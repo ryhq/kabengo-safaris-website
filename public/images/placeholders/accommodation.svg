@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" fill="none">
+  <rect width="800" height="600" fill="#f5f0eb"/>
+  <rect width="800" height="600" fill="url(#grad)" opacity="0.2"/>
+  <defs>
+    <linearGradient id="grad" x1="0" y1="0" x2="800" y2="600">
+      <stop offset="0%" stop-color="#5a1e03"/>
+      <stop offset="100%" stop-color="#3e3117"/>
+    </linearGradient>
+  </defs>
+  <!-- Ground -->
+  <path d="M0 440 Q400 420 800 440 L800 600 L0 600Z" fill="#5a1e03" opacity="0.08"/>
+  <!-- Lodge structure -->
+  <g opacity="0.15">
+    <!-- Main roof -->
+    <path d="M280 280 L400 200 L520 280Z" fill="#5a1e03"/>
+    <!-- Building body -->
+    <rect x="300" y="280" width="200" height="120" fill="#5a1e03"/>
+    <!-- Door -->
+    <rect x="380" y="340" width="40" height="60" rx="20" fill="#f5f0eb"/>
+    <!-- Windows -->
+    <rect x="320" y="310" width="30" height="25" rx="3" fill="#f5f0eb"/>
+    <rect x="450" y="310" width="30" height="25" rx="3" fill="#f5f0eb"/>
+    <!-- Porch posts -->
+    <rect x="300" y="280" width="6" height="120" fill="#5a1e03"/>
+    <rect x="494" y="280" width="6" height="120" fill="#5a1e03"/>
+  </g>
+  <!-- Palm trees -->
+  <g opacity="0.12">
+    <rect x="165" y="280" width="8" height="120" fill="#274e22"/>
+    <path d="M130 280 Q169 250 169 280" fill="#274e22"/>
+    <path d="M169 280 Q169 250 210 275" fill="#274e22"/>
+    <path d="M145 270 Q169 240 195 270" fill="#274e22"/>
+    <rect x="615" y="290" width="8" height="110" fill="#274e22"/>
+    <path d="M580 290 Q619 260 619 290" fill="#274e22"/>
+    <path d="M619 290 Q619 260 660 285" fill="#274e22"/>
+    <path d="M595 280 Q619 250 645 280" fill="#274e22"/>
+  </g>
+  <!-- Stars -->
+  <g fill="#5a1e03" opacity="0.1">
+    <circle cx="200" cy="150" r="2"/>
+    <circle cx="350" cy="120" r="2"/>
+    <circle cx="500" cy="140" r="1.5"/>
+    <circle cx="650" cy="130" r="2"/>
+    <circle cx="300" cy="160" r="1.5"/>
+    <circle cx="550" cy="110" r="1.5"/>
+  </g>
+  <!-- Text -->
+  <text x="400" y="520" text-anchor="middle" font-family="Georgia, serif" font-size="24" fill="#5a1e03" opacity="0.3">KABENGO SAFARIS</text>
+</svg>

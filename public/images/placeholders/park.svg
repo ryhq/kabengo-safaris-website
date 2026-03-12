@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" fill="none">
+  <rect width="800" height="600" fill="#f5f0eb"/>
+  <rect width="800" height="600" fill="url(#grad)" opacity="0.25"/>
+  <defs>
+    <linearGradient id="grad" x1="0" y1="600" x2="800" y2="0">
+      <stop offset="0%" stop-color="#274e22"/>
+      <stop offset="100%" stop-color="#4A7C5F"/>
+    </linearGradient>
+  </defs>
+  <!-- Rolling hills -->
+  <path d="M0 450 Q100 380 200 400 Q350 360 500 380 Q650 350 800 370 L800 600 L0 600Z" fill="#274e22" opacity="0.12"/>
+  <path d="M0 480 Q200 440 400 460 Q600 440 800 420 L800 600 L0 600Z" fill="#274e22" opacity="0.08"/>
+  <!-- Mountain -->
+  <path d="M250 400 L400 200 L550 400Z" fill="#274e22" opacity="0.1"/>
+  <path d="M380 250 L400 200 L420 250Z" fill="white" opacity="0.15"/>
+  <!-- Trees -->
+  <g opacity="0.15">
+    <rect x="145" y="370" width="8" height="50" fill="#274e22"/>
+    <ellipse cx="149" cy="365" rx="25" ry="20" fill="#274e22"/>
+    <rect x="595" y="345" width="8" height="55" fill="#274e22"/>
+    <ellipse cx="599" cy="340" rx="30" ry="22" fill="#274e22"/>
+    <rect x="695" y="350" width="6" height="45" fill="#274e22"/>
+    <ellipse cx="698" cy="345" rx="20" ry="16" fill="#274e22"/>
+  </g>
+  <!-- Bird -->
+  <path d="M500 180 Q510 170 520 180 Q530 170 540 180" stroke="#274e22" stroke-width="2" fill="none" opacity="0.2"/>
+  <path d="M530 195 Q540 185 550 195 Q560 185 570 195" stroke="#274e22" stroke-width="2" fill="none" opacity="0.15"/>
+  <!-- Text -->
+  <text x="400" y="530" text-anchor="middle" font-family="Georgia, serif" font-size="24" fill="#274e22" opacity="0.3">KABENGO SAFARIS</text>
+</svg>
