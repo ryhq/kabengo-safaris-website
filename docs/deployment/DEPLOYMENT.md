@@ -230,3 +230,7 @@ zip -r deploy.zip .
 | Passenger logs        | `/home/username/logs/passenger.log` (or custom) |
 | SSL                   | cPanel → SSL/TLS or AutoSSL                     |
 | HTTPS redirect        | cPanel → Domains → Force HTTPS toggle           |
+
+
+
+cd "/home/ricksy/Documents/NEXT JS PROJECTS/kabengo-safaris-website" && git remote set-url origin git@github.com:ryhq/kabengo-safaris-website.git && GIT_SSH_COMMAND="ssh -i ~/.ssh/github_ssh_key_ricksonenock -o IdentitiesOnly=yes" git push -u origin main
