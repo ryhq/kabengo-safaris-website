@@ -1,0 +1,74 @@
+name: Build & Deploy Next.js to cPanel
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build Next.js (standalone)
+        env:
+          NEXT_PUBLIC_API_BASE_URL: ${{ secrets.NEXT_PUBLIC_API_BASE_URL }}
+        run: npm run build
+
+      - name: Prepare standalone package
+        run: |
+          cp -r .next/static .next/standalone/.next/static
+          cp -r public .next/standalone/public
+
+      - name: Create deployment archive
+        run: |
+          cd .next/standalone
+          tar -czf ../../deploy.tar.gz .
+
+      - name: Deploy to cPanel via SSH
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.CPANEL_HOST }}
+          username: ${{ secrets.CPANEL_USERNAME }}
+          key: ${{ secrets.CPANEL_SSH_KEY }}
+          passphrase: ${{ secrets.CPANEL_SSH_KEY_PASSPHRASE }}
+          port: ${{ secrets.CPANEL_PORT }}
+          source: "deploy.tar.gz"
+          target: ${{ secrets.CPANEL_NEXTJS_APP_PATH }}
+
+      - name: Extract and restart on cPanel
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.CPANEL_HOST }}
+          username: ${{ secrets.CPANEL_USERNAME }}
+          key: ${{ secrets.CPANEL_SSH_KEY }}
+          passphrase: ${{ secrets.CPANEL_SSH_KEY_PASSPHRASE }}
+          port: ${{ secrets.CPANEL_PORT }}
+          script: |
+            cd ${{ secrets.CPANEL_NEXTJS_APP_PATH }}
+
+            # Extract new build (overwrite existing files)
+            tar -xzf deploy.tar.gz
+
+            # Clean up archive
+            rm -f deploy.tar.gz
+
+            # Restart Passenger app
+            mkdir -p tmp
+            touch tmp/restart.txt
+
+            echo "Deployment complete - Next.js app restarted"
