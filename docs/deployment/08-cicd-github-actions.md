@@ -189,6 +189,54 @@ Total deployment time: **~3-5 minutes** from push to live.
 
 ## Troubleshooting
 
+### Workflow succeeds but service is not responding
+
+The GitHub Actions workflow may show green (success) but the application isn't accessible. This can happen because the service takes time to start or crashed after deployment.
+
+**Step 1: Check if the service is running**
+
+```bash
+ssh -i ~/.ssh/deploy_ryhqtech root@164.92.191.175 "systemctl status kabengosafaris"
+```
+
+This shows:
+- `Active: active (running)` — service is up, check logs for errors
+- `Active: failed` — service crashed, check logs for the cause
+- `Active: activating (auto-restart)` — service is crash-looping
+
+**Step 2: Check recent logs for errors**
+
+```bash
+ssh -i ~/.ssh/deploy_ryhqtech root@164.92.191.175 "journalctl -u kabengosafaris --since '5 minutes ago' | grep -E 'Started|ERROR|Exception|port|Tomcat' | tail -10"
+```
+
+This filters for the most relevant log lines:
+- `Started` — confirms the application finished starting (Spring Boot startup takes ~60-120 seconds on the 1GB Droplet)
+- `ERROR` / `Exception` — application errors after startup
+- `port` / `Tomcat` — port binding issues
+
+**Step 3: View full recent logs (if filtered output isn't enough)**
+
+```bash
+ssh -i ~/.ssh/deploy_ryhqtech root@164.92.191.175 "journalctl -u kabengosafaris --since '10 minutes ago' --no-pager"
+```
+
+**Common scenarios:**
+
+| Symptom | Cause | Fix |
+|---------|-------|-----|
+| `Started KabengosafarisApplication in X seconds` but API returns 401 | JWT tokens invalidated after restart | Log out and log back in to get a fresh token |
+| `Active: failed` with `OutOfMemoryError` | 1GB Droplet running low on RAM | Check memory: `free -h`, consider reducing `-Xmx` or adding swap |
+| `Address already in use: bind` | Port 4450 still held by old process | `kill $(lsof -t -i:4450)` then `systemctl start kabengosafaris` |
+| `Communications link failure` | MySQL not running or wrong credentials | `systemctl status mysql`, check `application.properties` |
+| No `Started` line after 3+ minutes | Application stuck during startup | Check full logs for the blocking initializer |
+
+**Step 4: Restart the service manually (if needed)**
+
+```bash
+ssh -i ~/.ssh/deploy_ryhqtech root@164.92.191.175 "systemctl restart kabengosafaris && sleep 5 && systemctl is-active kabengosafaris"
+```
+
 ### Workflow fails at SCP step
 
 - Verify the `DROPLET_SSH_KEY` secret contains the **full private key** (including header/footer lines)
@@ -201,8 +249,7 @@ The JAR uploaded but the service crashed on restart:
 
 ```bash
 # SSH into Droplet and check logs
-ssh root@164.92.191.175
-journalctl -u kabengosafaris --since "5 minutes ago"
+ssh -i ~/.ssh/deploy_ryhqtech root@164.92.191.175 "journalctl -u kabengosafaris --since '5 minutes ago'"
 ```
 
 Common causes:
