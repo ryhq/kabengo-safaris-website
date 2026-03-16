@@ -146,9 +146,8 @@ export default function Navbar() {
   ];
 
   const trailingLinks = [
-    ...(navData?.testimoniesCount && navData.testimoniesCount > 0
-      ? [{ href: "/testimonials", label: t("testimonials"), key: "testimonials" }]
-      : []),
+    { href: "/testimonials", label: t("testimonials"), key: "testimonials" },
+    { href: "/gallery", label: t("gallery"), key: "gallery" },
     { href: "/about", label: t("about"), key: "about" },
     { href: "/contact", label: t("contact"), key: "contact" },
   ];
