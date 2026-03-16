@@ -80,6 +80,7 @@ export default function Footer() {
     { href: "/safaris", label: nav("safaris") },
     { href: "/parks", label: nav("parks") },
     { href: "/accommodations", label: nav("accommodations") },
+    { href: "/gallery", label: nav("gallery") },
     { href: "/testimonials", label: nav("testimonials") },
     { href: "/about", label: nav("about") },
     { href: "/contact", label: nav("contact") },

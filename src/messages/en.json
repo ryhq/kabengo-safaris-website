@@ -35,6 +35,9 @@
     "days": "days",
     "comingSoon": "Coming Soon",
     "loadMore": "Load More",
+    "previous": "Previous",
+    "next": "Next",
+    "close": "Close",
     "showingOf": "Showing {count} of {total}",
     "notFoundTitle": "Page Not Found",
     "notFoundMessage": "The page you're looking for doesn't exist or has been moved.",
@@ -199,9 +202,10 @@
     "title": "Photo Gallery",
     "subtitle": "Capturing the beauty of Africa through our lens",
     "all": "All",
-    "safaris": "Safaris",
     "parks": "Parks",
-    "wildlife": "Wildlife"
+    "activities": "Activities",
+    "accommodations": "Accommodations",
+    "viewEntity": "View {entity}"
   },
   "testimonials": {
     "title": "Guest Testimonials",
