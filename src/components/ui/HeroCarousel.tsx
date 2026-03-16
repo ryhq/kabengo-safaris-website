@@ -79,7 +79,7 @@ export default function HeroCarousel({
 
   return (
     <section className={`relative flex ${
-      variant === "page" ? "h-[60vh] min-h-[400px] items-end" : "h-screen min-h-[600px] items-center"
+      variant === "page" ? "h-[50vh] sm:h-[60vh] min-h-[300px] sm:min-h-[400px] items-end" : "h-screen min-h-[600px] items-center"
     } justify-center overflow-hidden`}>
       {/* Background with crossfade + Ken Burns */}
       <AnimatePresence initial={false}>
@@ -120,8 +120,8 @@ export default function HeroCarousel({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.6 }}
-          className={`relative z-10 flex flex-col ${contentAlignClass} ${textAlignClass} gap-6 px-4 sm:px-6 lg:px-8 w-full max-w-4xl mx-auto ${
-            variant === "page" ? "pb-24" : ""
+          className={`relative z-10 flex flex-col ${contentAlignClass} ${textAlignClass} gap-4 sm:gap-6 px-4 sm:px-6 lg:px-8 w-full max-w-4xl mx-auto ${
+            variant === "page" ? "pb-16 sm:pb-24" : ""
           } ${cssClasses}`}
         >
           <motion.h1
@@ -151,7 +151,7 @@ export default function HeroCarousel({
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.6 }}
-              className={`text-base sm:text-lg text-white/70 max-w-2xl leading-relaxed ${
+              className={`hidden sm:block text-base sm:text-lg text-white/70 max-w-2xl leading-relaxed ${
                 textAlignment === "center" ? "mx-auto" : ""
               }`}
             >
