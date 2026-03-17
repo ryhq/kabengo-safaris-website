@@ -63,9 +63,9 @@
     "ctaCta": "Plan Your Safari"
   },
   "safaris": {
-    "title": "Our Safari Experiences",
-    "subtitle": "Explore our handcrafted safari tours across East Africa",
-    "searchPlaceholder": "Search safaris...",
+    "title": "Safari Packages",
+    "subtitle": "Find your perfect African adventure — from day trips to multi-week expeditions",
+    "searchPlaceholder": "Search by name, destination, or package code...",
     "duration": "{days} Days",
     "nights": "{nights} nights",
     "status": {
@@ -76,6 +76,16 @@
     "filters": {
       "tripType": "Trip Type",
       "budget": "Budget",
+      "duration": "Duration",
+      "moreFilters": "Filters",
+      "durations": {
+        "all": "All Safaris",
+        "dayTrip": "Day Trips",
+        "short": "2–3 Days",
+        "medium": "4–6 Days",
+        "week": "7–9 Days",
+        "extended": "10+ Days"
+      },
       "tripTypes": {
         "all": "All",
         "private": "Private",
@@ -127,8 +137,11 @@
       "days": "Days",
       "nights": "Nights"
     },
-    "sectionHeading": "Find Your Perfect Safari",
-    "sectionSubheading": "Handcrafted journeys through Africa's most stunning landscapes"
+    "sectionHeading": "Choose Your Adventure",
+    "sectionSubheading": "Browse safari packages by duration, style, and budget",
+    "resultCount": "{count} {count, plural, one {safari} other {safaris}} found",
+    "dayTrip": "Day Trip",
+    "daysNights": "{days}D / {nights}N"
   },
   "parks": {
     "title": "National Parks & Reserves",
