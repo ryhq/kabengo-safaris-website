@@ -151,11 +151,19 @@ export default function SafarisPage() {
     }
   };
 
-  const formatPrice = (item: Itinerary) => {
+  const getPriceInfo = (item: Itinerary) => {
     if (!item.costSummary || item.costSummary.length === 0) return null;
     const cost = item.costSummary[0];
     if (!cost.grandTotalRack) return null;
-    return `${cost.currency || "USD"} ${cost.grandTotalRack.toLocaleString()}`;
+    const totalPax = item.totalPaxCount || 1;
+    const perPerson = cost.grandTotalRack / totalPax;
+    const currency = cost.currency || "USD";
+    const wasPrice = Math.ceil(perPerson * 1.3);
+    // Build pax label e.g. "Non-Resident Adult"
+    const paxLabel = item.paxBreakdown && item.paxBreakdown.length > 0
+      ? item.paxBreakdown.map(p => `${p.nationCategoryName || ""} ${p.ageCategoryName || ""}`.trim()).join(", ")
+      : null;
+    return { currency, perPerson, wasPrice, totalPax, paxLabel };
   };
 
   const clearFilters = () => {
@@ -432,11 +440,21 @@ export default function SafarisPage() {
                         )}
 
                         {/* Bottom-right: Price */}
-                        {formatPrice(item) && (
-                          <span className="absolute bottom-3 right-3 text-sm font-bold bg-brand-green/90 backdrop-blur-sm text-white px-3 py-1.5 rounded-lg shadow-sm">
-                            {formatPrice(item)}
-                          </span>
-                        )}
+                        {(() => {
+                          const price = getPriceInfo(item);
+                          if (!price) return null;
+                          return (
+                            <span className="absolute bottom-3 right-3 flex flex-col items-end bg-brand-green/90 backdrop-blur-sm text-white px-3 py-1.5 rounded-lg shadow-sm">
+                              <span className="text-[10px] line-through text-white/60">
+                                {price.currency} {price.wasPrice.toLocaleString()}
+                              </span>
+                              <span className="text-sm font-bold">
+                                {price.currency} {Math.ceil(price.perPerson).toLocaleString()}
+                              </span>
+                              <span className="text-[9px] text-white/70">{t("detail.perPerson")}</span>
+                            </span>
+                          );
+                        })()}
                       </div>
 
                       {/* Content */}
@@ -463,13 +481,15 @@ export default function SafarisPage() {
 
                         {/* CTA */}
                         <div className="flex items-center justify-between mt-4 pt-3 border-t border-stone-50">
-                          {formatPrice(item) ? (
-                            <span className="text-[11px] text-stone-400 font-medium">
-                              {t("detail.from")}
-                            </span>
-                          ) : (
-                            <span />
-                          )}
+                          {(() => {
+                            const price = getPriceInfo(item);
+                            if (!price) return <span />;
+                            return (
+                              <span className="text-[11px] text-stone-400 font-medium">
+                                {price.paxLabel ? t("detail.paxContext", { count: price.totalPax, category: price.paxLabel }) : t("detail.from")}
+                              </span>
+                            );
+                          })()}
                           <span className="flex items-center gap-1.5 text-sm font-semibold text-brand-green group-hover:gap-2.5 transition-all">
                             {common("viewDetails")}
                             <ArrowRight

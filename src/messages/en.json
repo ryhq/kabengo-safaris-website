@@ -135,7 +135,9 @@
       "trustResponse": "Response within 24 hours",
       "trustExpert": "Expert local guides",
       "days": "Days",
-      "nights": "Nights"
+      "nights": "Nights",
+      "perPerson": "per person",
+      "paxContext": "For {count} {category}"
     },
     "sectionHeading": "Choose Your Adventure",
     "sectionSubheading": "Browse safari packages by duration, style, and budget",

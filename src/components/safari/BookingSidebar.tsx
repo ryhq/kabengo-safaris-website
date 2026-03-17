@@ -25,6 +25,8 @@ interface BookingSidebarProps {
   startLocation?: string;
   endLocation?: string;
   price?: string | null;
+  wasPrice?: string;
+  paxLabel?: string;
 }
 
 export default function BookingSidebar({
@@ -34,6 +36,8 @@ export default function BookingSidebar({
   totalNights,
   startLocation,
   price,
+  wasPrice,
+  paxLabel,
 }: BookingSidebarProps) {
   const t = useTranslations("safaris");
   const common = useTranslations("common");
@@ -44,7 +48,16 @@ export default function BookingSidebar({
       {price && (
         <div className="bg-brand-green px-6 py-5">
           <p className="text-white/70 text-xs font-medium">{t("detail.from")}</p>
-          <p className="text-white text-2xl font-bold font-serif">{price}</p>
+          <div className="flex items-baseline gap-2">
+            {wasPrice && (
+              <span className="text-white/50 text-sm line-through">{wasPrice}</span>
+            )}
+            <p className="text-white text-2xl font-bold font-serif">{price}</p>
+          </div>
+          <p className="text-white/70 text-xs mt-0.5">{t("detail.perPerson")}</p>
+          {paxLabel && (
+            <p className="text-white/50 text-[10px] mt-0.5">{paxLabel}</p>
+          )}
           {totalDays && (
             <p className="text-white/60 text-xs mt-0.5">
               {totalDays} {t("detail.days")} {totalNights ? `/ ${totalNights} ${t("detail.nights")}` : ""}
@@ -114,10 +127,12 @@ export function MobileBookingBar({
   safariCode,
   safariName,
   price,
+  wasPrice,
 }: {
   safariCode: string;
   safariName: string;
   price?: string | null;
+  wasPrice?: string;
 }) {
   const common = useTranslations("common");
   const t = useTranslations("safaris");
@@ -144,7 +159,13 @@ export function MobileBookingBar({
               {price ? (
                 <>
                   <p className="text-xs text-stone-400">{t("detail.from")}</p>
-                  <p className="text-base font-bold text-stone-800">{price}</p>
+                  <div className="flex items-baseline gap-1.5">
+                    {wasPrice && (
+                      <span className="text-xs text-stone-400 line-through">{wasPrice}</span>
+                    )}
+                    <p className="text-base font-bold text-stone-800">{price}</p>
+                  </div>
+                  <p className="text-[10px] text-stone-400">{t("detail.perPerson")}</p>
                 </>
               ) : (
                 <p className="text-sm font-semibold text-stone-800 truncate">{safariName}</p>

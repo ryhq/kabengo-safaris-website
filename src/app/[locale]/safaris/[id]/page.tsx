@@ -50,15 +50,23 @@ export default function SafariDetailPage() {
     .filter(Boolean) as string[];
   const featuredImage = allDayImages.find((img) => img !== heroImage) || allDayImages[0] || undefined;
 
-  const formatPrice = () => {
+  const getPriceInfo = () => {
     if (!itinerary.costSummary || itinerary.costSummary.length === 0) return null;
     const cost = itinerary.costSummary[0];
     if (!cost.grandTotalRack) return null;
-    return `${cost.currency || "USD"} ${cost.grandTotalRack.toLocaleString()}`;
+    const totalPax = itinerary.totalPaxCount || 1;
+    const perPerson = cost.grandTotalRack / totalPax;
+    const currency = cost.currency || "USD";
+    const wasPrice = Math.ceil(perPerson * 1.3);
+    const paxLabel = itinerary.paxBreakdown && itinerary.paxBreakdown.length > 0
+      ? itinerary.paxBreakdown.map(p => `${p.nationCategoryName || ""} ${p.ageCategoryName || ""}`.trim()).join(", ")
+      : null;
+    return { currency, perPerson, wasPrice, totalPax, paxLabel, formatted: `${currency} ${Math.ceil(perPerson).toLocaleString()}` };
   };
 
   const safariCode = (params.id as string) || itinerary.code || itinerary.id;
-  const price = formatPrice();
+  const priceInfo = getPriceInfo();
+  const price = priceInfo?.formatted || null;
 
   return (
     <div className="pb-20 lg:pb-0">
@@ -81,6 +89,8 @@ export default function SafariDetailPage() {
             startLocation={itinerary.startLocation}
             endLocation={itinerary.endLocation}
             price={price}
+            wasPrice={priceInfo ? `${priceInfo.currency} ${priceInfo.wasPrice.toLocaleString()}` : undefined}
+            paxLabel={priceInfo?.paxLabel || undefined}
           />
         </div>
       </section>
@@ -125,6 +135,8 @@ export default function SafariDetailPage() {
                     startLocation={itinerary.startLocation}
                     endLocation={itinerary.endLocation}
                     price={price}
+                    wasPrice={priceInfo ? `${priceInfo.currency} ${priceInfo.wasPrice.toLocaleString()}` : undefined}
+                    paxLabel={priceInfo?.paxLabel || undefined}
                   />
                 </div>
               </div>
@@ -147,6 +159,7 @@ export default function SafariDetailPage() {
         safariCode={safariCode}
         safariName={itinerary.name}
         price={price}
+        wasPrice={priceInfo ? `${priceInfo.currency} ${priceInfo.wasPrice.toLocaleString()}` : undefined}
       />
     </div>
   );

@@ -24,6 +24,7 @@ export interface Itinerary {
   totalDaysCount?: number;
   primaryImageUrl?: string;
   costSummary?: CostSummary[];
+  paxBreakdown?: PaxBreakdown[];
   days?: ItineraryDay[];
 }
 
@@ -33,6 +34,12 @@ export interface CostSummary {
   parkFeesRack?: number;
   activitiesRack?: number;
   grandTotalRack?: number;
+}
+
+export interface PaxBreakdown {
+  nationCategoryName?: string;
+  ageCategoryName?: string;
+  count?: number;
 }
 
 export interface ItineraryDay {
