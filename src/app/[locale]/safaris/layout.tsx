@@ -1,4 +1,5 @@
 import { getTranslations } from "next-intl/server";
+import { buildAlternates } from "@/lib/seo";
 
 export async function generateMetadata({
   params,
@@ -10,6 +11,7 @@ export async function generateMetadata({
   return {
     title: t("safarisTitle"),
     description: t("safarisDescription"),
+    alternates: buildAlternates(locale, "/safaris"),
   };
 }
 
