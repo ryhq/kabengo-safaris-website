@@ -232,6 +232,8 @@
     "yourRating": "Your Rating",
     "ratingRequired": "Please select a rating",
     "yourName": "Your Name",
+    "yourEmail": "Your Email",
+    "emailPlaceholder": "you@example.com",
     "yourCountry": "Country",
     "yourTitle": "Occupation",
     "titlePlaceholder": "e.g. Travel Blogger, Teacher",

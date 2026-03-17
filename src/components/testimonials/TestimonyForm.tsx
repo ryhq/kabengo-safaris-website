@@ -16,6 +16,7 @@ export default function TestimonyForm() {
   const locale = useLocale();
   const [form, setForm] = useState({
     authorName: "",
+    authorEmail: "",
     authorTitle: "",
     authorCountry: "",
     message: "",
@@ -55,7 +56,7 @@ export default function TestimonyForm() {
       });
       if (res.data) {
         setStatus("success");
-        setForm({ authorName: "", authorTitle: "", authorCountry: "", message: "", rating: 0, safariId: "" });
+        setForm({ authorName: "", authorEmail: "", authorTitle: "", authorCountry: "", message: "", rating: 0, safariId: "" });
       } else {
         setStatus("error");
       }
@@ -168,12 +169,20 @@ export default function TestimonyForm() {
                 )}
               </div>
 
-              {/* Name & Country */}
+              {/* Name & Email */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-stone-700 mb-1.5">{t("yourName")} *</label>
                   <input type="text" name="authorName" required value={form.authorName} onChange={handleChange} className={inputClass} />
                 </div>
+                <div>
+                  <label className="block text-sm font-medium text-stone-700 mb-1.5">{t("yourEmail")} *</label>
+                  <input type="email" name="authorEmail" required value={form.authorEmail} onChange={handleChange} placeholder={t("emailPlaceholder")} className={inputClass} />
+                </div>
+              </div>
+
+              {/* Country */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-stone-700 mb-1.5">{t("yourCountry")}</label>
                   <input type="text" name="authorCountry" value={form.authorCountry} onChange={handleChange} className={inputClass} />
