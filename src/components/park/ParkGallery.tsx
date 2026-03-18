@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 import { ChevronLeft, ChevronRight, X, Expand } from "lucide-react";
 import LoadMoreFade from "@/components/ui/LoadMoreFade";
 
@@ -53,10 +54,12 @@ export default function ParkGallery({ images, parkName, totalImages, loadingMore
               i === 0 ? "col-span-2 row-span-2 h-[300px] sm:h-[400px]" : "h-[180px] sm:h-[200px]"
             }`}
           >
-            <img
+            <Image
               src={img.imageUrl}
               alt={img.altText || `${parkName}${img.imageType ? ` - ${img.imageType}` : ""}`}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              fill
+              sizes={i === 0 ? "(max-width: 768px) 100vw, 66vw" : "(max-width: 768px) 50vw, 33vw"}
+              className="object-cover group-hover:scale-105 transition-transform duration-500"
             />
             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300" />
             <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">

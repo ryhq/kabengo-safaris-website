@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { Calendar, ArrowRight } from "lucide-react";
 import SectionHeading from "@/components/ui/SectionHeading";
 import LoadMoreFade from "@/components/ui/LoadMoreFade";
@@ -83,11 +84,13 @@ export default function SafarisSection({ initialSafaris, totalItems }: SafarisSe
                 href={`/safaris/${safari.code || safari.id}`}
                 className="group block bg-brand-cream rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300"
               >
-                <div className="h-48 overflow-hidden">
-                  <img
+                <div className="relative h-48 overflow-hidden">
+                  <Image
                     src={safari.primaryImageUrl || "/images/placeholders/safari.svg"}
                     alt={safari.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                 </div>
                 <div className="p-6">

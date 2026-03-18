@@ -5,7 +5,6 @@ import { useTranslations, useLocale } from "next-intl";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import { Menu, X, Globe, ChevronDown, TreePine, Tent, Map, Compass, Search } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import Image from "next/image";
 import KabengoIcon from "@/components/ui/KabengoIcon";
 import SearchModal from "@/components/search/SearchModal";
 import { apiClient } from "@/lib/api";

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import SectionHeading from "@/components/ui/SectionHeading";
 import LoadMoreFade from "@/components/ui/LoadMoreFade";
@@ -83,10 +84,12 @@ export default function ActivitiesSection({ initialActivities, totalItems }: Act
                 className="group block bg-white rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300"
               >
                 <div className="h-44 bg-gradient-to-br from-brand-green/20 to-brand-brown/10 overflow-hidden relative">
-                  <img
+                  <Image
                     src={activity.primaryImageUrl || "/images/placeholders/activity.svg"}
                     alt={activity.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>

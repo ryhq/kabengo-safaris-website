@@ -1,0 +1,16 @@
+{
+  "name": "Kabengo Safaris",
+  "short_name": "Kabengo",
+  "description": "Premium safari tours, breathtaking destinations, and unforgettable wildlife experiences across East Africa.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#5a1e03",
+  "icons": [
+    {
+      "src": "/images/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

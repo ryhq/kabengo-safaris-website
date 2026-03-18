@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { JsonLd, getOrganizationJsonLd } from "@/lib/jsonld";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -26,6 +27,7 @@ export const metadata: Metadata = {
     shortcut: "/images/favicon.svg",
     apple: "/images/favicon.svg",
   },
+  manifest: "/manifest.json",
   openGraph: {
     type: "website",
     siteName: "Kabengo Safaris",
@@ -47,5 +49,10 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return children;
+  return (
+    <>
+      <JsonLd data={getOrganizationJsonLd()} />
+      {children}
+    </>
+  );
 }

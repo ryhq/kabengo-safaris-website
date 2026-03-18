@@ -4,6 +4,7 @@ import { useEffect, useState, useCallback } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import PageHero from "@/components/ui/PageHero";
 import { apiClient } from "@/lib/api";
 
@@ -150,11 +151,13 @@ export default function GalleryPage() {
                       className="group relative rounded-lg overflow-hidden break-inside-avoid cursor-pointer"
                       onClick={() => setLightboxImage(image)}
                     >
-                      <img
+                      <Image
                         src={image.imageUrl}
                         alt={image.altText || image.entityName}
+                        width={600}
+                        height={400}
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
                         className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-500"
-                        loading="lazy"
                       />
 
                       {/* Overlay on hover */}

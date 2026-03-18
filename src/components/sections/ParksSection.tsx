@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import SectionHeading from "@/components/ui/SectionHeading";
 import LoadMoreFade from "@/components/ui/LoadMoreFade";
@@ -83,11 +84,13 @@ export default function ParksSection({ initialParks, totalItems }: ParksSectionP
                 href={`/parks/${park.slug || park.id}`}
                 className="group block bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-stone-100"
               >
-                <div className="h-48 bg-gradient-to-br from-brand-green/20 to-brand-green/5 overflow-hidden">
-                  <img
+                <div className="relative h-48 bg-gradient-to-br from-brand-green/20 to-brand-green/5 overflow-hidden">
+                  <Image
                     src={park.primaryImageUrl || "/images/placeholders/park.svg"}
                     alt={park.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                 </div>
                 <div className="p-6">
