@@ -122,7 +122,10 @@
       "trustResponse": "Respuesta en 24 horas",
       "trustExpert": "Guías locales expertos",
       "days": "Días",
-      "nights": "Noches"
+      "nights": "Noches",
+      "similarSafaris": "También Te Puede Gustar",
+      "similarSafarisSubtitle": "Explora Aventuras Similares",
+      "viewAllSafaris": "Ver Todos los Safaris"
     },
     "sectionHeading": "Encuentra Tu Safari Perfecto",
     "sectionSubheading": "Viajes artesanales por los paisajes más impresionantes de África"

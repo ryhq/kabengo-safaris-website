@@ -122,7 +122,10 @@
       "trustResponse": "Antwort innerhalb 24 Stunden",
       "trustExpert": "Erfahrene lokale Guides",
       "days": "Tage",
-      "nights": "Nächte"
+      "nights": "Nächte",
+      "similarSafaris": "Das Könnte Ihnen Auch Gefallen",
+      "similarSafarisSubtitle": "Ähnliche Abenteuer Entdecken",
+      "viewAllSafaris": "Alle Safaris Durchsuchen"
     },
     "sectionHeading": "Finden Sie Ihre Perfekte Safari",
     "sectionSubheading": "Handgemachte Reisen durch Afrikas atemberaubendste Landschaften"

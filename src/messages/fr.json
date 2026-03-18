@@ -122,7 +122,10 @@
       "trustResponse": "Réponse sous 24 heures",
       "trustExpert": "Guides locaux experts",
       "days": "Jours",
-      "nights": "Nuits"
+      "nights": "Nuits",
+      "similarSafaris": "Vous Aimerez Aussi",
+      "similarSafarisSubtitle": "Explorez des Aventures Similaires",
+      "viewAllSafaris": "Voir Tous les Safaris"
     },
     "sectionHeading": "Trouvez Votre Safari Idéal",
     "sectionSubheading": "Des voyages sur mesure à travers les plus beaux paysages d'Afrique"

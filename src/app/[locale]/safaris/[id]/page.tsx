@@ -9,6 +9,7 @@ import SafariDescription from "@/components/safari/SafariDescription";
 import SafariItinerary from "@/components/safari/SafariItinerary";
 import SafariDetailSkeleton from "@/components/safari/SafariDetailSkeleton";
 import BookingSidebar, { MobileBookingBar } from "@/components/safari/BookingSidebar";
+import SimilarSafaris from "@/components/safari/SimilarSafaris";
 import { apiClient } from "@/lib/api";
 import type { Itinerary } from "@/types";
 
@@ -153,6 +154,13 @@ export default function SafariDetailPage() {
           </div>
         </section>
       )}
+
+      {/* Similar Safaris */}
+      <SimilarSafaris
+        currentId={params.id as string}
+        tripType={itinerary.tripType}
+        budgetCategory={itinerary.budgetCategory}
+      />
 
       {/* Mobile sticky bottom bar */}
       <MobileBookingBar

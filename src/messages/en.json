@@ -137,7 +137,10 @@
       "days": "Days",
       "nights": "Nights",
       "perPerson": "per person",
-      "paxContext": "For {count} {category}"
+      "paxContext": "For {count} {category}",
+      "similarSafaris": "You May Also Like",
+      "similarSafarisSubtitle": "Explore Similar Adventures",
+      "viewAllSafaris": "Browse All Safaris"
     },
     "sectionHeading": "Choose Your Adventure",
     "sectionSubheading": "Browse safari packages by duration, style, and budget",

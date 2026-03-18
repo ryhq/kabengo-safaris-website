@@ -122,7 +122,10 @@
       "trustResponse": "Jibu ndani ya saa 24",
       "trustExpert": "Waongoza wa ndani wataalamu",
       "days": "Siku",
-      "nights": "Usiku"
+      "nights": "Usiku",
+      "similarSafaris": "Unaweza Pia Kupenda",
+      "similarSafarisSubtitle": "Gundua Safari Zinazofanana",
+      "viewAllSafaris": "Tazama Safari Zote"
     },
     "sectionHeading": "Pata Safari Yako Bora",
     "sectionSubheading": "Safari za kipekee kupitia mandhari ya Afrika yenye kupendeza"
