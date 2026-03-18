@@ -5,6 +5,15 @@ const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 const nextConfig: NextConfig = {
   output: "standalone",
+  async redirects() {
+    return [
+      {
+        source: "/:locale/testimonials",
+        destination: "/:locale/reviews",
+        permanent: true,
+      },
+    ];
+  },
   images: {
     remotePatterns: [
       {
