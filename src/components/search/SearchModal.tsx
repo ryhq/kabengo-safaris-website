@@ -56,7 +56,7 @@ const CATEGORIES = [
   { key: "parks", icon: TreePine, href: "/parks", labelKey: "parks", identifierField: "slug" },
   { key: "activities", icon: Compass, href: "/activities", labelKey: "activities", identifierField: "slug" },
   { key: "accommodations", icon: Tent, href: "/accommodations", labelKey: "accommodations", identifierField: "slug" },
-  { key: "testimonies", icon: MessageSquareQuote, href: "/testimonials", labelKey: "testimonials", identifierField: null },
+  { key: "testimonies", icon: MessageSquareQuote, href: "/reviews", labelKey: "testimonials", identifierField: null },
 ] as const;
 
 const INITIAL_LIMIT = 3;

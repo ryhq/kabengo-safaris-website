@@ -6,7 +6,7 @@
     "accommodations": "Accommodations",
     "activities": "Activities",
     "gallery": "Gallery",
-    "testimonials": "Testimonials",
+    "testimonials": "Reviews",
     "blog": "Blog",
     "about": "About",
     "contact": "Contact",
@@ -223,7 +223,7 @@
     "viewEntity": "View {entity}"
   },
   "testimonials": {
-    "title": "Guest Testimonials",
+    "title": "Reviews",
     "subtitle": "Hear from those who've experienced the magic",
     "verified": "Verified Booking",
     "allRatings": "All Ratings",
@@ -384,7 +384,7 @@
     "contactDescription": "Get in touch with Kabengo Safaris to plan your dream safari.",
     "galleryTitle": "Gallery | Kabengo Safaris",
     "galleryDescription": "Capturing the beauty of Africa through our lens.",
-    "testimonialsTitle": "Testimonials | Kabengo Safaris",
+    "testimonialsTitle": "Reviews | Kabengo Safaris",
     "testimonialsDescription": "Hear from guests who've experienced the magic of an African safari.",
     "faqTitle": "FAQ | Kabengo Safaris",
     "faqDescription": "Everything you need to know about your safari adventure.",

@@ -13,7 +13,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/parks",
     "/accommodations",
     "/activities",
-    "/testimonials",
+    "/reviews",
     "/contact",
     "/book",
     "/faq",

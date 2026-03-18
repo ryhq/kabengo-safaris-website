@@ -82,7 +82,7 @@ export default function Footer() {
     { href: "/accommodations", label: nav("accommodations") },
     { href: "/activities", label: nav("activities") },
     { href: "/gallery", label: nav("gallery") },
-    { href: "/testimonials", label: nav("testimonials") },
+    { href: "/reviews", label: nav("testimonials") },
     { href: "/about", label: nav("about") },
     { href: "/contact", label: nav("contact") },
     { href: "/faq", label: nav("faq") },

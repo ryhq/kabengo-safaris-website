@@ -149,7 +149,7 @@ export default function TestimonialsSection({ initialTestimonies, totalItems }: 
               label="Testimonials"
               onLoadMore={loadMore}
               fadeColor="white"
-              viewAllHref="/testimonials"
+              viewAllHref="/reviews"
             />
           </div>
         )}
@@ -157,7 +157,7 @@ export default function TestimonialsSection({ initialTestimonies, totalItems }: 
         {!hasMore && (
           <div className="flex justify-center mt-6">
             <Link
-              href="/testimonials"
+              href="/reviews"
               className="group w-9 h-9 rounded-full border border-stone-200 bg-white flex items-center justify-center shadow-sm hover:shadow-md hover:border-brand-green transition-all duration-200"
               title={test("title")}
             >
