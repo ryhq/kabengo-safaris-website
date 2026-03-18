@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { Mail, Phone, MapPin, Facebook, Instagram, Twitter } from "lucide-react";
+import { Mail, Phone, MapPin, Instagram } from "lucide-react";
 import KabengoIcon from "@/components/ui/KabengoIcon";
 import { subscribeToNewsletter } from "@/lib/api";
 
@@ -156,9 +156,7 @@ export default function Footer() {
                 {t("followUs")}
               </h4>
               <div className="flex space-x-4">
-                <a href="#" className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-brand-accent transition-colors" aria-label="Facebook"><Facebook size={18} /></a>
-                <a href="#" className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-brand-accent transition-colors" aria-label="Instagram"><Instagram size={18} /></a>
-                <a href="#" className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-brand-accent transition-colors" aria-label="Twitter"><Twitter size={18} /></a>
+                <a href="https://www.instagram.com/kabengosafaris" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-brand-accent transition-colors" aria-label="Instagram"><Instagram size={18} /></a>
               </div>
             </div>
           </div>
