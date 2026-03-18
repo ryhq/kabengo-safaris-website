@@ -33,6 +33,11 @@ const nextConfig: NextConfig = {
         hostname: "*.kabengosafaris.com",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "*.kabengosafaris.ryhqtech.com",
+        pathname: "/**",
+      },
     ],
   },
 };
