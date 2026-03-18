@@ -3,12 +3,14 @@
 import { useEffect, useState } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { motion } from "framer-motion";
-import { Send, CheckCircle, XCircle, Star, ChevronDown, Quote, Pen } from "lucide-react";
+import { Send, CheckCircle, XCircle, Star, Quote, Pen, Compass } from "lucide-react";
 import { apiClient } from "@/lib/api";
+import GlassCombobox from "@/components/ui/GlassCombobox";
 
 interface SafariOption {
   id: string;
   name: string;
+  totalDays?: number;
 }
 
 export default function TestimonyForm() {
@@ -36,7 +38,7 @@ export default function TestimonyForm() {
         });
         if (res.data.success) {
           const data = Array.isArray(res.data.data) ? res.data.data : res.data.data?.safaris || [];
-          setSafaris(data.map((s: SafariOption) => ({ id: s.id, name: s.name })));
+          setSafaris(data.map((s: SafariOption & { totalDays?: number }) => ({ id: s.id, name: s.name, totalDays: s.totalDays })));
         }
       } catch {
         // Silently fail — safari dropdown is optional
@@ -197,15 +199,20 @@ export default function TestimonyForm() {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-stone-700 mb-1.5">{t("safariExperience")}</label>
-                  <div className="relative">
-                    <select name="safariId" value={form.safariId} onChange={handleChange} className={`${inputClass} appearance-none pr-10`}>
-                      <option value="">{t("selectSafari")}</option>
-                      {safaris.map((s) => (
-                        <option key={s.id} value={s.id}>{s.name}</option>
-                      ))}
-                    </select>
-                    <ChevronDown size={16} className="absolute right-4 top-1/2 -translate-y-1/2 text-stone-400 pointer-events-none" />
-                  </div>
+                  <GlassCombobox
+                    options={[
+                      { value: "", label: t("selectSafari") },
+                      ...safaris.map((s) => ({
+                        value: s.id,
+                        label: `${s.name}${s.totalDays ? ` (${s.totalDays} days)` : ""}`,
+                      })),
+                    ]}
+                    value={form.safariId}
+                    onChange={(value) => setForm({ ...form, safariId: value })}
+                    placeholder={t("selectSafari")}
+                    searchPlaceholder={t("selectSafari")}
+                    icon={<Compass size={16} />}
+                  />
                 </div>
               </div>
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { useTranslations } from "next-intl";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import { submitBookingInquiry, fetchSafarisPaginated } from "@/lib/api";
 import GlassSelect from "@/components/ui/GlassSelect";
+import GlassCombobox from "@/components/ui/GlassCombobox";
 import DateRangePicker from "@/components/ui/DateRangePicker";
 import type { Itinerary, BookingInquiryPayload } from "@/types";
 
@@ -106,6 +107,14 @@ export default function BookingInquiryForm({ safariId }: BookingInquiryFormProps
     [t]
   );
 
+  const autoPopulateFromSafari = useCallback((id: string, list: Itinerary[]) => {
+    const safari = list.find((s) => s.id === id);
+    if (safari) {
+      if (safari.tripType) setTripType(safari.tripType);
+      if (safari.budgetCategory) setBudgetCategory(safari.budgetCategory);
+    }
+  }, []);
+
   useEffect(() => {
     fetchSafarisPaginated(0, 100, {}).then((data) => {
       const list = data?.safaris || (data?.content as Itinerary[]) || [];
@@ -114,10 +123,23 @@ export default function BookingInquiryForm({ safariId }: BookingInquiryFormProps
         const match = list.find(
           (s: Itinerary) => s.id === safariId || s.code === safariId
         );
-        if (match) setSelectedSafari(match.id);
+        if (match) {
+          setSelectedSafari(match.id);
+          autoPopulateFromSafari(match.id, list);
+        }
       }
     }).catch(() => {});
-  }, [safariId]);
+  }, [safariId, autoPopulateFromSafari]);
+
+  const handleSafariChange = useCallback((id: string) => {
+    setSelectedSafari(id);
+    if (id) {
+      autoPopulateFromSafari(id, safaris);
+    } else {
+      setTripType("");
+      setBudgetCategory("");
+    }
+  }, [safaris, autoPopulateFromSafari]);
 
   const currentIdx = STEPS.indexOf(step);
   const isFirst = currentIdx === 0;
@@ -349,11 +371,12 @@ export default function BookingInquiryForm({ safariId }: BookingInquiryFormProps
                   </div>
                   <div>
                     <label className={labelClass}>{t("selectSafari")}</label>
-                    <GlassSelect
+                    <GlassCombobox
                       options={safariOptions}
                       value={selectedSafari}
-                      onChange={setSelectedSafari}
+                      onChange={handleSafariChange}
                       placeholder={t("customSafari")}
+                      searchPlaceholder={t("selectSafari")}
                       icon={<Compass className="w-4 h-4" />}
                     />
                   </div>
