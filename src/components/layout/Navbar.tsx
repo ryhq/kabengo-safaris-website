@@ -46,6 +46,7 @@ export default function Navbar() {
   const [langOpen, setLangOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
+  const [mobileExpanded, setMobileExpanded] = useState<string | null>(null);
   const [navData, setNavData] = useState<NavigationData | null>(null);
   const menuTimeout = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const langRef = useRef<HTMLDivElement>(null);
@@ -347,7 +348,7 @@ export default function Navbar() {
               <Search size={22} />
             </button>
             <button
-              onClick={() => setIsOpen(!isOpen)}
+              onClick={() => { setIsOpen(!isOpen); if (isOpen) setMobileExpanded(null); }}
               className={`p-2 rounded-md cursor-pointer ${scrolled ? "text-stone-700" : "text-white"}`}
             >
               {isOpen ? <X size={24} /> : <Menu size={24} />}
@@ -373,36 +374,60 @@ export default function Navbar() {
 
               {megaMenuGroups.map((group) => {
                 if (group.items.length === 0) return null;
+                const isExpanded = mobileExpanded === group.key;
                 return (
                   <div key={group.key}>
-                    <Link
-                      href={group.href}
-                      onClick={() => setIsOpen(false)}
-                      className="block px-4 py-3 rounded-xl text-base font-semibold text-white"
-                    >
-                      {group.label}
-                    </Link>
-                    <div className="pl-6 space-y-0.5">
-                      {group.items.slice(0, 8).map((item) => (
-                        <Link
-                          key={item.id}
-                          href={group.itemHref(item)}
-                          onClick={() => setIsOpen(false)}
-                          className="block px-4 py-2 text-sm text-white/70 hover:text-white hover:bg-white/20 rounded-xl"
-                        >
-                          {item.name}
-                        </Link>
-                      ))}
-                      {group.items.length > 8 && (
-                        <Link
-                          href={group.href}
-                          onClick={() => setIsOpen(false)}
-                          className="block px-4 py-2 text-sm font-medium text-white/60"
-                        >
-                          {t("viewAllCount", { count: group.items.length, label: group.label.toLowerCase() })}
-                        </Link>
-                      )}
+                    <div className="flex items-center">
+                      <Link
+                        href={group.href}
+                        onClick={() => setIsOpen(false)}
+                        className="flex-1 px-4 py-3 rounded-xl text-base font-semibold text-white"
+                      >
+                        {group.label}
+                      </Link>
+                      <button
+                        onClick={() => setMobileExpanded(isExpanded ? null : group.key)}
+                        className="p-2 mr-2 rounded-lg text-white/60 hover:text-white hover:bg-white/20 transition-colors cursor-pointer"
+                      >
+                        <ChevronDown
+                          size={18}
+                          className={`transition-transform duration-200 ${isExpanded ? "rotate-180" : ""}`}
+                        />
+                      </button>
                     </div>
+                    <AnimatePresence>
+                      {isExpanded && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.2 }}
+                          className="overflow-hidden"
+                        >
+                          <div className="pl-6 space-y-0.5 pb-1">
+                            {group.items.slice(0, 8).map((item) => (
+                              <Link
+                                key={item.id}
+                                href={group.itemHref(item)}
+                                onClick={() => setIsOpen(false)}
+                                className="block px-4 py-2 text-sm text-white/70 hover:text-white hover:bg-white/20 rounded-xl"
+                              >
+                                {item.name}
+                              </Link>
+                            ))}
+                            {group.items.length > 8 && (
+                              <Link
+                                href={group.href}
+                                onClick={() => setIsOpen(false)}
+                                className="block px-4 py-2 text-sm font-medium text-white/60"
+                              >
+                                {t("viewAllCount", { count: group.items.length, label: group.label.toLowerCase() })}
+                              </Link>
+                            )}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
                 );
               })}
