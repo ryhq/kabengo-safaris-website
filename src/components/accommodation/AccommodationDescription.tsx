@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 import { Sparkles, ConciergeBell, MapPinned } from "lucide-react";
 
 interface AccommodationDescriptionProps {
@@ -64,12 +65,14 @@ export default function AccommodationDescription({
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ delay: 0.15 }}
-              className="relative rounded-2xl overflow-hidden shadow-xl"
+              className="relative rounded-2xl overflow-hidden shadow-xl h-[300px] lg:h-[400px]"
             >
-              <img
+              <Image
                 src={featuredImage}
                 alt={accommodationName || "Accommodation"}
-                className="w-full h-[300px] lg:h-[400px] object-cover"
+                fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
             </motion.div>

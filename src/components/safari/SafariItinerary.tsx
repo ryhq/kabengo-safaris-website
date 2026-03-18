@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import {
   Sun,
@@ -83,10 +84,12 @@ export default function SafariItinerary({ days }: SafariItineraryProps) {
                   <div className={`grid ${isEven ? "lg:grid-cols-[1fr_1.2fr]" : "lg:grid-cols-[1.2fr_1fr]"}`}>
                     {/* Image side */}
                     <div className={`relative h-64 lg:h-auto lg:min-h-[340px] overflow-hidden ${!isEven ? "lg:order-2" : ""}`}>
-                      <img
+                      <Image
                         src={dayImage}
                         alt={day.title || `${t("detail.day")} ${day.dayNumber}`}
-                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                        fill
+                        sizes="(max-width: 1024px) 100vw, 55vw"
+                        className="object-cover group-hover:scale-105 transition-transform duration-700"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent lg:bg-gradient-to-r lg:from-transparent lg:via-transparent lg:to-black/5" />
 
@@ -284,9 +287,12 @@ function DayContent({ day, showDayNumber }: { day: ItineraryDay; showDayNumber: 
                 className="group/acc flex items-center gap-3 bg-gradient-to-r from-brand-brown/5 to-brand-cream hover:from-brand-brown/10 rounded-2xl pl-1.5 pr-5 py-1.5 transition-all border border-brand-brown/10 hover:border-brand-brown/20"
               >
                 {acc.primaryImageUrl ? (
-                  <img
+                  <Image
                     src={acc.primaryImageUrl}
                     alt={acc.accommodationName}
+                    width={48}
+                    height={48}
+                    sizes="48px"
                     className="w-12 h-12 rounded-xl object-cover"
                   />
                 ) : (

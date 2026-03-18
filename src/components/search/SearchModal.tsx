@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { createPortal } from "react-dom";
 import { useTranslations, useLocale } from "next-intl";
 import { Link } from "@/i18n/navigation";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Search,
@@ -283,9 +284,12 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
                               className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-white/10 transition-colors group"
                             >
                               {item.primaryImageUrl && !isTestimony ? (
-                                <img
+                                <Image
                                   src={item.primaryImageUrl}
                                   alt={title || ""}
+                                  width={40}
+                                  height={40}
+                                  sizes="40px"
                                   className="w-10 h-10 rounded-lg object-cover flex-shrink-0"
                                 />
                               ) : (

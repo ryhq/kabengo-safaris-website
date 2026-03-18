@@ -235,9 +235,12 @@ export default function GalleryPage() {
                 {common("close")} ✕
               </button>
 
-              <img
+              <Image
                 src={lightboxImage.imageUrl}
                 alt={lightboxImage.altText || lightboxImage.entityName}
+                width={1200}
+                height={800}
+                sizes="90vw"
                 className="w-full h-auto max-h-[80vh] object-contain rounded-lg"
               />
 

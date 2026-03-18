@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { ArrowRight, Search, Compass } from "lucide-react";
 import PageHero from "@/components/ui/PageHero";
 import LoadMoreFade from "@/components/ui/LoadMoreFade";
@@ -158,11 +159,13 @@ export default function ActivitiesPage() {
                       href={`/activities/${activity.slug || activity.id}`}
                       className="group block bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-stone-100/80"
                     >
-                      <div className="h-44 bg-gradient-to-br from-brand-green/20 to-brand-brown/10 overflow-hidden relative">
-                        <img
+                      <div className="relative h-44 bg-gradient-to-br from-brand-green/20 to-brand-brown/10 overflow-hidden">
+                        <Image
                           src={activity.primaryImageUrl || "/images/placeholders/activity.svg"}
                           alt={activity.name}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          fill
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                          className="object-cover group-hover:scale-105 transition-transform duration-500"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                       </div>

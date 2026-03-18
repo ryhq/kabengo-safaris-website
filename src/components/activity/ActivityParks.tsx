@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 import { TreePine, ArrowRight } from "lucide-react";
 import LoadMoreFade from "@/components/ui/LoadMoreFade";
 
@@ -52,9 +53,9 @@ export default function ActivityParks({ parks, totalParks, loadingMore, onLoadMo
               href={`/parks/${park.slug || park.id}`}
               className="group block bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-stone-100"
             >
-              <div className="h-48 bg-gradient-to-br from-brand-green/20 to-brand-brown/10 overflow-hidden relative">
+              <div className="relative h-48 bg-gradient-to-br from-brand-green/20 to-brand-brown/10 overflow-hidden">
                 {park.primaryImageUrl ? (
-                  <img src={park.primaryImageUrl} alt={park.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <Image src={park.primaryImageUrl} alt={park.name} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" className="object-cover group-hover:scale-105 transition-transform duration-500" />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center">
                     <TreePine size={48} className="text-brand-green/30" />

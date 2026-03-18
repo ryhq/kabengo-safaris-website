@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { ArrowRight, Search, Star, MapPin, Building2 } from "lucide-react";
 import PageHero from "@/components/ui/PageHero";
 import LoadMoreFade from "@/components/ui/LoadMoreFade";
@@ -164,10 +165,12 @@ export default function AccommodationsPage() {
                     >
                       {/* Image */}
                       <div className="relative h-56 sm:h-60 overflow-hidden">
-                        <img
+                        <Image
                           src={acc.primaryImageUrl || "/images/placeholders/accommodation.svg"}
                           alt={acc.name}
-                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+                          fill
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                          className="object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/5 to-transparent" />
 

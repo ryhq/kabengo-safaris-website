@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { Clock, MapPin, ArrowRight, Star } from "lucide-react";
 import { fetchSafarisPaginated } from "@/lib/api";
 import type { Itinerary } from "@/types";
@@ -113,10 +114,12 @@ export default function SimilarSafaris({ currentId, tripType, budgetCategory }: 
                   {/* Image */}
                   <div className="relative h-52 overflow-hidden">
                     {safari.primaryImageUrl ? (
-                      <img
+                      <Image
                         src={safari.primaryImageUrl}
                         alt={safari.name}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                        className="object-cover group-hover:scale-105 transition-transform duration-500"
                       />
                     ) : (
                       <div className="w-full h-full bg-gradient-to-br from-brand-green/20 to-brand-brown/20 flex items-center justify-center">

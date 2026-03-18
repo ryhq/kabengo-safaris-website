@@ -122,16 +122,23 @@ export default function ParkGallery({ images, parkName, totalImages, loadingMore
               </>
             )}
 
-            <motion.img
+            <motion.div
               key={images[lightboxIndex].id}
-              src={images[lightboxIndex].imageUrl}
-              alt={images[lightboxIndex].altText || parkName}
-              className="max-w-[90vw] max-h-[85vh] object-contain rounded-lg"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.9 }}
               onClick={(e) => e.stopPropagation()}
-            />
+              className="max-w-[90vw] max-h-[85vh]"
+            >
+              <Image
+                src={images[lightboxIndex].imageUrl}
+                alt={images[lightboxIndex].altText || parkName}
+                width={1200}
+                height={800}
+                sizes="90vw"
+                className="max-w-[90vw] max-h-[85vh] object-contain rounded-lg"
+              />
+            </motion.div>
 
             <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white/70 text-sm">
               {lightboxIndex + 1} / {images.length}
