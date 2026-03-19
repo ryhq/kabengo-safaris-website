@@ -5,6 +5,7 @@ import { useTranslations, useLocale } from "next-intl";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
+import { ChevronLeft, ChevronRight, X, ExternalLink } from "lucide-react";
 import PageHero from "@/components/ui/PageHero";
 import { apiClient } from "@/lib/api";
 
@@ -52,7 +53,7 @@ export default function GalleryPage() {
   const [activeFilter, setActiveFilter] = useState<FilterType>("ALL");
   const [page, setPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
-  const [lightboxImage, setLightboxImage] = useState<GalleryImage | null>(null);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   const fetchGallery = useCallback(async (filter: FilterType, pageNum: number) => {
     setLoading(true);
@@ -149,7 +150,7 @@ export default function GalleryPage() {
                       exit={{ opacity: 0, scale: 0.9 }}
                       transition={{ delay: index * 0.03, duration: 0.3 }}
                       className="group relative rounded-lg overflow-hidden break-inside-avoid cursor-pointer"
-                      onClick={() => setLightboxImage(image)}
+                      onClick={() => setLightboxIndex(index)}
                     >
                       <Image
                         src={image.imageUrl}
@@ -212,66 +213,126 @@ export default function GalleryPage() {
 
       {/* Lightbox */}
       <AnimatePresence>
-        {lightboxImage && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4"
-            onClick={() => setLightboxImage(null)}
-          >
+        {lightboxIndex !== null && images[lightboxIndex] && (() => {
+          const img = images[lightboxIndex];
+          const hasPrev = lightboxIndex > 0;
+          const hasNext = lightboxIndex < images.length - 1;
+
+          const goNext = (e?: React.MouseEvent) => {
+            e?.stopPropagation();
+            if (hasNext) setLightboxIndex(lightboxIndex + 1);
+          };
+          const goPrev = (e?: React.MouseEvent) => {
+            e?.stopPropagation();
+            if (hasPrev) setLightboxIndex(lightboxIndex - 1);
+          };
+          const close = () => setLightboxIndex(null);
+
+          return (
             <motion.div
-              initial={{ scale: 0.9 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.9 }}
-              className="relative max-w-5xl max-h-[90vh] w-full"
-              onClick={(e) => e.stopPropagation()}
+              key="lightbox-overlay"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-50 bg-black/95"
+              onClick={close}
+              onKeyDown={(e) => {
+                if (e.key === "Escape") close();
+                if (e.key === "ArrowRight") goNext();
+                if (e.key === "ArrowLeft") goPrev();
+              }}
+              tabIndex={0}
+              role="dialog"
+              ref={(el) => el?.focus()}
             >
-              {/* Close button */}
-              <button
-                onClick={() => setLightboxImage(null)}
-                className="absolute -top-10 right-0 text-white/70 hover:text-white text-sm transition-colors"
-              >
-                {common("close")} ✕
-              </button>
-
-              <Image
-                src={lightboxImage.imageUrl}
-                alt={lightboxImage.altText || lightboxImage.entityName}
-                width={1200}
-                height={800}
-                sizes="90vw"
-                className="w-full h-auto max-h-[80vh] object-contain rounded-lg"
-              />
-
-              {/* Image info bar */}
-              <div className="mt-3 flex items-center justify-between">
+              {/* Top bar */}
+              <div className="absolute top-0 left-0 right-0 z-10 flex items-center justify-between px-4 sm:px-6 py-4" onClick={(e) => e.stopPropagation()}>
                 <div className="flex items-center gap-3">
-                  <span className={`inline-block px-2.5 py-1 rounded-full text-xs font-semibold uppercase tracking-wider ${
-                    lightboxImage.entityType === "PARK"
+                  <span className={`px-2.5 py-1 rounded-full text-[11px] font-semibold uppercase tracking-wider ${
+                    img.entityType === "PARK"
                       ? "bg-emerald-500/90 text-white"
-                      : lightboxImage.entityType === "ACTIVITY"
+                      : img.entityType === "ACTIVITY"
                       ? "bg-amber-500/90 text-white"
                       : "bg-sky-500/90 text-white"
                   }`}>
-                    {ENTITY_LABEL_MAP[lightboxImage.entityType]}
+                    {ENTITY_LABEL_MAP[img.entityType]}
                   </span>
-                  <span className="text-white font-medium">{lightboxImage.entityName}</span>
-                  {lightboxImage.caption && (
-                    <span className="text-white/50 text-sm">— {lightboxImage.caption}</span>
+                  <span className="text-white font-medium text-sm sm:text-base">{img.entityName}</span>
+                  {img.imageType && (
+                    <span className="text-white/40 text-xs hidden sm:inline">— {img.imageType}</span>
                   )}
                 </div>
-                <Link
-                  href={`/${locale}/${ENTITY_ROUTE_MAP[lightboxImage.entityType]}/${lightboxImage.entitySlug}`}
-                  className="text-brand-brown hover:text-brand-brown/80 text-sm font-medium transition-colors"
-                  onClick={() => setLightboxImage(null)}
+                <button
+                  onClick={close}
+                  className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors"
                 >
-                  {t("viewEntity", { entity: ENTITY_LABEL_MAP[lightboxImage.entityType] })} →
+                  <X size={20} />
+                </button>
+              </div>
+
+              {/* Image area */}
+              <div className="absolute inset-0 flex items-center justify-center px-4 sm:px-16 py-20">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={img.id}
+                    initial={{ opacity: 0, x: 30 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -30 }}
+                    transition={{ duration: 0.2 }}
+                    className="relative w-full h-full flex items-center justify-center"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <Image
+                      src={img.imageUrl}
+                      alt={img.altText || img.entityName}
+                      width={1400}
+                      height={900}
+                      sizes="95vw"
+                      className="max-w-full max-h-full object-contain rounded-lg select-none"
+                      priority
+                    />
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+
+              {/* Navigation arrows */}
+              {hasPrev && (
+                <button
+                  onClick={goPrev}
+                  className="absolute left-3 sm:left-5 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white/10 hover:bg-white/25 backdrop-blur-sm flex items-center justify-center text-white transition-all"
+                >
+                  <ChevronLeft size={24} />
+                </button>
+              )}
+              {hasNext && (
+                <button
+                  onClick={goNext}
+                  className="absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white/10 hover:bg-white/25 backdrop-blur-sm flex items-center justify-center text-white transition-all"
+                >
+                  <ChevronRight size={24} />
+                </button>
+              )}
+
+              {/* Bottom bar */}
+              <div className="absolute bottom-0 left-0 right-0 z-10 px-4 sm:px-6 py-4 flex items-center justify-between" onClick={(e) => e.stopPropagation()}>
+                {/* Counter */}
+                <span className="text-white/50 text-sm font-medium tabular-nums">
+                  {lightboxIndex + 1} / {images.length}
+                </span>
+
+                {/* View entity link */}
+                <Link
+                  href={`/${locale}/${ENTITY_ROUTE_MAP[img.entityType]}/${img.entitySlug}`}
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white text-sm font-medium transition-all"
+                  onClick={close}
+                >
+                  {t("viewEntity", { entity: ENTITY_LABEL_MAP[img.entityType] })}
+                  <ExternalLink size={14} />
                 </Link>
               </div>
             </motion.div>
-          </motion.div>
-        )}
+          );
+        })()}
       </AnimatePresence>
     </>
   );
