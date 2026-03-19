@@ -7,6 +7,7 @@ import type { Metadata } from "next";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import ApiLocaleSync from "@/lib/ApiLocaleSync";
+import ImageProtection from "@/components/ui/ImageProtection";
 import { buildAlternates } from "@/lib/seo";
 
 export async function generateMetadata({
@@ -52,6 +53,7 @@ export default async function LocaleLayout({
       <body className="min-h-screen flex flex-col">
         <NextIntlClientProvider messages={messages}>
           <ApiLocaleSync />
+          <ImageProtection />
           <Navbar />
           <main className="flex-1">{children}</main>
           <Footer />

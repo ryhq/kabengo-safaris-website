@@ -108,6 +108,23 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   height: 100%;
 }
 
+/* Image protection — prevent casual downloading */
+img {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  pointer-events: none;
+}
+
+/* Re-enable pointer events on interactive image wrappers (links, buttons, clickable containers) */
+a img,
+button img,
+[role="button"] img,
+[onclick] img,
+.cursor-pointer img {
+  pointer-events: auto;
+}
+
 /* Shimmer animation for skeleton loading */
 @keyframes shimmer {
   100% {
