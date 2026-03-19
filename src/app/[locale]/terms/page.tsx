@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ObfuscatedEmail, ObfuscatedPhone } from "@/components/ui/ObfuscatedContact";
 
 export const metadata: Metadata = {
   title: "Terms & Conditions | Kabengo Safaris",
@@ -83,7 +84,7 @@ export default function TermsPage() {
             </div>
 
             <p className="mt-3">
-              All cancellations must be submitted in writing via email to <strong>info@kabengosafaris.com</strong>. The cancellation date is the date we receive your written notice.
+              All cancellations must be submitted in writing via email to <strong><ObfuscatedEmail /></strong>. The cancellation date is the date we receive your written notice.
             </p>
           </div>
 
@@ -159,8 +160,8 @@ export default function TermsPage() {
             <p className="mt-2">
               <strong>Kabengo Safaris</strong><br />
               Arusha, Tanzania<br />
-              Email: info@kabengosafaris.com<br />
-              Phone: +255 786 345 408
+              Email: <ObfuscatedEmail /><br />
+              Phone: <ObfuscatedPhone />
             </p>
           </div>
         </div>

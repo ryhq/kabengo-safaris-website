@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ObfuscatedEmail, ObfuscatedPhone } from "@/components/ui/ObfuscatedContact";
 
 export const metadata: Metadata = {
   title: "Privacy Policy | Kabengo Safaris",
@@ -22,7 +23,7 @@ export default function PrivacyPolicyPage() {
               <strong>kabengosafaris.com</strong> and are committed to protecting your personal information.
             </p>
             <p className="mt-2">
-              <strong>Contact:</strong> info@kabengosafaris.com
+              <strong>Contact:</strong> <ObfuscatedEmail />
             </p>
           </div>
 
@@ -76,7 +77,7 @@ export default function PrivacyPolicyPage() {
               <li><strong>Unsubscribe</strong> — opt out of newsletter emails at any time</li>
             </ul>
             <p className="mt-3">
-              To exercise any of these rights, contact us at <strong>info@kabengosafaris.com</strong>.
+              To exercise any of these rights, contact us at <strong><ObfuscatedEmail /></strong>.
             </p>
           </div>
 
@@ -102,8 +103,8 @@ export default function PrivacyPolicyPage() {
             <p className="mt-2">
               <strong>Kabengo Safaris</strong><br />
               Arusha, Tanzania<br />
-              Email: info@kabengosafaris.com<br />
-              Phone: +255 786 345 408
+              Email: <ObfuscatedEmail /><br />
+              Phone: <ObfuscatedPhone />
             </p>
           </div>
         </div>
