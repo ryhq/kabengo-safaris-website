@@ -10,7 +10,6 @@ import PageHero from "@/components/ui/PageHero";
 import { apiClient } from "@/lib/api";
 
 interface GalleryImage {
-  id: string;
   imageUrl: string;
   altText?: string;
   caption?: string;
@@ -18,7 +17,6 @@ interface GalleryImage {
   entityType: "PARK" | "ACTIVITY" | "ACCOMMODATION";
   entityName: string;
   entitySlug: string;
-  entityId: string;
 }
 
 interface GalleryCounts {
@@ -143,7 +141,7 @@ export default function GalleryPage() {
                 <AnimatePresence mode="popLayout">
                   {images.map((image, index) => (
                     <motion.div
-                      key={image.id}
+                      key={image.imageUrl}
                       layout
                       initial={{ opacity: 0, scale: 0.9 }}
                       animate={{ opacity: 1, scale: 1 }}
@@ -274,7 +272,7 @@ export default function GalleryPage() {
               <div className="absolute inset-0 flex items-center justify-center px-4 sm:px-16 py-20">
                 <AnimatePresence mode="wait">
                   <motion.div
-                    key={img.id}
+                    key={img.imageUrl}
                     initial={{ opacity: 0, x: 30 }}
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -30 }}

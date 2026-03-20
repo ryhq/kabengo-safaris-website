@@ -65,7 +65,7 @@ export default function SafariDetailPage() {
     return { currency, perPerson, wasPrice, totalPax, paxLabel, formatted: `${currency} ${Math.ceil(perPerson).toLocaleString()}` };
   };
 
-  const safariCode = (params.id as string) || itinerary.code || itinerary.id;
+  const safariCode = (params.id as string) || itinerary.code;
   const priceInfo = getPriceInfo();
   const price = priceInfo?.formatted || null;
 
@@ -157,7 +157,7 @@ export default function SafariDetailPage() {
 
       {/* Similar Safaris */}
       <SimilarSafaris
-        currentId={params.id as string}
+        currentCode={params.id as string}
         tripType={itinerary.tripType}
         budgetCategory={itinerary.budgetCategory}
       />

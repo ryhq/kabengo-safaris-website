@@ -52,7 +52,7 @@ export function getSafariJsonLd(safari: {
   totalNights?: number;
   startLocation?: string;
   endLocation?: string;
-  id: string;
+  code?: string;
   costSummary?: { totalRackPriceUSD?: number };
 }) {
   return {
@@ -75,7 +75,7 @@ export function getSafariJsonLd(safari: {
         description: `${safari.totalDays} Days / ${safari.totalNights ?? safari.totalDays - 1} Nights`,
       },
     }),
-    url: `${BASE_URL}/en/safaris/${safari.id}`,
+    url: `${BASE_URL}/en/safaris/${safari.code}`,
     ...(safari.costSummary?.totalRackPriceUSD && {
       offers: {
         "@type": "Offer",
@@ -98,7 +98,6 @@ export function getParkJsonLd(park: {
   region?: string;
   latitude?: number;
   longitude?: number;
-  id: string;
   slug?: string;
 }) {
   const desc = park.shortDescription || park.fullDescription;
@@ -110,7 +109,7 @@ export function getParkJsonLd(park: {
       ? stripHtml(desc).slice(0, 300)
       : `${park.name} - National Park in Tanzania`,
     ...(park.primaryImageUrl && { image: park.primaryImageUrl }),
-    url: `${BASE_URL}/en/parks/${park.slug || park.id}`,
+    url: `${BASE_URL}/en/parks/${park.slug}`,
     ...(park.latitude && park.longitude && {
       geo: {
         "@type": "GeoCoordinates",
@@ -143,7 +142,6 @@ export function getAccommodationJsonLd(acc: {
   starRating?: number;
   categoryApproximateStars?: number;
   priceRange?: string;
-  id: string;
   slug?: string;
 }) {
   const desc = acc.shortDescription || acc.details;
@@ -155,7 +153,7 @@ export function getAccommodationJsonLd(acc: {
       ? stripHtml(desc).slice(0, 300)
       : `${acc.name} - Accommodation in Tanzania`,
     ...(acc.primaryImageUrl && { image: acc.primaryImageUrl }),
-    url: `${BASE_URL}/en/accommodations/${acc.slug || acc.id}`,
+    url: `${BASE_URL}/en/accommodations/${acc.slug}`,
     ...(acc.latitude && acc.longitude && {
       geo: {
         "@type": "GeoCoordinates",

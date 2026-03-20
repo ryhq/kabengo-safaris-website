@@ -137,9 +137,9 @@ export default function SafarisPage() {
         const data = res.data.data;
         const newItems = data?.safaris || data || [];
         setItineraries((prev) => {
-          const existingIds = new Set(prev.map((s) => s.id));
+          const existingCodes = new Set(prev.map((s) => s.code));
           const unique = newItems.filter(
-            (s: Itinerary) => !existingIds.has(s.id)
+            (s: Itinerary) => !existingCodes.has(s.code)
           );
           return [...prev, ...unique];
         });
@@ -390,7 +390,7 @@ export default function SafarisPage() {
               >
                 {itineraries.map((item, index) => (
                   <motion.div
-                    key={item.id}
+                    key={item.code}
                     initial={{ opacity: 0, y: 24 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
@@ -400,7 +400,7 @@ export default function SafarisPage() {
                     }}
                   >
                     <Link
-                      href={`/safaris/${item.code || item.id}`}
+                      href={`/safaris/${item.code}`}
                       className="group block bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-stone-100/80 h-full"
                     >
                       {/* Image */}

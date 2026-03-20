@@ -11,8 +11,7 @@ import LoadMoreFade from "@/components/ui/LoadMoreFade";
 import { fetchSafarisPaginated } from "@/lib/api";
 
 interface SafariItem {
-  id: string;
-  code?: string;
+  code: string;
   name: string;
   description?: string;
   totalDays?: number;
@@ -32,8 +31,8 @@ export default function SafarisSection({ initialSafaris, totalItems }: SafarisSe
   const [safaris, setSafaris] = useState<SafariItem[]>(() => {
     const seen = new Set<string>();
     return initialSafaris.filter((s) => {
-      if (seen.has(s.id)) return false;
-      seen.add(s.id);
+      if (seen.has(s.code)) return false;
+      seen.add(s.code);
       return true;
     });
   });
@@ -48,8 +47,8 @@ export default function SafarisSection({ initialSafaris, totalItems }: SafarisSe
       const nextPage = currentPage + 1;
       const data = await fetchSafarisPaginated(nextPage, PAGE_SIZE);
       setSafaris((prev) => {
-        const existingIds = new Set(prev.map((s) => s.id));
-        const newItems = data.safaris.filter((s) => !existingIds.has(s.id));
+        const existingCodes = new Set(prev.map((s) => s.code));
+        const newItems = data.safaris.filter((s) => !existingCodes.has(s.code));
         return [...prev, ...newItems];
       });
       setCurrentPage(nextPage);
@@ -74,14 +73,14 @@ export default function SafarisSection({ initialSafaris, totalItems }: SafarisSe
         }`}>
           {safaris.map((safari, index) => (
             <motion.div
-              key={safari.id}
+              key={safari.code}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
             >
               <Link
-                href={`/safaris/${safari.code || safari.id}`}
+                href={`/safaris/${safari.code}`}
                 className="group block bg-brand-cream rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300"
               >
                 <div className="relative h-48 overflow-hidden">

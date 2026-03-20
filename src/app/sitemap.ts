@@ -60,10 +60,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     fetchAllActivityIds(),
   ]);
 
-  // Safari detail pages
+  // Safari detail pages — only include safaris with a stable code
   for (const safari of safaris) {
-    const identifier = safari.code || safari.id;
-    const path = `/safaris/${identifier}`;
+    if (!safari.code) continue;
+    const path = `/safaris/${safari.code}`;
     for (const locale of locales) {
       entries.push({
         url: `${BASE_URL}/${locale}${path}`,
@@ -75,10 +75,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   }
 
-  // Park detail pages
+  // Park detail pages — only include parks with a stable slug
   for (const park of parks) {
-    const identifier = park.slug || park.id;
-    const path = `/parks/${identifier}`;
+    if (!park.slug) continue;
+    const path = `/parks/${park.slug}`;
     for (const locale of locales) {
       entries.push({
         url: `${BASE_URL}/${locale}${path}`,
@@ -90,10 +90,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   }
 
-  // Accommodation detail pages
+  // Accommodation detail pages — only include accommodations with a stable slug
   for (const acc of accommodations) {
-    const identifier = acc.slug || acc.id;
-    const path = `/accommodations/${identifier}`;
+    if (!acc.slug) continue;
+    const path = `/accommodations/${acc.slug}`;
     for (const locale of locales) {
       entries.push({
         url: `${BASE_URL}/${locale}${path}`,
@@ -105,10 +105,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   }
 
-  // Activity detail pages
+  // Activity detail pages — only include activities with a stable slug
   for (const activity of activities) {
-    const identifier = activity.slug || activity.id;
-    const path = `/activities/${identifier}`;
+    if (!activity.slug) continue;
+    const path = `/activities/${activity.slug}`;
     for (const locale of locales) {
       entries.push({
         url: `${BASE_URL}/${locale}${path}`,

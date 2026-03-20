@@ -107,8 +107,8 @@ export default function SafariItinerary({ days }: SafariItineraryProps) {
                           <div className="flex flex-wrap gap-2">
                             {day.parks.map((park) => (
                               <Link
-                                key={park.parkId}
-                                href={`/parks/${park.parkId}`}
+                                key={park.parkSlug}
+                                href={`/parks/${park.parkSlug}`}
                                 className="text-xs font-medium bg-white/90 backdrop-blur-sm text-stone-700 px-3 py-1.5 rounded-full hover:bg-white transition-colors"
                               >
                                 <TreePine size={11} className="inline mr-1.5 text-brand-green" />
@@ -250,8 +250,8 @@ function DayContent({ day, showDayNumber }: { day: ItineraryDay; showDayNumber: 
           <div className="flex flex-wrap gap-2">
             {day.activities.map((activity) => (
               <Link
-                key={activity.activityId}
-                href={`/activities/${activity.activityId}`}
+                key={activity.activitySlug}
+                href={`/activities/${activity.activitySlug}`}
                 className="group/act inline-flex items-center gap-2 bg-stone-50 hover:bg-brand-green/5 text-stone-700 pl-3 pr-4 py-2 rounded-full text-sm transition-all border border-stone-100 hover:border-brand-green/20"
               >
                 <span className="w-5 h-5 rounded-full bg-brand-green/10 flex items-center justify-center flex-shrink-0">
@@ -282,8 +282,8 @@ function DayContent({ day, showDayNumber }: { day: ItineraryDay; showDayNumber: 
           <div className="flex flex-wrap gap-3">
             {day.accommodations.map((acc) => (
               <Link
-                key={acc.accommodationId}
-                href={`/accommodations/${acc.accommodationId}`}
+                key={acc.accommodationSlug}
+                href={`/accommodations/${acc.accommodationSlug}`}
                 className="group/acc flex items-center gap-3 bg-gradient-to-r from-brand-brown/5 to-brand-cream hover:from-brand-brown/10 rounded-2xl pl-1.5 pr-5 py-1.5 transition-all border border-brand-brown/10 hover:border-brand-brown/20"
               >
                 {acc.primaryImageUrl ? (

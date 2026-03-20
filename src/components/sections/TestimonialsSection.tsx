@@ -10,7 +10,6 @@ import LoadMoreFade from "@/components/ui/LoadMoreFade";
 import { fetchTestimoniesPaginated } from "@/lib/api";
 
 interface TestimonyItem {
-  id: string;
   authorName: string;
   authorTitle?: string;
   authorCountry?: string;
@@ -41,8 +40,9 @@ export default function TestimonialsSection({ initialTestimonies, totalItems }: 
   const [testimonies, setTestimonies] = useState<TestimonyItem[]>(() => {
     const seen = new Set<string>();
     return initialTestimonies.filter((t) => {
-      if (seen.has(t.id)) return false;
-      seen.add(t.id);
+      const key = t.authorName;
+      if (seen.has(key)) return false;
+      seen.add(key);
       return true;
     });
   });
@@ -57,8 +57,8 @@ export default function TestimonialsSection({ initialTestimonies, totalItems }: 
       const nextPage = currentPage + 1;
       const data = await fetchTestimoniesPaginated(nextPage, PAGE_SIZE);
       setTestimonies((prev) => {
-        const existingIds = new Set(prev.map((t) => t.id));
-        const newItems = data.testimonies.filter((t) => !existingIds.has(t.id));
+        const existingKeys = new Set(prev.map((t) => t.authorName));
+        const newItems = data.testimonies.filter((t) => !existingKeys.has(t.authorName));
         return [...prev, ...newItems];
       });
       setCurrentPage(nextPage);
@@ -83,7 +83,7 @@ export default function TestimonialsSection({ initialTestimonies, totalItems }: 
         }`}>
           {testimonies.map((item, index) => (
             <motion.div
-              key={item.id}
+              key={`review-${index}`}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}

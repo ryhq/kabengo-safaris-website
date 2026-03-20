@@ -1,8 +1,7 @@
 // Itinerary (Safari Package template) - displayed as "Safari" to the public
 export interface Itinerary {
-  id: string;
   name: string;
-  code?: string;
+  code: string;
   status?: string;
   statusDisplayName?: string;
   tripType?: string;
@@ -65,28 +64,27 @@ export interface ItineraryDay {
 }
 
 export interface ItineraryDayPark {
-  parkId: string;
+  parkSlug: string;
   parkName: string;
   primaryImageUrl?: string;
 }
 
 export interface ItineraryDayActivity {
-  activityId: string;
+  activitySlug: string;
   activityName: string;
   durationHours?: number;
   isOptional?: boolean;
 }
 
 export interface ItineraryDayAccommodation {
-  accommodationId: string;
+  accommodationSlug: string;
   accommodationName: string;
   primaryImageUrl?: string;
 }
 
 export interface Park {
-  id: string;
   name: string;
-  slug?: string;
+  slug: string;
   parkType?: string;
   region?: string;
   shortDescription?: string;
@@ -94,9 +92,8 @@ export interface Park {
 }
 
 export interface Accommodation {
-  id: string;
   name: string;
-  slug?: string;
+  slug: string;
   accommodationType?: string;
   accommodationTypeDisplayName?: string;
   accommodationTypeDescription?: string;
@@ -141,9 +138,8 @@ export interface Accommodation {
 }
 
 export interface Activity {
-  id: string;
   name: string;
-  slug?: string;
+  slug: string;
   description?: string;
   detailedDescription?: string;
   primaryImageUrl?: string;
@@ -156,7 +152,6 @@ export interface Activity {
 }
 
 export interface Testimony {
-  id: string;
   authorName: string;
   authorTitle: string;
   authorCountry: string;
@@ -172,7 +167,6 @@ export interface Testimony {
 }
 
 export interface Hero {
-  id: string;
   title: string;
   subtitle: string;
   description?: string;
@@ -187,8 +181,6 @@ export interface Hero {
 }
 
 export interface HeroImage {
-  id: string;
-  heroId: string;
   imageUrl: string;
   altText: string;
   displayOrder: number;

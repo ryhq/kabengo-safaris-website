@@ -15,7 +15,6 @@ const IMAGES_PAGE_SIZE = 6;
 const ACTIVITIES_PAGE_SIZE = 3;
 
 interface ParkImage {
-  id: string;
   imageUrl: string;
   altText?: string;
   caption?: string;
@@ -23,9 +22,8 @@ interface ParkImage {
 }
 
 interface ParkDetail {
-  id: string;
   name: string;
-  slug?: string;
+  slug: string;
   parkType?: string;
   region?: string;
   district?: string;
@@ -48,7 +46,7 @@ interface ParkDetail {
 }
 
 interface ActivityItem {
-  id: string;
+  slug: string;
   name: string;
   description?: string;
   primaryImage?: string;
@@ -118,8 +116,8 @@ export default function ParkDetailPage() {
       if (res.data.success) {
         const newImages = res.data.data?.images || [];
         setImages((prev) => {
-          const existingIds = new Set(prev.map((img) => img.id));
-          const unique = newImages.filter((img: ParkImage) => !existingIds.has(img.id));
+          const existingUrls = new Set(prev.map((img) => img.imageUrl));
+          const unique = newImages.filter((img: ParkImage) => !existingUrls.has(img.imageUrl));
           return [...prev, ...unique];
         });
         setImagesPage(nextPage);
@@ -141,8 +139,8 @@ export default function ParkDetailPage() {
       if (res.data.success) {
         const newActivities = res.data.data?.activities || [];
         setActivities((prev) => {
-          const existingIds = new Set(prev.map((a) => a.id));
-          const unique = newActivities.filter((a: ActivityItem) => !existingIds.has(a.id));
+          const existingSlugs = new Set(prev.map((a) => a.slug));
+          const unique = newActivities.filter((a: ActivityItem) => !existingSlugs.has(a.slug));
           return [...prev, ...unique];
         });
         setActivitiesPage(nextPage);

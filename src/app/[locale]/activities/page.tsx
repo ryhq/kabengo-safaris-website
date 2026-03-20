@@ -13,8 +13,7 @@ import { useDebounce } from "@/lib/useDebounce";
 import { apiClient } from "@/lib/api";
 
 interface ActivityItem {
-  id: string;
-  slug?: string;
+  slug: string;
   name: string;
   description?: string;
   primaryImageUrl?: string;
@@ -77,8 +76,8 @@ export default function ActivitiesPage() {
         const data = res.data.data;
         const newActivities = data?.activities || data || [];
         setActivities((prev) => {
-          const existingIds = new Set(prev.map((a) => a.id));
-          const unique = newActivities.filter((a: ActivityItem) => !existingIds.has(a.id));
+          const existingSlugs = new Set(prev.map((a) => a.slug));
+          const unique = newActivities.filter((a: ActivityItem) => !existingSlugs.has(a.slug));
           return [...prev, ...unique];
         });
         setCurrentPage(nextPage);
@@ -149,14 +148,14 @@ export default function ActivitiesPage() {
               }`}>
                 {activities.map((activity, index) => (
                   <motion.div
-                    key={activity.id}
+                    key={activity.slug}
                     initial={{ opacity: 0, y: 24 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: (index % PAGE_SIZE) * 0.06, duration: 0.5 }}
                   >
                     <Link
-                      href={`/activities/${activity.slug || activity.id}`}
+                      href={`/activities/${activity.slug}`}
                       className="group block bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-stone-100/80"
                     >
                       <div className="relative h-44 bg-gradient-to-br from-brand-green/20 to-brand-brown/10 overflow-hidden">

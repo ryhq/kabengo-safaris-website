@@ -21,12 +21,12 @@ export async function generateMetadata({
   return {
     title: activity.name,
     description,
-    alternates: buildAlternates(locale, `/activities/${activity.slug || id}`),
+    alternates: buildAlternates(locale, `/activities/${activity.slug}`),
     openGraph: {
       title: activity.name,
       description,
       type: "website",
-      url: `https://kabengosafaris.com/${locale}/activities/${activity.slug || id}`,
+      url: `https://kabengosafaris.com/${locale}/activities/${activity.slug}`,
       ...(activity.primaryImageUrl && {
         images: [{ url: activity.primaryImageUrl, width: 1200, height: 630, alt: activity.name }],
       }),

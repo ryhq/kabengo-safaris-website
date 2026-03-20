@@ -84,7 +84,7 @@ export default function HeroCarousel({
       {/* Background with crossfade + Ken Burns */}
       <AnimatePresence initial={false}>
         <motion.div
-          key={hero?.id || "fallback"}
+          key={`hero-${current}`}
           initial={{ opacity: 0, scale: kb.initial.scale }}
           animate={{
             opacity: 1,

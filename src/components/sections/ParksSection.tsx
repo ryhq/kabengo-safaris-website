@@ -11,8 +11,7 @@ import LoadMoreFade from "@/components/ui/LoadMoreFade";
 import { fetchParksPaginated } from "@/lib/api";
 
 interface ParkItem {
-  id: string;
-  slug?: string;
+  slug: string;
   name: string;
   region?: string;
   shortDescription?: string;
@@ -32,8 +31,8 @@ export default function ParksSection({ initialParks, totalItems }: ParksSectionP
   const [parks, setParks] = useState<ParkItem[]>(() => {
     const seen = new Set<string>();
     return initialParks.filter((p) => {
-      if (seen.has(p.id)) return false;
-      seen.add(p.id);
+      if (seen.has(p.slug)) return false;
+      seen.add(p.slug);
       return true;
     });
   });
@@ -48,8 +47,8 @@ export default function ParksSection({ initialParks, totalItems }: ParksSectionP
       const nextPage = currentPage + 1;
       const data = await fetchParksPaginated(nextPage, PAGE_SIZE);
       setParks((prev) => {
-        const existingIds = new Set(prev.map((p) => p.id));
-        const newItems = data.parks.filter((p) => !existingIds.has(p.id));
+        const existingSlugs = new Set(prev.map((p) => p.slug));
+        const newItems = data.parks.filter((p) => !existingSlugs.has(p.slug));
         return [...prev, ...newItems];
       });
       setCurrentPage(nextPage);
@@ -74,14 +73,14 @@ export default function ParksSection({ initialParks, totalItems }: ParksSectionP
         }`}>
           {parks.map((park, index) => (
             <motion.div
-              key={park.id}
+              key={park.slug}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
             >
               <Link
-                href={`/parks/${park.slug || park.id}`}
+                href={`/parks/${park.slug}`}
                 className="group block bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-stone-100"
               >
                 <div className="relative h-48 bg-gradient-to-br from-brand-green/20 to-brand-green/5 overflow-hidden">

@@ -22,12 +22,12 @@ export async function generateMetadata({
   return {
     title: safari.name,
     description,
-    alternates: buildAlternates(locale, `/safaris/${id}`),
+    alternates: buildAlternates(locale, `/safaris/${safari.code || id}`),
     openGraph: {
       title: safari.name,
       description,
       type: "website",
-      url: `https://kabengosafaris.com/${locale}/safaris/${id}`,
+      url: `https://kabengosafaris.com/${locale}/safaris/${safari.code || id}`,
       ...(safari.primaryImageUrl && {
         images: [{ url: safari.primaryImageUrl, width: 1200, height: 630, alt: safari.name }],
       }),

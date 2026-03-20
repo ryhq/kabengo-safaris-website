@@ -91,7 +91,7 @@ export default function BookingInquiryForm({ safariId }: BookingInquiryFormProps
     const opts = [{ value: "", label: t("customSafari") }];
     safaris.forEach((s) => {
       opts.push({
-        value: s.id,
+        value: s.code,
         label: `${s.name}${s.totalDays ? ` (${s.totalDays} days)` : ""}`,
       });
     });
@@ -107,8 +107,8 @@ export default function BookingInquiryForm({ safariId }: BookingInquiryFormProps
     [t]
   );
 
-  const autoPopulateFromSafari = useCallback((id: string, list: Itinerary[]) => {
-    const safari = list.find((s) => s.id === id);
+  const autoPopulateFromSafari = useCallback((code: string, list: Itinerary[]) => {
+    const safari = list.find((s) => s.code === code);
     if (safari) {
       if (safari.tripType) setTripType(safari.tripType);
       if (safari.budgetCategory) setBudgetCategory(safari.budgetCategory);
@@ -121,11 +121,11 @@ export default function BookingInquiryForm({ safariId }: BookingInquiryFormProps
       setSafaris(list);
       if (safariId && list.length > 0) {
         const match = list.find(
-          (s: Itinerary) => s.id === safariId || s.code === safariId
+          (s: Itinerary) => s.code === safariId
         );
         if (match) {
-          setSelectedSafari(match.id);
-          autoPopulateFromSafari(match.id, list);
+          setSelectedSafari(match.code);
+          autoPopulateFromSafari(match.code, list);
         }
       }
     }).catch(() => {});

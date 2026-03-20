@@ -11,8 +11,7 @@ import LoadMoreFade from "@/components/ui/LoadMoreFade";
 import { fetchActivitiesPaginated } from "@/lib/api";
 
 interface ActivityItem {
-  id: string;
-  slug?: string;
+  slug: string;
   name: string;
   description?: string;
   primaryImageUrl?: string;
@@ -31,8 +30,8 @@ export default function ActivitiesSection({ initialActivities, totalItems }: Act
   const [activities, setActivities] = useState<ActivityItem[]>(() => {
     const seen = new Set<string>();
     return initialActivities.filter((a) => {
-      if (seen.has(a.id)) return false;
-      seen.add(a.id);
+      if (seen.has(a.slug)) return false;
+      seen.add(a.slug);
       return true;
     });
   });
@@ -47,8 +46,8 @@ export default function ActivitiesSection({ initialActivities, totalItems }: Act
       const nextPage = currentPage + 1;
       const data = await fetchActivitiesPaginated(nextPage, PAGE_SIZE);
       setActivities((prev) => {
-        const existingIds = new Set(prev.map((a) => a.id));
-        const newItems = data.activities.filter((a) => !existingIds.has(a.id));
+        const existingSlugs = new Set(prev.map((a) => a.slug));
+        const newItems = data.activities.filter((a) => !existingSlugs.has(a.slug));
         return [...prev, ...newItems];
       });
       setCurrentPage(nextPage);
@@ -73,14 +72,14 @@ export default function ActivitiesSection({ initialActivities, totalItems }: Act
         }`}>
           {activities.map((activity, index) => (
             <motion.div
-              key={activity.id}
+              key={activity.slug}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
             >
               <Link
-                href={`/activities/${activity.slug || activity.id}`}
+                href={`/activities/${activity.slug}`}
                 className="group block bg-white rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300"
               >
                 <div className="h-44 bg-gradient-to-br from-brand-green/20 to-brand-brown/10 overflow-hidden relative">

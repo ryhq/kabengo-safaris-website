@@ -13,8 +13,7 @@ import { useDebounce } from "@/lib/useDebounce";
 import { apiClient } from "@/lib/api";
 
 interface ParkItem {
-  id: string;
-  slug?: string;
+  slug: string;
   name: string;
   region?: string;
   shortDescription?: string;
@@ -77,8 +76,8 @@ export default function ParksPage() {
         const data = res.data.data;
         const newParks = data?.parks || data || [];
         setParks((prev) => {
-          const existingIds = new Set(prev.map((p) => p.id));
-          const unique = newParks.filter((p: ParkItem) => !existingIds.has(p.id));
+          const existingSlugs = new Set(prev.map((p) => p.slug));
+          const unique = newParks.filter((p: ParkItem) => !existingSlugs.has(p.slug));
           return [...prev, ...unique];
         });
         setCurrentPage(nextPage);
@@ -149,14 +148,14 @@ export default function ParksPage() {
               }`}>
                 {parks.map((park, index) => (
                   <motion.div
-                    key={park.id}
+                    key={park.slug}
                     initial={{ opacity: 0, y: 24 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: (index % PAGE_SIZE) * 0.06, duration: 0.5 }}
                   >
                     <Link
-                      href={`/parks/${park.slug || park.id}`}
+                      href={`/parks/${park.slug}`}
                       className="group block bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-stone-100/80"
                     >
                       <div className="relative h-48 bg-gradient-to-br from-brand-green/20 to-brand-green/5 overflow-hidden">

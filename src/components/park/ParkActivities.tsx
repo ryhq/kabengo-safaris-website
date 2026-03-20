@@ -8,8 +8,7 @@ import { TreePine, ArrowRight } from "lucide-react";
 import LoadMoreFade from "@/components/ui/LoadMoreFade";
 
 interface ActivityItem {
-  id: string;
-  slug?: string;
+  slug: string;
   name: string;
   description?: string;
   primaryImageUrl?: string;
@@ -42,14 +41,14 @@ export default function ParkActivities({ activities, totalActivities, loadingMor
       }`}>
         {activities.map((activity, index) => (
           <motion.div
-            key={activity.id}
+            key={activity.slug}
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: (index % pageSize) * 0.05 }}
           >
             <Link
-              href={`/activities/${activity.slug || activity.id}`}
+              href={`/activities/${activity.slug}`}
               className="group block bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-stone-100"
             >
               <div className="relative h-48 bg-gradient-to-br from-brand-green/20 to-brand-brown/10 overflow-hidden">

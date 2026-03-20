@@ -21,7 +21,6 @@ import {
 import { apiClient } from "@/lib/api";
 
 interface SearchResult {
-  id: string;
   slug?: string;
   code?: string;
   name?: string;
@@ -268,8 +267,8 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
                       <div className="px-3 pb-3">
                         {items.map((item) => {
                           const identifier = cat.identifierField
-                            ? (item as unknown as Record<string, string | undefined>)[cat.identifierField] || item.id
-                            : item.id;
+                            ? (item as unknown as Record<string, string | undefined>)[cat.identifierField] || item.name
+                            : item.name;
                           const isTestimony = cat.key === "testimonies";
                           const title = isTestimony ? item.authorName : item.name;
                           const subtitle = isTestimony
@@ -278,7 +277,7 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
 
                           return (
                             <Link
-                              key={item.id}
+                              key={`${cat.key}-${identifier}`}
                               href={isTestimony ? cat.href : `${cat.href}/${identifier}`}
                               onClick={handleNavigate}
                               className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-white/10 transition-colors group"

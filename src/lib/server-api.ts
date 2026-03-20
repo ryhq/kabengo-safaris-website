@@ -98,7 +98,7 @@ export async function fetchActivityMeta(id: string, locale = "en"): Promise<Acti
 }
 
 // Sitemap: fetch all published entity IDs
-interface SitemapItem { id: string; slug?: string; code?: string }
+interface SitemapItem { slug?: string; code?: string }
 
 interface PaginatedResponse<T> {
   [key: string]: T[] | number;

@@ -11,7 +11,6 @@ import TestimonyForm from "@/components/testimonials/TestimonyForm";
 import { apiClient } from "@/lib/api";
 
 interface TestimonyItem {
-  id: string;
   authorName: string;
   authorTitle?: string;
   authorCountry?: string;
@@ -77,8 +76,8 @@ export default function TestimonialsPage() {
         const data = res.data.data;
         const newItems = data?.testimonies || data || [];
         setTestimonies((prev) => {
-          const existingIds = new Set(prev.map((t) => t.id));
-          const unique = newItems.filter((t: TestimonyItem) => !existingIds.has(t.id));
+          const existingKeys = new Set(prev.map((t) => `${t.authorName}-${t.reviewDate}`));
+          const unique = newItems.filter((t: TestimonyItem) => !existingKeys.has(`${t.authorName}-${t.reviewDate}`));
           return [...prev, ...unique];
         });
         setCurrentPage(nextPage);
@@ -171,7 +170,7 @@ export default function TestimonialsPage() {
               }`}>
                 {rest.map((item, index) => (
                   <motion.div
-                    key={item.id}
+                    key={`review-${index}`}
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}

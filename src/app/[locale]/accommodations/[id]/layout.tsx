@@ -22,12 +22,12 @@ export async function generateMetadata({
   return {
     title: acc.name,
     description,
-    alternates: buildAlternates(locale, `/accommodations/${acc.slug || id}`),
+    alternates: buildAlternates(locale, `/accommodations/${acc.slug}`),
     openGraph: {
       title: acc.name,
       description,
       type: "website",
-      url: `https://kabengosafaris.com/${locale}/accommodations/${acc.slug || id}`,
+      url: `https://kabengosafaris.com/${locale}/accommodations/${acc.slug}`,
       ...(acc.primaryImageUrl && {
         images: [{ url: acc.primaryImageUrl, width: 1200, height: 630, alt: acc.name }],
       }),

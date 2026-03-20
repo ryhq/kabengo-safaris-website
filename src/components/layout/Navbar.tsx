@@ -20,7 +20,8 @@ const LOCALES = [
 ];
 
 interface NavItem {
-  id: string;
+  slug?: string;
+  code?: string;
   name: string;
   region?: string;
 }
@@ -117,7 +118,7 @@ export default function Navbar() {
       href: "/safaris",
       icon: Map,
       items: navData?.itineraries || [],
-      itemHref: (item: NavItem) => `/safaris/${item.id}`,
+      itemHref: (item: NavItem) => `/safaris/${item.code}`,
     },
     {
       key: "parks",
@@ -125,7 +126,7 @@ export default function Navbar() {
       href: "/parks",
       icon: TreePine,
       items: navData?.parks || [],
-      itemHref: (item: NavItem) => `/parks/${item.id}`,
+      itemHref: (item: NavItem) => `/parks/${item.slug}`,
     },
     {
       key: "accommodations",
@@ -133,7 +134,7 @@ export default function Navbar() {
       href: "/accommodations",
       icon: Tent,
       items: navData?.accommodations || [],
-      itemHref: (item: NavItem) => `/accommodations/${item.id}`,
+      itemHref: (item: NavItem) => `/accommodations/${item.slug}`,
     },
     {
       key: "activities",
@@ -141,7 +142,7 @@ export default function Navbar() {
       href: "/activities",
       icon: Compass,
       items: navData?.activities || [],
-      itemHref: (item: NavItem) => `/activities/${item.id}`,
+      itemHref: (item: NavItem) => `/activities/${item.slug}`,
     },
   ];
 
@@ -234,7 +235,7 @@ export default function Navbar() {
                           <div className="grid grid-cols-2 gap-1 max-h-[320px] overflow-y-auto">
                             {group.items.map((item) => (
                               <Link
-                                key={item.id}
+                                key={item.code || item.slug || item.name}
                                 href={group.itemHref(item)}
                                 onClick={() => setActiveMenu(null)}
                                 className="flex items-start px-3 py-2 rounded-xl text-sm text-white/80 hover:bg-white/20 hover:text-white transition-colors group"
@@ -406,7 +407,7 @@ export default function Navbar() {
                           <div className="pl-6 space-y-0.5 pb-1">
                             {group.items.slice(0, 8).map((item) => (
                               <Link
-                                key={item.id}
+                                key={item.code || item.slug || item.name}
                                 href={group.itemHref(item)}
                                 onClick={() => setIsOpen(false)}
                                 className="block px-4 py-2 text-sm text-white/70 hover:text-white hover:bg-white/20 rounded-xl"

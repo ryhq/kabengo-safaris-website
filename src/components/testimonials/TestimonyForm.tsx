@@ -8,7 +8,7 @@ import { apiClient } from "@/lib/api";
 import GlassCombobox from "@/components/ui/GlassCombobox";
 
 interface SafariOption {
-  id: string;
+  code: string;
   name: string;
   totalDays?: number;
 }
@@ -38,7 +38,7 @@ export default function TestimonyForm() {
         });
         if (res.data.success) {
           const data = Array.isArray(res.data.data) ? res.data.data : res.data.data?.safaris || [];
-          setSafaris(data.map((s: SafariOption & { totalDays?: number }) => ({ id: s.id, name: s.name, totalDays: s.totalDays })));
+          setSafaris(data.map((s: SafariOption & { totalDays?: number }) => ({ code: s.code, name: s.name, totalDays: s.totalDays })));
         }
       } catch {
         // Silently fail — safari dropdown is optional
@@ -203,7 +203,7 @@ export default function TestimonyForm() {
                     options={[
                       { value: "", label: t("selectSafari") },
                       ...safaris.map((s) => ({
-                        value: s.id,
+                        value: s.code,
                         label: `${s.name}${s.totalDays ? ` (${s.totalDays} days)` : ""}`,
                       })),
                     ]}

@@ -10,12 +10,12 @@ import { fetchSafarisPaginated } from "@/lib/api";
 import type { Itinerary } from "@/types";
 
 interface SimilarSafarisProps {
-  currentId: string;
+  currentCode: string;
   tripType?: string;
   budgetCategory?: string;
 }
 
-export default function SimilarSafaris({ currentId, tripType, budgetCategory }: SimilarSafarisProps) {
+export default function SimilarSafaris({ currentCode, tripType, budgetCategory }: SimilarSafarisProps) {
   const t = useTranslations("safaris");
   const locale = useLocale();
   const [safaris, setSafaris] = useState<Itinerary[]>([]);
@@ -27,7 +27,7 @@ export default function SimilarSafaris({ currentId, tripType, budgetCategory }: 
         const data = await fetchSafarisPaginated(0, 10, {
           tripType: tripType || undefined,
         });
-        let list = (data?.safaris || []).filter((s) => s.id !== currentId && s.code !== currentId);
+        let list = (data?.safaris || []).filter((s) => s.code !== currentCode);
 
         // If not enough results, try budget category
         if (list.length < 3 && budgetCategory) {
@@ -35,7 +35,7 @@ export default function SimilarSafaris({ currentId, tripType, budgetCategory }: 
             budgetCategory,
           });
           const extra = (data2?.safaris || []).filter(
-            (s) => s.id !== currentId && s.code !== currentId && !list.some((l) => l.id === s.id)
+            (s) => s.code !== currentCode && !list.some((l) => l.code === s.code)
           );
           list = [...list, ...extra];
         }
@@ -44,7 +44,7 @@ export default function SimilarSafaris({ currentId, tripType, budgetCategory }: 
         if (list.length < 3) {
           const data3 = await fetchSafarisPaginated(0, 10, {});
           const extra = (data3?.safaris || []).filter(
-            (s) => s.id !== currentId && s.code !== currentId && !list.some((l) => l.id === s.id)
+            (s) => s.code !== currentCode && !list.some((l) => l.code === s.code)
           );
           list = [...list, ...extra];
         }
@@ -55,7 +55,7 @@ export default function SimilarSafaris({ currentId, tripType, budgetCategory }: 
       }
     };
     fetchSimilar();
-  }, [currentId, tripType, budgetCategory]);
+  }, [currentCode, tripType, budgetCategory]);
 
   if (safaris.length === 0) return null;
 
@@ -92,7 +92,7 @@ export default function SimilarSafaris({ currentId, tripType, budgetCategory }: 
         }`}>
           {safaris.map((safari, index) => {
             const priceInfo = getPriceInfo(safari);
-            const identifier = safari.code || safari.id;
+            const identifier = safari.code;
             const duration = safari.isDayTrip
               ? t("dayTrip")
               : safari.totalDays
@@ -101,7 +101,7 @@ export default function SimilarSafaris({ currentId, tripType, budgetCategory }: 
 
             return (
               <motion.div
-                key={safari.id}
+                key={safari.code}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}

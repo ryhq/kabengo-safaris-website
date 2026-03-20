@@ -8,7 +8,6 @@ import { ChevronLeft, ChevronRight, X, Expand } from "lucide-react";
 import LoadMoreFade from "@/components/ui/LoadMoreFade";
 
 interface ParkImage {
-  id: string;
   imageUrl: string;
   altText?: string;
   caption?: string;
@@ -44,7 +43,7 @@ export default function ParkGallery({ images, parkName, totalImages, loadingMore
       <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
         {images.map((img, i) => (
           <motion.button
-            key={img.id}
+            key={img.imageUrl}
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -123,7 +122,7 @@ export default function ParkGallery({ images, parkName, totalImages, loadingMore
             )}
 
             <motion.div
-              key={images[lightboxIndex].id}
+              key={images[lightboxIndex].imageUrl}
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.9 }}

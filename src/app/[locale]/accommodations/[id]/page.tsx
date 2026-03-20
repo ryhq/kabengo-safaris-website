@@ -14,7 +14,6 @@ import { apiClient } from "@/lib/api";
 const IMAGES_PAGE_SIZE = 6;
 
 interface AccommodationImage {
-  id: string;
   imageUrl: string;
   altText?: string;
   caption?: string;
@@ -22,9 +21,8 @@ interface AccommodationImage {
 }
 
 interface AccommodationDetail {
-  id: string;
   name: string;
-  slug?: string;
+  slug: string;
   accommodationType?: string;
   accommodationTypeDisplayName?: string;
   category?: string;
@@ -102,8 +100,8 @@ export default function AccommodationDetailPage() {
       if (res.data.success) {
         const newImages = res.data.data?.images || [];
         setImages((prev) => {
-          const existingIds = new Set(prev.map((img) => img.id));
-          const unique = newImages.filter((img: AccommodationImage) => !existingIds.has(img.id));
+          const existingUrls = new Set(prev.map((img) => img.imageUrl));
+          const unique = newImages.filter((img: AccommodationImage) => !existingUrls.has(img.imageUrl));
           return [...prev, ...unique];
         });
         setImagesPage(nextPage);

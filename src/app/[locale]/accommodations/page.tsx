@@ -13,8 +13,7 @@ import { useDebounce } from "@/lib/useDebounce";
 import { apiClient } from "@/lib/api";
 
 interface AccommodationItem {
-  id: string;
-  slug?: string;
+  slug: string;
   name: string;
   accommodationTypeDisplayName?: string;
   categoryDisplayName?: string;
@@ -81,8 +80,8 @@ export default function AccommodationsPage() {
         const data = res.data.data;
         const newItems = data?.accommodations || data || [];
         setAccommodations((prev) => {
-          const existingIds = new Set(prev.map((a) => a.id));
-          const unique = newItems.filter((a: AccommodationItem) => !existingIds.has(a.id));
+          const existingSlugs = new Set(prev.map((a) => a.slug));
+          const unique = newItems.filter((a: AccommodationItem) => !existingSlugs.has(a.slug));
           return [...prev, ...unique];
         });
         setCurrentPage(nextPage);
@@ -153,14 +152,14 @@ export default function AccommodationsPage() {
               }`}>
                 {accommodations.map((acc, index) => (
                   <motion.div
-                    key={acc.id}
+                    key={acc.slug}
                     initial={{ opacity: 0, y: 24 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: (index % PAGE_SIZE) * 0.06, duration: 0.5 }}
                   >
                     <Link
-                      href={`/accommodations/${acc.slug || acc.id}`}
+                      href={`/accommodations/${acc.slug}`}
                       className="group block bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-stone-100/80"
                     >
                       {/* Image */}
