@@ -64,7 +64,19 @@ export default function Navbar() {
         const res = await apiClient.get("/public/navigation", {
           headers: { "Accept-Language": locale },
         });
-        if (res.data.success) setNavData(res.data.data);
+        if (res.data.success) {
+          const d = res.data.data;
+          // API returns "id" as slug — map to "slug" field
+          const mapSlug = (items: Array<{ id?: string; [key: string]: unknown }>) =>
+            items?.map(({ id, ...rest }) => ({ ...rest, slug: id })) || [];
+          setNavData({
+            ...d,
+            parks: mapSlug(d.parks),
+            accommodations: mapSlug(d.accommodations),
+            activities: mapSlug(d.activities),
+            itineraries: d.itineraries?.map(({ id, ...rest }: { id?: string; [key: string]: unknown }) => ({ ...rest, code: id })) || [],
+          });
+        }
       } catch (err) {
         console.error("Failed to fetch navigation:", err);
       }
