@@ -64,8 +64,10 @@ export default function AboutPage() {
           </div>
 
           {/* TripAdvisor */}
-          <div className="mt-12 flex justify-center">
-            <TripAdvisorBadge variant="light" />
+          <div className="mt-16 flex justify-center">
+            <div className="bg-[#f2f2f2] rounded-2xl px-8 py-6 flex flex-col items-center gap-3">
+              <TripAdvisorBadge variant="light" />
+            </div>
           </div>
         </div>
       </section>

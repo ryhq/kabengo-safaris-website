@@ -8,8 +8,19 @@ const TRIPADVISOR_URL =
 
 function TripAdvisorLogo({ className = "w-6 h-6" }: { className?: string }) {
   return (
-    <svg className={className} viewBox="0 0 24 24" fill="currentColor">
-      <path d="M12 2C6.48 2 2 4.48 2 7.5c0 1.41.84 2.69 2.21 3.69L2 16l3.79-2.05C7.32 14.63 9.57 15 12 15s4.68-.37 6.21-1.05L22 16l-2.21-4.81C21.16 10.19 22 8.91 22 7.5 22 4.48 17.52 2 12 2zm-4.5 9a2.5 2.5 0 110-5 2.5 2.5 0 010 5zm9 0a2.5 2.5 0 110-5 2.5 2.5 0 010 5z" />
+    <svg className={className} viewBox="0 0 32 32" fill="none">
+      {/* Owl body */}
+      <path d="M16 6C9.4 6 4 9.4 4 13.5c0 2.2 1.5 4.2 3.8 5.6L6 24l4.2-2.3c1.7.6 3.7 1 5.8 1s4.1-.4 5.8-1L26 24l-1.8-4.9C26.5 17.7 28 15.7 28 13.5 28 9.4 22.6 6 16 6z" fill="currentColor" opacity="0.15" />
+      {/* Left eye */}
+      <circle cx="11" cy="14" r="4" stroke="currentColor" strokeWidth="1.8" />
+      <circle cx="11" cy="14" r="1.8" fill="currentColor" />
+      {/* Right eye */}
+      <circle cx="21" cy="14" r="4" stroke="currentColor" strokeWidth="1.8" />
+      <circle cx="21" cy="14" r="1.8" fill="currentColor" />
+      {/* Beak */}
+      <path d="M14.5 17L16 19.5L17.5 17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      {/* Head feathers */}
+      <path d="M13 5.5L16 3L19 5.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }
@@ -23,10 +34,10 @@ export function TripAdvisorIcon() {
       href={TRIPADVISOR_URL}
       target="_blank"
       rel="noopener noreferrer"
-      className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-brand-accent transition-colors"
+      className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-[#00aa6c] transition-colors"
       aria-label="TripAdvisor"
     >
-      <TripAdvisorLogo className="w-[18px] h-[18px]" />
+      <TripAdvisorLogo className="w-6 h-6" />
     </a>
   );
 }
