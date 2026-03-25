@@ -42,9 +42,9 @@ export default function WhatsAppButton() {
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.5 }}
           transition={{ duration: 0.25 }}
-          className="fixed bottom-24 lg:bottom-6 right-6 z-40 w-14 h-14 bg-[#25D366] hover:bg-[#20bd5a] text-white rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
+          className="fixed bottom-20 lg:bottom-6 right-5 lg:right-6 z-40 w-12 h-12 bg-[#25D366] hover:bg-[#20bd5a] text-white rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
         >
-          <WhatsAppIcon />
+          <WhatsAppIcon size={24} />
         </motion.a>
       )}
     </AnimatePresence>

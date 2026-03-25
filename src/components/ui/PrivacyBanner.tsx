@@ -31,7 +31,7 @@ export default function PrivacyBanner() {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 100, opacity: 0 }}
           transition={{ duration: 0.3 }}
-          className="fixed bottom-0 inset-x-0 z-50 bg-brand-secondary text-white px-4 py-4 shadow-2xl"
+          className="fixed bottom-[60px] lg:bottom-0 inset-x-0 z-40 bg-brand-secondary text-white px-4 py-3 shadow-2xl"
         >
           <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
             <p className="text-sm text-stone-300 text-center sm:text-left">
