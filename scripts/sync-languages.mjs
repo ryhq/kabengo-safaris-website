@@ -218,9 +218,11 @@ async function main() {
   if (removedLocales.length > 0) console.log(`🗑️  Unused locales:    ${removedLocales.join(", ")}`);
   console.log();
 
-  // 3. Translate and create missing message files
+  // 3. Read en.json (needed for new locales and patching)
+  const enMessages = JSON.parse(fs.readFileSync(path.join(MESSAGES_DIR, "en.json"), "utf-8"));
+
+  // 3a. Translate and create missing message files
   if (newLocales.length > 0) {
-    const enMessages = JSON.parse(fs.readFileSync(path.join(MESSAGES_DIR, "en.json"), "utf-8"));
 
     for (const locale of newLocales) {
       const langName = nameMap[locale] || locale;
@@ -242,7 +244,74 @@ async function main() {
     }
   }
 
-  // 4. Remove unused message files (only with --prune)
+  // 4. Patch missing keys in existing locale files
+  const enFlat = flattenMessages(enMessages);
+  const enKeys = Object.entries(enFlat).filter(([, v]) => typeof v === "string");
+
+  const existingNonEnLocales = targetLocales.filter(
+    (l) => l !== DEFAULT_LOCALE && !newLocales.includes(l) && existingLocales.includes(l)
+  );
+
+  for (const locale of existingNonEnLocales) {
+    const localePath = path.join(MESSAGES_DIR, `${locale}.json`);
+    const localeMessages = JSON.parse(fs.readFileSync(localePath, "utf-8"));
+    const localeFlat = flattenMessages(localeMessages);
+
+    // Find keys missing from this locale or still prefixed with [XX]
+    const missingKeys = enKeys.filter(([key]) => {
+      const val = localeFlat[key];
+      return val === undefined || (typeof val === "string" && /^\[([A-Z]{2})\]\s/.test(val));
+    });
+
+    if (missingKeys.length === 0) continue;
+
+    const langName = nameMap[locale] || locale;
+    console.log(`🔧 Patching ${locale}.json (${langName}) — ${missingKeys.length} missing keys`);
+
+    if (DRY_RUN) {
+      console.log(`   [DRY RUN] Would translate ${missingKeys.length} missing strings\n`);
+      continue;
+    }
+
+    const missingTexts = missingKeys.map(([, v]) => v);
+    const missingKeyNames = missingKeys.map(([k]) => k);
+    let translatedFlat = { ...localeFlat };
+
+    // Batch translate missing keys
+    for (let i = 0; i < missingTexts.length; i += BATCH_SIZE) {
+      const batchTexts = missingTexts.slice(i, i + BATCH_SIZE);
+      const batchKeys = missingKeyNames.slice(i, i + BATCH_SIZE);
+      const batchNum = Math.floor(i / BATCH_SIZE) + 1;
+      const totalBatches = Math.ceil(missingTexts.length / BATCH_SIZE);
+
+      console.log(`    ⏳ Batch ${batchNum}/${totalBatches} (${batchTexts.length} strings)`);
+
+      try {
+        const translated = await translateBatch(batchTexts, locale);
+        for (let j = 0; j < batchKeys.length; j++) {
+          translatedFlat[batchKeys[j]] = translated[j];
+        }
+      } catch (err) {
+        console.error(`    ❌ Batch ${batchNum} failed: ${err.message}`);
+        for (let j = 0; j < batchKeys.length; j++) {
+          translatedFlat[batchKeys[j]] = `[${locale.toUpperCase()}] ${batchTexts[j]}`;
+        }
+      }
+    }
+
+    // Also carry over any non-string values from en that are missing
+    for (const [key, value] of Object.entries(enFlat)) {
+      if (typeof value !== "string" && translatedFlat[key] === undefined) {
+        translatedFlat[key] = value;
+      }
+    }
+
+    const patched = unflattenMessages(translatedFlat);
+    fs.writeFileSync(localePath, JSON.stringify(patched, null, 2) + "\n", "utf-8");
+    console.log(`   ✅ Patched ${locale}.json — ${missingKeys.length} keys translated\n`);
+  }
+
+  // 6. Remove unused message files (only with --prune)
   if (removedLocales.length > 0 && PRUNE) {
     for (const locale of removedLocales) {
       const filePath = path.join(MESSAGES_DIR, `${locale}.json`);
@@ -256,7 +325,7 @@ async function main() {
     console.log();
   }
 
-  // 5. Update routing.ts
+  // 7. Update routing.ts
   const routingContent = `import { defineRouting } from "next-intl/routing";
 import { createNavigation } from "next-intl/navigation";
 
@@ -281,7 +350,7 @@ export const { Link, redirect, usePathname, useRouter } = createNavigation(routi
     console.log("📝 src/i18n/routing.ts is already up to date");
   }
 
-  // 6. Summary
+  // 8. Summary
   console.log("\n─── Summary ───────────────────────────────────────");
   console.log(`   Locales:     ${targetLocales.length} (${targetLocales.join(", ")})`);
   console.log(`   New:         ${newLocales.length > 0 ? newLocales.join(", ") : "none"}`);
