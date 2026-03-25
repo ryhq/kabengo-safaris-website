@@ -6,7 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "sync-languages": "node scripts/sync-languages.mjs",
+    "sync-languages:apply": "node scripts/sync-languages.mjs --apply",
+    "sync-languages:prune": "node scripts/sync-languages.mjs --apply --prune",
+    "prebuild": "node scripts/sync-languages.mjs --apply"
   },
   "dependencies": {
     "axios": "^1.13.6",
