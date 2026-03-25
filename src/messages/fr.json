@@ -38,7 +38,14 @@
     "showingOf": "Affichage de {count} sur {total}",
     "notFoundTitle": "Page Introuvable",
     "notFoundMessage": "La page que vous recherchez n'existe pas ou a été déplacée.",
-    "notFoundCta": "Explorez Nos Safaris"
+    "notFoundCta": "Explorez Nos Safaris",
+    "noResultsTitle": "[EN] No Results Found",
+    "noResultsMessage": "[EN] We couldn't find anything matching your search. Try adjusting your filters or search terms.",
+    "clearFilters": "[EN] Clear Filters",
+    "errorTitle": "[EN] Something Went Wrong",
+    "errorMessage": "[EN] We encountered an unexpected error. Please try again.",
+    "tryAgain": "[EN] Try Again",
+    "backToTop": "[EN] Back to top"
   },
   "search": {
     "placeholder": "Rechercher parcs, safaris, activités...",
@@ -57,7 +64,9 @@
     "testimonialsSubtitle": "Histoires réelles d'aventures safari inoubliables",
     "ctaTitle": "Prêt pour Votre Aventure Africaine?",
     "ctaSubtitle": "Laissez-nous créer l'expérience safari parfaite pour vous",
-    "ctaCta": "Planifiez Votre Safari"
+    "ctaCta": "Planifiez Votre Safari",
+    "whyChooseUsTitle": "[EN] Why Choose Kabengo Safaris",
+    "whyChooseUsSubtitle": "[EN] Trusted by travelers worldwide for unforgettable African adventures"
   },
   "safaris": {
     "title": "Nos Safaris",
@@ -125,7 +134,18 @@
       "nights": "Nuits",
       "similarSafaris": "Vous Aimerez Aussi",
       "similarSafarisSubtitle": "Explorez des Aventures Similaires",
-      "viewAllSafaris": "Voir Tous les Safaris"
+      "viewAllSafaris": "Voir Tous les Safaris",
+      "faq": {
+        "title": "[EN] Frequently Asked Questions",
+        "q1": "[EN] How do I book this safari?",
+        "a1": "[EN] You can book directly through our website by clicking Book Now or Inquire, or contact us via WhatsApp or email.",
+        "q2": "[EN] Can this safari be customized?",
+        "a2": "[EN] Absolutely! Every safari we offer can be tailored to your preferences, budget, and travel dates.",
+        "q3": "[EN] What should I pack for this safari?",
+        "a3": "[EN] We recommend neutral-colored clothing, comfortable walking shoes, sun protection, binoculars, and a camera.",
+        "q4": "[EN] Is travel insurance required?",
+        "a4": "[EN] We strongly recommend comprehensive travel insurance that covers trip cancellation, medical emergencies, and evacuation."
+      }
     },
     "sectionHeading": "Trouvez Votre Safari Idéal",
     "sectionSubheading": "Des voyages sur mesure à travers les plus beaux paysages d'Afrique"
@@ -147,7 +167,18 @@
       "gallery": "Galerie",
       "activities": "Activités",
       "location": "Emplacement",
-      "backToParks": "Retour aux Parcs"
+      "backToParks": "Retour aux Parcs",
+      "faq": {
+        "title": "[EN] Frequently Asked Questions",
+        "q1": "[EN] When is the best time to visit this park?",
+        "a1": "[EN] The best time varies by park, but generally the dry season (June to October) offers the best wildlife viewing.",
+        "q2": "[EN] What wildlife can I expect to see?",
+        "a2": "[EN] Each park has its unique wildlife. Our expert guides will help you spot the area's most iconic species.",
+        "q3": "[EN] Are there entry fees for the park?",
+        "a3": "[EN] Yes, all national parks and reserves have entry fees. These are typically included in our safari packages.",
+        "q4": "[EN] How do I get to this park?",
+        "a4": "[EN] Most parks are accessible by road from Arusha or nearby towns. We provide comfortable 4x4 vehicles."
+      }
     },
     "sectionHeading": "Découvrez les Destinations Sauvages",
     "sectionSubheading": "Des plaines du Serengeti au cratère du Ngorongoro et au-delà"
@@ -176,7 +207,10 @@
       "petPolicy": "Politique Animaux",
       "checkInPolicy": "Politique d'Arrivée",
       "checkOutPolicy": "Politique de Départ",
-      "termsAndConditions": "Conditions Générales"
+      "termsAndConditions": "Conditions Générales",
+      "nearbyAccommodations": "[EN] Nearby Accommodations",
+      "nearbyAccommodationsSubtitle": "[EN] Explore More Places to Stay",
+      "viewAllAccommodations": "[EN] Browse All Accommodations"
     },
     "sectionHeading": "Séjournez au Cœur de la Nature",
     "sectionSubheading": "Des lodges de luxe aux camps de toile authentiques sous le ciel africain"
@@ -372,5 +406,14 @@
     "faqDescription": "Tout ce que vous devez savoir sur votre safari.",
     "blogTitle": "Blog | Kabengo Safaris",
     "blogDescription": "Histoires et conseils de la brousse africaine."
+  },
+  "whatsapp": {
+    "tooltip": "[EN] Chat with us on WhatsApp",
+    "defaultMessage": "Hello! I'm interested in learning more about your safari packages."
+  },
+  "privacy": {
+    "bannerMessage": "[EN] We respect your privacy — this website does not use cookies or tracking.",
+    "learnMore": "[EN] Learn More",
+    "dismiss": "[EN] Got it"
   }
 }

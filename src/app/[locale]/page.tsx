@@ -7,6 +7,7 @@ import ActivitiesSection from "@/components/sections/ActivitiesSection";
 import TestimonialsSection from "@/components/sections/TestimonialsSection";
 import CTASection from "@/components/sections/CTASection";
 import NewsletterSection from "@/components/sections/NewsletterSection";
+import WhyChooseUsSection from "@/components/sections/WhyChooseUsSection";
 
 export async function generateMetadata({
   params,
@@ -48,6 +49,7 @@ export default async function HomePage({
         initialTestimonies={data.testimonies ?? []}
         totalItems={data.testimoniesTotalItems ?? 0}
       />
+      <WhyChooseUsSection />
       <NewsletterSection />
       <CTASection />
     </>

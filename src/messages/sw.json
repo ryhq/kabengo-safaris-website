@@ -38,7 +38,14 @@
     "showingOf": "Inaonyesha {count} kati ya {total}",
     "notFoundTitle": "Ukurasa Haupatikani",
     "notFoundMessage": "Ukurasa unaoutafuta haupo au umehamishwa.",
-    "notFoundCta": "Chunguza Safari Zetu"
+    "notFoundCta": "Chunguza Safari Zetu",
+    "noResultsTitle": "[EN] No Results Found",
+    "noResultsMessage": "[EN] We couldn't find anything matching your search. Try adjusting your filters or search terms.",
+    "clearFilters": "[EN] Clear Filters",
+    "errorTitle": "[EN] Something Went Wrong",
+    "errorMessage": "[EN] We encountered an unexpected error. Please try again.",
+    "tryAgain": "[EN] Try Again",
+    "backToTop": "[EN] Back to top"
   },
   "search": {
     "placeholder": "Tafuta mbuga, safari, shughuli...",
@@ -57,7 +64,9 @@
     "testimonialsSubtitle": "Hadithi za kweli kutoka safari zisizosahaulika",
     "ctaTitle": "Uko Tayari kwa Safari Yako ya Afrika?",
     "ctaSubtitle": "Turuhusu kuunda uzoefu bora wa safari kwa ajili yako",
-    "ctaCta": "Panga Safari Yako"
+    "ctaCta": "Panga Safari Yako",
+    "whyChooseUsTitle": "[EN] Why Choose Kabengo Safaris",
+    "whyChooseUsSubtitle": "[EN] Trusted by travelers worldwide for unforgettable African adventures"
   },
   "safaris": {
     "title": "Safari Zetu",
@@ -125,7 +134,18 @@
       "nights": "Usiku",
       "similarSafaris": "Unaweza Pia Kupenda",
       "similarSafarisSubtitle": "Gundua Safari Zinazofanana",
-      "viewAllSafaris": "Tazama Safari Zote"
+      "viewAllSafaris": "Tazama Safari Zote",
+      "faq": {
+        "title": "[EN] Frequently Asked Questions",
+        "q1": "[EN] How do I book this safari?",
+        "a1": "[EN] You can book directly through our website by clicking Book Now or Inquire, or contact us via WhatsApp or email.",
+        "q2": "[EN] Can this safari be customized?",
+        "a2": "[EN] Absolutely! Every safari we offer can be tailored to your preferences, budget, and travel dates.",
+        "q3": "[EN] What should I pack for this safari?",
+        "a3": "[EN] We recommend neutral-colored clothing, comfortable walking shoes, sun protection, binoculars, and a camera.",
+        "q4": "[EN] Is travel insurance required?",
+        "a4": "[EN] We strongly recommend comprehensive travel insurance that covers trip cancellation, medical emergencies, and evacuation."
+      }
     },
     "sectionHeading": "Pata Safari Yako Bora",
     "sectionSubheading": "Safari za kipekee kupitia mandhari ya Afrika yenye kupendeza"
@@ -147,7 +167,18 @@
       "gallery": "Picha",
       "activities": "Shughuli",
       "location": "Mahali",
-      "backToParks": "Rudi kwa Hifadhi"
+      "backToParks": "Rudi kwa Hifadhi",
+      "faq": {
+        "title": "[EN] Frequently Asked Questions",
+        "q1": "[EN] When is the best time to visit this park?",
+        "a1": "[EN] The best time varies by park, but generally the dry season (June to October) offers the best wildlife viewing.",
+        "q2": "[EN] What wildlife can I expect to see?",
+        "a2": "[EN] Each park has its unique wildlife. Our expert guides will help you spot the area's most iconic species.",
+        "q3": "[EN] Are there entry fees for the park?",
+        "a3": "[EN] Yes, all national parks and reserves have entry fees. These are typically included in our safari packages.",
+        "q4": "[EN] How do I get to this park?",
+        "a4": "[EN] Most parks are accessible by road from Arusha or nearby towns. We provide comfortable 4x4 vehicles."
+      }
     },
     "sectionHeading": "Gundua Maeneo ya Porini",
     "sectionSubheading": "Kutoka nyanda za Serengeti hadi Bonde la Ngorongoro na zaidi"
@@ -176,7 +207,10 @@
       "petPolicy": "Sera ya Wanyama",
       "checkInPolicy": "Sera ya Kuingia",
       "checkOutPolicy": "Sera ya Kutoka",
-      "termsAndConditions": "Sheria na Masharti"
+      "termsAndConditions": "Sheria na Masharti",
+      "nearbyAccommodations": "[EN] Nearby Accommodations",
+      "nearbyAccommodationsSubtitle": "[EN] Explore More Places to Stay",
+      "viewAllAccommodations": "[EN] Browse All Accommodations"
     },
     "sectionHeading": "Kaa Mahali Pazuri",
     "sectionSubheading": "Kutoka lodji za kifahari hadi kambi halisi chini ya anga la Afrika"
@@ -372,5 +406,14 @@
     "faqDescription": "Kila unachohitaji kujua kuhusu safari yako.",
     "blogTitle": "Blogu | Kabengo Safaris",
     "blogDescription": "Hadithi na maarifa kutoka nyika za Afrika."
+  },
+  "whatsapp": {
+    "tooltip": "[EN] Chat with us on WhatsApp",
+    "defaultMessage": "Hello! I'm interested in learning more about your safari packages."
+  },
+  "privacy": {
+    "bannerMessage": "[EN] We respect your privacy — this website does not use cookies or tracking.",
+    "learnMore": "[EN] Learn More",
+    "dismiss": "[EN] Got it"
   }
 }

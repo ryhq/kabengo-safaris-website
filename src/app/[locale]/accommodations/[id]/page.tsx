@@ -8,6 +8,8 @@ import AccommodationDetailHero from "@/components/accommodation/AccommodationDet
 import AccommodationInfoCards from "@/components/accommodation/AccommodationInfoCards";
 import AccommodationDescription from "@/components/accommodation/AccommodationDescription";
 import AccommodationDetailSkeleton from "@/components/accommodation/AccommodationDetailSkeleton";
+import Breadcrumbs from "@/components/ui/Breadcrumbs";
+import NearbyAccommodations from "@/components/accommodation/NearbyAccommodations";
 import ParkGallery from "@/components/park/ParkGallery";
 import ParkLocationMap from "@/components/park/ParkLocationMap";
 import { apiClient } from "@/lib/api";
@@ -61,6 +63,7 @@ export default function AccommodationDetailPage() {
   const params = useParams();
   const common = useTranslations("common");
   const t = useTranslations("accommodations");
+  const nav = useTranslations("nav");
   const locale = useLocale();
 
   const [accommodation, setAccommodation] = useState<AccommodationDetail | null>(null);
@@ -133,6 +136,12 @@ export default function AccommodationDetailPage() {
 
   return (
     <div>
+      <Breadcrumbs items={[
+        { label: nav("home"), href: "/" },
+        { label: nav("accommodations"), href: "/accommodations" },
+        { label: accommodation.name },
+      ]} />
+
       <AccommodationDetailHero
         name={accommodation.name}
         heroImage={heroImage}
@@ -228,6 +237,9 @@ export default function AccommodationDetailPage() {
           </div>
         </section>
       )}
+
+      {/* Nearby Accommodations */}
+      <NearbyAccommodations currentSlug={accommodation.slug} region={accommodation.region} />
 
       {/* CTA */}
       <section className="bg-brand-brown py-14">

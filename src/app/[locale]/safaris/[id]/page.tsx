@@ -10,12 +10,15 @@ import SafariItinerary from "@/components/safari/SafariItinerary";
 import SafariDetailSkeleton from "@/components/safari/SafariDetailSkeleton";
 import BookingSidebar, { MobileBookingBar } from "@/components/safari/BookingSidebar";
 import SimilarSafaris from "@/components/safari/SimilarSafaris";
+import Breadcrumbs from "@/components/ui/Breadcrumbs";
+import ContextualFAQ from "@/components/ui/ContextualFAQ";
 import { apiClient } from "@/lib/api";
 import type { Itinerary } from "@/types";
 
 export default function SafariDetailPage() {
   const params = useParams();
   const t = useTranslations("safaris");
+  const nav = useTranslations("nav");
   const locale = useLocale();
   const [itinerary, setItinerary] = useState<Itinerary | null>(null);
   const [loading, setLoading] = useState(true);
@@ -71,6 +74,12 @@ export default function SafariDetailPage() {
 
   return (
     <div className="pb-20 lg:pb-0">
+      <Breadcrumbs items={[
+        { label: nav("home"), href: "/" },
+        { label: nav("safaris"), href: "/safaris" },
+        { label: itinerary.name },
+      ]} />
+
       <SafariDetailHero
         name={itinerary.name}
         startLocation={itinerary.startLocation}
@@ -154,6 +163,9 @@ export default function SafariDetailPage() {
           </div>
         </section>
       )}
+
+      {/* FAQ */}
+      <ContextualFAQ type="safari" />
 
       {/* Similar Safaris */}
       <SimilarSafaris

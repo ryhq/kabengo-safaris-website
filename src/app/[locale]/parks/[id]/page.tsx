@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { useParams, notFound } from "next/navigation";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import ParkDetailHero from "@/components/park/ParkDetailHero";
 import ParkInfoCards from "@/components/park/ParkInfoCards";
 import ParkDescription from "@/components/park/ParkDescription";
@@ -10,6 +10,8 @@ import ParkGallery from "@/components/park/ParkGallery";
 import ParkActivities from "@/components/park/ParkActivities";
 import ParkLocationMap from "@/components/park/ParkLocationMap";
 import ParkDetailSkeleton from "@/components/park/ParkDetailSkeleton";
+import Breadcrumbs from "@/components/ui/Breadcrumbs";
+import ContextualFAQ from "@/components/ui/ContextualFAQ";
 import { apiClient } from "@/lib/api";
 const IMAGES_PAGE_SIZE = 6;
 const ACTIVITIES_PAGE_SIZE = 3;
@@ -55,6 +57,7 @@ interface ActivityItem {
 export default function ParkDetailPage() {
   const params = useParams();
   const locale = useLocale();
+  const nav = useTranslations("nav");
 
   const [park, setPark] = useState<ParkDetail | null>(null);
   const [images, setImages] = useState<ParkImage[]>([]);
@@ -172,6 +175,12 @@ export default function ParkDetailPage() {
 
   return (
     <div>
+      <Breadcrumbs items={[
+        { label: nav("home"), href: "/" },
+        { label: nav("parks"), href: "/parks" },
+        { label: park.name },
+      ]} />
+
       <ParkDetailHero
         name={park.name}
         location={park.location}
@@ -239,6 +248,9 @@ export default function ParkDetailPage() {
           </div>
         </section>
       )}
+
+      {/* FAQ */}
+      <ContextualFAQ type="park" />
 
       {/* Map */}
       {hasCoordinates && (

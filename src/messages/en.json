@@ -31,6 +31,13 @@
     "loading": "Loading...",
     "error": "Something went wrong",
     "noResults": "No results found",
+    "noResultsTitle": "No Results Found",
+    "noResultsMessage": "We couldn't find anything matching your search. Try adjusting your filters or search terms.",
+    "clearFilters": "Clear Filters",
+    "errorTitle": "Something Went Wrong",
+    "errorMessage": "We encountered an unexpected error. Please try again.",
+    "tryAgain": "Try Again",
+    "backToTop": "Back to top",
     "backToHome": "Back to Home",
     "days": "days",
     "comingSoon": "Coming Soon",
@@ -60,7 +67,9 @@
     "testimonialsSubtitle": "Real stories from unforgettable safari adventures",
     "ctaTitle": "Ready for Your African Adventure?",
     "ctaSubtitle": "Let us craft the perfect safari experience tailored just for you",
-    "ctaCta": "Plan Your Safari"
+    "ctaCta": "Plan Your Safari",
+    "whyChooseUsTitle": "Why Choose Kabengo Safaris",
+    "whyChooseUsSubtitle": "Trusted by travelers worldwide for unforgettable African adventures"
   },
   "safaris": {
     "title": "Safari Packages",
@@ -140,7 +149,18 @@
       "paxContext": "For {count} {category}",
       "similarSafaris": "You May Also Like",
       "similarSafarisSubtitle": "Explore Similar Adventures",
-      "viewAllSafaris": "Browse All Safaris"
+      "viewAllSafaris": "Browse All Safaris",
+      "faq": {
+        "title": "Frequently Asked Questions",
+        "q1": "How do I book this safari?",
+        "a1": "You can book directly through our website by clicking 'Book Now' or 'Inquire', or contact us via WhatsApp or email. Our team will respond within 24 hours with a personalized proposal.",
+        "q2": "Can this safari be customized?",
+        "a2": "Absolutely! Every safari we offer can be tailored to your preferences, budget, and travel dates. We can adjust accommodation, add extra days, or modify activities to suit your needs.",
+        "q3": "What should I pack for this safari?",
+        "a3": "We recommend neutral-colored clothing (khaki, beige, olive), comfortable walking shoes, sun protection (hat, sunscreen, sunglasses), binoculars, a camera, and layers for cooler mornings and evenings.",
+        "q4": "Is travel insurance required?",
+        "a4": "We strongly recommend comprehensive travel insurance that covers trip cancellation, medical emergencies, and evacuation. Some parks and activities may require proof of insurance."
+      }
     },
     "sectionHeading": "Choose Your Adventure",
     "sectionSubheading": "Browse safari packages by duration, style, and budget",
@@ -165,7 +185,18 @@
       "gallery": "Gallery",
       "activities": "Activities",
       "location": "Location",
-      "backToParks": "Back to Parks"
+      "backToParks": "Back to Parks",
+      "faq": {
+        "title": "Frequently Asked Questions",
+        "q1": "When is the best time to visit this park?",
+        "a1": "The best time varies by park, but generally the dry season (June to October) offers the best wildlife viewing as animals gather around water sources. The wet season (November to May) is ideal for birdwatching and lush landscapes.",
+        "q2": "What wildlife can I expect to see?",
+        "a2": "Each park has its unique wildlife. Our expert guides will help you spot the area's most iconic species. Sightings depend on season and time of day, but our experienced guides know the best spots.",
+        "q3": "Are there entry fees for the park?",
+        "a3": "Yes, all national parks and reserves have entry fees. These are typically included in our safari packages. Fees vary by park, visitor nationality, and age category. Contact us for current rates.",
+        "q4": "How do I get to this park?",
+        "a4": "Most parks are accessible by road from Arusha or nearby towns. We provide comfortable 4x4 vehicles with experienced drivers for all transfers. Some remote parks also offer fly-in options."
+      }
     },
     "sectionHeading": "Discover Wild Destinations",
     "sectionSubheading": "From the Serengeti plains to the Ngorongoro Crater and beyond"
@@ -194,7 +225,10 @@
       "petPolicy": "Pet Policy",
       "checkInPolicy": "Check-in Policy",
       "checkOutPolicy": "Check-out Policy",
-      "termsAndConditions": "Terms & Conditions"
+      "termsAndConditions": "Terms & Conditions",
+      "nearbyAccommodations": "Nearby Accommodations",
+      "nearbyAccommodationsSubtitle": "Explore More Places to Stay",
+      "viewAllAccommodations": "Browse All Accommodations"
     },
     "sectionHeading": "Stay in Nature's Finest",
     "sectionSubheading": "From luxury lodges to authentic tented camps under the African sky"
@@ -393,5 +427,14 @@
     "faqDescription": "Everything you need to know about your safari adventure.",
     "blogTitle": "Blog | Kabengo Safaris",
     "blogDescription": "Stories, tips, and insights from the African wilderness."
+  },
+  "whatsapp": {
+    "tooltip": "Chat with us on WhatsApp",
+    "defaultMessage": "Hello! I'm interested in learning more about your safari packages."
+  },
+  "privacy": {
+    "bannerMessage": "We respect your privacy — this website does not use cookies or tracking.",
+    "learnMore": "Learn More",
+    "dismiss": "Got it"
   }
 }

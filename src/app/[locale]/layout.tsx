@@ -9,6 +9,9 @@ import Footer from "@/components/layout/Footer";
 import ApiLocaleSync from "@/lib/ApiLocaleSync";
 import ImageProtection from "@/components/ui/ImageProtection";
 import { buildAlternates } from "@/lib/seo";
+import WhatsAppButton from "@/components/ui/WhatsAppButton";
+import BackToTopButton from "@/components/ui/BackToTopButton";
+import PrivacyBanner from "@/components/ui/PrivacyBanner";
 
 export async function generateMetadata({
   params,
@@ -57,6 +60,9 @@ export default async function LocaleLayout({
           <Navbar />
           <main className="flex-1">{children}</main>
           <Footer />
+          <WhatsAppButton />
+          <BackToTopButton />
+          <PrivacyBanner />
         </NextIntlClientProvider>
       </body>
     </html>

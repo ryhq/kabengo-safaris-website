@@ -2,12 +2,13 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { useParams, notFound } from "next/navigation";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import ActivityDetailHero from "@/components/activity/ActivityDetailHero";
 import ActivityInfoCards from "@/components/activity/ActivityInfoCards";
 import ActivityDescription from "@/components/activity/ActivityDescription";
 import ActivityDetailSkeleton from "@/components/activity/ActivityDetailSkeleton";
 import ActivityParks from "@/components/activity/ActivityParks";
+import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import ParkGallery from "@/components/park/ParkGallery";
 import { apiClient } from "@/lib/api";
 const IMAGES_PAGE_SIZE = 6;
@@ -45,6 +46,7 @@ interface ParkItem {
 export default function ActivityDetailPage() {
   const params = useParams();
   const locale = useLocale();
+  const nav = useTranslations("nav");
 
   const [activity, setActivity] = useState<ActivityDetail | null>(null);
   const [images, setImages] = useState<ActivityImage[]>([]);
@@ -159,6 +161,12 @@ export default function ActivityDetailPage() {
 
   return (
     <div>
+      <Breadcrumbs items={[
+        { label: nav("home"), href: "/" },
+        { label: nav("activities"), href: "/activities" },
+        { label: activity.name },
+      ]} />
+
       <ActivityDetailHero
         name={activity.name}
         heroImage={heroImage}
