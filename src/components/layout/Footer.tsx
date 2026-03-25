@@ -6,6 +6,7 @@ import { Link } from "@/i18n/navigation";
 import { Mail, Phone, MapPin, Instagram, Facebook, Youtube } from "lucide-react";
 import KabengoIcon from "@/components/ui/KabengoIcon";
 import { subscribeToNewsletter } from "@/lib/api";
+import { TripAdvisorIcon } from "@/components/ui/TripAdvisorBadge";
 
 /* Obfuscated contact — assembled client-side so bots can't scrape from HTML */
 function ObfuscatedEmail() {
@@ -162,10 +163,7 @@ export default function Footer() {
                 <a href="https://x.com/kabengosafaris" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-brand-accent transition-colors" aria-label="X">
                   <svg width={16} height={16} viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
                 </a>
-                {/* TODO: Add TripAdvisor link once listing is approved */}
-                <a href="#" className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-brand-accent transition-colors" aria-label="TripAdvisor">
-                  <svg width={18} height={18} viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 4.48 2 7.5c0 1.41.84 2.69 2.21 3.69L2 16l3.79-2.05C7.32 14.63 9.57 15 12 15s4.68-.37 6.21-1.05L22 16l-2.21-4.81C21.16 10.19 22 8.91 22 7.5 22 4.48 17.52 2 12 2zm-4.5 9a2.5 2.5 0 110-5 2.5 2.5 0 010 5zm9 0a2.5 2.5 0 110-5 2.5 2.5 0 010 5z"/></svg>
-                </a>
+                <TripAdvisorIcon />
               </div>
             </div>
           </div>

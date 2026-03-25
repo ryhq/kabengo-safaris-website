@@ -8,6 +8,7 @@ import TestimonialsSection from "@/components/sections/TestimonialsSection";
 import CTASection from "@/components/sections/CTASection";
 import NewsletterSection from "@/components/sections/NewsletterSection";
 import WhyChooseUsSection from "@/components/sections/WhyChooseUsSection";
+import { TripAdvisorSection } from "@/components/ui/TripAdvisorBadge";
 
 export async function generateMetadata({
   params,
@@ -49,6 +50,7 @@ export default async function HomePage({
         initialTestimonies={data.testimonies ?? []}
         totalItems={data.testimoniesTotalItems ?? 0}
       />
+      <TripAdvisorSection />
       <WhyChooseUsSection />
       <NewsletterSection />
       <CTASection />
