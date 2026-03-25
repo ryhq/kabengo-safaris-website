@@ -74,12 +74,6 @@ export default function SafariDetailPage() {
 
   return (
     <div className="pb-20 lg:pb-0">
-      <Breadcrumbs items={[
-        { label: nav("home"), href: "/" },
-        { label: nav("safaris"), href: "/safaris" },
-        { label: itinerary.name },
-      ]} />
-
       <SafariDetailHero
         name={itinerary.name}
         startLocation={itinerary.startLocation}
@@ -88,6 +82,12 @@ export default function SafariDetailPage() {
         budgetCategoryDisplayName={itinerary.budgetCategoryDisplayName}
         heroImage={heroImage}
       />
+
+      <Breadcrumbs items={[
+        { label: nav("home"), href: "/" },
+        { label: nav("safaris"), href: "/safaris" },
+        { label: itinerary.name },
+      ]} />
 
       {/* Info Cards */}
       <section className="bg-brand-warm py-10">

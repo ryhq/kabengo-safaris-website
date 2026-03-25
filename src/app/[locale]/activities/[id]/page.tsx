@@ -161,16 +161,16 @@ export default function ActivityDetailPage() {
 
   return (
     <div>
+      <ActivityDetailHero
+        name={activity.name}
+        heroImage={heroImage}
+      />
+
       <Breadcrumbs items={[
         { label: nav("home"), href: "/" },
         { label: nav("activities"), href: "/activities" },
         { label: activity.name },
       ]} />
-
-      <ActivityDetailHero
-        name={activity.name}
-        heroImage={heroImage}
-      />
 
       {/* Info Cards */}
       <section className="bg-brand-warm py-10">

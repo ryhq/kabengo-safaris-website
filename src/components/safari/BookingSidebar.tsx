@@ -144,6 +144,13 @@ export function MobileBookingBar({
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    window.dispatchEvent(new CustomEvent("mobile-booking-bar", { detail: { visible } }));
+    return () => {
+      window.dispatchEvent(new CustomEvent("mobile-booking-bar", { detail: { visible: false } }));
+    };
+  }, [visible]);
+
   return (
     <AnimatePresence>
       {visible && (

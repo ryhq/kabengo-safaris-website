@@ -175,12 +175,6 @@ export default function ParkDetailPage() {
 
   return (
     <div>
-      <Breadcrumbs items={[
-        { label: nav("home"), href: "/" },
-        { label: nav("parks"), href: "/parks" },
-        { label: park.name },
-      ]} />
-
       <ParkDetailHero
         name={park.name}
         location={park.location}
@@ -188,6 +182,12 @@ export default function ParkDetailPage() {
         district={park.district}
         heroImage={heroImage}
       />
+
+      <Breadcrumbs items={[
+        { label: nav("home"), href: "/" },
+        { label: nav("parks"), href: "/parks" },
+        { label: park.name },
+      ]} />
 
       {/* Info Cards */}
       <section className="bg-brand-warm py-10">

@@ -136,18 +136,18 @@ export default function AccommodationDetailPage() {
 
   return (
     <div>
-      <Breadcrumbs items={[
-        { label: nav("home"), href: "/" },
-        { label: nav("accommodations"), href: "/accommodations" },
-        { label: accommodation.name },
-      ]} />
-
       <AccommodationDetailHero
         name={accommodation.name}
         heroImage={heroImage}
         typeDisplayName={accommodation.accommodationTypeDisplayName}
         region={[accommodation.region, accommodation.district].filter(Boolean).join(", ")}
       />
+
+      <Breadcrumbs items={[
+        { label: nav("home"), href: "/" },
+        { label: nav("accommodations"), href: "/accommodations" },
+        { label: accommodation.name },
+      ]} />
 
       {/* Info Cards */}
       <section className="bg-brand-warm py-10">
