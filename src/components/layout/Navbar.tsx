@@ -3,27 +3,32 @@
 import { useState, useEffect, useRef } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
+import { routing } from "@/i18n/routing";
 import { Menu, X, Globe, ChevronDown, TreePine, Tent, Map, Compass, Search } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import KabengoIcon from "@/components/ui/KabengoIcon";
 import SearchModal from "@/components/search/SearchModal";
 import { apiClient } from "@/lib/api";
 
-const LOCALES = [
-  { code: "en", label: "English", flag: "EN" },
-  { code: "sw", label: "Kiswahili", flag: "SW" },
-  { code: "fr", label: "Français", flag: "FR" },
-  { code: "de", label: "Deutsch", flag: "DE" },
-  { code: "es", label: "Español", flag: "ES" },
-  { code: "it", label: "Italiano", flag: "IT" },
-  { code: "pt", label: "Português", flag: "PT" },
-];
+/** Display names for language codes — used as fallback when API names aren't available */
+const LOCALE_NAMES: Record<string, string> = {
+  en: "English", sw: "Kiswahili", fr: "Français", de: "Deutsch",
+  es: "Español", it: "Italiano", pt: "Português", uk: "Українська",
+  af: "Afrikaans", ar: "العربية", zh: "中文", ja: "日本語",
+  ko: "한국어", ru: "Русский", hi: "हिन्दी", nl: "Nederlands",
+  pl: "Polski", tr: "Türkçe", sv: "Svenska", da: "Dansk",
+};
 
 interface NavItem {
   slug?: string;
   code?: string;
   name: string;
   region?: string;
+}
+
+interface LangItem {
+  code: string;
+  name: string;
 }
 
 interface NavigationData {
@@ -34,6 +39,7 @@ interface NavigationData {
   testimoniesCount: number;
   translationEnabled: boolean;
   supportedLanguages: string[];
+  languages: LangItem[];
 }
 
 export default function Navbar() {
@@ -113,10 +119,13 @@ export default function Navbar() {
   const textColorActive = scrolled ? "text-brand-brown" : "text-white";
   const textColorHover = scrolled ? "hover:text-brand-brown" : "hover:text-white";
 
-  // Filter locales to only those supported by the backend
-  const availableLocales = navData?.supportedLanguages
-    ? LOCALES.filter((l) => navData.supportedLanguages.includes(l.code))
-    : LOCALES;
+  // Build available locales from backend languages (with names), fallback to routing locales
+  const localeSet = new Set<string>(routing.locales);
+  const availableLocales = navData?.languages?.length
+    ? navData.languages
+        .filter((l) => localeSet.has(l.code))
+        .map((l) => ({ code: l.code, label: l.name || LOCALE_NAMES[l.code] || l.code.toUpperCase() }))
+    : routing.locales.map((code) => ({ code, label: LOCALE_NAMES[code] || code.toUpperCase() }));
 
   // Build nav links based on API data
   const staticLinks = [
@@ -340,7 +349,7 @@ export default function Navbar() {
                           onClick={() => switchLocale(locale.code)}
                           className="flex items-center w-full text-left px-4 py-2.5 text-sm text-white/80 hover:bg-white/20 hover:text-white transition-all duration-200 cursor-pointer rounded-xl mx-1 hover:pl-5"
                         >
-                          <span className="w-8 text-xs font-bold text-white/50">{locale.flag}</span>
+                          <span className="w-8 text-xs font-bold text-white/50">{locale.code.toUpperCase()}</span>
                           {locale.label}
                         </motion.button>
                       ))}
@@ -466,16 +475,48 @@ export default function Navbar() {
 
               {navData?.translationEnabled && (
                 <div className="pt-2 border-t border-white/15">
-                  <p className="px-4 py-2 text-xs font-semibold text-white/40 uppercase tracking-wider">{t("language")}</p>
-                  {availableLocales.map((l) => (
+                  <div className="flex items-center">
                     <button
-                      key={l.code}
-                      onClick={() => { switchLocale(l.code); setIsOpen(false); }}
-                      className="block w-full text-left px-4 py-2 text-sm text-white/80 hover:bg-white/20 hover:text-white cursor-pointer rounded-xl"
+                      onClick={() => setMobileExpanded(mobileExpanded === "lang" ? null : "lang")}
+                      className="flex items-center justify-between w-full px-4 py-3 text-base font-semibold text-white cursor-pointer"
                     >
-                      {l.label}
+                      <span className="flex items-center gap-2">
+                        <Globe size={18} className="text-white/60" />
+                        {availableLocales.find((l) => l.code === locale)?.label || t("language")}
+                      </span>
+                      <ChevronDown
+                        size={18}
+                        className={`text-white/60 transition-transform duration-200 ${mobileExpanded === "lang" ? "rotate-180" : ""}`}
+                      />
                     </button>
-                  ))}
+                  </div>
+                  <AnimatePresence>
+                    {mobileExpanded === "lang" && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.2 }}
+                        className="overflow-hidden"
+                      >
+                        <div className="pl-6 space-y-0.5 pb-1">
+                          {availableLocales.map((l) => (
+                            <button
+                              key={l.code}
+                              onClick={() => { switchLocale(l.code); setIsOpen(false); }}
+                              className={`block w-full text-left px-4 py-2 text-sm rounded-xl cursor-pointer ${
+                                l.code === locale
+                                  ? "text-white bg-white/20 font-medium"
+                                  : "text-white/70 hover:text-white hover:bg-white/20"
+                              }`}
+                            >
+                              {l.label}
+                            </button>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
               )}
             </div>
