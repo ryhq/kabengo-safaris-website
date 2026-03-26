@@ -195,7 +195,7 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Nav */}
-          <div className="hidden lg:flex items-center space-x-0.5">
+          <div className="hidden lg:flex items-center space-x-1">
             {/* Home */}
             {staticLinks.map((link) => (
               <Link
@@ -298,7 +298,7 @@ export default function Navbar() {
             {/* Book Now CTA */}
             <Link
               href="/book"
-              className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all ${
+              className={`px-5 py-2.5 rounded-lg text-sm font-semibold whitespace-nowrap transition-all ${
                 scrolled
                   ? "bg-brand-green text-white hover:bg-brand-green/90"
                   : "bg-white/15 text-white hover:bg-white/25 border border-white/30"
