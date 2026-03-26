@@ -165,7 +165,7 @@ export default function Footer() {
                 </a>
                 <TripAdvisorIcon />
               </div>
-              <div className="mt-4">
+              <div className="mt-4 w-full bg-white rounded-xl p-4 flex items-center justify-center">
                 <TripAdvisorWidget />
               </div>
             </div>

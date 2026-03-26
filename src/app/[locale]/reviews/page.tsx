@@ -241,15 +241,15 @@ export default function TestimonialsPage() {
         </div>
       </section>
 
-      {/* Rate us on TripAdvisor */}
-      <TripAdvisorReviewSection />
-
       {/* Submit Testimony Form */}
       <section className="py-20 bg-brand-warm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <TestimonyForm />
         </div>
       </section>
+
+      {/* Rate us on TripAdvisor */}
+      <TripAdvisorReviewSection />
     </>
   );
 }
