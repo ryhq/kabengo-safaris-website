@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 
@@ -43,7 +44,7 @@ export function TripAdvisorIcon() {
 }
 
 /**
- * Inline badge for homepage/about — shows logo, name, and CTA.
+ * Inline badge for about page — shows logo, name, and CTA.
  */
 export function TripAdvisorBadge({ variant = "light" }: { variant?: "light" | "dark" }) {
   const t = useTranslations("common");
@@ -80,14 +81,41 @@ export function TripAdvisorBadge({ variant = "light" }: { variant?: "light" | "d
 }
 
 /**
- * Full section with TripAdvisor badge — for homepage between sections.
+ * Official TripAdvisor rating widget — loads their embed script.
  */
-export function TripAdvisorSection() {
+export function TripAdvisorWidget() {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+    const script = document.createElement("script");
+    script.src =
+      "https://www.jscache.com/wejs?wtype=cdsratingsonlynarrow&uniq=410&locationId=34283345&lang=en_US&border=true&display_version=2";
+    script.async = true;
+    containerRef.current.appendChild(script);
+    return () => {
+      script.remove();
+    };
+  }, []);
+
   return (
-    <section className="py-10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-center">
-        <TripAdvisorBadge variant="light" />
+    <div ref={containerRef}>
+      <div id="TA_cdsratingsonlynarrow410" className="TA_cdsratingsonlynarrow">
+        <ul id="Dd0pwD" className="TA_links w2jo6gn0">
+          <li id="2zgtgeVI0E" className="AcVyugmURHj">
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href={TRIPADVISOR_URL}
+            >
+              <img
+                src="https://www.tripadvisor.com/img/cdsi/img2/branding/v2/Tripadvisor_lockup_horizontal_secondary_registered-18034-2.svg"
+                alt="TripAdvisor"
+              />
+            </a>
+          </li>
+        </ul>
       </div>
-    </section>
+    </div>
   );
 }
