@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import { Compass, Map, Shield, Leaf } from "lucide-react";
 import PageHero from "@/components/ui/PageHero";
-import { TripAdvisorBadge } from "@/components/ui/TripAdvisorBadge";
+import { TripAdvisorAboutSection } from "@/components/ui/TripAdvisorBadge";
 
 export default function AboutPage() {
   const t = useTranslations("about");
@@ -64,9 +64,7 @@ export default function AboutPage() {
           </div>
 
           {/* TripAdvisor */}
-          <div className="mt-16 flex justify-center">
-            <TripAdvisorBadge variant="light" />
-          </div>
+          <TripAdvisorAboutSection />
         </div>
       </section>
     </>

@@ -8,6 +8,7 @@ import PageHero from "@/components/ui/PageHero";
 import LoadMoreFade from "@/components/ui/LoadMoreFade";
 import SkeletonCard from "@/components/ui/SkeletonCard";
 import TestimonyForm from "@/components/testimonials/TestimonyForm";
+import { TripAdvisorReviewSection } from "@/components/ui/TripAdvisorBadge";
 import { apiClient } from "@/lib/api";
 
 interface TestimonyItem {
@@ -239,6 +240,9 @@ export default function TestimonialsPage() {
           ) : null}
         </div>
       </section>
+
+      {/* Rate us on TripAdvisor */}
+      <TripAdvisorReviewSection />
 
       {/* Submit Testimony Form */}
       <section className="py-20 bg-brand-warm">
