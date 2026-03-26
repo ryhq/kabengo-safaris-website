@@ -119,3 +119,43 @@ export function TripAdvisorWidget() {
     </div>
   );
 }
+
+/**
+ * Official TripAdvisor "Recommended" linking widget.
+ */
+export function TripAdvisorRecommended() {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+    const script = document.createElement("script");
+    script.src =
+      "https://www.jscache.com/wejs?wtype=linkingWidgetRedesign&uniq=134&locationId=34283345&lang=en_US&border=true&display_version=2";
+    script.async = true;
+    containerRef.current.appendChild(script);
+    return () => {
+      script.remove();
+    };
+  }, []);
+
+  return (
+    <div ref={containerRef}>
+      <div id="TA_linkingWidgetRedesign134" className="TA_linkingWidgetRedesign">
+        <ul id="UfDAA6lBoKJP" className="TA_links TAlBj67R">
+          <li id="onlwOZvHoqZ" className="bkY3TF">
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href={TRIPADVISOR_URL}
+            >
+              <img
+                src="https://static.tacdn.com/img2/brand_refresh/Tripadvisor_lockup_horizontal_secondary_registered.svg"
+                alt="TripAdvisor"
+              />
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  );
+}
