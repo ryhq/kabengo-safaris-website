@@ -39,13 +39,22 @@
     "notFoundTitle": "Ukurasa Haupatikani",
     "notFoundMessage": "Ukurasa unaoutafuta haupo au umehamishwa.",
     "notFoundCta": "Chunguza Safari Zetu",
-    "noResultsTitle": "[EN] No Results Found",
-    "noResultsMessage": "[EN] We couldn't find anything matching your search. Try adjusting your filters or search terms.",
-    "clearFilters": "[EN] Clear Filters",
-    "errorTitle": "[EN] Something Went Wrong",
-    "errorMessage": "[EN] We encountered an unexpected error. Please try again.",
-    "tryAgain": "[EN] Try Again",
-    "backToTop": "[EN] Back to top"
+    "noResultsTitle": "No Results Found",
+    "noResultsMessage": "We couldn't find anything matching your search. Try adjusting your filters or search terms.",
+    "clearFilters": "Clear Filters",
+    "errorTitle": "Something Went Wrong",
+    "errorMessage": "We encountered an unexpected error. Please try again.",
+    "tryAgain": "Try Again",
+    "backToTop": "Back to top",
+    "findUsOn": "Find us on",
+    "tripadvisor": "Tripadvisor",
+    "previous": "Previous",
+    "next": "Next",
+    "close": "Close",
+    "tripadvisorAboutDesc": "Read reviews from our guests and see why travelers love exploring East Africa with Kabengo Safaris.",
+    "viewOnTripadvisor": "View on Tripadvisor",
+    "reviewOnTripadvisor": "Rate Us on Tripadvisor",
+    "reviewOnTripadvisorDesc": "Had an amazing safari experience? Share your story on Tripadvisor and help other travelers discover Kabengo Safaris."
   },
   "search": {
     "placeholder": "Tafuta mbuga, safari, shughuli...",
@@ -65,8 +74,8 @@
     "ctaTitle": "Uko Tayari kwa Safari Yako ya Afrika?",
     "ctaSubtitle": "Turuhusu kuunda uzoefu bora wa safari kwa ajili yako",
     "ctaCta": "Panga Safari Yako",
-    "whyChooseUsTitle": "[EN] Why Choose Kabengo Safaris",
-    "whyChooseUsSubtitle": "[EN] Trusted by travelers worldwide for unforgettable African adventures"
+    "whyChooseUsTitle": "Why Choose Kabengo Safaris",
+    "whyChooseUsSubtitle": "Trusted by travelers worldwide for unforgettable African adventures"
   },
   "safaris": {
     "title": "Safari Zetu",
@@ -100,7 +109,17 @@
         "budget": "Bajeti",
         "backpacker": "Msafiri"
       },
-      "clear": "Ondoa vichujio"
+      "clear": "Ondoa vichujio",
+      "duration": "Duration",
+      "moreFilters": "Filters",
+      "durations": {
+        "all": "All Safaris",
+        "dayTrip": "Day Trips",
+        "short": "2–3 Days",
+        "medium": "4–6 Days",
+        "week": "7–9 Days",
+        "extended": "10+ Days"
+      }
     },
     "detail": {
       "itinerary": "Ratiba ya Kila Siku",
@@ -136,19 +155,24 @@
       "similarSafarisSubtitle": "Gundua Safari Zinazofanana",
       "viewAllSafaris": "Tazama Safari Zote",
       "faq": {
-        "title": "[EN] Frequently Asked Questions",
-        "q1": "[EN] How do I book this safari?",
-        "a1": "[EN] You can book directly through our website by clicking Book Now or Inquire, or contact us via WhatsApp or email.",
-        "q2": "[EN] Can this safari be customized?",
-        "a2": "[EN] Absolutely! Every safari we offer can be tailored to your preferences, budget, and travel dates.",
-        "q3": "[EN] What should I pack for this safari?",
-        "a3": "[EN] We recommend neutral-colored clothing, comfortable walking shoes, sun protection, binoculars, and a camera.",
-        "q4": "[EN] Is travel insurance required?",
-        "a4": "[EN] We strongly recommend comprehensive travel insurance that covers trip cancellation, medical emergencies, and evacuation."
-      }
+        "title": "Frequently Asked Questions",
+        "q1": "How do I book this safari?",
+        "a1": "You can book directly through our website by clicking 'Book Now' or 'Inquire', or contact us via WhatsApp or email. Our team will respond within 24 hours with a personalized proposal.",
+        "q2": "Can this safari be customized?",
+        "a2": "Absolutely! Every safari we offer can be tailored to your preferences, budget, and travel dates. We can adjust accommodation, add extra days, or modify activities to suit your needs.",
+        "q3": "What should I pack for this safari?",
+        "a3": "We recommend neutral-colored clothing (khaki, beige, olive), comfortable walking shoes, sun protection (hat, sunscreen, sunglasses), binoculars, a camera, and layers for cooler mornings and evenings.",
+        "q4": "Is travel insurance required?",
+        "a4": "We strongly recommend comprehensive travel insurance that covers trip cancellation, medical emergencies, and evacuation. Some parks and activities may require proof of insurance."
+      },
+      "perPerson": "per person",
+      "paxContext": "For {count} {category}"
     },
     "sectionHeading": "Pata Safari Yako Bora",
-    "sectionSubheading": "Safari za kipekee kupitia mandhari ya Afrika yenye kupendeza"
+    "sectionSubheading": "Safari za kipekee kupitia mandhari ya Afrika yenye kupendeza",
+    "resultCount": "{count} {count, plural, one {safari} other {safaris}} found",
+    "dayTrip": "Day Trip",
+    "daysNights": "{days}D / {nights}N"
   },
   "parks": {
     "title": "Hifadhi za Taifa",
@@ -169,15 +193,15 @@
       "location": "Mahali",
       "backToParks": "Rudi kwa Hifadhi",
       "faq": {
-        "title": "[EN] Frequently Asked Questions",
-        "q1": "[EN] When is the best time to visit this park?",
-        "a1": "[EN] The best time varies by park, but generally the dry season (June to October) offers the best wildlife viewing.",
-        "q2": "[EN] What wildlife can I expect to see?",
-        "a2": "[EN] Each park has its unique wildlife. Our expert guides will help you spot the area's most iconic species.",
-        "q3": "[EN] Are there entry fees for the park?",
-        "a3": "[EN] Yes, all national parks and reserves have entry fees. These are typically included in our safari packages.",
-        "q4": "[EN] How do I get to this park?",
-        "a4": "[EN] Most parks are accessible by road from Arusha or nearby towns. We provide comfortable 4x4 vehicles."
+        "title": "Frequently Asked Questions",
+        "q1": "When is the best time to visit this park?",
+        "a1": "The best time varies by park, but generally the dry season (June to October) offers the best wildlife viewing as animals gather around water sources. The wet season (November to May) is ideal for birdwatching and lush landscapes.",
+        "q2": "What wildlife can I expect to see?",
+        "a2": "Each park has its unique wildlife. Our expert guides will help you spot the area's most iconic species. Sightings depend on season and time of day, but our experienced guides know the best spots.",
+        "q3": "Are there entry fees for the park?",
+        "a3": "Yes, all national parks and reserves have entry fees. These are typically included in our safari packages. Fees vary by park, visitor nationality, and age category. Contact us for current rates.",
+        "q4": "How do I get to this park?",
+        "a4": "Most parks are accessible by road from Arusha or nearby towns. We provide comfortable 4x4 vehicles with experienced drivers for all transfers. Some remote parks also offer fly-in options."
       }
     },
     "sectionHeading": "Gundua Maeneo ya Porini",
@@ -208,9 +232,9 @@
       "checkInPolicy": "Sera ya Kuingia",
       "checkOutPolicy": "Sera ya Kutoka",
       "termsAndConditions": "Sheria na Masharti",
-      "nearbyAccommodations": "[EN] Nearby Accommodations",
-      "nearbyAccommodationsSubtitle": "[EN] Explore More Places to Stay",
-      "viewAllAccommodations": "[EN] Browse All Accommodations"
+      "nearbyAccommodations": "Nearby Accommodations",
+      "nearbyAccommodationsSubtitle": "Explore More Places to Stay",
+      "viewAllAccommodations": "Browse All Accommodations"
     },
     "sectionHeading": "Kaa Mahali Pazuri",
     "sectionSubheading": "Kutoka lodji za kifahari hadi kambi halisi chini ya anga la Afrika"
@@ -238,7 +262,10 @@
     "all": "Zote",
     "safaris": "Safari",
     "parks": "Hifadhi",
-    "wildlife": "Wanyamapori"
+    "wildlife": "Wanyamapori",
+    "activities": "Activities",
+    "accommodations": "Accommodations",
+    "viewEntity": "View {entity}"
   },
   "testimonials": {
     "title": "Mapitio",
@@ -263,7 +290,9 @@
     "submitError": "Kitu kimeenda vibaya. Tafadhali jaribu tena.",
     "formInspiration": "Hadithi yako inaweza kumhamasisha mtu kuchukua safari ya maisha. Kila safari ni ya kipekee — shiriki yako.",
     "thankYouTitle": "Hadithi Imepokelewa!",
-    "writeAnother": "Andika maoni mengine"
+    "writeAnother": "Andika maoni mengine",
+    "yourEmail": "Your Email",
+    "emailPlaceholder": "you@example.com"
   },
   "blog": {
     "title": "Jarida la Safari",
@@ -408,12 +437,12 @@
     "blogDescription": "Hadithi na maarifa kutoka nyika za Afrika."
   },
   "whatsapp": {
-    "tooltip": "[EN] Chat with us on WhatsApp",
+    "tooltip": "Chat with us on WhatsApp",
     "defaultMessage": "Hello! I'm interested in learning more about your safari packages."
   },
   "privacy": {
-    "bannerMessage": "[EN] We respect your privacy — this website does not use cookies or tracking.",
-    "learnMore": "[EN] Learn More",
-    "dismiss": "[EN] Got it"
+    "bannerMessage": "We respect your privacy — this website does not use cookies or tracking.",
+    "learnMore": "Learn More",
+    "dismiss": "Got it"
   }
 }
