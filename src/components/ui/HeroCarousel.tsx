@@ -99,11 +99,11 @@ export default function HeroCarousel({
             transition: { duration: 1.2, ease: "easeInOut" },
           }}
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{
-            backgroundImage: hero?.primaryImageUrl
-              ? `url('${hero.primaryImageUrl}')`
-              : "url('https://images.unsplash.com/photo-1516426122078-c23e76319801?w=1920&q=80')",
-          }}
+          style={
+            hero?.primaryImageUrl
+              ? { backgroundImage: `url('${hero.primaryImageUrl}')` }
+              : { background: "linear-gradient(135deg, #3d2817 0%, #6b4226 50%, #8b5a2b 100%)" }
+          }
         >
           <div
             className="absolute inset-0"
