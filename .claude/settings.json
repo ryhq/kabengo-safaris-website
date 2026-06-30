@@ -1,0 +1,45 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(/usr/bin/ssh -i ~/.ssh/deploy_ryhqtech root@164.92.191.175 'ls -la /opt/kabengosafaris/data/static/')",
+      "Bash(/usr/bin/scp -i '~/.ssh/deploy_ryhqtech' '/home/ricksy/Documents/SPRING BOOT PROJECTS/kabengosafaris/src/main/resources/static/images/icon-logo-green.png' root@164.92.191.175:/opt/kabengosafaris/data/static/icon-logo-green.png)",
+      "Bash(/usr/bin/curl -sI https://api.kabengosafaris.ryhqtech.com/static/icon-logo-green.png)",
+      "Bash(DRY_RUN=true /usr/bin/node scripts/import-outpost-rates.mjs)",
+      "Bash(/usr/bin/ls \"/home/ricksy/Documents/REACT JS PROJECTS/kabengo-safaris-management/scripts/\")",
+      "Bash(/usr/bin/ls \"/home/ricksy/Documents/SPRING BOOT PROJECTS/kabengosafaris/src/main/java/com/itineraryledger/kabengosafaris/Itinerary/Entity/\")",
+      "Bash(/usr/bin/ls \"/home/ricksy/Documents/SPRING BOOT PROJECTS/kabengosafaris/src/main/java/com/itineraryledger/kabengosafaris/Itinerary/ItineraryDay/Entity/\")",
+      "Bash(/usr/bin/ls \"/home/ricksy/Documents/SPRING BOOT PROJECTS/kabengosafaris/src/main/java/com/itineraryledger/kabengosafaris/Itinerary/DTOs/\")",
+      "Bash(/usr/bin/wc -l '/home/ricksy/Documents/REACT JS PROJECTS/kabengo-safaris-management/scripts/link-itinerary-accommodations.mjs' '/home/ricksy/Documents/REACT JS PROJECTS/kabengo-safaris-management/scripts/relink-saf-16d15n-01001.mjs' '/home/ricksy/Documents/REACT JS PROJECTS/kabengo-safaris-management/scripts/SAF-16D15N-01001-PLAN.md' '/home/ricksy/Documents/SPRING BOOT PROJECTS/kabengosafaris/src/main/java/com/itineraryledger/kabengosafaris/Itinerary/DTOs/CreateItineraryDTO.java' '/home/ricksy/Documents/SPRING BOOT PROJECTS/kabengosafaris/src/main/java/com/itineraryledger/kabengosafaris/Itinerary/Entity/Itinerary.java' '/home/ricksy/Documents/SPRING BOOT PROJECTS/kabengosafaris/src/main/java/com/itineraryledger/kabengosafaris/Itinerary/ItineraryDay/Entity/ItineraryDay.java')",
+      "Bash(/usr/bin/grep -E 'name:|Tukaone|TWC|Weavers|Migombani' '/home/ricksy/Documents/REACT JS PROJECTS/kabengo-safaris-management/scripts/import-twc-rates.mjs')",
+      "Bash(/usr/bin/grep -E \"name: '[A-Z]\" \"/home/ricksy/Documents/REACT JS PROJECTS/kabengo-safaris-management/scripts/import-twc-rates.mjs\")",
+      "Bash(/usr/bin/grep -nE \"accommodation:|name:\" \"/home/ricksy/Documents/REACT JS PROJECTS/kabengo-safaris-management/scripts/import-twc-rates.mjs\")",
+      "Bash(/usr/bin/grep -nE \"name: '[A-Z][^']*',\" \"/home/ricksy/Documents/REACT JS PROJECTS/kabengo-safaris-management/scripts/import-twc-rates.mjs\")",
+      "Bash(/usr/bin/grep -E 'name: '\\\\''Tukaone|name: '\\\\''Serengeti|name: '\\\\''Mara |Serengeti Weavers' '/home/ricksy/Documents/REACT JS PROJECTS/kabengo-safaris-management/scripts/import-twc-rates.mjs')",
+      "Bash(/usr/bin/grep -B1 -A20 \"POST /api/itineraries/{itineraryId}/days$\\\\|POST /api/itineraries/{itineraryId}/days\\\\`$\\\\|POST /api/itineraries/itn456abc/days$\" src/pages/Itineraries/views/ItineraryDay/API_DOCUMENTATION.md)",
+      "Bash(/usr/bin/grep -B1 -A20 \"Endpoint:.*POST.*accommodations\" src/pages/Itineraries/views/ItineraryDay/ItineraryDayAccommodation/API_DOCUMENTATION.md)",
+      "Bash(/usr/bin/grep -B1 -A20 \"URL:.*POST.*parks\\\\`$\" src/pages/Itineraries/views/ItineraryDay/ItineraryDayPark/API_DOCUMENTATION.md)",
+      "Bash(/usr/bin/grep -B1 -A20 \"Endpoint:.*POST.*activities\\\\`$\" src/pages/Itineraries/views/ItineraryDay/ItineraryDayActivity/API_DOCUMENTATION.md)",
+      "Bash(/usr/bin/grep -rE \"/pax|itinerary-pax|itineraryPax|paxList\" src/pages/Itineraries/)",
+      "Bash(/usr/bin/grep -A30 \"axiosInstance.post.*pax\" src/pages/Itineraries/components/AddItineraryPaxModal.jsx)",
+      "Bash(/usr/bin/sed -n '/handleSubmit\\\\|payload\\\\|formData/p' src/pages/Itineraries/components/AddItineraryPaxModal.jsx)",
+      "Bash(/usr/bin/grep -B5 -A2 \"itineraryId}/pax\" src/pages/Itineraries/components/AddItineraryPaxModal.jsx)",
+      "Bash(/usr/bin/find \"/home/ricksy/Documents/SPRING BOOT PROJECTS/kabengosafaris/src/main/java/com/itineraryledger/kabengosafaris/Itinerary/ItineraryPax\" -name \"*.java\")",
+      "Bash(/usr/bin/grep -rB1 -A30 \"POST.*\\\\/activities\\\\b\" src/pages/Activities/ src/pages/Itineraries/)",
+      "Bash(/usr/bin/find \"/home/ricksy/Documents/SPRING BOOT PROJECTS/kabengosafaris/src/main/java/com/itineraryledger/kabengosafaris/Activity\" -name \"*Create*.java\" -o -name \"*Upsert*.java\")",
+      "Bash(/usr/bin/find \"/home/ricksy/Documents/SPRING BOOT PROJECTS/kabengosafaris/src/main/java/com/itineraryledger/kabengosafaris/Itinerary/ItineraryDay/ItineraryDayPark\" -name \"*.java\")",
+      "Bash(/usr/bin/grep -rE \"enum|EntryType|entryType\" \"/home/ricksy/Documents/SPRING BOOT PROJECTS/kabengosafaris/src/main/java/com/itineraryledger/kabengosafaris/Itinerary/ItineraryDay/ItineraryDayPark/\")",
+      "Bash(/usr/bin/grep -nE \"public enum|enum EntryType|getDisplayName|GAME_DRIVE|DAY_TRIP|OVERNIGHT|TRANSIT|cases\" \"/home/ricksy/Documents/SPRING BOOT PROJECTS/kabengosafaris/src/main/java/com/itineraryledger/kabengosafaris/Itinerary/ItineraryDay/ItineraryDayPark/Entity/ItineraryDayPark.java\")",
+      "Bash(/usr/bin/cat \"/home/ricksy/Documents/SPRING BOOT PROJECTS/kabengosafaris/src/main/java/com/itineraryledger/kabengosafaris/Itinerary/ItineraryDay/ItineraryDayPark/DTOs/CreateItineraryDayParkDTO.java\")",
+      "Bash(DRY_RUN=true /usr/bin/node scripts/finish-6day-northern-classic-itinerary.mjs)",
+      "Bash(DRY_RUN=true /usr/bin/node scripts/create-6day-migration-trail-itinerary.mjs)",
+      "WebFetch(domain:serengetisavannahcamp.com)",
+      "Bash(DRY_RUN=true node scripts/import-serengeti-savannah-rates.mjs)",
+      "WebFetch(domain:www.migombanicamp.com)",
+      "Bash(DRY_RUN=true node scripts/import-migombani-rates.mjs)",
+      "Bash(DRY_RUN=true node scripts/finish-migombani-import.mjs)"
+    ],
+    "additionalDirectories": [
+      "/home/ricksy/Documents"
+    ]
+  }
+}

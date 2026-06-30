@@ -16,6 +16,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import PageHero from "@/components/ui/PageHero";
+import CountryPhoneInput from "@/components/ui/CountryPhoneInput";
 import { apiClient } from "@/lib/api";
 
 /* Client-side only contact details — not in static HTML for bot protection */
@@ -211,12 +212,11 @@ export default function ContactPage() {
                         <label className="block text-sm font-medium text-stone-700 mb-1.5">
                           {t("phone")}
                         </label>
-                        <input
-                          type="tel"
+                        <CountryPhoneInput
+                          accent="brown"
                           name="phone"
                           value={form.phone}
-                          onChange={handleChange}
-                          className={inputClass}
+                          onChange={(full) => setForm((f) => ({ ...f, phone: full }))}
                         />
                       </div>
                       <div>

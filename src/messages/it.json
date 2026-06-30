@@ -292,7 +292,10 @@
     "thankYouTitle": "Storia Ricevuta!",
     "writeAnother": "Scrivi un'altra recensione",
     "yourEmail": "Your Email",
-    "emailPlaceholder": "you@example.com"
+    "emailPlaceholder": "you@example.com",
+    "emptyTitle": "Be the first to share your story",
+    "emptyBody": "No reviews here yet — but every great safari begins with someone taking the leap. If you've explored Tanzania with us, your words help the next traveler dream bigger.",
+    "emptyCta": "Write the first review"
   },
   "blog": {
     "title": "Diario Safari",

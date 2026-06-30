@@ -22,6 +22,7 @@ import { submitBookingInquiry, fetchSafarisPaginated } from "@/lib/api";
 import GlassSelect from "@/components/ui/GlassSelect";
 import GlassCombobox from "@/components/ui/GlassCombobox";
 import DateRangePicker from "@/components/ui/DateRangePicker";
+import CountryPhoneInput from "@/components/ui/CountryPhoneInput";
 import type { Itinerary, BookingInquiryPayload } from "@/types";
 
 interface BookingInquiryFormProps {
@@ -452,12 +453,12 @@ export default function BookingInquiryForm({ safariId }: BookingInquiryFormProps
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className={labelClass}>{t("phone")}</label>
-                      <input
-                        type="tel"
+                      <CountryPhoneInput
+                        accent="green"
                         value={phone}
-                        onChange={(e) => setPhone(e.target.value)}
-                        className={inputClass}
-                        placeholder={t("phonePlaceholder")}
+                        onChange={setPhone}
+                        radiusClass="rounded-xl"
+                        sizeClass="px-4 py-3.5 text-sm"
                       />
                     </div>
                     <div>

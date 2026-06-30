@@ -291,6 +291,9 @@
     "formInspiration": "Hadithi yako inaweza kumhamasisha mtu kuchukua safari ya maisha. Kila safari ni ya kipekee — shiriki yako.",
     "thankYouTitle": "Hadithi Imepokelewa!",
     "writeAnother": "Andika maoni mengine",
+    "emptyTitle": "Kuwa wa kwanza kushiriki hadithi yako",
+    "emptyBody": "Bado hakuna maoni hapa — lakini kila safari nzuri huanza na mtu kuthubutu. Kama umeitembelea Tanzania nasi, maneno yako humsaidia msafiri ajaye kuota ndoto kubwa zaidi.",
+    "emptyCta": "Andika maoni ya kwanza",
     "yourEmail": "Your Email",
     "emailPlaceholder": "you@example.com"
   },

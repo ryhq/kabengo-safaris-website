@@ -290,7 +290,10 @@
     "submitError": "Something went wrong. Please try again.",
     "formInspiration": "Your story could inspire someone to take the journey of a lifetime. Every safari is unique — share yours.",
     "thankYouTitle": "Story Received!",
-    "writeAnother": "Write another review"
+    "writeAnother": "Write another review",
+    "emptyTitle": "Be the first to share your story",
+    "emptyBody": "No reviews here yet — but every great safari begins with someone taking the leap. If you've explored Tanzania with us, your words help the next traveler dream bigger.",
+    "emptyCta": "Write the first review"
   },
   "blog": {
     "title": "Safari Journal",

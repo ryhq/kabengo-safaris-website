@@ -162,7 +162,38 @@ export default function TestimonialsPage() {
               ))}
             </div>
           ) : rest.length === 0 && !featured ? (
-            <p className="text-center text-stone-500 py-12">{common("noResults")}</p>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="text-center max-w-md mx-auto py-16"
+            >
+              {/* Decorative quote badge with star accents */}
+              <div className="relative mx-auto mb-7 w-24 h-24">
+                <div className="absolute inset-0 rounded-full bg-gradient-to-br from-brand-brown/15 to-brand-brown/5" />
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <Quote className="w-10 h-10 text-brand-brown" strokeWidth={1.5} />
+                </div>
+                <Star className="absolute -top-0.5 right-2 w-4 h-4 text-amber-400 fill-amber-400" />
+                <Star className="absolute bottom-1 -left-1 w-3 h-3 text-amber-400/70 fill-amber-400/70" />
+              </div>
+              <h3 className="text-2xl sm:text-3xl font-serif font-bold text-stone-800 mb-3">
+                {t("emptyTitle")}
+              </h3>
+              <p className="text-stone-500 leading-relaxed mb-8">
+                {t("emptyBody")}
+              </p>
+              <button
+                type="button"
+                onClick={() =>
+                  document.getElementById("share-story")?.scrollIntoView({ behavior: "smooth" })
+                }
+                className="inline-flex items-center gap-2 px-7 py-3.5 bg-brand-brown text-white text-sm font-semibold rounded-lg shadow-lg shadow-brand-brown/20 hover:bg-brand-brown-light hover:shadow-xl transition-all duration-300"
+              >
+                <Quote size={16} className="rotate-180" />
+                {t("emptyCta")}
+              </button>
+            </motion.div>
           ) : rest.length > 0 ? (
             <>
               <div className={`grid gap-10 ${
@@ -242,7 +273,7 @@ export default function TestimonialsPage() {
       </section>
 
       {/* Submit Testimony Form */}
-      <section className="py-20 bg-brand-warm">
+      <section id="share-story" className="py-20 bg-brand-warm scroll-mt-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <TestimonyForm />
         </div>

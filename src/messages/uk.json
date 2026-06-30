@@ -290,7 +290,10 @@
     "submitError": "Щось пішло не так. Будь ласка, спробуйте ще раз.",
     "formInspiration": "Ваша історія може надихнути когось на подорож усього життя. Кожне сафарі унікальне - поділіться своїм.",
     "thankYouTitle": "Історію прийнято!",
-    "writeAnother": "Напишіть ще один відгук"
+    "writeAnother": "Напишіть ще один відгук",
+    "emptyTitle": "Be the first to share your story",
+    "emptyBody": "No reviews here yet — but every great safari begins with someone taking the leap. If you've explored Tanzania with us, your words help the next traveler dream bigger.",
+    "emptyCta": "Write the first review"
   },
   "blog": {
     "title": "Сафарі-журнал",
