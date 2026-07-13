@@ -28,6 +28,13 @@ async function serverFetch<T>(path: string, locale = "en"): Promise<T | null> {
 }
 
 // Safari/Itinerary
+interface SafariDayMeta {
+  dayNumber?: number;
+  title?: string;
+  description?: string;
+  startLocation?: string;
+  endLocation?: string;
+}
 interface SafariMeta {
   id: string;
   name: string;
@@ -38,7 +45,9 @@ interface SafariMeta {
   totalNights?: number;
   startLocation?: string;
   endLocation?: string;
-  costSummary?: { totalRackPriceUSD?: number };
+  days?: SafariDayMeta[];
+  // Public API returns an array of cost summaries (rack figures); JSON-LD reads [0].
+  costSummary?: Array<{ grandTotalRack?: number; currency?: string }>;
 }
 
 export async function fetchSafariMeta(id: string, locale = "en"): Promise<SafariMeta | null> {
@@ -56,6 +65,9 @@ interface ParkMeta {
   region?: string;
   latitude?: number;
   longitude?: number;
+  openingHours?: string;
+  bestTimeToVisit?: string;
+  wildlife?: string;
 }
 
 export async function fetchParkMeta(id: string, locale = "en"): Promise<ParkMeta | null> {
@@ -71,12 +83,18 @@ interface AccommodationMeta {
   details?: string;
   primaryImageUrl?: string;
   region?: string;
+  district?: string;
+  address?: string;
   latitude?: number;
   longitude?: number;
   starRating?: number;
   categoryApproximateStars?: number;
   categoryDisplayName?: string;
   priceRange?: string;
+  accommodationType?: string;
+  amenities?: string;
+  website?: string;
+  maxGuests?: number;
 }
 
 export async function fetchAccommodationMeta(id: string, locale = "en"): Promise<AccommodationMeta | null> {
@@ -95,6 +113,32 @@ interface ActivityMeta {
 
 export async function fetchActivityMeta(id: string, locale = "en"): Promise<ActivityMeta | null> {
   return serverFetch<ActivityMeta>(`/public/activities/${id}`, locale);
+}
+
+// Testimony rating summary (for AggregateRating schema).
+// Returns null until the backend /public/testimonies/summary endpoint is deployed,
+// so schema simply omits ratings rather than breaking.
+export interface TestimonySummary {
+  ratingValue: number;
+  reviewCount: number;
+  bestRating: number;
+  worstRating: number;
+}
+
+export async function fetchTestimonySummary(): Promise<TestimonySummary | null> {
+  const data = await serverFetch<{
+    averageRating?: number;
+    reviewCount?: number;
+    bestRating?: number;
+    worstRating?: number;
+  }>(`/public/testimonies/summary`);
+  if (!data || !data.averageRating || !data.reviewCount) return null;
+  return {
+    ratingValue: data.averageRating,
+    reviewCount: data.reviewCount,
+    bestRating: data.bestRating ?? 5,
+    worstRating: data.worstRating ?? 1,
+  };
 }
 
 // Sitemap: fetch all published entity IDs

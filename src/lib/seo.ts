@@ -18,3 +18,20 @@ export function buildAlternates(locale: string, path: string = "") {
     languages,
   };
 }
+
+/** Map an app locale to an Open Graph locale (e.g. "fr" → "fr_FR"). */
+const OG_LOCALE: Record<string, string> = {
+  en: "en_US",
+  sw: "sw_TZ",
+  fr: "fr_FR",
+  de: "de_DE",
+  es: "es_ES",
+  it: "it_IT",
+  pt: "pt_PT",
+  af: "af_ZA",
+  uk: "uk_UA",
+};
+
+export function ogLocale(locale: string): string {
+  return OG_LOCALE[locale] ?? "en_US";
+}

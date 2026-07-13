@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { JsonLd, getOrganizationJsonLd } from "@/lib/jsonld";
+import { fetchTestimonySummary } from "@/lib/server-api";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -44,14 +45,15 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const aggregate = await fetchTestimonySummary();
   return (
     <>
-      <JsonLd data={getOrganizationJsonLd()} />
+      <JsonLd data={getOrganizationJsonLd({ aggregate })} />
       {children}
     </>
   );

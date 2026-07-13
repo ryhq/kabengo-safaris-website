@@ -8,7 +8,8 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import ApiLocaleSync from "@/lib/ApiLocaleSync";
 import ImageProtection from "@/components/ui/ImageProtection";
-import { buildAlternates } from "@/lib/seo";
+import { buildAlternates, ogLocale } from "@/lib/seo";
+import { JsonLd, getWebSiteJsonLd } from "@/lib/jsonld";
 import WhatsAppButton from "@/components/ui/WhatsAppButton";
 import BackToTopButton from "@/components/ui/BackToTopButton";
 import PrivacyBanner from "@/components/ui/PrivacyBanner";
@@ -21,6 +22,7 @@ export async function generateMetadata({
   const { locale } = await params;
   return {
     alternates: buildAlternates(locale),
+    openGraph: { locale: ogLocale(locale) },
   };
 }
 
@@ -54,6 +56,7 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} className={`${playfair.variable} ${inter.variable}`}>
       <body className="min-h-screen flex flex-col">
+        <JsonLd data={getWebSiteJsonLd(locale)} />
         <NextIntlClientProvider messages={messages}>
           <ApiLocaleSync />
           <ImageProtection />

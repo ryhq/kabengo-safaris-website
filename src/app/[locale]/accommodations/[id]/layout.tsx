@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import { fetchAccommodationMeta } from "@/lib/server-api";
 import { buildAlternates } from "@/lib/seo";
-import { JsonLd, getAccommodationJsonLd } from "@/lib/jsonld";
+import { JsonLd, getAccommodationJsonLd, getBreadcrumbJsonLd, localeUrl } from "@/lib/jsonld";
 
 export async function generateMetadata({
   params,
@@ -49,11 +50,23 @@ export default async function AccommodationDetailLayout({
   params: Promise<{ locale: string; id: string }>;
 }) {
   const { locale, id } = await params;
-  const acc = await fetchAccommodationMeta(id, locale);
+  const [acc, nav] = await Promise.all([
+    fetchAccommodationMeta(id, locale),
+    getTranslations({ locale, namespace: "nav" }),
+  ]);
+
+  const breadcrumb = acc
+    ? getBreadcrumbJsonLd([
+        { name: nav("home"), url: localeUrl(locale) },
+        { name: nav("accommodations"), url: localeUrl(locale, "/accommodations") },
+        { name: acc.name, url: localeUrl(locale, `/accommodations/${acc.slug || id}`) },
+      ])
+    : null;
 
   return (
     <>
-      {acc && <JsonLd data={getAccommodationJsonLd(acc)} />}
+      {acc && <JsonLd data={getAccommodationJsonLd(acc, { locale })} />}
+      {breadcrumb && <JsonLd data={breadcrumb} />}
       {children}
     </>
   );

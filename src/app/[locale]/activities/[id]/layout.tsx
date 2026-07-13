@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import { fetchActivityMeta } from "@/lib/server-api";
 import { buildAlternates } from "@/lib/seo";
+import { JsonLd, getActivityJsonLd, getBreadcrumbJsonLd, localeUrl } from "@/lib/jsonld";
 
 export async function generateMetadata({
   params,
@@ -40,10 +42,32 @@ export async function generateMetadata({
   };
 }
 
-export default function ActivityDetailLayout({
+export default async function ActivityDetailLayout({
   children,
+  params,
 }: {
   children: React.ReactNode;
+  params: Promise<{ locale: string; id: string }>;
 }) {
-  return children;
+  const { locale, id } = await params;
+  const [activity, nav] = await Promise.all([
+    fetchActivityMeta(id, locale),
+    getTranslations({ locale, namespace: "nav" }),
+  ]);
+
+  const breadcrumb = activity
+    ? getBreadcrumbJsonLd([
+        { name: nav("home"), url: localeUrl(locale) },
+        { name: nav("activities"), url: localeUrl(locale, "/activities") },
+        { name: activity.name, url: localeUrl(locale, `/activities/${activity.slug || id}`) },
+      ])
+    : null;
+
+  return (
+    <>
+      {activity && <JsonLd data={getActivityJsonLd(activity, { locale })} />}
+      {breadcrumb && <JsonLd data={breadcrumb} />}
+      {children}
+    </>
+  );
 }

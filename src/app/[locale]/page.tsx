@@ -1,5 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import { fetchHomepageData } from "@/lib/api";
+import { buildAlternates } from "@/lib/seo";
 import HeroSection from "@/components/sections/HeroSection";
 import SafarisSection from "@/components/sections/SafarisSection";
 import ParksSection from "@/components/sections/ParksSection";
@@ -19,6 +20,12 @@ export async function generateMetadata({
   return {
     title: t("homeTitle"),
     description: t("homeDescription"),
+    alternates: buildAlternates(locale),
+    openGraph: {
+      title: t("homeTitle"),
+      description: t("homeDescription"),
+      url: `https://kabengosafaris.com/${locale}`,
+    },
   };
 }
 

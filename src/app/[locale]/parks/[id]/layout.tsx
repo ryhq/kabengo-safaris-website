@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import { fetchParkMeta } from "@/lib/server-api";
 import { buildAlternates } from "@/lib/seo";
-import { JsonLd, getParkJsonLd } from "@/lib/jsonld";
+import { JsonLd, getParkJsonLd, getBreadcrumbJsonLd, localeUrl } from "@/lib/jsonld";
 
 export async function generateMetadata({
   params,
@@ -49,11 +50,23 @@ export default async function ParkDetailLayout({
   params: Promise<{ locale: string; id: string }>;
 }) {
   const { locale, id } = await params;
-  const park = await fetchParkMeta(id, locale);
+  const [park, nav] = await Promise.all([
+    fetchParkMeta(id, locale),
+    getTranslations({ locale, namespace: "nav" }),
+  ]);
+
+  const breadcrumb = park
+    ? getBreadcrumbJsonLd([
+        { name: nav("home"), url: localeUrl(locale) },
+        { name: nav("parks"), url: localeUrl(locale, "/parks") },
+        { name: park.name, url: localeUrl(locale, `/parks/${park.slug || id}`) },
+      ])
+    : null;
 
   return (
     <>
-      {park && <JsonLd data={getParkJsonLd(park)} />}
+      {park && <JsonLd data={getParkJsonLd(park, { locale })} />}
+      {breadcrumb && <JsonLd data={breadcrumb} />}
       {children}
     </>
   );
