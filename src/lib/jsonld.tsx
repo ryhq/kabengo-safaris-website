@@ -353,6 +353,34 @@ export function getActivityJsonLd(
 }
 
 /**
+ * Reviews-page schema — attaches AggregateRating + individual Review nodes to the
+ * organization entity (same @id merges with the global TravelAgency node).
+ */
+export function getReviewsJsonLd(opts: {
+  aggregate?: AggregateRatingInput | null;
+  reviews?: Array<{ authorName: string; authorCountry?: string; rating?: number; message?: string; reviewDate?: string }>;
+}) {
+  const ar = aggregateRating(opts.aggregate);
+  const reviews = (opts.reviews ?? []).filter((r) => r.authorName && r.rating);
+  return {
+    "@context": "https://schema.org",
+    "@type": "TravelAgency",
+    "@id": `${BASE_URL}/#organization`,
+    name: "Kabengo Safaris",
+    ...(ar && { aggregateRating: ar }),
+    ...(reviews.length && {
+      review: reviews.slice(0, 20).map((r) => ({
+        "@type": "Review",
+        author: { "@type": "Person", name: r.authorName, ...(r.authorCountry && { address: r.authorCountry }) },
+        reviewRating: { "@type": "Rating", ratingValue: r.rating, bestRating: 5, worstRating: 1 },
+        ...(r.reviewDate && { datePublished: r.reviewDate }),
+        ...(r.message && { reviewBody: stripHtml(r.message).slice(0, 500) }),
+      })),
+    }),
+  };
+}
+
+/**
  * FAQPage schema.
  */
 export function getFAQJsonLd(items: { q: string; a: string }[]) {

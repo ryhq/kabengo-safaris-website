@@ -125,6 +125,20 @@ export interface TestimonySummary {
   worstRating: number;
 }
 
+export interface TestimonyReview {
+  authorName: string;
+  authorCountry?: string;
+  rating?: number;
+  message?: string;
+  reviewDate?: string;
+}
+
+/** Featured approved testimonies (for Review JSON-LD on the reviews page). */
+export async function fetchFeaturedTestimonies(locale = "en"): Promise<TestimonyReview[]> {
+  const data = await serverFetch<TestimonyReview[]>(`/public/testimonies/featured`, locale);
+  return Array.isArray(data) ? data.filter((t) => t.authorName && t.rating) : [];
+}
+
 export async function fetchTestimonySummary(): Promise<TestimonySummary | null> {
   const data = await serverFetch<{
     averageRating?: number;

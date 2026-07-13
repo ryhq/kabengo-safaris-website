@@ -1,5 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import { buildAlternates } from "@/lib/seo";
+import { fetchTestimonySummary, fetchFeaturedTestimonies } from "@/lib/server-api";
+import { JsonLd, getReviewsJsonLd } from "@/lib/jsonld";
 
 export async function generateMetadata({
   params,
@@ -15,6 +17,25 @@ export async function generateMetadata({
   };
 }
 
-export default function Layout({ children }: { children: React.ReactNode }) {
-  return children;
+export default async function Layout({
+  children,
+  params,
+}: {
+  children: React.ReactNode;
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  const [aggregate, reviews] = await Promise.all([
+    fetchTestimonySummary(),
+    fetchFeaturedTestimonies(locale),
+  ]);
+
+  const hasData = aggregate || reviews.length > 0;
+
+  return (
+    <>
+      {hasData && <JsonLd data={getReviewsJsonLd({ aggregate, reviews })} />}
+      {children}
+    </>
+  );
 }
