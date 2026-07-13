@@ -166,7 +166,8 @@
         "a3": "Ми рекомендуємо одяг нейтральних кольорів (хакі, бежевий, оливковий), зручне взуття, захист від сонця (капелюх, сонцезахисний крем, сонцезахисні окуляри), бінокль, фотоапарат та кілька шарів одягу для прохолодних ранків та вечорів.",
         "q4": "Чи потрібна туристична страховка?",
         "a4": "Ми наполегливо рекомендуємо комплексне туристичне страхування, яке покриває скасування поїздки, невідкладні медичні випадки та евакуацію. Деякі парки та заходи можуть вимагати підтвердження страхування."
-      }
+      },
+      "lead": "{name} is a {days}-day, {nights}-night private guided safari in Tanzania with Kabengo Safaris — combining iconic parks and expert local guides in one tailor-made journey."
     },
     "sectionHeading": "Оберіть свою пригоду",
     "sectionSubheading": "Перегляньте сафарі-пакети за тривалістю, стилем та бюджетом",
@@ -202,7 +203,8 @@
         "a3": "Так, у всіх національних парках і заповідниках є плата за вхід. Зазвичай вони включені в наші сафарі-пакети. Вартість залежить від парку, національності та вікової категорії відвідувачів. Зв'яжіться з нами, щоб дізнатися актуальні тарифи.",
         "q4": "Як дістатися до цього парку?",
         "a4": "До більшості парків можна дістатися дорогою з Аруші або сусідніх міст. Ми надаємо комфортабельні повнопривідні автомобілі з досвідченими водіями для всіх трансферів. До деяких віддалених парків також можна долетіти літаком."
-      }
+      },
+      "lead": "{name} is a national park in {region}, Tanzania — a prime safari destination for wildlife viewing on guided game drives with Kabengo Safaris."
     },
     "sectionHeading": "Відкрийте для себе дикі напрямки",
     "sectionSubheading": "Від рівнин Серенгеті до кратера Нгоронгоро і далі"
@@ -234,7 +236,19 @@
       "termsAndConditions": "Умови та положення",
       "nearbyAccommodations": "Найближче житло",
       "nearbyAccommodationsSubtitle": "Дослідити більше місць, де можна зупинитися",
-      "viewAllAccommodations": "Переглянути всі варіанти розміщення"
+      "viewAllAccommodations": "Переглянути всі варіанти розміщення",
+      "lead": "{name} is a safari {type} in {region}, Tanzania, offering comfortable stays close to the wildlife as part of a Kabengo Safaris itinerary.",
+      "faq": {
+        "title": "Frequently Asked Questions",
+        "q1": "What is included in a stay at this property?",
+        "a1": "Rates at most safari lodges and camps are full board (accommodation and all meals). Park fees, drinks and activities are detailed separately in your quote — we confirm exactly what's included when we tailor your itinerary.",
+        "q2": "How do I get to this lodge or camp?",
+        "a2": "Most properties are reached by road transfer or a short bush flight to a nearby airstrip. Your Kabengo Safaris itinerary includes all transfers between destinations.",
+        "q3": "Is it suitable for families or children?",
+        "a3": "Many lodges and camps welcome families, though some tented camps set a minimum age for young children. Tell us your group's ages and we'll match you with the right property.",
+        "q4": "When is the best time to stay?",
+        "a4": "It depends on the region — the dry season (June–October) is best for wildlife, while the green season (November–May) is quieter and lush. We advise based on your travel dates."
+      }
     },
     "sectionHeading": "Зупиніться у найкращому куточку природи",
     "sectionSubheading": "Від розкішних будиночків до автентичних наметових таборів під африканським небом"

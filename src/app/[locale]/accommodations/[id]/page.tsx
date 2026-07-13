@@ -9,6 +9,8 @@ import AccommodationInfoCards from "@/components/accommodation/AccommodationInfo
 import AccommodationDescription from "@/components/accommodation/AccommodationDescription";
 import AccommodationDetailSkeleton from "@/components/accommodation/AccommodationDetailSkeleton";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
+import ContextualFAQ from "@/components/ui/ContextualFAQ";
+import AnswerLead from "@/components/ui/AnswerLead";
 import NearbyAccommodations from "@/components/accommodation/NearbyAccommodations";
 import ParkGallery from "@/components/park/ParkGallery";
 import ParkLocationMap from "@/components/park/ParkLocationMap";
@@ -168,6 +170,17 @@ export default function AccommodationDetailPage() {
       {/* Description */}
       <section className="bg-white py-14">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {accommodation.region && (
+            <div className="mb-8 max-w-3xl">
+              <AnswerLead
+                text={t("detail.lead", {
+                  name: accommodation.name,
+                  type: (accommodation.accommodationTypeDisplayName || "lodge").toLowerCase(),
+                  region: accommodation.region,
+                })}
+              />
+            </div>
+          )}
           <AccommodationDescription
             shortDescription={accommodation.shortDescription}
             details={accommodation.details}
@@ -237,6 +250,9 @@ export default function AccommodationDetailPage() {
           </div>
         </section>
       )}
+
+      {/* FAQ */}
+      <ContextualFAQ type="accommodation" />
 
       {/* Nearby Accommodations */}
       <NearbyAccommodations currentSlug={accommodation.slug} region={accommodation.region} />

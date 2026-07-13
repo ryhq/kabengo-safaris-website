@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { fetchSafariMeta, fetchTestimonySummary } from "@/lib/server-api";
 import { buildAlternates } from "@/lib/seo";
-import { JsonLd, getSafariJsonLd, getBreadcrumbJsonLd, localeUrl } from "@/lib/jsonld";
+import { JsonLd, getSafariJsonLd, getBreadcrumbJsonLd, getFAQJsonLd, localeUrl } from "@/lib/jsonld";
 
 export async function generateMetadata({
   params,
@@ -50,11 +50,17 @@ export default async function SafariDetailLayout({
   params: Promise<{ locale: string; id: string }>;
 }) {
   const { locale, id } = await params;
-  const [safari, aggregate, nav] = await Promise.all([
+  const [safari, aggregate, nav, tSaf] = await Promise.all([
     fetchSafariMeta(id, locale),
     fetchTestimonySummary(),
     getTranslations({ locale, namespace: "nav" }),
+    getTranslations({ locale, namespace: "safaris" }),
   ]);
+
+  const faqItems = [1, 2, 3, 4].map((i) => ({
+    q: tSaf(`detail.faq.q${i}`),
+    a: tSaf(`detail.faq.a${i}`),
+  }));
 
   const breadcrumb = safari
     ? getBreadcrumbJsonLd([
@@ -68,6 +74,7 @@ export default async function SafariDetailLayout({
     <>
       {safari && <JsonLd data={getSafariJsonLd(safari, { locale, aggregate })} />}
       {breadcrumb && <JsonLd data={breadcrumb} />}
+      {safari && <JsonLd data={getFAQJsonLd(faqItems)} />}
       {children}
     </>
   );

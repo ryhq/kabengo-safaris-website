@@ -12,6 +12,7 @@ import BookingSidebar, { MobileBookingBar } from "@/components/safari/BookingSid
 import SimilarSafaris from "@/components/safari/SimilarSafaris";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import ContextualFAQ from "@/components/ui/ContextualFAQ";
+import AnswerLead from "@/components/ui/AnswerLead";
 import { apiClient } from "@/lib/api";
 import type { Itinerary } from "@/types";
 
@@ -154,6 +155,21 @@ export default function SafariDetailPage() {
           </div>
         </div>
       </section>
+
+      {/* Answer-first lead */}
+      {itinerary.totalDays ? (
+        <section className="bg-white pt-12">
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <AnswerLead
+              text={t("detail.lead", {
+                name: itinerary.name,
+                days: itinerary.totalDays,
+                nights: itinerary.totalNights ?? itinerary.totalDays - 1,
+              })}
+            />
+          </div>
+        </section>
+      ) : null}
 
       {/* Day-by-Day Itinerary */}
       {itinerary.days && itinerary.days.length > 0 && (

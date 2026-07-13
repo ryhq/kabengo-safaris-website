@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { fetchParkMeta } from "@/lib/server-api";
 import { buildAlternates } from "@/lib/seo";
-import { JsonLd, getParkJsonLd, getBreadcrumbJsonLd, localeUrl } from "@/lib/jsonld";
+import { JsonLd, getParkJsonLd, getBreadcrumbJsonLd, getFAQJsonLd, localeUrl } from "@/lib/jsonld";
 
 export async function generateMetadata({
   params,
@@ -50,10 +50,16 @@ export default async function ParkDetailLayout({
   params: Promise<{ locale: string; id: string }>;
 }) {
   const { locale, id } = await params;
-  const [park, nav] = await Promise.all([
+  const [park, nav, tPark] = await Promise.all([
     fetchParkMeta(id, locale),
     getTranslations({ locale, namespace: "nav" }),
+    getTranslations({ locale, namespace: "parks" }),
   ]);
+
+  const faqItems = [1, 2, 3, 4].map((i) => ({
+    q: tPark(`detail.faq.q${i}`),
+    a: tPark(`detail.faq.a${i}`),
+  }));
 
   const breadcrumb = park
     ? getBreadcrumbJsonLd([
@@ -67,6 +73,7 @@ export default async function ParkDetailLayout({
     <>
       {park && <JsonLd data={getParkJsonLd(park, { locale })} />}
       {breadcrumb && <JsonLd data={breadcrumb} />}
+      {park && <JsonLd data={getFAQJsonLd(faqItems)} />}
       {children}
     </>
   );

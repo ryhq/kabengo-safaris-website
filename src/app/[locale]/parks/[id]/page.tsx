@@ -12,6 +12,7 @@ import ParkLocationMap from "@/components/park/ParkLocationMap";
 import ParkDetailSkeleton from "@/components/park/ParkDetailSkeleton";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import ContextualFAQ from "@/components/ui/ContextualFAQ";
+import AnswerLead from "@/components/ui/AnswerLead";
 import { apiClient } from "@/lib/api";
 const IMAGES_PAGE_SIZE = 6;
 const ACTIVITIES_PAGE_SIZE = 3;
@@ -58,6 +59,7 @@ export default function ParkDetailPage() {
   const params = useParams();
   const locale = useLocale();
   const nav = useTranslations("nav");
+  const tPark = useTranslations("parks");
 
   const [park, setPark] = useState<ParkDetail | null>(null);
   const [images, setImages] = useState<ParkImage[]>([]);
@@ -204,6 +206,11 @@ export default function ParkDetailPage() {
       {/* Description */}
       <section className="bg-white py-14">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {park.region && (
+            <div className="mb-8 max-w-3xl">
+              <AnswerLead text={tPark("detail.lead", { name: park.name, region: park.region })} />
+            </div>
+          )}
           <ParkDescription
             shortDescription={park.shortDescription}
             fullDescription={park.fullDescription}

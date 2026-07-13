@@ -6,16 +6,23 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 
 interface ContextualFAQProps {
-  type: "safari" | "park";
+  type: "safari" | "park" | "accommodation";
 }
 
 const FAQ_KEYS = {
   safari: ["q1", "q2", "q3", "q4"] as const,
   park: ["q1", "q2", "q3", "q4"] as const,
+  accommodation: ["q1", "q2", "q3", "q4"] as const,
 };
 
+const NAMESPACE = {
+  safari: "safaris",
+  park: "parks",
+  accommodation: "accommodations",
+} as const;
+
 export default function ContextualFAQ({ type }: ContextualFAQProps) {
-  const namespace = type === "safari" ? "safaris" : "parks";
+  const namespace = NAMESPACE[type];
   const t = useTranslations(namespace);
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
@@ -69,22 +76,8 @@ export default function ContextualFAQ({ type }: ContextualFAQProps) {
           })}
         </div>
       </div>
-
-      {/* FAQ structured data */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            mainEntity: questions.map((item) => ({
-              "@type": "Question",
-              name: item.question,
-              acceptedAnswer: { "@type": "Answer", text: item.answer },
-            })),
-          }),
-        }}
-      />
+      {/* FAQPage JSON-LD is emitted server-side from the route layout (see getFAQJsonLd)
+          so it appears in the initial HTML for crawlers. */}
     </section>
   );
 }
