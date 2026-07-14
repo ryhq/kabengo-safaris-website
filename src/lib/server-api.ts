@@ -71,7 +71,9 @@ interface ParkMeta {
 }
 
 export async function fetchParkMeta(id: string, locale = "en"): Promise<ParkMeta | null> {
-  return serverFetch<ParkMeta>(`/public/parks/${id}`, locale);
+  // The single-park endpoint wraps the entity as { park, images, totalImages }.
+  const data = await serverFetch<{ park?: ParkMeta } & ParkMeta>(`/public/parks/${id}`, locale);
+  return data ? (data.park ?? data) : null;
 }
 
 // Accommodation
@@ -98,7 +100,12 @@ interface AccommodationMeta {
 }
 
 export async function fetchAccommodationMeta(id: string, locale = "en"): Promise<AccommodationMeta | null> {
-  return serverFetch<AccommodationMeta>(`/public/accommodations/${id}`, locale);
+  // The single-accommodation endpoint wraps the entity as { accommodation, images, totalImages }.
+  const data = await serverFetch<{ accommodation?: AccommodationMeta } & AccommodationMeta>(
+    `/public/accommodations/${id}`,
+    locale,
+  );
+  return data ? (data.accommodation ?? data) : null;
 }
 
 // Activity
@@ -112,7 +119,9 @@ interface ActivityMeta {
 }
 
 export async function fetchActivityMeta(id: string, locale = "en"): Promise<ActivityMeta | null> {
-  return serverFetch<ActivityMeta>(`/public/activities/${id}`, locale);
+  // The single-activity endpoint wraps the entity as { activity, images, totalImages }.
+  const data = await serverFetch<{ activity?: ActivityMeta } & ActivityMeta>(`/public/activities/${id}`, locale);
+  return data ? (data.activity ?? data) : null;
 }
 
 // Testimony rating summary (for AggregateRating schema).
