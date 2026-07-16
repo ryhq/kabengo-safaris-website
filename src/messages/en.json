@@ -643,5 +643,16 @@
       "No obligation",
       "Reply within 24 hrs"
     ]
+  },
+  "explore": {
+    "eyebrow": "Explore Tanzania",
+    "title": "Where will your journey take you?",
+    "destTitle": "Destinations",
+    "destDesc": "Serengeti, Ngorongoro, Tarangire and beyond",
+    "actTitle": "Activities",
+    "actDesc": "Game drives, walking safaris, balloon rides & culture",
+    "stayTitle": "Where to stay",
+    "stayDesc": "Safari lodges & tented camps for every style",
+    "cta": "Explore"
   }
 }

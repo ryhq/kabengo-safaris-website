@@ -643,5 +643,16 @@
       "Geen verpligting",
       "Antwoord binne 24 uur"
     ]
+  },
+  "explore": {
+    "eyebrow": "Verken Tanzanië",
+    "title": "Waarheen sal jou reis jou neem?",
+    "destTitle": "Bestemmings",
+    "destDesc": "Serengeti, Ngorongoro, Tarangire en meer",
+    "actTitle": "Aktiwiteite",
+    "actDesc": "Wildritte, stapsafari's, ballonvaarte en kultuur",
+    "stayTitle": "Waar om te bly",
+    "stayDesc": "Safari-lodges en tentkampe vir elke styl",
+    "cta": "Verken"
   }
 }

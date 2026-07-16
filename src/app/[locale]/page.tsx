@@ -5,8 +5,7 @@ import HeroSection from "@/components/sections/HeroSection";
 import SafarisSection from "@/components/sections/SafarisSection";
 import BookVacationSection from "@/components/sections/BookVacationSection";
 import HowItWorksSection from "@/components/sections/HowItWorksSection";
-import ParksSection from "@/components/sections/ParksSection";
-import ActivitiesSection from "@/components/sections/ActivitiesSection";
+import ExploreSection from "@/components/sections/ExploreSection";
 import TestimonialsSection from "@/components/sections/TestimonialsSection";
 import CTASection from "@/components/sections/CTASection";
 import NewsletterSection from "@/components/sections/NewsletterSection";
@@ -48,14 +47,7 @@ export default async function HomePage({
       />
       <BookVacationSection />
       <HowItWorksSection />
-      <ParksSection
-        initialParks={data.parks ?? []}
-        totalItems={data.parksTotalItems ?? 0}
-      />
-      <ActivitiesSection
-        initialActivities={data.activities ?? []}
-        totalItems={data.activitiesTotalItems ?? 0}
-      />
+      <ExploreSection />
       <TestimonialsSection
         initialTestimonies={data.testimonies ?? []}
         totalItems={data.testimoniesTotalItems ?? 0}

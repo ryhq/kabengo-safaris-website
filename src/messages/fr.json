@@ -645,5 +645,16 @@
       "Sans engagement",
       "Réponse sous 24 h"
     ]
+  },
+  "explore": {
+    "eyebrow": "Explorez la Tanzanie",
+    "title": "Où votre voyage vous mènera-t-il ?",
+    "destTitle": "Destinations",
+    "destDesc": "Serengeti, Ngorongoro, Tarangire et au-delà",
+    "actTitle": "Activités",
+    "actDesc": "Safaris en 4×4, à pied, vols en montgolfière et culture",
+    "stayTitle": "Où séjourner",
+    "stayDesc": "Lodges et camps de toile pour tous les styles",
+    "cta": "Explorer"
   }
 }

@@ -645,5 +645,16 @@
       "Sin compromiso",
       "Respuesta en 24 h"
     ]
+  },
+  "explore": {
+    "eyebrow": "Explora Tanzania",
+    "title": "¿A dónde te llevará tu viaje?",
+    "destTitle": "Destinos",
+    "destDesc": "Serengeti, Ngorongoro, Tarangire y más",
+    "actTitle": "Actividades",
+    "actDesc": "Safaris en 4×4, a pie, en globo y cultura",
+    "stayTitle": "Dónde alojarse",
+    "stayDesc": "Lodges y campamentos para cada estilo",
+    "cta": "Explorar"
   }
 }

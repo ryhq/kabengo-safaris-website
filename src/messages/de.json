@@ -645,5 +645,16 @@
       "Unverbindlich",
       "Antwort binnen 24 Std."
     ]
+  },
+  "explore": {
+    "eyebrow": "Tansania entdecken",
+    "title": "Wohin führt Sie Ihre Reise?",
+    "destTitle": "Reiseziele",
+    "destDesc": "Serengeti, Ngorongoro, Tarangire und mehr",
+    "actTitle": "Aktivitäten",
+    "actDesc": "Pirschfahrten, Wandersafaris, Ballonfahrten & Kultur",
+    "stayTitle": "Unterkünfte",
+    "stayDesc": "Safari-Lodges & Zeltcamps für jeden Stil",
+    "cta": "Entdecken"
   }
 }

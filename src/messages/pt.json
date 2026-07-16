@@ -645,5 +645,16 @@
       "Sem compromisso",
       "Resposta em 24 h"
     ]
+  },
+  "explore": {
+    "eyebrow": "Explore a Tanzânia",
+    "title": "Para onde a sua viagem o levará?",
+    "destTitle": "Destinos",
+    "destDesc": "Serengeti, Ngorongoro, Tarangire e além",
+    "actTitle": "Atividades",
+    "actDesc": "Safáris de jipe, a pé, balão e cultura",
+    "stayTitle": "Onde ficar",
+    "stayDesc": "Lodges e campos de tenda para todos os estilos",
+    "cta": "Explorar"
   }
 }

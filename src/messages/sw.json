@@ -645,5 +645,16 @@
       "Bila wajibu",
       "Jibu ndani ya saa 24"
     ]
+  },
+  "explore": {
+    "eyebrow": "Gundua Tanzania",
+    "title": "Safari yako itakupeleka wapi?",
+    "destTitle": "Maeneo",
+    "destDesc": "Serengeti, Ngorongoro, Tarangire na zaidi",
+    "actTitle": "Shughuli",
+    "actDesc": "Safari za magari, za miguu, za puto na utamaduni",
+    "stayTitle": "Mahali pa kukaa",
+    "stayDesc": "Malazi na kambi za hema kwa kila mtindo",
+    "cta": "Gundua"
   }
 }
