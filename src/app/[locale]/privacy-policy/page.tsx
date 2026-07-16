@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { ObfuscatedEmail, ObfuscatedPhone } from "@/components/ui/ObfuscatedContact";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy | Kabengo Safaris",
+  title: "Privacy Policy",
   description: "Learn how Kabengo Safaris collects, uses, and protects your personal information.",
 };
 

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { ObfuscatedEmail, ObfuscatedPhone } from "@/components/ui/ObfuscatedContact";
 
 export const metadata: Metadata = {
-  title: "Terms & Conditions | Kabengo Safaris",
+  title: "Terms & Conditions",
   description: "Terms and conditions for booking safaris and using the Kabengo Safaris website.",
 };
 
