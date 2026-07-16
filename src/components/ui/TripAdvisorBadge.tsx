@@ -1,12 +1,17 @@
 "use client";
 
-import { useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import { ExternalLink } from "lucide-react";
 
 const TRIPADVISOR_URL =
   "https://www.tripadvisor.com/Attraction_Review-g297913-d34283345-Reviews-Kabengo_Safaris-Arusha_Arusha_Region.html";
+
+/* Live figures from the TripAdvisor listing — bump these as reviews grow
+   (or later wire the TripAdvisor Content API to fetch them automatically). */
+const TRIPADVISOR_RATING = 5.0;
+const TRIPADVISOR_REVIEW_COUNT = 1;
+const TA_GREEN = "#00aa6c";
 
 function TripAdvisorLogo({ className = "w-6 h-6" }: { className?: string }) {
   return (
@@ -22,8 +27,20 @@ function TripAdvisorLogo({ className = "w-6 h-6" }: { className?: string }) {
   );
 }
 
+/** TripAdvisor-style rating bubbles (green circles). */
+function RatingBubbles({ rating, size = 15 }: { rating: number; size?: number }) {
+  const rounded = Math.round(rating);
+  return (
+    <span className="inline-flex items-center" style={{ gap: 3 }} aria-hidden="true">
+      {[0, 1, 2, 3, 4].map((n) => (
+        <span key={n} style={{ width: size, height: size, borderRadius: "50%", background: n < rounded ? TA_GREEN : "#d6d3cd", display: "inline-block" }} />
+      ))}
+    </span>
+  );
+}
+
 /**
- * Compact icon for footer social row.
+ * Compact icon for the footer social row.
  */
 export function TripAdvisorIcon() {
   return (
@@ -40,43 +57,37 @@ export function TripAdvisorIcon() {
 }
 
 /**
- * Official TripAdvisor rating widget (narrow) — for footer.
+ * Self-rendered TripAdvisor rating badge (footer). No third-party script —
+ * always renders and links to the live listing.
  */
 export function TripAdvisorWidget() {
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!containerRef.current) return;
-    const script = document.createElement("script");
-    script.src =
-      "https://www.jscache.com/wejs?wtype=cdsratingsonlynarrow&uniq=410&locationId=34283345&lang=en_US&border=true&display_version=2";
-    script.async = true;
-    containerRef.current.appendChild(script);
-    return () => {
-      script.remove();
-    };
-  }, []);
-
   return (
-    <div ref={containerRef}>
-      <div id="TA_cdsratingsonlynarrow410" className="TA_cdsratingsonlynarrow">
-        <ul id="Dd0pwD" className="TA_links w2jo6gn0">
-          <li id="2zgtgeVI0E" className="AcVyugmURHj">
-            <a target="_blank" rel="noopener noreferrer" href={TRIPADVISOR_URL}>
-              <img
-                src="https://www.tripadvisor.com/img/cdsi/img2/branding/v2/Tripadvisor_lockup_horizontal_secondary_registered-18034-2.svg"
-                alt="TripAdvisor"
-              />
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
+    <a
+      href={TRIPADVISOR_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="flex items-center gap-3 no-underline"
+      aria-label={`Kabengo Safaris on Tripadvisor — rated ${TRIPADVISOR_RATING.toFixed(1)} from ${TRIPADVISOR_REVIEW_COUNT} review${TRIPADVISOR_REVIEW_COUNT === 1 ? "" : "s"}`}
+    >
+      <span className="flex items-center justify-center rounded-full flex-shrink-0" style={{ width: 44, height: 44, background: "rgba(0,170,108,.12)", color: TA_GREEN }}>
+        <TripAdvisorLogo className="w-7 h-7" />
+      </span>
+      <span className="min-w-0">
+        <span className="block font-bold leading-none" style={{ color: TA_GREEN, fontSize: 15 }}>Tripadvisor</span>
+        <span className="flex items-center gap-2" style={{ marginTop: 5 }}>
+          <RatingBubbles rating={TRIPADVISOR_RATING} />
+          <span className="font-semibold" style={{ color: "#2a2018", fontSize: 14 }}>{TRIPADVISOR_RATING.toFixed(1)}</span>
+        </span>
+        <span className="block" style={{ color: "#7a6f61", fontSize: 12, marginTop: 3 }}>
+          {TRIPADVISOR_REVIEW_COUNT} review{TRIPADVISOR_REVIEW_COUNT === 1 ? "" : "s"}
+        </span>
+      </span>
+    </a>
   );
 }
 
 /**
- * Well-styled "Find us on Tripadvisor" section — for about page.
+ * Well-styled "Find us on Tripadvisor" section — for the about page.
  */
 export function TripAdvisorAboutSection() {
   const t = useTranslations("common");
@@ -106,6 +117,11 @@ export function TripAdvisorAboutSection() {
             <h3 className="text-2xl sm:text-3xl font-bold font-serif mb-2">
               {t("tripadvisor")}
             </h3>
+            <div className="flex items-center justify-center sm:justify-start gap-2 mb-2">
+              <RatingBubbles rating={TRIPADVISOR_RATING} size={16} />
+              <span className="text-white font-semibold">{TRIPADVISOR_RATING.toFixed(1)}</span>
+              <span className="text-white/70 text-sm">· {TRIPADVISOR_REVIEW_COUNT} review{TRIPADVISOR_REVIEW_COUNT === 1 ? "" : "s"}</span>
+            </div>
             <p className="text-white/80 text-sm max-w-md">
               {t("tripadvisorAboutDesc")}
             </p>
@@ -127,24 +143,11 @@ export function TripAdvisorAboutSection() {
 }
 
 /**
- * TripAdvisor "Write a Review" section — for reviews page.
- * Loads the official review starter widget in a styled container.
+ * TripAdvisor "Write a Review" section — for the reviews page.
+ * Self-rendered (no jscache widget) so it always displays.
  */
 export function TripAdvisorReviewSection() {
   const t = useTranslations("common");
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!containerRef.current) return;
-    const script = document.createElement("script");
-    script.src =
-      "https://www.jscache.com/wejs?wtype=cdswritereviewlg&uniq=691&locationId=34283345&lang=en_US&lang=en_US&display_version=2";
-    script.async = true;
-    containerRef.current.appendChild(script);
-    return () => {
-      script.remove();
-    };
-  }, []);
 
   return (
     <section className="py-16 bg-gradient-to-b from-white to-stone-50">
@@ -172,21 +175,23 @@ export function TripAdvisorReviewSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="bg-white rounded-2xl border border-stone-200 shadow-sm p-8 sm:p-10 flex flex-col items-center"
-          ref={containerRef}
+          className="bg-white rounded-2xl border border-stone-200 shadow-sm p-8 sm:p-10 flex flex-col items-center gap-5"
         >
-          <div id="TA_cdswritereviewlg691" className="TA_cdswritereviewlg">
-            <ul id="rqB6PwRVhxFi" className="TA_links 33GNHwf8">
-              <li id="MJa6WqjUe" className="EHaNWBD">
-                <a target="_blank" rel="noopener noreferrer" href={TRIPADVISOR_URL}>
-                  <img
-                    src="https://static.tacdn.com/img2/brand_refresh/Tripadvisor_lockup_horizontal_secondary_registered.svg"
-                    alt="TripAdvisor"
-                  />
-                </a>
-              </li>
-            </ul>
+          <div className="flex items-center gap-3">
+            <RatingBubbles rating={TRIPADVISOR_RATING} size={18} />
+            <span className="font-semibold text-stone-800 text-lg">{TRIPADVISOR_RATING.toFixed(1)}</span>
+            <span className="text-stone-500 text-sm">· {TRIPADVISOR_REVIEW_COUNT} review{TRIPADVISOR_REVIEW_COUNT === 1 ? "" : "s"}</span>
           </div>
+          <a
+            href={TRIPADVISOR_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-7 py-3.5 bg-[#00aa6c] text-white font-semibold rounded-xl hover:bg-[#008a57] transition-colors shadow-sm"
+          >
+            <TripAdvisorLogo className="w-5 h-5" />
+            {t("viewOnTripadvisor")}
+            <ExternalLink size={16} />
+          </a>
         </motion.div>
       </div>
     </section>
