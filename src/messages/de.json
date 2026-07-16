@@ -626,5 +626,24 @@
     ],
     "railReviews": "basierend auf {count} Gästebewertungen",
     "railChip": "Kostenlos · Unverbindlich · Ca. 2 Minuten"
+  },
+  "howItWorks": {
+    "eyebrow": "So funktioniert's",
+    "title": "Ihre Reise, vom Traum bis zur Abreise",
+    "intro": "Eine maßgeschneiderte Safari zu planen ist einfacher als gedacht — so geht's.",
+    "s1t": "Erzählen Sie uns Ihren Traum",
+    "s1b": "Sagen Sie uns, was Sie begeistert, wann Sie reisen würden und Ihr Budget — im Planer oder mit einer kurzen Nachricht.",
+    "s2t": "Wir gestalten Ihren Plan",
+    "s2b": "Ein lokaler Experte entwirft eine persönliche Route mit Lodges und ehrlichen Preisen — kostenlos, unverbindlich.",
+    "s3t": "Gemeinsam verfeinern",
+    "s3b": "Passen Sie alles an, bis es perfekt ist; wir beraten zu Parks, Timing und Budget.",
+    "s4t": "Reisen Sie mit einem lokalen Experten",
+    "s4b": "Ihr eigener Guide und 4×4 kümmern sich um jedes Detail, von der Ankunft bis zur Abreise.",
+    "cta": "Safari-Planung starten",
+    "trust": [
+      "Kostenlos",
+      "Unverbindlich",
+      "Antwort binnen 24 Std."
+    ]
   }
 }

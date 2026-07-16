@@ -626,5 +626,24 @@
     ],
     "railReviews": "d'après {count} avis de voyageurs",
     "railChip": "Gratuit · Sans engagement · Environ 2 minutes"
+  },
+  "howItWorks": {
+    "eyebrow": "Comment ça marche",
+    "title": "Votre voyage, du rêve au départ",
+    "intro": "Planifier un safari sur mesure est plus simple qu'on ne le pense — voici comment.",
+    "s1t": "Parlez-nous de votre rêve",
+    "s1b": "Dites-nous ce qui vous enthousiasme, quand vous voyageriez et votre budget — dans le planificateur ou en quelques mots.",
+    "s2t": "Nous créons votre plan",
+    "s2b": "Un expert local conçoit un itinéraire personnalisé avec les lodges et des prix honnêtes — gratuit, sans engagement.",
+    "s3t": "Affinons-le ensemble",
+    "s3b": "Modifiez tout jusqu'à la perfection ; nous vous conseillons sur les parcs, le timing et le budget.",
+    "s4t": "Voyagez avec un expert local",
+    "s4b": "Votre guide et votre 4×4 s'occupent de chaque détail, de l'arrivée au départ.",
+    "cta": "Commencer à planifier",
+    "trust": [
+      "Gratuit",
+      "Sans engagement",
+      "Réponse sous 24 h"
+    ]
   }
 }

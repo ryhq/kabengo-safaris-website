@@ -624,5 +624,24 @@
     ],
     "railReviews": "gebaseer op {count} gaste-resensies",
     "railChip": "Gratis · Geen verpligting · Neem ~2 minute"
+  },
+  "howItWorks": {
+    "eyebrow": "Hoe dit werk",
+    "title": "Jou reis, van droom tot vertrek",
+    "intro": "Om 'n pasgemaakte safari te beplan is eenvoudiger as wat jy dink — so werk dit.",
+    "s1t": "Vertel ons van jou droom",
+    "s1b": "Sê vir ons wat jou opgewonde maak, wanneer jy sou reis en jou begroting — in die beplanner of met 'n kort boodskap.",
+    "s2t": "Ons skep jou plan",
+    "s2b": "'n Plaaslike kundige ontwerp 'n persoonlike reisplan met lodges en eerlike pryse — gratis, geen verpligting.",
+    "s3t": "Ons verfyn dit saam",
+    "s3b": "Verander enigiets totdat dit perfek is; ons adviseer oor parke, tydsberekening en begroting.",
+    "s4t": "Reis met 'n plaaslike kundige",
+    "s4b": "Jou eie gids en 4×4 hanteer elke besonderheid, van aankoms tot vertrek.",
+    "cta": "Begin jou safari beplan",
+    "trust": [
+      "Gratis",
+      "Geen verpligting",
+      "Antwoord binne 24 uur"
+    ]
   }
 }

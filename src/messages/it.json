@@ -626,5 +626,24 @@
     ],
     "railReviews": "in base a {count} recensioni degli ospiti",
     "railChip": "Gratis · Senza impegno · Circa 2 minuti"
+  },
+  "howItWorks": {
+    "eyebrow": "Come funziona",
+    "title": "Il tuo viaggio, dal sogno alla partenza",
+    "intro": "Pianificare un safari su misura è più semplice di quanto pensi — ecco come.",
+    "s1t": "Raccontaci il tuo sogno",
+    "s1b": "Dicci cosa ti entusiasma, quando viaggeresti e il tuo budget — nel pianificatore o con un breve messaggio.",
+    "s2t": "Creiamo il tuo piano",
+    "s2b": "Un esperto locale progetta un itinerario personale con lodge e prezzi onesti — gratis, senza impegno.",
+    "s3t": "Perfezioniamolo insieme",
+    "s3b": "Modifica tutto finché non è perfetto; ti consigliamo su parchi, tempi e budget.",
+    "s4t": "Viaggia con un esperto locale",
+    "s4b": "La tua guida e il 4×4 si occupano di ogni dettaglio, dall'arrivo alla partenza.",
+    "cta": "Inizia a pianificare",
+    "trust": [
+      "Gratis",
+      "Senza impegno",
+      "Risposta entro 24 h"
+    ]
   }
 }

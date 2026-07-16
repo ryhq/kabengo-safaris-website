@@ -626,5 +626,24 @@
     ],
     "railReviews": "kutokana na hakiki {count} za wageni",
     "railChip": "Bila malipo · Bila wajibu · Huchukua ~dakika 2"
+  },
+  "howItWorks": {
+    "eyebrow": "Jinsi inavyofanya kazi",
+    "title": "Safari yako, kutoka ndoto hadi kuondoka",
+    "intro": "Kupanga safari iliyoundwa maalum ni rahisi kuliko unavyofikiri — hivi ndivyo inavyofanya kazi.",
+    "s1t": "Tuambie ndoto yako",
+    "s1b": "Tuambie kinachokuvutia, utakaposafiri na bajeti yako — kwenye mpangaji au kwa ujumbe mfupi.",
+    "s2t": "Tunaunda mpango wako",
+    "s2b": "Mtaalamu wa ndani hubuni ratiba binafsi yenye malazi na bei za uaminifu — bila malipo, bila wajibu.",
+    "s3t": "Tunaiboresha pamoja",
+    "s3b": "Badilisha chochote hadi iwe kamili; tunakushauri kuhusu mbuga, wakati na bajeti.",
+    "s4t": "Safiri na mtaalamu wa ndani",
+    "s4b": "Mwelekezi wako mwenyewe na gari la 4×4 hushughulikia kila jambo, tangu kuwasili hadi kuondoka.",
+    "cta": "Anza kupanga safari yako",
+    "trust": [
+      "Bila malipo",
+      "Bila wajibu",
+      "Jibu ndani ya saa 24"
+    ]
   }
 }

@@ -624,5 +624,24 @@
     ],
     "railReviews": "based on {count} guest reviews",
     "railChip": "Free · No obligation · Takes ~2 minutes"
+  },
+  "howItWorks": {
+    "eyebrow": "How it works",
+    "title": "Your journey, from dream to departure",
+    "intro": "Planning a tailor-made safari is simpler than you'd think — here's how it works.",
+    "s1t": "Tell us your dream",
+    "s1b": "Share what excites you, when you'd travel and your budget — in the planner or a quick message.",
+    "s2t": "We craft your plan",
+    "s2b": "A local expert designs a personal itinerary with lodges and honest pricing — free, no obligation.",
+    "s3t": "Refine it together",
+    "s3b": "Tweak anything until it's perfect; we advise on parks, timing and budget.",
+    "s4t": "Travel with a local expert",
+    "s4b": "Your own guide and 4×4 handle every detail, from arrival to departure.",
+    "cta": "Start planning your safari",
+    "trust": [
+      "Free",
+      "No obligation",
+      "Reply within 24 hrs"
+    ]
   }
 }

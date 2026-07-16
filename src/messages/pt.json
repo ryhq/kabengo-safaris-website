@@ -626,5 +626,24 @@
     ],
     "railReviews": "com base em {count} avaliações de hóspedes",
     "railChip": "Grátis · Sem compromisso · Cerca de 2 minutos"
+  },
+  "howItWorks": {
+    "eyebrow": "Como funciona",
+    "title": "A sua viagem, do sonho à partida",
+    "intro": "Planear um safári sob medida é mais simples do que pensa — veja como.",
+    "s1t": "Conte-nos o seu sonho",
+    "s1b": "Diga-nos o que o entusiasma, quando viajaria e o seu orçamento — no planeador ou numa mensagem rápida.",
+    "s2t": "Criamos o seu plano",
+    "s2b": "Um especialista local desenha um itinerário pessoal com lodges e preços honestos — grátis, sem compromisso.",
+    "s3t": "Aperfeiçoamos juntos",
+    "s3b": "Ajuste tudo até ficar perfeito; aconselhamos sobre parques, datas e orçamento.",
+    "s4t": "Viaje com um especialista local",
+    "s4b": "O seu guia e o 4×4 tratam de cada detalhe, da chegada à partida.",
+    "cta": "Comece a planear o seu safári",
+    "trust": [
+      "Grátis",
+      "Sem compromisso",
+      "Resposta em 24 h"
+    ]
   }
 }

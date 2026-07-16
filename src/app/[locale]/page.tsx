@@ -4,6 +4,7 @@ import { buildAlternates } from "@/lib/seo";
 import HeroSection from "@/components/sections/HeroSection";
 import SafarisSection from "@/components/sections/SafarisSection";
 import BookVacationSection from "@/components/sections/BookVacationSection";
+import HowItWorksSection from "@/components/sections/HowItWorksSection";
 import ParksSection from "@/components/sections/ParksSection";
 import ActivitiesSection from "@/components/sections/ActivitiesSection";
 import TestimonialsSection from "@/components/sections/TestimonialsSection";
@@ -46,6 +47,7 @@ export default async function HomePage({
         totalItems={data.safarisTotalItems ?? 0}
       />
       <BookVacationSection />
+      <HowItWorksSection />
       <ParksSection
         initialParks={data.parks ?? []}
         totalItems={data.parksTotalItems ?? 0}
