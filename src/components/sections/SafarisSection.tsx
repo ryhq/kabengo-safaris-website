@@ -56,7 +56,7 @@ export default function SafarisSection({ initialSafaris }: SafarisSectionProps) 
         <header className="flex flex-col items-center text-center gap-7 md:flex-row md:items-end md:justify-between md:text-left md:gap-8" style={{ marginBottom: "clamp(38px,5vw,60px)" }}>
           <div style={{ maxWidth: 640 }}>
             <div className="flex items-center justify-center md:justify-start" style={{ gap: 11, color: "#96631a", fontSize: 12, fontWeight: 600, letterSpacing: ".2em", textTransform: "uppercase", marginBottom: 18 }}>
-              <span style={{ width: 26, height: 1, background: "#96631a" }} />Tailor-made Journeys
+              <span style={{ width: 26, height: 1, background: "#96631a" }} />{t("safarisEyebrow")}
             </div>
             <h2 id="exp-title" style={{ fontFamily: SERIF, fontWeight: 700, color: "#2a2018", fontSize: "clamp(32px,5vw,56px)", lineHeight: 1.03, letterSpacing: "-.015em", margin: "0 0 20px" }}>{t("safarisTitle")}</h2>
 
@@ -81,7 +81,7 @@ export default function SafarisSection({ initialSafaris }: SafarisSectionProps) 
             className="hidden md:inline-flex items-center gap-2 flex-shrink-0 font-semibold rounded-lg border-[1.5px] border-brand-green text-brand-green hover:bg-brand-green hover:text-brand-cream transition-colors"
             style={{ padding: "13px 22px", fontSize: 15 }}
           >
-            Explore all safaris
+            {t("exploreAll")}
             <ArrowRight size={16} strokeWidth={2.3} />
           </Link>
         </header>
@@ -108,7 +108,7 @@ export default function SafarisSection({ initialSafaris }: SafarisSectionProps) 
             className="inline-flex items-center gap-2.5 bg-brand-green text-brand-cream hover:bg-brand-green-dark transition-colors font-semibold shadow-sm hover:shadow-md rounded-full"
             style={{ padding: "15px 32px", fontSize: 16 }}
           >
-            Explore all safaris
+            {t("exploreAll")}
             <ArrowRight size={18} strokeWidth={2.2} />
           </Link>
         </div>

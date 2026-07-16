@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { motion } from "framer-motion";
 import { ArrowRight, Check, MapPin } from "lucide-react";
@@ -14,13 +15,10 @@ const PHOTO_MASK =
 const BG_MASK =
   "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 600'%3E%3Cdefs%3E%3Cfilter id='b' x='-25%25' y='-25%25' width='150%25' height='150%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.008' numOctaves='3' seed='29' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='72' xChannelSelector='R' yChannelSelector='G'/%3E%3C/filter%3E%3C/defs%3E%3Ccircle cx='300' cy='300' r='250' fill='white' filter='url(%23b)'/%3E%3C/svg%3E\") center/contain no-repeat";
 
-const TRUST = [
-  "Our own local guides & safari Land Cruisers",
-  "Tailor-made itineraries, shaped around you",
-  "Honest, transparent pricing — no middlemen",
-];
+const TRUST_KEYS = ["trust1", "trust2", "trust3"] as const;
 
 export default function BookVacationSection() {
+  const t = useTranslations("bookSection");
   return (
     <section aria-labelledby="book-title" className="bookv relative overflow-hidden" style={{ background: "linear-gradient(180deg,#faf8f5 0%,#f1ece3 100%)" }}>
       <style>{`
@@ -50,26 +48,22 @@ export default function BookVacationSection() {
         {/* ── text column ── */}
         <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }} className="bookv-text">
           <div className="flex items-center" style={{ gap: 8, color: "#96631a", fontSize: 12, fontWeight: 600, letterSpacing: ".18em", textTransform: "uppercase", marginBottom: 18 }}>
-            <MapPin size={14} strokeWidth={2.4} />Locally owned · Arusha, Tanzania
+            <MapPin size={14} strokeWidth={2.4} />{t("eyebrow")}
           </div>
 
-          <h2 id="book-title" style={{ fontFamily: SERIF, fontWeight: 700, color: "#2a2018", fontSize: "clamp(30px,4.4vw,52px)", lineHeight: 1.05, letterSpacing: "-.015em", margin: "0 0 22px" }}>Book your dream safari today</h2>
+          <h2 id="book-title" style={{ fontFamily: SERIF, fontWeight: 700, color: "#2a2018", fontSize: "clamp(30px,4.4vw,52px)", lineHeight: 1.05, letterSpacing: "-.015em", margin: "0 0 22px" }}>{t("title")}</h2>
 
-          <p style={{ color: "#4a3f34", fontSize: "clamp(16px,1.8vw,18px)", lineHeight: 1.65, margin: "0 0 18px" }}>
-            A Tanzania safari is a once-in-a-lifetime journey — and we make it yours. From the Serengeti plains and the Ngorongoro Crater to the beaches of Zanzibar and the summit of Kilimanjaro, choose one of our ready-made itineraries or build your own, exactly the way you love it.
-          </p>
+          <p style={{ color: "#4a3f34", fontSize: "clamp(16px,1.8vw,18px)", lineHeight: 1.65, margin: "0 0 18px" }}>{t("intro")}</p>
 
-          <h3 style={{ fontFamily: SERIF, fontWeight: 700, color: "#2a2018", fontSize: "clamp(20px,2.4vw,26px)", lineHeight: 1.2, margin: "26px 0 14px" }}>The best way to explore Tanzania</h3>
-          <p style={{ color: "#4a3f34", fontSize: "clamp(15px,1.7vw,17px)", lineHeight: 1.65, margin: "0 0 22px" }}>
-            We&apos;re a team of locals based in Arusha, with our own guides and safari vehicles who know this country intimately and arrange every detail from start to finish. Tell us the parks and experiences you dream of — we&apos;ll design the perfect trip around you.
-          </p>
+          <h3 style={{ fontFamily: SERIF, fontWeight: 700, color: "#2a2018", fontSize: "clamp(20px,2.4vw,26px)", lineHeight: 1.2, margin: "26px 0 14px" }}>{t("bestWayTitle")}</h3>
+          <p style={{ color: "#4a3f34", fontSize: "clamp(15px,1.7vw,17px)", lineHeight: 1.65, margin: "0 0 22px" }}>{t("bestWayBody")}</p>
 
           {/* trust list */}
           <ul style={{ listStyle: "none", margin: "0 0 30px", padding: 0, display: "grid", gap: 12 }}>
-            {TRUST.map((item) => (
-              <li key={item} className="flex items-start" style={{ gap: 11, color: "#2a2018", fontSize: "clamp(14.5px,1.6vw,16px)", lineHeight: 1.45 }}>
+            {TRUST_KEYS.map((key) => (
+              <li key={key} className="flex items-start" style={{ gap: 11, color: "#2a2018", fontSize: "clamp(14.5px,1.6vw,16px)", lineHeight: 1.45 }}>
                 <span className="flex-shrink-0 flex items-center justify-center" style={{ width: 22, height: 22, borderRadius: "50%", background: "#e6ece2", color: "#274e22", marginTop: 1 }}><Check size={13} strokeWidth={3} /></span>
-                {item}
+                {t(key)}
               </li>
             ))}
           </ul>
@@ -77,11 +71,11 @@ export default function BookVacationSection() {
           {/* CTAs */}
           <div className="flex flex-wrap items-center" style={{ gap: 14 }}>
             <Link href="/plan" className="inline-flex items-center gap-2 font-semibold rounded-full transition-colors" style={{ background: "#c48f2b", color: "#3d1402", padding: "15px 28px", fontSize: 16 }}>
-              Plan your safari
+              {t("planCta")}
               <ArrowRight size={18} strokeWidth={2.3} />
             </Link>
             <Link href="/safaris" className="inline-flex items-center gap-2 font-semibold rounded-full border-[1.5px] border-brand-green text-brand-green hover:bg-brand-green hover:text-brand-cream transition-colors" style={{ padding: "13px 26px", fontSize: 15 }}>
-              Browse all safaris
+              {t("browseCta")}
             </Link>
           </div>
         </motion.div>

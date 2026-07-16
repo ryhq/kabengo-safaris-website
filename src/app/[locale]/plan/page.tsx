@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import { Check, Clock } from "lucide-react";
 import { buildAlternates } from "@/lib/seo";
 import { fetchTestimonySummary, fetchFeaturedTestimonies } from "@/lib/server-api";
@@ -10,15 +11,14 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
+  const tm = await getTranslations({ locale, namespace: "meta" });
   return {
-    title: "Plan Your Safari",
-    description:
-      "Build your tailor-made Tanzania safari in about a minute — tell us what excites you, when you'd travel and your budget, and a Kabengo specialist replies within 24 hours.",
+    title: tm("planTitle"),
+    description: tm("planDescription"),
     alternates: buildAlternates(locale, "/plan"),
   };
 }
 
-const TRUST = ["Local expert guides", "Tailor-made & private", "Honest, transparent pricing", "Reply within 24 hrs"];
 const GRAIN =
   "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")";
 const GRASS =
@@ -27,9 +27,11 @@ const SERIF = "var(--font-source-serif), Georgia, serif";
 
 export default async function PlanPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "planner" });
+  const TRUST = t.raw("railTrust") as string[];
   const [summary, featured] = await Promise.all([fetchTestimonySummary(), fetchFeaturedTestimonies(locale)]);
   const hasRating = !!(summary && summary.reviewCount > 0);
-  const quote = featured.find((t) => t.message && t.message.trim().length > 20) || null;
+  const quote = featured.find((q) => q.message && q.message.trim().length > 20) || null;
 
   return (
     <div style={{ background: "linear-gradient(165deg,#f1ece3,#faf8f5 60%)" }}>
@@ -38,10 +40,10 @@ export default async function PlanPage({ params }: { params: Promise<{ locale: s
         <div style={{ maxWidth: 640, margin: "0 0 clamp(24px,4vw,38px)" }}>
           <div style={{ display: "inline-flex", alignItems: "center", gap: 9, color: "#96631a", fontSize: 12, fontWeight: 600, letterSpacing: ".18em", textTransform: "uppercase", marginBottom: 12 }}>
             <span style={{ width: 24, height: 1, background: "#96631a" }} />
-            Plan Your Safari
+            {t("railEyebrow")}
           </div>
           <h1 style={{ fontFamily: SERIF, fontWeight: 700, color: "#2a2018", fontSize: "clamp(30px,4.6vw,48px)", lineHeight: 1.05, letterSpacing: "-.015em", margin: 0 }}>
-            Build your dream Tanzania trip
+            {t("railH1")}
           </h1>
         </div>
 
@@ -56,18 +58,18 @@ export default async function PlanPage({ params }: { params: Promise<{ locale: s
               </svg>
 
               <div style={{ position: "relative", padding: "clamp(26px,3.4vw,40px)" }}>
-                <div style={{ color: "#c48f2b", fontSize: 12, fontWeight: 600, letterSpacing: ".2em", textTransform: "uppercase", marginBottom: 16 }}>Tailor-made Safaris</div>
-                <h2 style={{ fontFamily: SERIF, fontWeight: 700, color: "#faf8f5", fontSize: "clamp(26px,3vw,34px)", lineHeight: 1.12, margin: "0 0 14px" }}>Your Tanzania safari, planned around you</h2>
-                <p style={{ color: "rgba(242,236,224,.82)", fontSize: 15.5, lineHeight: 1.6, margin: "0 0 26px" }}>Answer a few quick questions and a local expert will hand-build a free, no-obligation proposal — itinerary, lodges and honest pricing, all shaped to you.</p>
+                <div style={{ color: "#c48f2b", fontSize: 12, fontWeight: 600, letterSpacing: ".2em", textTransform: "uppercase", marginBottom: 16 }}>{t("railKicker")}</div>
+                <h2 style={{ fontFamily: SERIF, fontWeight: 700, color: "#faf8f5", fontSize: "clamp(26px,3vw,34px)", lineHeight: 1.12, margin: "0 0 14px" }}>{t("railTitle")}</h2>
+                <p style={{ color: "rgba(242,236,224,.82)", fontSize: 15.5, lineHeight: 1.6, margin: "0 0 26px" }}>{t("railBody")}</p>
 
                 {/* trust points 2×2 */}
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px 18px", marginBottom: 26 }}>
-                  {TRUST.map((t) => (
-                    <div key={t} style={{ display: "flex", alignItems: "flex-start", gap: 10 }}>
+                  {TRUST.map((item) => (
+                    <div key={item} style={{ display: "flex", alignItems: "flex-start", gap: 10 }}>
                       <span style={{ width: 22, height: 22, borderRadius: "50%", background: "rgba(196,143,43,.2)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: 1 }}>
                         <Check size={13} color="#c48f2b" strokeWidth={3} />
                       </span>
-                      <span style={{ color: "#faf8f5", fontSize: 14, fontWeight: 500, lineHeight: 1.35 }}>{t}</span>
+                      <span style={{ color: "#faf8f5", fontSize: 14, fontWeight: 500, lineHeight: 1.35 }}>{item}</span>
                     </div>
                   ))}
                 </div>
@@ -80,7 +82,7 @@ export default async function PlanPage({ params }: { params: Promise<{ locale: s
                         <span style={{ fontFamily: SERIF, fontWeight: 700, color: "#fff", fontSize: 30, lineHeight: 1 }}>{summary!.ratingValue.toFixed(1)}</span>
                         <div>
                           <div style={{ color: "#c48f2b", fontSize: 16, letterSpacing: 2 }}>★★★★★</div>
-                          <div style={{ color: "rgba(242,236,224,.7)", fontSize: 12.5 }}>based on {summary!.reviewCount} guest review{summary!.reviewCount === 1 ? "" : "s"}</div>
+                          <div style={{ color: "rgba(242,236,224,.7)", fontSize: 12.5 }}>{t("railReviews", { count: summary!.reviewCount })}</div>
                         </div>
                       </div>
                     )}
@@ -96,7 +98,7 @@ export default async function PlanPage({ params }: { params: Promise<{ locale: s
                 {/* reassurance chip */}
                 <div style={{ display: "inline-flex", alignItems: "center", gap: 9, background: "rgba(196,143,43,.16)", border: "1px solid rgba(196,143,43,.35)", borderRadius: 24, padding: "9px 16px" }}>
                   <Clock size={15} color="#c48f2b" strokeWidth={2} />
-                  <span style={{ color: "#f3e6c8", fontSize: 13, fontWeight: 600 }}>Free · No obligation · Takes ~2 minutes</span>
+                  <span style={{ color: "#f3e6c8", fontSize: 13, fontWeight: 600 }}>{t("railChip")}</span>
                 </div>
               </div>
             </div>

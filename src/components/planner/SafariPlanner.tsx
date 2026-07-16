@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { User, Users, UsersRound, Heart, Baby, HelpCircle, ArrowRight, Check, Search, MapPin, Binoculars, Footprints, Waves, MountainSnow, Drum } from "lucide-react";
 import { submitBookingInquiry, fetchPublicParks, type PublicParkOption } from "@/lib/api";
@@ -9,7 +10,7 @@ import PlannerDropdown from "@/components/planner/PlannerDropdown";
 
 /* Scoped brand tokens + planner-only CSS (kept here so globals.css isn't touched). */
 const PLANNER_CSS = `
-.kplanner{--brand-green:#274e22;--brand-green-dark:#1b3717;--brand-green-pale:#e6ece2;--brand-choc:#5a1e03;--brand-choc-dark:#3d1402;--brand-olive:#3e3117;--accent-gold:#c48f2b;--accent-gold-deep:#96631a;--accent-gold-soft:#f3e6c8;--cream:#faf8f5;--sand:#f1ece3;--card:#fff;--border:#e4ddd1;--ink:#2a2018;--body:#4a3f34;--muted:#7a6f61;font-family:'Inter',system-ui,sans-serif;color:var(--body)}
+.kplanner{--brand-green:#274e22;--brand-green-dark:#1b3717;--brand-green-pale:#e6ece2;--brand-choc:#5a1e03;--brand-choc-dark:#3d1402;--brand-olive:#3e3117;--accent-gold:#c48f2b;--accent-gold-deep:#96631a;--accent-gold-soft:#f3e6c8;--cream:#faf8f5;--sand:#f1ece3;--card:#fff;--border:#e4ddd1;--ink:#2a2018;--body:#4a3f34;--muted:#7a6f61;font-family:var(--font-inter),'Inter',system-ui,sans-serif;color:var(--body)}
 @keyframes kp-stepIn{from{opacity:0;transform:translateX(26px)}to{opacity:1;transform:none}}
 @keyframes kp-pop{0%{transform:scale(0)}60%{transform:scale(1.15)}100%{transform:scale(1)}}
 @keyframes kp-floatUp{from{opacity:0;transform:translateY(20px) scale(.9)}to{opacity:1;transform:none}}
@@ -22,11 +23,11 @@ const PLANNER_CSS = `
 `;
 
 const ACTIVITIES = [
-  { key: "safari", enum: "SAFARI", name: "Safari", Icon: Binoculars },
-  { key: "migration", enum: "GREAT_MIGRATION", name: "Great Migration", Icon: Footprints },
-  { key: "beach", enum: "ZANZIBAR_BEACH", name: "Beach & Zanzibar", Icon: Waves },
-  { key: "kili", enum: "KILIMANJARO", name: "Climb Kilimanjaro", Icon: MountainSnow },
-  { key: "culture", enum: "CULTURE", name: "Culture & People", Icon: Drum },
+  { key: "safari", enum: "SAFARI", nameKey: "actSafari", Icon: Binoculars },
+  { key: "migration", enum: "GREAT_MIGRATION", nameKey: "actMigration", Icon: Footprints },
+  { key: "beach", enum: "ZANZIBAR_BEACH", nameKey: "actBeach", Icon: Waves },
+  { key: "kili", enum: "KILIMANJARO", nameKey: "actKili", Icon: MountainSnow },
+  { key: "culture", enum: "CULTURE", nameKey: "actCulture", Icon: Drum },
 ] as const;
 
 // Brand-only gradients for park-image fallbacks (greens / browns / olive / muted gold).
@@ -37,15 +38,13 @@ const PARK_GRADIENTS = [
 ];
 
 const PARTIES = [
-  { key: "solo", name: "Solo", trip: "PRIVATE", Icon: User },
-  { key: "couple", name: "Couple", trip: "PRIVATE", Icon: Users },
-  { key: "family", name: "Family", trip: "FAMILY", Icon: Baby },
-  { key: "honeymoon", name: "Honeymoon", trip: "HONEYMOON", Icon: Heart },
-  { key: "friends", name: "Group of friends", trip: "GROUP", Icon: UsersRound },
-  { key: "other", name: "Other", trip: "CUSTOM", Icon: HelpCircle },
+  { key: "solo", nameKey: "partySolo", trip: "PRIVATE", Icon: User },
+  { key: "couple", nameKey: "partyCouple", trip: "PRIVATE", Icon: Users },
+  { key: "family", nameKey: "partyFamily", trip: "FAMILY", Icon: Baby },
+  { key: "honeymoon", nameKey: "partyHoneymoon", trip: "HONEYMOON", Icon: Heart },
+  { key: "friends", nameKey: "partyFriends", trip: "GROUP", Icon: UsersRound },
+  { key: "other", nameKey: "partyOther", trip: "CUSTOM", Icon: HelpCircle },
 ] as const;
-
-const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 const COUNTRY_OPTIONS = [
   "United Kingdom", "United States", "Germany", "Netherlands", "France", "Italy", "Spain", "Belgium",
@@ -62,13 +61,10 @@ const PHONE_OPTIONS = [
   ["+81", "Japan"], ["+86", "China"],
 ].map(([code, c]) => ({ value: code, label: `${code} · ${c}` }));
 
-const TRUST = ["Tailor-made & private", "No obligation", "Local expert guides", "Reply within 24 hours"];
-
 const STEPS = ["interests", "where", "days", "who", "when", "travellers", "budget", "notes", "details", "review"] as const;
 const LAST = STEPS.length - 1; // index of the final step ("Review" — submits)
 const DONE = STEPS.length; // success screen
 const gold = "#c48f2b";
-const AGE_OPTIONS = Array.from({ length: 16 }, (_, n) => ({ value: String(n), label: n === 0 ? "Under 1" : `${n} ${n === 1 ? "yr" : "yrs"}` }));
 
 function budgetToCategory(b: number): string {
   if (b < 2500) return "BUDGET";
@@ -78,6 +74,11 @@ function budgetToCategory(b: number): string {
 }
 
 export default function SafariPlanner({ embedded = false }: { embedded?: boolean }) {
+  const t = useTranslations("planner");
+  const MONTHS = t.raw("months") as string[];
+  const TRUST = t.raw("trust") as string[];
+  const AGE_OPTIONS = Array.from({ length: 16 }, (_, n) => ({ value: String(n), label: n === 0 ? t("under1") : `${n} ${t("yrsAbbr")}` }));
+
   const [step, setStep] = useState(0);
   const [acts, setActs] = useState<Record<string, boolean>>({});
   const [dests, setDests] = useState<Record<string, boolean>>({});
@@ -150,9 +151,9 @@ export default function SafariPlanner({ embedded = false }: { embedded?: boolean
   };
 
   const contactError = (): string => {
-    if (!firstName.trim() || !lastName.trim()) return "Please enter your first and last name.";
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) return "Please enter a valid email address.";
-    if (!consent) return "Please confirm we may contact you about your proposal.";
+    if (!firstName.trim() || !lastName.trim()) return t("errName");
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) return t("errEmail");
+    if (!consent) return t("errConsent");
     return "";
   };
 
@@ -183,7 +184,7 @@ export default function SafariPlanner({ embedded = false }: { embedded?: boolean
     });
     setSubmitting(false);
     if (result.status === "received") setStep(DONE);
-    else setError(result.message || "Something went wrong. Please try again.");
+    else setError(result.message || t("errGeneric"));
   };
 
   const next = () => {
@@ -209,36 +210,39 @@ export default function SafariPlanner({ embedded = false }: { embedded?: boolean
     const [y, m, d] = iso.split("-");
     return `${+d} ${MONTHS[+m - 1]} ${y}`;
   };
+  const daysLabel = daysUnsure ? t("flexible") : days >= 21 ? t("days21") : `${days} ${t("daysUnit")}`;
   const selMonthNames = MONTHS.filter((_, i) => months[i]);
   const whenSummary = whenFlexible
-    ? "Flexible / not sure"
+    ? t("flexibleDates")
     : startDate
       ? `${fmtDate(startDate)}${endDate ? " – " + fmtDate(endDate) : ""}`
       : selMonthNames.length
         ? selMonthNames.join(", ")
-        : "Not specified";
+        : t("notSpecified");
+  const travellersSummary = `${t("adults")} ${adults}, ${t("children")} ${children}${children > 0 ? ` (${t("agesLabel")} ${childAges.join(", ")})` : ""}`;
+  const budgetSummary = budgetUnsure ? t("flexible") : `${budget >= 7500 ? "$7,500+" : "$" + budget.toLocaleString()} ${t("perPerson")}`;
   const reviewRows = [
-    { label: "Experiences", value: ACTIVITIES.filter((a) => acts[a.key]).map((a) => a.name).join(", ") || "—" },
-    { label: "Destinations", value: parks.filter((p) => dests[p.slug]).map((p) => p.name).join(", ") || "Open to suggestions" },
-    { label: "Trip length", value: daysUnsure ? "Flexible" : days >= 21 ? "21+ days" : `${days} days` },
-    { label: "Travelling as", value: party ? PARTIES.find((p) => p.key === party)?.name ?? "—" : "—" },
-    { label: "When", value: whenSummary },
-    { label: "Travellers", value: `${adults} adult${adults > 1 ? "s" : ""}, ${children} ${children === 1 ? "child" : "children"}${children > 0 ? ` (ages ${childAges.join(", ")})` : ""}` },
-    { label: "Budget", value: budgetUnsure ? "Flexible" : `${budget >= 7500 ? "$7,500+" : "$" + budget.toLocaleString()} / person` },
-    { label: "Notes", value: notes.trim() || "—" },
-    { label: "Contact", value: `${firstName} ${lastName}`.trim() || "—" },
-    { label: "Email", value: email.trim() || "—" },
-    { label: "Phone", value: phone.trim() ? `${phoneCode} ${phone.trim()}` : "—" },
-    { label: "Country", value: country },
+    { label: t("rowExperiences"), value: ACTIVITIES.filter((a) => acts[a.key]).map((a) => t(a.nameKey)).join(", ") || "—" },
+    { label: t("rowDestinations"), value: parks.filter((p) => dests[p.slug]).map((p) => p.name).join(", ") || t("openToSuggestions") },
+    { label: t("rowTripLength"), value: daysLabel },
+    { label: t("rowTravellingAs"), value: party ? t(PARTIES.find((p) => p.key === party)!.nameKey) : "—" },
+    { label: t("rowWhen"), value: whenSummary },
+    { label: t("rowTravellers"), value: travellersSummary },
+    { label: t("rowBudget"), value: budgetSummary },
+    { label: t("rowNotes"), value: notes.trim() || "—" },
+    { label: t("rowContact"), value: `${firstName} ${lastName}`.trim() || "—" },
+    { label: t("rowEmail"), value: email.trim() || "—" },
+    { label: t("rowPhone"), value: phone.trim() ? `${phoneCode} ${phone.trim()}` : "—" },
+    { label: t("rowCountry"), value: country },
   ];
 
-  const eyebrow = (t: string) => (
-    <div style={{ color: "var(--accent-gold-deep)", fontSize: 12, fontWeight: 600, letterSpacing: ".16em", textTransform: "uppercase", marginBottom: 10 }}>{t}</div>
+  const eyebrow = (text: string) => (
+    <div style={{ color: "var(--accent-gold-deep)", fontSize: 12, fontWeight: 600, letterSpacing: ".16em", textTransform: "uppercase", marginBottom: 10 }}>{text}</div>
   );
-  const heading = (t: string) => (
-    <h2 style={{ fontFamily: "var(--font-source-serif), Georgia, serif", fontWeight: 700, color: "var(--ink)", fontSize: "clamp(26px,3.6vw,36px)", lineHeight: 1.1, margin: "0 0 6px" }}>{t}</h2>
+  const heading = (text: string) => (
+    <h2 style={{ fontFamily: "var(--font-source-serif), Georgia, serif", fontWeight: 700, color: "var(--ink)", fontSize: "clamp(26px,3.6vw,36px)", lineHeight: 1.1, margin: "0 0 6px" }}>{text}</h2>
   );
-  const sub = (t: string) => <p style={{ color: "var(--muted)", fontSize: 15, margin: "0 0 24px" }}>{t}</p>;
+  const sub = (text: string) => <p style={{ color: "var(--muted)", fontSize: 15, margin: "0 0 24px" }}>{text}</p>;
 
   const cardStyle = (sel: boolean): React.CSSProperties => ({
     border: `2px solid ${sel ? gold : "var(--border)"}`,
@@ -257,10 +261,10 @@ export default function SafariPlanner({ embedded = false }: { embedded?: boolean
               <span style={{ fontFamily: "var(--font-source-serif), Georgia, serif", fontWeight: 700, fontSize: 15, letterSpacing: ".06em", color: "var(--brand-choc)" }}>
                 KABENGO <span style={{ color: "var(--brand-olive)" }}>SAFARIS</span>
               </span>
-              {inFlow && <span style={{ fontSize: 13, fontWeight: 600, color: "var(--muted)" }} aria-live="polite">Step {Math.min(step + 1, LAST + 1)} of {LAST + 1}</span>}
+              {inFlow && <span style={{ fontSize: 13, fontWeight: 600, color: "var(--muted)" }} aria-live="polite">{t("stepOf", { current: Math.min(step + 1, LAST + 1), total: LAST + 1 })}</span>}
             </div>
             {inFlow && (
-              <div role="progressbar" aria-label="Planner progress" style={{ height: 6, borderRadius: 6, background: "var(--sand)", overflow: "hidden" }}>
+              <div role="progressbar" aria-label={t("progress")} style={{ height: 6, borderRadius: 6, background: "var(--sand)", overflow: "hidden" }}>
                 <div style={{ height: "100%", width: progressPct, background: "linear-gradient(90deg,var(--accent-gold),var(--accent-gold-deep))", borderRadius: 6, transition: "width .5s cubic-bezier(.4,0,.2,1)" }} />
               </div>
             )}
@@ -273,9 +277,9 @@ export default function SafariPlanner({ embedded = false }: { embedded?: boolean
               {/* STEP — interests */}
               {current === "interests" && (
                 <>
-                  {eyebrow("What excites you")}
-                  {heading("What excites you?")}
-                  {sub("Pick one or more — we'll weave them into one trip.")}
+                  {eyebrow(t("interestsEyebrow"))}
+                  {heading(t("interestsTitle"))}
+                  {sub(t("interestsSub"))}
                   <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(155px,1fr))", gap: 12 }}>
                     {ACTIVITIES.map((a) => {
                       const sel = !!acts[a.key];
@@ -285,7 +289,7 @@ export default function SafariPlanner({ embedded = false }: { embedded?: boolean
                           <span style={{ width: 40, height: 40, borderRadius: "50%", background: sel ? gold : "var(--brand-green-pale)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, color: sel ? "#fff" : "var(--brand-green)" }}>
                             <Icon size={20} strokeWidth={1.8} />
                           </span>
-                          <span style={{ fontWeight: 600, fontSize: 15, color: "var(--ink)" }}>{a.name}</span>
+                          <span style={{ fontWeight: 600, fontSize: 15, color: "var(--ink)" }}>{t(a.nameKey)}</span>
                         </button>
                       );
                     })}
@@ -296,17 +300,17 @@ export default function SafariPlanner({ embedded = false }: { embedded?: boolean
               {/* STEP — where (destinations, real parks + search) */}
               {current === "where" && (
                 <>
-                  {eyebrow("Destinations")}
-                  {heading("Where do you want to go?")}
-                  {sub("Search and pick the parks calling you — or skip, and we'll suggest a route.")}
+                  {eyebrow(t("whereEyebrow"))}
+                  {heading(t("whereTitle"))}
+                  {sub(t("whereSub"))}
                   <div style={{ position: "relative", marginBottom: 16 }}>
                     <Search size={18} style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", color: "var(--muted)" }} />
-                    <input className="kfield" value={parkSearch} onChange={(e) => setParkSearch(e.target.value)} placeholder="Search parks…" aria-label="Search parks" style={{ paddingLeft: 42 }} />
+                    <input className="kfield" value={parkSearch} onChange={(e) => setParkSearch(e.target.value)} placeholder={t("searchParks")} aria-label={t("searchParksAria")} style={{ paddingLeft: 42 }} />
                   </div>
                   {parksLoading ? (
-                    <div style={{ textAlign: "center", color: "var(--muted)", padding: "48px 0", fontSize: 14 }}>Loading destinations…</div>
+                    <div style={{ textAlign: "center", color: "var(--muted)", padding: "48px 0", fontSize: 14 }}>{t("loadingDest")}</div>
                   ) : filteredParks.length === 0 ? (
-                    <div style={{ textAlign: "center", color: "var(--muted)", padding: "48px 0", fontSize: 14 }}>No parks match “{parkSearch}”.</div>
+                    <div style={{ textAlign: "center", color: "var(--muted)", padding: "48px 0", fontSize: 14 }}>{t("noParks", { query: parkSearch })}</div>
                   ) : (
                     <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(150px,1fr))", gap: 12, maxHeight: 344, overflowY: "auto", paddingRight: 4 }}>
                       {filteredParks.map((p, idx) => {
@@ -334,21 +338,21 @@ export default function SafariPlanner({ embedded = false }: { embedded?: boolean
               {/* STEP — days */}
               {current === "days" && (
                 <>
-                  {eyebrow("Trip length")}
-                  {heading("How many days?")}
-                  {sub("A rough idea is perfect — we'll fine-tune it together.")}
+                  {eyebrow(t("daysEyebrow"))}
+                  {heading(t("daysTitle"))}
+                  {sub(t("daysSub"))}
                   <div style={{ textAlign: "center", marginBottom: 8 }}>
                     <span style={{ fontFamily: "var(--font-source-serif), Georgia, serif", fontWeight: 700, color: "var(--accent-gold-deep)", fontSize: "clamp(44px,7vw,64px)", lineHeight: 1, opacity: daysUnsure ? 0.4 : 1 }}>
-                      {daysUnsure ? "Not sure" : days >= 21 ? "21+ days" : `${days} days`}
+                      {daysUnsure ? t("notSure") : days >= 21 ? t("days21") : `${days} ${t("daysUnit")}`}
                     </span>
                   </div>
                   <div style={{ padding: "20px 6px 0" }}>
-                    <input type="range" min={3} max={21} value={days} onChange={(e) => setDays(+e.target.value)} className="krange" disabled={daysUnsure} aria-label="Number of days" style={{ background: `linear-gradient(90deg, ${gold} ${daysPct}%, var(--sand) ${daysPct}%)` }} />
-                    <div style={{ display: "flex", justifyContent: "space-between", marginTop: 10, color: "var(--muted)", fontSize: 12 }}><span>3 days</span><span>21+ days</span></div>
+                    <input type="range" min={3} max={21} value={days} onChange={(e) => setDays(+e.target.value)} className="krange" disabled={daysUnsure} aria-label={t("daysAria")} style={{ background: `linear-gradient(90deg, ${gold} ${daysPct}%, var(--sand) ${daysPct}%)` }} />
+                    <div style={{ display: "flex", justifyContent: "space-between", marginTop: 10, color: "var(--muted)", fontSize: 12 }}><span>3 {t("daysUnit")}</span><span>{t("days21")}</span></div>
                   </div>
                   <label style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 9, marginTop: 26, cursor: "pointer" }}>
                     <input type="checkbox" checked={daysUnsure} onChange={() => setDaysUnsure((v) => !v)} style={{ width: 18, height: 18, accentColor: gold, cursor: "pointer" }} />
-                    <span style={{ fontSize: 14, fontWeight: 500, color: "var(--body)" }}>Not sure yet — help me decide</span>
+                    <span style={{ fontSize: 14, fontWeight: 500, color: "var(--body)" }}>{t("daysHelp")}</span>
                   </label>
                 </>
               )}
@@ -356,9 +360,9 @@ export default function SafariPlanner({ embedded = false }: { embedded?: boolean
               {/* STEP — party */}
               {current === "who" && (
                 <>
-                  {eyebrow("Your party")}
-                  {heading("Who's travelling?")}
-                  {sub("Choose the closest match.")}
+                  {eyebrow(t("whoEyebrow"))}
+                  {heading(t("whoTitle"))}
+                  {sub(t("whoSub"))}
                   <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(155px,1fr))", gap: 12 }}>
                     {PARTIES.map((p) => {
                       const sel = party === p.key;
@@ -368,7 +372,7 @@ export default function SafariPlanner({ embedded = false }: { embedded?: boolean
                           <span style={{ width: 40, height: 40, borderRadius: "50%", background: sel ? gold : "var(--brand-green-pale)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, color: sel ? "#fff" : "var(--brand-green)" }}>
                             <Icon size={20} strokeWidth={1.8} />
                           </span>
-                          <span style={{ fontWeight: 600, fontSize: 15, color: "var(--ink)" }}>{p.name}</span>
+                          <span style={{ fontWeight: 600, fontSize: 15, color: "var(--ink)" }}>{t(p.nameKey)}</span>
                         </button>
                       );
                     })}
@@ -379,11 +383,11 @@ export default function SafariPlanner({ embedded = false }: { embedded?: boolean
               {/* STEP — when */}
               {current === "when" && (
                 <>
-                  {eyebrow("Timing")}
-                  {heading("When do you want to travel?")}
-                  {sub("Peak wildlife season runs June–October — but every month has its magic.")}
+                  {eyebrow(t("whenEyebrow"))}
+                  {heading(t("whenTitle"))}
+                  {sub(t("whenSub"))}
                   <div style={{ opacity: whenFlexible ? 0.35 : 1, pointerEvents: whenFlexible ? "none" : "auto", transition: "opacity .2s" }}>
-                    <div style={{ fontSize: 13, fontWeight: 600, color: "var(--body)", marginBottom: 12 }}>Pick a month (or a few)</div>
+                    <div style={{ fontSize: 13, fontWeight: 600, color: "var(--body)", marginBottom: 12 }}>{t("pickMonth")}</div>
                     <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(84px,1fr))", gap: 9 }}>
                       {MONTHS.map((m, idx) => {
                         const sel = !!months[idx];
@@ -393,13 +397,13 @@ export default function SafariPlanner({ embedded = false }: { embedded?: boolean
                       })}
                     </div>
                     <div style={{ marginTop: 16 }}>
-                      <label style={{ display: "block", fontSize: 13, fontWeight: 600, color: "var(--body)", marginBottom: 7 }}>Or exact travel dates</label>
-                      <DateRangePicker startDate={startDate} endDate={endDate} onChangeStart={setStartDate} onChangeEnd={setEndDate} placeholder="Select your travel dates" />
+                      <label style={{ display: "block", fontSize: 13, fontWeight: 600, color: "var(--body)", marginBottom: 7 }}>{t("exactDates")}</label>
+                      <DateRangePicker startDate={startDate} endDate={endDate} onChangeStart={setStartDate} onChangeEnd={setEndDate} placeholder={t("selectDates")} />
                     </div>
                   </div>
                   <label style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 9, marginTop: 24, cursor: "pointer" }}>
                     <input type="checkbox" checked={whenFlexible} onChange={() => setWhenFlexible((v) => !v)} style={{ width: 18, height: 18, accentColor: gold, cursor: "pointer" }} />
-                    <span style={{ fontSize: 14, fontWeight: 500, color: "var(--body)" }}>I'm flexible / not sure yet</span>
+                    <span style={{ fontSize: 14, fontWeight: 500, color: "var(--body)" }}>{t("whenFlex")}</span>
                   </label>
                 </>
               )}
@@ -407,28 +411,28 @@ export default function SafariPlanner({ embedded = false }: { embedded?: boolean
               {/* STEP — travellers */}
               {current === "travellers" && (
                 <>
-                  {eyebrow("Group size")}
-                  {heading("Travellers & ages")}
-                  {sub("Who's coming along?")}
+                  {eyebrow(t("travellersEyebrow"))}
+                  {heading(t("travellersTitle"))}
+                  {sub(t("travellersSub"))}
                   <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-                    {([["Adults", "Aged 16+", adults, (n: number) => setAdults(n), 1, 20],
-                       ["Children", "Aged 0–15", children, setChildCount, 0, 12]] as const).map(([label, hint, val, setter, min, max]) => (
+                    {([[t("adults"), t("adultsHint"), adults, (n: number) => setAdults(n), 1, 20],
+                       [t("children"), t("childrenHint"), children, setChildCount, 0, 12]] as const).map(([label, hint, val, setter, min, max]) => (
                       <div key={label} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, background: "var(--sand)", borderRadius: 12, padding: "18px 20px" }}>
                         <div><div style={{ fontWeight: 600, fontSize: 16, color: "var(--ink)" }}>{label}</div><div style={{ fontSize: 13, color: "var(--muted)" }}>{hint}</div></div>
                         <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-                          <button onClick={() => setter(Math.max(min, val - 1))} aria-label={`Fewer ${label.toLowerCase()}`} style={{ width: 40, height: 40, borderRadius: "50%", border: "none", background: val <= min ? "#cbb" : "var(--brand-olive)", color: "#fff", fontSize: 22, lineHeight: 1, cursor: "pointer" }}>−</button>
+                          <button onClick={() => setter(Math.max(min, val - 1))} aria-label={t("fewer", { label })} style={{ width: 40, height: 40, borderRadius: "50%", border: "none", background: val <= min ? "#cbb" : "var(--brand-olive)", color: "#fff", fontSize: 22, lineHeight: 1, cursor: "pointer" }}>−</button>
                           <span style={{ fontFamily: "var(--font-source-serif), Georgia, serif", fontWeight: 700, fontSize: 26, color: "var(--ink)", minWidth: 28, textAlign: "center" }}>{val}</span>
-                          <button onClick={() => setter(Math.min(max, val + 1))} aria-label={`More ${label.toLowerCase()}`} style={{ width: 40, height: 40, borderRadius: "50%", border: "none", background: gold, color: "var(--brand-choc-dark)", fontSize: 22, lineHeight: 1, cursor: "pointer" }}>+</button>
+                          <button onClick={() => setter(Math.min(max, val + 1))} aria-label={t("more", { label })} style={{ width: 40, height: 40, borderRadius: "50%", border: "none", background: gold, color: "var(--brand-choc-dark)", fontSize: 22, lineHeight: 1, cursor: "pointer" }}>+</button>
                         </div>
                       </div>
                     ))}
                     {children > 0 && (
                       <div style={{ animation: "kp-floatUp .35s ease both", background: "var(--brand-green-pale)", borderRadius: 12, padding: "18px 20px" }}>
-                        <div style={{ fontWeight: 600, fontSize: 14, color: "var(--brand-green)", marginBottom: 12 }}>Age of each child at travel</div>
+                        <div style={{ fontWeight: 600, fontSize: 14, color: "var(--brand-green)", marginBottom: 12 }}>{t("childAgesTitle")}</div>
                         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(88px,1fr))", gap: 10 }}>
                           {Array.from({ length: children }, (_, i) => (
                             <label key={i} style={{ display: "block" }}>
-                              <span style={{ display: "block", fontSize: 11, color: "var(--muted)", marginBottom: 4 }}>Child {i + 1}</span>
+                              <span style={{ display: "block", fontSize: 11, color: "var(--muted)", marginBottom: 4 }}>{t("childN", { n: i + 1 })}</span>
                               <PlannerDropdown value={childAges[i] ?? "5"} options={AGE_OPTIONS} onChange={(v) => setChildAges((a) => { const n = a.slice(); n[i] = v; return n; })} />
                             </label>
                           ))}
@@ -442,21 +446,21 @@ export default function SafariPlanner({ embedded = false }: { embedded?: boolean
               {/* STEP — budget */}
               {current === "budget" && (
                 <>
-                  {eyebrow("Budget")}
-                  {heading("Your budget per person")}
-                  {sub("A guide price, excluding international flights.")}
+                  {eyebrow(t("budgetEyebrow"))}
+                  {heading(t("budgetTitle"))}
+                  {sub(t("budgetSub"))}
                   <div style={{ textAlign: "center", marginBottom: 8 }}>
                     <span style={{ fontFamily: "var(--font-source-serif), Georgia, serif", fontWeight: 700, color: "var(--accent-gold-deep)", fontSize: "clamp(40px,6.5vw,58px)", lineHeight: 1, opacity: budgetUnsure ? 0.4 : 1 }}>
-                      {budgetUnsure ? "Flexible" : budget >= 7500 ? "$7,500+" : `$${budget.toLocaleString()}`}
+                      {budgetUnsure ? t("flexible") : budget >= 7500 ? "$7,500+" : `$${budget.toLocaleString()}`}
                     </span>
                   </div>
                   <div style={{ padding: "20px 6px 0" }}>
-                    <input type="range" min={1500} max={7500} step={250} value={budget} onChange={(e) => setBudget(+e.target.value)} className="krange" disabled={budgetUnsure} aria-label="Budget per person" style={{ background: `linear-gradient(90deg, ${gold} ${budgetPct}%, var(--sand) ${budgetPct}%)` }} />
+                    <input type="range" min={1500} max={7500} step={250} value={budget} onChange={(e) => setBudget(+e.target.value)} className="krange" disabled={budgetUnsure} aria-label={t("budgetAria")} style={{ background: `linear-gradient(90deg, ${gold} ${budgetPct}%, var(--sand) ${budgetPct}%)` }} />
                     <div style={{ display: "flex", justifyContent: "space-between", marginTop: 10, color: "var(--muted)", fontSize: 12 }}><span>$1,500</span><span>$7,500+</span></div>
                   </div>
                   <label style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 9, marginTop: 26, cursor: "pointer" }}>
                     <input type="checkbox" checked={budgetUnsure} onChange={() => setBudgetUnsure((v) => !v)} style={{ width: 18, height: 18, accentColor: gold, cursor: "pointer" }} />
-                    <span style={{ fontSize: 14, fontWeight: 500, color: "var(--body)" }}>Help me decide</span>
+                    <span style={{ fontSize: 14, fontWeight: 500, color: "var(--body)" }}>{t("budgetHelp")}</span>
                   </label>
                 </>
               )}
@@ -464,40 +468,40 @@ export default function SafariPlanner({ embedded = false }: { embedded?: boolean
               {/* STEP — notes */}
               {current === "notes" && (
                 <>
-                  {eyebrow("Wishlist")}
-                  {heading("Anything else?")}
-                  {sub("The more you share, the more tailored your proposal.")}
-                  <textarea rows={6} value={notes} onChange={(e) => setNotes(e.target.value)} placeholder="Specific lodges, must-see animals, room type, combining safari + beach…" className="kfield" style={{ resize: "vertical", lineHeight: 1.6 }} />
+                  {eyebrow(t("notesEyebrow"))}
+                  {heading(t("notesTitle"))}
+                  {sub(t("notesSub"))}
+                  <textarea rows={6} value={notes} onChange={(e) => setNotes(e.target.value)} placeholder={t("notesPlaceholder")} className="kfield" style={{ resize: "vertical", lineHeight: 1.6 }} />
                 </>
               )}
 
               {/* STEP — details */}
               {current === "details" && (
                 <>
-                  {eyebrow("Almost there")}
-                  {heading("Your details")}
-                  {sub("So a specialist can reach you with your proposal.")}
+                  {eyebrow(t("detailsEyebrow"))}
+                  {heading(t("detailsTitle"))}
+                  {sub(t("detailsSub"))}
                   <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
-                    <label><span style={{ display: "block", fontSize: 13, fontWeight: 600, color: "var(--body)", marginBottom: 7 }}>First name</span><input className="kfield" value={firstName} onChange={(e) => setFirstName(e.target.value)} placeholder="Amani" /></label>
-                    <label><span style={{ display: "block", fontSize: 13, fontWeight: 600, color: "var(--body)", marginBottom: 7 }}>Last name</span><input className="kfield" value={lastName} onChange={(e) => setLastName(e.target.value)} placeholder="Mushi" /></label>
-                    <label style={{ gridColumn: "1/-1" }}><span style={{ display: "block", fontSize: 13, fontWeight: 600, color: "var(--body)", marginBottom: 7 }}>Email</span><input type="email" className="kfield" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@email.com" /></label>
+                    <label><span style={{ display: "block", fontSize: 13, fontWeight: 600, color: "var(--body)", marginBottom: 7 }}>{t("firstName")}</span><input className="kfield" value={firstName} onChange={(e) => setFirstName(e.target.value)} placeholder="Amani" /></label>
+                    <label><span style={{ display: "block", fontSize: 13, fontWeight: 600, color: "var(--body)", marginBottom: 7 }}>{t("lastName")}</span><input className="kfield" value={lastName} onChange={(e) => setLastName(e.target.value)} placeholder="Mushi" /></label>
+                    <label style={{ gridColumn: "1/-1" }}><span style={{ display: "block", fontSize: 13, fontWeight: 600, color: "var(--body)", marginBottom: 7 }}>{t("emailLabel")}</span><input type="email" className="kfield" value={email} onChange={(e) => setEmail(e.target.value)} placeholder={t("emailPlaceholder")} /></label>
                     <label style={{ gridColumn: "1/-1" }}>
-                      <span style={{ display: "block", fontSize: 13, fontWeight: 600, color: "var(--body)", marginBottom: 7 }}>Phone</span>
+                      <span style={{ display: "block", fontSize: 13, fontWeight: 600, color: "var(--body)", marginBottom: 7 }}>{t("phoneLabel")}</span>
                       <div style={{ display: "flex", gap: 10 }}>
                         <div style={{ width: 176, flexShrink: 0 }}>
                           <PlannerDropdown value={phoneCode} onChange={setPhoneCode} options={PHONE_OPTIONS} searchable />
                         </div>
-                        <input type="tel" className="kfield" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="712 345 678" />
+                        <input type="tel" className="kfield" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder={t("phonePlaceholder")} />
                       </div>
                     </label>
                     <label style={{ gridColumn: "1/-1" }}>
-                      <span style={{ display: "block", fontSize: 13, fontWeight: 600, color: "var(--body)", marginBottom: 7 }}>Country of residence</span>
-                      <PlannerDropdown value={country} onChange={setCountry} options={COUNTRY_OPTIONS} searchable placeholder="Select your country" />
+                      <span style={{ display: "block", fontSize: 13, fontWeight: 600, color: "var(--body)", marginBottom: 7 }}>{t("countryLabel")}</span>
+                      <PlannerDropdown value={country} onChange={setCountry} options={COUNTRY_OPTIONS} searchable placeholder={t("selectCountry")} />
                     </label>
                   </div>
                   <label style={{ display: "flex", alignItems: "flex-start", gap: 10, marginTop: 18, cursor: "pointer" }}>
                     <input type="checkbox" checked={consent} onChange={() => setConsent((v) => !v)} style={{ width: 18, height: 18, accentColor: gold, cursor: "pointer", marginTop: 2, flexShrink: 0 }} />
-                    <span style={{ fontSize: 13.5, lineHeight: 1.5, color: "var(--body)" }}>I'd like Kabengo to contact me about my safari proposal. No spam, ever.</span>
+                    <span style={{ fontSize: 13.5, lineHeight: 1.5, color: "var(--body)" }}>{t("consent")}</span>
                   </label>
                   {error && <p style={{ color: "#9a3412", fontSize: 13.5, fontWeight: 500, marginTop: 14 }}>{error}</p>}
                 </>
@@ -506,9 +510,9 @@ export default function SafariPlanner({ embedded = false }: { embedded?: boolean
               {/* STEP — review */}
               {current === "review" && (
                 <>
-                  {eyebrow("Almost done")}
-                  {heading("Review your plan")}
-                  {sub("A quick check — go Back to change anything, then send it to us.")}
+                  {eyebrow(t("reviewEyebrow"))}
+                  {heading(t("reviewTitle"))}
+                  {sub(t("reviewSub"))}
                   <div style={{ border: "1px solid var(--border)", borderRadius: 12, overflow: "hidden" }}>
                     {reviewRows.map((r, idx) => (
                       <div key={r.label} style={{ display: "flex", justifyContent: "space-between", gap: 16, padding: "12px 16px", background: idx % 2 ? "var(--cream)" : "var(--card)" }}>
@@ -528,9 +532,9 @@ export default function SafariPlanner({ embedded = false }: { embedded?: boolean
                     <div style={{ position: "absolute", inset: 0, borderRadius: "50%", background: "var(--brand-green-pale)", animation: "kp-pop .45s ease both" }} />
                     <svg viewBox="0 0 96 96" fill="none" style={{ position: "absolute", inset: 0 }}><path d="M30 50l12 12 24-26" stroke="var(--brand-green)" strokeWidth={5} strokeLinecap="round" strokeLinejoin="round" style={{ animation: "kp-pop .5s .1s ease both" }} /></svg>
                   </div>
-                  <h2 style={{ fontFamily: "var(--font-source-serif), Georgia, serif", fontWeight: 700, color: "var(--ink)", fontSize: "clamp(28px,4vw,40px)", lineHeight: 1.08, margin: "0 0 14px" }}>Asante sana — request received!</h2>
-                  <p style={{ color: "var(--body)", fontSize: 17, lineHeight: 1.6, maxWidth: 440, margin: "0 auto 30px" }}>We'll craft your tailor-made itinerary and a personal safari specialist will reply <strong style={{ color: "var(--ink)" }}>within 24 hours</strong>. Keep an eye on your inbox.</p>
-                  <Link href="/" style={{ display: "inline-block", background: "var(--brand-green)", color: "var(--cream)", fontWeight: 600, fontSize: 15, borderRadius: 8, padding: "14px 28px", transition: "background .2s" }}>Back to home</Link>
+                  <h2 style={{ fontFamily: "var(--font-source-serif), Georgia, serif", fontWeight: 700, color: "var(--ink)", fontSize: "clamp(28px,4vw,40px)", lineHeight: 1.08, margin: "0 0 14px" }}>{t("successTitle")}</h2>
+                  <p style={{ color: "var(--body)", fontSize: 17, lineHeight: 1.6, maxWidth: 440, margin: "0 auto 30px" }}>{t.rich("successBody", { b: (chunks) => <strong style={{ color: "var(--ink)" }}>{chunks}</strong> })}</p>
+                  <Link href="/" style={{ display: "inline-block", background: "var(--brand-green)", color: "var(--cream)", fontWeight: 600, fontSize: 15, borderRadius: 8, padding: "14px 28px", transition: "background .2s" }}>{t("backHome")}</Link>
                 </div>
               )}
             </div>
@@ -539,11 +543,11 @@ export default function SafariPlanner({ embedded = false }: { embedded?: boolean
           {/* footer nav */}
           {inFlow && (
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 14, padding: "20px clamp(22px,4vw,40px)", borderTop: "1px solid var(--border)", background: "var(--cream)" }}>
-              <button onClick={back} style={{ background: "none", color: "var(--brand-green)", fontWeight: 600, fontSize: 15, border: "1.5px solid var(--brand-green)", borderRadius: 8, padding: "12px 22px", cursor: "pointer", visibility: step === 0 ? "hidden" : "visible" }}>Back</button>
+              <button onClick={back} style={{ background: "none", color: "var(--brand-green)", fontWeight: 600, fontSize: 15, border: "1.5px solid var(--brand-green)", borderRadius: 8, padding: "12px 22px", cursor: "pointer", visibility: step === 0 ? "hidden" : "visible" }}>{t("back")}</button>
               <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-                {step !== LAST && <span style={{ fontSize: 12.5, color: "var(--muted)" }}>takes ~1 minute · no obligation</span>}
+                {step !== LAST && <span style={{ fontSize: 12.5, color: "var(--muted)" }}>{t("takesMinute")}</span>}
                 <button onClick={next} disabled={submitting} style={{ display: "inline-flex", alignItems: "center", gap: 9, background: gold, color: "var(--brand-choc-dark)", fontWeight: 600, fontSize: 15, border: "none", borderRadius: 8, padding: "13px 26px", cursor: submitting ? "wait" : "pointer", opacity: submitting ? 0.7 : 1, boxShadow: "0 6px 18px rgba(196,143,43,.4)" }}>
-                  {step === LAST ? (submitting ? "Sending…" : "Get My Safari Proposal") : "Next"}
+                  {step === LAST ? (submitting ? t("sending") : t("getProposal")) : t("next")}
                   <ArrowRight size={16} strokeWidth={2.4} />
                 </button>
               </div>
@@ -554,8 +558,8 @@ export default function SafariPlanner({ embedded = false }: { embedded?: boolean
         {/* trust strip (standalone only — the /plan rail carries trust when embedded) */}
         {!embedded && (
           <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "center", gap: "10px 22px", marginTop: 22, color: "var(--muted)", fontSize: 13 }}>
-            {TRUST.map((t) => (
-              <span key={t} style={{ display: "inline-flex", alignItems: "center", gap: 7 }}><Check size={15} color="var(--accent-gold-deep)" strokeWidth={2} />{t}</span>
+            {TRUST.map((item) => (
+              <span key={item} style={{ display: "inline-flex", alignItems: "center", gap: 7 }}><Check size={15} color="var(--accent-gold-deep)" strokeWidth={2} />{item}</span>
             ))}
           </div>
         )}
