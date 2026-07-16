@@ -176,10 +176,14 @@ button img,
 .ksafari-clamp { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .ksafari-mobile { display: none; }
 @media (max-width: 700px) {
-  .ksafari-sweep { display: none !important; }
-  .ksafari:hover .ksafari-rest, .ksafari:focus-within .ksafari-rest { opacity: 1; }
+  /* mobile: no hover — show the green details panel permanently over the photo; whole card links */
+  .ksafari-media { aspect-ratio: auto !important; min-height: 300px; }
+  .ksafari-rest { display: none !important; }
+  .ksafari-sweep { position: relative !important; opacity: 1 !important; }
+  .ksafari-fill { transform: none !important; }
+  .ksafari-reveal { opacity: 1 !important; transform: none !important; }
+  .ksafari-mobile { display: none !important; }
   .ksafari:hover { transform: none; }
-  .ksafari-mobile { display: block; }
 }
 @media (prefers-reduced-motion: reduce) {
   .ksafari, .ksafari-img, .ksafari-rest, .ksafari-sweep, .ksafari-fill, .ksafari-reveal { transition: none !important; }

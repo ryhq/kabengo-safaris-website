@@ -77,7 +77,7 @@ export default function SafariCard({ safari }: { safari: SafariCardData }) {
     <article className="ksafari relative flex flex-col bg-white border border-[#e4ddd1] rounded-[14px] overflow-hidden cursor-pointer">
       {/* full-card link — click anywhere navigates to the safari */}
       <Link href={`/safaris/${code}`} aria-label={name} className="absolute inset-0 z-[5]" />
-      <div className="relative aspect-[4/3] overflow-hidden">
+      <div className="ksafari-media relative aspect-[4/3] overflow-hidden">
         <div className="ksafari-img absolute inset-0" style={{ background: bg }} />
         <div className="ksafari-rest absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(20,12,4,0) 28%, rgba(20,12,4,.5) 60%, rgba(20,12,4,.95) 100%)" }} />
 
@@ -139,23 +139,6 @@ export default function SafariCard({ safari }: { safari: SafariCardData }) {
         </div>
       </div>
 
-      {/* mobile always-visible details */}
-      <div className="ksafari-mobile" style={{ padding: 16 }}>
-        {route && (
-          <div className="flex items-center gap-1.5" style={{ color: "#7a6f61", fontSize: 13, marginBottom: 12 }}>
-            <MapPin size={13} color="#274e22" style={{ flexShrink: 0 }} />{route}
-          </div>
-        )}
-        {chips.length > 0 && (
-          <div className="flex flex-wrap gap-1.5" style={{ marginBottom: 14 }}>
-            {shownChips.map((h) => <span key={h} style={{ background: "#f1ece3", color: "#4a3f34", fontSize: 12, padding: "4px 10px", borderRadius: 20 }}>{h}</span>)}
-            {extra > 0 && <span style={{ background: "#e6ece2", color: "#274e22", fontSize: 12, fontWeight: 600, padding: "4px 10px", borderRadius: 20 }}>+{extra} more</span>}
-          </div>
-        )}
-        <Link href={`/safaris/${code}`} className="relative z-[6] flex items-center justify-center gap-1.5" style={{ background: "#c48f2b", color: "#3d1402", fontWeight: 600, fontSize: 14, borderRadius: 8, padding: 12 }}>
-          View &amp; Book <ArrowIcon size={15} />
-        </Link>
-      </div>
     </article>
   );
 }
