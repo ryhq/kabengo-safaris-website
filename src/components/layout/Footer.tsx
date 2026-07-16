@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { Mail, Phone, MapPin, Instagram, ArrowRight } from "lucide-react";
+import { Mail, Phone, MapPin, Instagram, ArrowRight, ShieldCheck, BadgeCheck } from "lucide-react";
 import KabengoIcon from "@/components/ui/KabengoIcon";
 import { subscribeToNewsletter } from "@/lib/api";
 import { TripAdvisorIcon, TripAdvisorWidget } from "@/components/ui/TripAdvisorBadge";
@@ -152,7 +152,7 @@ export default function Footer() {
               </li>
               <li className="flex items-start space-x-3 text-stone-300 text-sm">
                 <MapPin size={16} className="text-accent-gold flex-shrink-0 mt-0.5" />
-                <span>Arusha, Tanzania</span>
+                <span>P. O. Box 11271, Arusha, Tanzania</span>
               </li>
             </ul>
           </div>
@@ -171,6 +171,26 @@ export default function Footer() {
               <div className="mt-4 w-full bg-white rounded-xl p-4 flex items-center justify-center">
                 <TripAdvisorWidget />
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Credentials strip */}
+      <div className="relative border-t border-white/10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex flex-wrap items-center justify-center gap-x-10 gap-y-4">
+          <div className="flex items-center gap-2.5">
+            <ShieldCheck size={20} className="text-accent-gold flex-shrink-0" />
+            <div>
+              <div className="text-white text-sm font-semibold leading-tight">TATO Member</div>
+              <div className="text-stone-400 text-xs leading-tight">Tanzania Association of Tour Operators</div>
+            </div>
+          </div>
+          <div className="flex items-center gap-2.5">
+            <BadgeCheck size={20} className="text-accent-gold flex-shrink-0" />
+            <div>
+              <div className="text-white text-sm font-semibold leading-tight">TALA Licensed</div>
+              <div className="text-stone-400 text-xs leading-tight">Tourist Agents Licensing Authority</div>
             </div>
           </div>
         </div>
