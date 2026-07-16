@@ -7,39 +7,6 @@ import type { Hero } from "@/types";
 
 const SLIDE_DURATION = 6500;
 
-/** Realistic grass clump (grass-svgrepo-com.svg), source coords 0..512, base at y≈494. */
-const GRASS_CLUMP =
-  "M18 494l36.35-330.4c6.728 107.62 4.086 231.82 35.556 295.67 11.205-84.926 15.707-168.18 10.562-249.01 15.225 71.69 35.543 141.68 39.468 217.14 7.395-55.935 12.667-111.52 31.798-169.41-.76 65.19-17.16 124.9 12.677 157.47 14.433-51.01 28.992-101.9 31.46-164.88 21.27 61.862 18.342 135.82 24.948 205.02 8.417-68.06 15.28-257.84 46.907-318.17-3.11 124.98-3.862 223.94 27.398 274.23 30.897-38.673 33.566-114.44 34.28-186.34 21.812 61.75 36.457 132.1 37.857 218.34 8.626-71.955 18.667-143.91 43.39-215.86-5.748 88.29-1.284 156.95 19.525 194.17 13.76-55.55 25.504-111.1 29.12-166.66 18.42 82.78 13 159.59 16.706 238.69z";
-
-/**
- * The clump tiled across a 1600×90 viewBox — alternating horizontal flips, size + baseline
- * jitter — so it reads as real grass, not an obvious repeat. Stretched edge-to-edge with
- * preserveAspectRatio="none". Filled with the light section colour so the ground cuts up.
- */
-const GRASS_TRANSFORMS = [
-  "translate(-35.8 32.2) scale(0.323 0.103)",
-  "translate(248.8 34.0) scale(-0.369 0.100)",
-  "translate(165.1 32.2) scale(0.339 0.105)",
-  "translate(446.6 26.2) scale(-0.345 0.119)",
-  "translate(378.0 28.0) scale(0.345 0.112)",
-  "translate(670.3 38.8) scale(-0.362 0.090)",
-  "translate(578.4 28.9) scale(0.361 0.112)",
-  "translate(828.5 35.5) scale(-0.320 0.098)",
-  "translate(772.7 35.3) scale(0.343 0.098)",
-  "translate(1091.3 32.3) scale(-0.397 0.107)",
-  "translate(964.9 27.0) scale(0.361 0.115)",
-  "translate(1225.8 29.4) scale(-0.333 0.111)",
-  "translate(1145.6 40.7) scale(0.331 0.088)",
-  "translate(1427.7 22.7) scale(-0.366 0.125)",
-  "translate(1313.2 23.1) scale(0.305 0.123)",
-  "translate(1561.9 40.1) scale(-0.322 0.091)",
-  "translate(1488.0 36.9) scale(0.317 0.096)",
-  "translate(1790.1 25.2) scale(-0.363 0.119)",
-];
-
-/** Fill for the grass divider — the light section colour directly below the hero. */
-const GRASS_FILL = "#faf8f5";
-
 /** Fallback backgrounds when a CMS slide has no primaryImageUrl. */
 const BG_FALLBACKS = [
   "linear-gradient(120deg,#6b4a1f,#3d1402 60%,#1b3717)",
@@ -281,19 +248,6 @@ export default function HomeHero({ heroes }: HomeHeroProps) {
         </div>
       )}
 
-      {/* ── Grasses & shrubs divider — real grass clump tiled, cream silhouette cutting up,
-             gently swaying in the wind (3 phase-offset groups for a rippling breeze) ── */}
-      <svg viewBox="0 0 1600 90" preserveAspectRatio="none" aria-hidden="true" style={{ position: "absolute", left: 0, right: 0, bottom: -1, width: "100%", height: "clamp(52px,6.5vw,84px)", display: "block", zIndex: 5, pointerEvents: "none" }}>
-        <defs>
-          <path id="kb-grass-clump" d={GRASS_CLUMP} />
-        </defs>
-        <rect x="0" y="82" width="1600" height="10" fill={GRASS_FILL} />
-        {[0, 1, 2].map((group) => (
-          <g key={group} className="hero-grass-sway" style={{ animationDelay: `${group * -1.85}s` }}>
-            {GRASS_TRANSFORMS.map((tr, idx) => (idx % 3 === group ? <use key={idx} href="#kb-grass-clump" transform={tr} fill={GRASS_FILL} /> : null))}
-          </g>
-        ))}
-      </svg>
     </section>
   );
 }
