@@ -20,7 +20,6 @@ export interface SafariCardData {
 }
 
 const SERIF = "var(--font-source-serif), Georgia, serif";
-const HIGHLIGHT_CAP = 3;
 const FALLBACK_GRADIENTS = [
   "linear-gradient(150deg,#5a7a3a 0%,#274e22 55%,#12280f 100%)",
   "linear-gradient(150deg,#9a6a2a 0%,#5a1e03 60%,#2a1204 100%)",
@@ -67,8 +66,6 @@ export default function SafariCard({ safari }: { safari: SafariCardData }) {
 
   const route = startLocation && endLocation ? `${startLocation}  →  ${endLocation}` : null;
   const chips = parseHighlights(highlights);
-  const shownChips = chips.slice(0, HIGHLIGHT_CAP);
-  const extra = chips.length - HIGHLIGHT_CAP;
   const badges = [tripTypeDisplayName, budgetCategoryDisplayName].filter(Boolean) as string[];
   const tagline = chips[0] || description || "";
   const bg = primaryImageUrl ? `center/cover no-repeat url('${primaryImageUrl}')` : FALLBACK_GRADIENTS[code.length % FALLBACK_GRADIENTS.length];
@@ -82,7 +79,7 @@ export default function SafariCard({ safari }: { safari: SafariCardData }) {
         <div className="ksafari-rest absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(20,12,4,0) 28%, rgba(20,12,4,.5) 60%, rgba(20,12,4,.95) 100%)" }} />
 
         {/* price pill — dark, high-contrast so it reads on any photo */}
-        <div className="ksafari-rest absolute top-3.5 right-3.5" style={{ fontFamily: SERIF, background: "rgba(20,12,4,.82)", color: "#f3e6c8", fontSize: 14, fontWeight: 700, padding: "7px 13px", borderRadius: 6, border: "1px solid rgba(196,143,43,.55)", boxShadow: "0 2px 12px rgba(20,12,4,.45)" }}>{pillText}</div>
+        <div className="ksafari-rest absolute top-3.5 right-3.5" style={{ fontFamily: SERIF, background: "rgba(20,12,4,.82)", color: "#f3e6c8", fontSize: 18, fontWeight: 700, padding: "9px 15px", borderRadius: 7, border: "1px solid rgba(196,143,43,.55)", boxShadow: "0 2px 12px rgba(20,12,4,.45)" }}>{pillText}</div>
 
         {/* rest: kicker + title + tagline */}
         <div className="ksafari-rest absolute left-0 bottom-0" style={{ right: 56, padding: 18 }}>
@@ -98,43 +95,35 @@ export default function SafariCard({ safari }: { safari: SafariCardData }) {
         <div className="ksafari-sweep absolute inset-0">
           <div className="ksafari-fill absolute inset-0" style={{ background: "linear-gradient(160deg, rgba(53,107,46,.78) 0%, rgba(31,67,25,.9) 52%, rgba(18,40,15,.96) 100%)" }} />
           <div className="relative flex flex-col" style={{ height: "100%", padding: 22, zIndex: 1 }}>
-          {badges.length > 0 && (
-            <div className="ksafari-reveal" style={{ transitionDelay: ".04s" }}>
-              <div className="flex flex-wrap gap-1.5 mb-3">
-                {badges.map((b) => (
-                  <span key={b} style={{ background: "rgba(242,236,224,.14)", color: "#faf8f5", fontSize: 11, fontWeight: 600, padding: "5px 10px", borderRadius: 5 }}>{b}</span>
-                ))}
-              </div>
-            </div>
-          )}
-          <h4 className="ksafari-reveal ksafari-clamp" style={{ fontFamily: SERIF, fontWeight: 700, color: "#fff", fontSize: 19, lineHeight: 1.18, margin: 0, transitionDelay: ".08s" }}>{name}</h4>
-          {route && (
-            <div className="ksafari-reveal flex items-center gap-1.5" style={{ marginTop: 10, color: "#f3e6c8", fontSize: 12.5, transitionDelay: ".12s" }}>
-              <MapPin size={13} style={{ flexShrink: 0 }} />{route}
-            </div>
-          )}
-          {chips.length > 0 && (
-            <div className="ksafari-reveal flex flex-wrap gap-1.5" style={{ marginTop: 12, transitionDelay: ".16s" }}>
-              {shownChips.map((h) => (
-                <span key={h} style={{ background: "rgba(242,236,224,.1)", border: "1px solid rgba(242,236,224,.2)", color: "#faf8f5", fontSize: 11.5, padding: "4px 9px", borderRadius: 20 }}>{h}</span>
-              ))}
-              {extra > 0 && <span style={{ background: "#c48f2b", color: "#3d1402", fontSize: 11.5, fontWeight: 600, padding: "4px 9px", borderRadius: 20 }}>+{extra} more</span>}
-            </div>
-          )}
-          {description && <p className="ksafari-reveal ksafari-clamp" style={{ color: "rgba(242,236,224,.85)", fontSize: 13, lineHeight: 1.5, margin: "12px 0 0", transitionDelay: ".2s" }}>{description}</p>}
-          <div className="ksafari-reveal flex items-center justify-between gap-3" style={{ marginTop: "auto", paddingTop: 16, transitionDelay: ".24s" }}>
-            <div style={{ minWidth: 0 }}>
-              {priceNum ? (
-                <>
-                  <div style={{ color: "rgba(242,236,224,.75)", fontSize: 11 }}>From</div>
-                  <div style={{ fontFamily: SERIF, fontWeight: 700, color: "#c48f2b", fontSize: 21, lineHeight: 1 }}>{priceFull}</div>
-                </>
-              ) : (
-                <div style={{ fontFamily: SERIF, fontWeight: 600, color: "#fff", fontSize: 16 }}>Enquire for pricing</div>
+            {/* essentials only — info group clips gracefully; price + CTA stay pinned */}
+            <div className="flex flex-col" style={{ flex: 1, minHeight: 0, overflow: "hidden" }}>
+              {badges.length > 0 && (
+                <div className="ksafari-reveal flex flex-wrap gap-1.5" style={{ marginBottom: 12, transitionDelay: ".04s" }}>
+                  {badges.map((b) => (
+                    <span key={b} style={{ background: "rgba(242,236,224,.14)", color: "#faf8f5", fontSize: 11, fontWeight: 600, padding: "5px 10px", borderRadius: 5 }}>{b}</span>
+                  ))}
+                </div>
+              )}
+              <h4 className="ksafari-reveal ksafari-clamp" style={{ fontFamily: SERIF, fontWeight: 700, color: "#fff", fontSize: 19, lineHeight: 1.18, margin: 0, transitionDelay: ".08s" }}>{name}</h4>
+              {route && (
+                <div className="ksafari-reveal flex items-center gap-1.5" style={{ marginTop: 10, color: "#f3e6c8", fontSize: 12.5, transitionDelay: ".12s" }}>
+                  <MapPin size={13} style={{ flexShrink: 0 }} />{route}
+                </div>
               )}
             </div>
-            <span className="inline-flex items-center gap-1.5 whitespace-nowrap" style={{ background: "#c48f2b", color: "#3d1402", fontWeight: 600, fontSize: 13.5, borderRadius: 7, padding: "10px 15px" }}>View &amp; Book <ArrowIcon size={14} sw={2.5} /></span>
-          </div>
+            <div className="ksafari-reveal flex items-center justify-between gap-3" style={{ flexShrink: 0, paddingTop: 16, transitionDelay: ".16s" }}>
+              <div style={{ minWidth: 0 }}>
+                {priceNum ? (
+                  <>
+                    <div style={{ color: "rgba(242,236,224,.75)", fontSize: 12 }}>From</div>
+                    <div style={{ fontFamily: SERIF, fontWeight: 700, color: "#c48f2b", fontSize: 27, lineHeight: 1.05 }}>{priceFull}</div>
+                  </>
+                ) : (
+                  <div style={{ fontFamily: SERIF, fontWeight: 600, color: "#fff", fontSize: 16 }}>Enquire for pricing</div>
+                )}
+              </div>
+              <span className="inline-flex items-center gap-1.5 whitespace-nowrap" style={{ background: "#c48f2b", color: "#3d1402", fontWeight: 600, fontSize: 13.5, borderRadius: 7, padding: "10px 15px" }}>View &amp; Book <ArrowIcon size={14} sw={2.5} /></span>
+            </div>
           </div>
         </div>
       </div>
