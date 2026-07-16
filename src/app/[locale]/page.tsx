@@ -8,7 +8,6 @@ import HowItWorksSection from "@/components/sections/HowItWorksSection";
 import ExploreSection from "@/components/sections/ExploreSection";
 import TestimonialsSection from "@/components/sections/TestimonialsSection";
 import CTASection from "@/components/sections/CTASection";
-import NewsletterSection from "@/components/sections/NewsletterSection";
 import WhyChooseUsSection from "@/components/sections/WhyChooseUsSection";
 
 export async function generateMetadata({
@@ -53,7 +52,6 @@ export default async function HomePage({
         totalItems={data.testimoniesTotalItems ?? 0}
       />
       <WhyChooseUsSection />
-      <NewsletterSection />
       <CTASection />
     </>
   );
