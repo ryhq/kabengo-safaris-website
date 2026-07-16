@@ -379,7 +379,12 @@
     "copyright": "© {year} Сафарі Кабенго. Всі права захищені.",
     "newsletter": "Підпишіться на нашу розсилку",
     "emailPlaceholder": "Введіть свою електронну адресу",
-    "subscribeBtn": "Підписатися"
+    "subscribeBtn": "Підписатися",
+    "privacy": "Політика конфіденційності",
+    "terms": "Умови використання",
+    "explore": "Дослідити",
+    "company": "Компанія",
+    "whatsapp": "Напишіть у WhatsApp"
   },
   "newsletter": {
     "title": "Залишайтеся в курсі подій Safari Adventures",

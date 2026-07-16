@@ -381,7 +381,12 @@
     "copyright": "© {year} Kabengo Safaris. Tutti i diritti riservati.",
     "newsletter": "Iscriviti",
     "emailPlaceholder": "La tua email",
-    "subscribeBtn": "Iscriviti"
+    "subscribeBtn": "Iscriviti",
+    "privacy": "Informativa sulla privacy",
+    "terms": "Termini e condizioni",
+    "explore": "Esplora",
+    "company": "Azienda",
+    "whatsapp": "Scrivici su WhatsApp"
   },
   "newsletter": {
     "title": "Resta aggiornato sulle avventure safari",

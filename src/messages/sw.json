@@ -381,7 +381,12 @@
     "copyright": "© {year} Kabengo Safaris. Haki zote zimehifadhiwa.",
     "newsletter": "Jiandikishe kwa jarida letu",
     "emailPlaceholder": "Weka barua pepe yako",
-    "subscribeBtn": "Jiandikishe"
+    "subscribeBtn": "Jiandikishe",
+    "privacy": "Sera ya Faragha",
+    "terms": "Sheria na Masharti",
+    "explore": "Gundua",
+    "company": "Kampuni",
+    "whatsapp": "Tutumie WhatsApp"
   },
   "newsletter": {
     "title": "Pata Habari za Safari",
