@@ -2,7 +2,7 @@ import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
-import { Playfair_Display, Inter } from "next/font/google";
+import { Source_Serif_4, Inter } from "next/font/google";
 import type { Metadata } from "next";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
@@ -26,9 +26,9 @@ export async function generateMetadata({
   };
 }
 
-const playfair = Playfair_Display({
+const sourceSerif = Source_Serif_4({
   subsets: ["latin"],
-  variable: "--font-playfair",
+  variable: "--font-source-serif",
   display: "swap",
 });
 
@@ -54,7 +54,7 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale} className={`${playfair.variable} ${inter.variable}`}>
+    <html lang={locale} className={`${sourceSerif.variable} ${inter.variable}`}>
       <body className="min-h-screen flex flex-col">
         <JsonLd data={getWebSiteJsonLd(locale)} />
         <NextIntlClientProvider messages={messages}>

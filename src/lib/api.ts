@@ -217,6 +217,30 @@ export async function subscribeToNewsletter(email: string, name?: string): Promi
   }
 }
 
+export interface PublicParkOption {
+  slug: string;
+  name: string;
+  region?: string;
+  primaryImageUrl?: string;
+}
+
+/** All web-active parks (for the planner's destination multi-select). */
+export async function fetchPublicParks(): Promise<PublicParkOption[]> {
+  try {
+    const res = await apiClient.get("/public/parks?page=0&size=100", {
+      headers: { "Accept-Language": getApiLocale() },
+    });
+    if (res.data?.success) {
+      const d = res.data.data;
+      return (d?.parks || d || []) as PublicParkOption[];
+    }
+    return [];
+  } catch (err) {
+    console.error("[api] Failed to fetch parks:", err);
+    return [];
+  }
+}
+
 export async function submitBookingInquiry(
   data: BookingInquiryPayload
 ): Promise<{ status: string; message: string }> {

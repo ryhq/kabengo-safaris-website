@@ -66,8 +66,7 @@ export default function SimilarSafaris({ currentCode, tripType, budgetCategory }
     const totalPax = item.totalPaxCount || 1;
     const perPerson = cost.grandTotalRack / totalPax;
     const currency = cost.currency || "USD";
-    const wasPrice = Math.ceil(perPerson * 1.3);
-    return { currency, perPerson: Math.ceil(perPerson), wasPrice };
+    return { currency, perPerson: Math.ceil(perPerson) };
   };
 
   return (
@@ -145,14 +144,9 @@ export default function SimilarSafaris({ currentCode, tripType, budgetCategory }
                     {/* Price overlay */}
                     {priceInfo && (
                       <div className="absolute bottom-3 right-3 bg-white/95 backdrop-blur-sm rounded-xl px-3 py-1.5 shadow-sm">
-                        <div className="flex items-baseline gap-1">
-                          <span className="text-stone-400 line-through text-xs">
-                            {priceInfo.currency} {priceInfo.wasPrice.toLocaleString()}
-                          </span>
-                          <span className="text-brand-green font-bold text-sm">
-                            {priceInfo.currency} {priceInfo.perPerson.toLocaleString()}
-                          </span>
-                        </div>
+                        <span className="text-brand-green font-bold text-sm">
+                          {priceInfo.currency} {priceInfo.perPerson.toLocaleString()}
+                        </span>
                         <p className="text-[10px] text-stone-400">{t("detail.perPerson")}</p>
                       </div>
                     )}

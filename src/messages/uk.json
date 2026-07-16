@@ -19,7 +19,13 @@
   "hero": {
     "title": "Відкрийте для себе магію Африки",
     "subtitle": "linking a savings account transaction to a goalСафарі-тури преміум-класу та захоплюючі враження від дикої природи Східної Африки",
-    "cta": "Сплануйте своє сафарі"
+    "cta": "Сплануйте своє сафарі",
+    "eyebrow": "Tanzania · Tailor-made Safaris",
+    "planCustom": "Plan a Custom Safari",
+    "scroll": "Scroll",
+    "prevSlide": "Previous slide",
+    "nextSlide": "Next slide",
+    "goToSlide": "Go to slide {n}"
   },
   "common": {
     "readMore": "Читати далі",

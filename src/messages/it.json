@@ -19,7 +19,13 @@
   "hero": {
     "title": "Scopri la Magia dell'Africa",
     "subtitle": "Safari premium ed esperienze indimenticabili nell'Africa Orientale",
-    "cta": "Pianifica il Tuo Safari"
+    "cta": "Pianifica il Tuo Safari",
+    "eyebrow": "Tanzania · Tailor-made Safaris",
+    "planCustom": "Plan a Custom Safari",
+    "scroll": "Scroll",
+    "prevSlide": "Previous slide",
+    "nextSlide": "Next slide",
+    "goToSlide": "Go to slide {n}"
   },
   "common": {
     "readMore": "Leggi di Più",

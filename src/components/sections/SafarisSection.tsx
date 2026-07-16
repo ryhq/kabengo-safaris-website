@@ -4,22 +4,14 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { motion } from "framer-motion";
-import Image from "next/image";
-import { Calendar, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import SectionHeading from "@/components/ui/SectionHeading";
 import LoadMoreFade from "@/components/ui/LoadMoreFade";
+import SafariCard, { type SafariCardData } from "@/components/safari/SafariCard";
 import { fetchSafarisPaginated } from "@/lib/api";
 
-interface SafariItem {
-  code: string;
-  name: string;
-  description?: string;
-  totalDays?: number;
-  primaryImageUrl?: string;
-}
-
 interface SafarisSectionProps {
-  initialSafaris: SafariItem[];
+  initialSafaris: SafariCardData[];
   totalItems: number;
 }
 
@@ -28,7 +20,7 @@ const PAGE_SIZE = 6;
 export default function SafarisSection({ initialSafaris, totalItems }: SafarisSectionProps) {
   const t = useTranslations("home");
   const common = useTranslations("common");
-  const [safaris, setSafaris] = useState<SafariItem[]>(() => {
+  const [safaris, setSafaris] = useState<SafariCardData[]>(() => {
     const seen = new Set<string>();
     return initialSafaris.filter((s) => {
       if (seen.has(s.code)) return false;
@@ -79,42 +71,7 @@ export default function SafarisSection({ initialSafaris, totalItems }: SafarisSe
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
             >
-              <Link
-                href={`/safaris/${safari.code}`}
-                className="group block bg-brand-cream rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300"
-              >
-                <div className="relative h-48 overflow-hidden">
-                  <Image
-                    src={safari.primaryImageUrl || "/images/placeholders/safari.svg"}
-                    alt={safari.name}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                </div>
-                <div className="p-6">
-                  <h3 className="text-lg font-bold text-stone-800 group-hover:text-brand-brown transition-colors font-serif">
-                    {safari.name}
-                  </h3>
-                  {safari.description && (
-                    <p className="text-sm text-stone-500 mt-2 line-clamp-2">
-                      {safari.description}
-                    </p>
-                  )}
-                  <div className="flex items-center justify-between mt-4">
-                    {safari.totalDays && (
-                      <span className="flex items-center text-xs text-stone-400">
-                        <Calendar size={14} className="mr-1" />
-                        {safari.totalDays} {common("days")}
-                      </span>
-                    )}
-                    <span className="flex items-center text-sm font-medium text-brand-brown group-hover:translate-x-1 transition-transform">
-                      {common("viewDetails")}
-                      <ArrowRight size={14} className="ml-1" />
-                    </span>
-                  </div>
-                </div>
-              </Link>
+              <SafariCard safari={safari} />
             </motion.div>
           ))}
         </div>

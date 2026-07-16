@@ -2,14 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { useTranslations, useLocale } from "next-intl";
-import { Link } from "@/i18n/navigation";
-import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Calendar,
-  ArrowRight,
   Search,
-  MapPin,
   Moon,
   Sun,
   Sunrise,
@@ -23,6 +19,7 @@ import {
 import PageHero from "@/components/ui/PageHero";
 import LoadMoreFade from "@/components/ui/LoadMoreFade";
 import SkeletonCard from "@/components/ui/SkeletonCard";
+import SafariCard from "@/components/safari/SafariCard";
 import { useDebounce } from "@/lib/useDebounce";
 import { apiClient } from "@/lib/api";
 import type { Itinerary } from "@/types";
@@ -150,21 +147,6 @@ export default function SafarisPage() {
     } finally {
       setLoadingMore(false);
     }
-  };
-
-  const getPriceInfo = (item: Itinerary) => {
-    if (!item.costSummary || item.costSummary.length === 0) return null;
-    const cost = item.costSummary[0];
-    if (!cost.grandTotalRack) return null;
-    const totalPax = item.totalPaxCount || 1;
-    const perPerson = cost.grandTotalRack / totalPax;
-    const currency = cost.currency || "USD";
-    const wasPrice = Math.ceil(perPerson * 1.3);
-    // Build pax label e.g. "Non-Resident Adult"
-    const paxLabel = item.paxBreakdown && item.paxBreakdown.length > 0
-      ? item.paxBreakdown.map(p => `${p.nationCategoryName || ""} ${p.ageCategoryName || ""}`.trim()).join(", ")
-      : null;
-    return { currency, perPerson, wasPrice, totalPax, paxLabel };
   };
 
   const clearFilters = () => {
@@ -394,115 +376,9 @@ export default function SafarisPage() {
                     initial={{ opacity: 0, y: 24 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{
-                      delay: (index % PAGE_SIZE) * 0.05,
-                      duration: 0.45,
-                    }}
+                    transition={{ delay: (index % PAGE_SIZE) * 0.05, duration: 0.45 }}
                   >
-                    <Link
-                      href={`/safaris/${item.code}`}
-                      className="group block bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-stone-100/80 h-full"
-                    >
-                      {/* Image */}
-                      <div className="relative h-52 sm:h-56 overflow-hidden">
-                        <Image
-                          src={
-                            item.primaryImageUrl ||
-                            "/images/placeholders/safari.svg"
-                          }
-                          alt={item.name}
-                          fill
-                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                          className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/5 to-transparent" />
-
-                        {/* Top-left: Trip type */}
-                        {item.tripTypeDisplayName && (
-                          <span className="absolute top-3 left-3 text-[11px] font-semibold bg-white/95 backdrop-blur-sm text-brand-green px-3 py-1.5 rounded-lg shadow-sm">
-                            {item.tripTypeDisplayName}
-                          </span>
-                        )}
-
-                        {/* Top-right: Duration badge */}
-                        <span className="absolute top-3 right-3 text-[11px] font-bold bg-black/40 backdrop-blur-sm text-white px-3 py-1.5 rounded-lg flex items-center gap-1.5">
-                          <Calendar size={11} />
-                          {item.totalDays === 1 && item.totalNights === 0
-                            ? t("dayTrip")
-                            : t("daysNights", {
-                                days: item.totalDays ?? 0,
-                                nights: item.totalNights ?? 0,
-                              })}
-                        </span>
-
-                        {/* Bottom-left: Budget tier */}
-                        {item.budgetCategoryDisplayName && (
-                          <span className="absolute bottom-3 left-3 text-[10px] font-semibold bg-brand-brown/85 backdrop-blur-sm text-white px-2.5 py-1 rounded-lg uppercase tracking-wider">
-                            {item.budgetCategoryDisplayName}
-                          </span>
-                        )}
-
-                        {/* Bottom-right: Price */}
-                        {(() => {
-                          const price = getPriceInfo(item);
-                          if (!price) return null;
-                          return (
-                            <span className="absolute bottom-3 right-3 flex flex-col items-end bg-brand-green/90 backdrop-blur-sm text-white px-3 py-1.5 rounded-lg shadow-sm">
-                              <span className="text-[10px] line-through text-white/60">
-                                {price.currency} {price.wasPrice.toLocaleString()}
-                              </span>
-                              <span className="text-sm font-bold">
-                                {price.currency} {Math.ceil(price.perPerson).toLocaleString()}
-                              </span>
-                              <span className="text-[9px] text-white/70">{t("detail.perPerson")}</span>
-                            </span>
-                          );
-                        })()}
-                      </div>
-
-                      {/* Content */}
-                      <div className="p-5 pb-4 flex flex-col">
-                        <h3 className="text-base font-bold text-stone-800 group-hover:text-brand-green transition-colors font-serif leading-snug line-clamp-2">
-                          {item.name}
-                        </h3>
-
-                        {item.description && (
-                          <p className="text-[13px] text-stone-500 mt-2 line-clamp-2 leading-relaxed">
-                            {item.description}
-                          </p>
-                        )}
-
-                        {/* Meta */}
-                        <div className="flex flex-wrap items-center gap-2 mt-3">
-                          {(item.startLocation || item.endLocation) && (
-                            <span className="inline-flex items-center gap-1 text-[11px] text-stone-500 bg-stone-50 px-2.5 py-1 rounded-lg">
-                              <MapPin size={11} className="text-stone-400" />
-                              {item.startLocation || item.endLocation}
-                            </span>
-                          )}
-                        </div>
-
-                        {/* CTA */}
-                        <div className="flex items-center justify-between mt-4 pt-3 border-t border-stone-50">
-                          {(() => {
-                            const price = getPriceInfo(item);
-                            if (!price) return <span />;
-                            return (
-                              <span className="text-[11px] text-stone-400 font-medium">
-                                {price.paxLabel ? t("detail.paxContext", { count: price.totalPax, category: price.paxLabel }) : t("detail.from")}
-                              </span>
-                            );
-                          })()}
-                          <span className="flex items-center gap-1.5 text-sm font-semibold text-brand-green group-hover:gap-2.5 transition-all">
-                            {common("viewDetails")}
-                            <ArrowRight
-                              size={14}
-                              className="transition-transform group-hover:translate-x-0.5"
-                            />
-                          </span>
-                        </div>
-                      </div>
-                    </Link>
+                    <SafariCard safari={item} />
                   </motion.div>
                 ))}
               </div>

@@ -12,7 +12,6 @@ interface SafariInfoCardsProps {
   startLocation?: string;
   endLocation?: string;
   price?: string | null;
-  wasPrice?: string;
   paxLabel?: string;
 }
 
@@ -23,17 +22,16 @@ export default function SafariInfoCards({
   startLocation,
   endLocation,
   price,
-  wasPrice,
   paxLabel,
 }: SafariInfoCardsProps) {
   const t = useTranslations("safaris");
-  const items: { icon: ElementType; label: string; value: string; wasValue?: string; subtext?: string }[] = [
+  const items: { icon: ElementType; label: string; value: string; subtext?: string }[] = [
     totalDays ? { icon: Calendar, label: t("detail.duration"), value: `${totalDays} Days${totalNights ? ` / ${totalNights} Nights` : ""}` } : null,
     totalPaxCount ? { icon: Users, label: t("detail.groupSize"), value: `${totalPaxCount} Travelers` } : null,
     startLocation ? { icon: MapPin, label: t("detail.start"), value: startLocation } : null,
     endLocation ? { icon: Route, label: t("detail.end"), value: endLocation } : null,
-    price ? { icon: DollarSign, label: `${t("detail.from")} · ${t("detail.perPerson")}`, value: price, wasValue: wasPrice, subtext: paxLabel } : null,
-  ].filter(Boolean) as { icon: ElementType; label: string; value: string; wasValue?: string; subtext?: string }[];
+    price ? { icon: DollarSign, label: `${t("detail.from")} · ${t("detail.perPerson")}`, value: price, subtext: paxLabel } : null,
+  ].filter(Boolean) as { icon: ElementType; label: string; value: string; subtext?: string }[];
 
   if (items.length === 0) return null;
 
@@ -49,12 +47,7 @@ export default function SafariInfoCards({
         >
           <item.icon size={18} className="text-brand-green mb-2" />
           <p className="text-xs text-stone-400 font-medium">{item.label}</p>
-          <div className="flex items-baseline gap-1.5 mt-0.5">
-            {item.wasValue && (
-              <span className="text-xs text-stone-400 line-through">{item.wasValue}</span>
-            )}
-            <p className="text-sm text-stone-700 font-semibold">{item.value}</p>
-          </div>
+          <p className="text-sm text-stone-700 font-semibold mt-0.5">{item.value}</p>
           {item.subtext && (
             <p className="text-[10px] text-stone-400 mt-0.5">{item.subtext}</p>
           )}

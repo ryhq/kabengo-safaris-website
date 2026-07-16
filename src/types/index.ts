@@ -224,6 +224,9 @@ export interface BookingInquiryPayload {
   preferredEndDate?: string;
   budgetCategory?: string;
   tripType?: string;
+  interests?: string[];
+  preferredDurationDays?: number;
+  destinationParkIds?: string[];
   specialRequests?: string;
   message?: string;
   safariIdentifier?: string;

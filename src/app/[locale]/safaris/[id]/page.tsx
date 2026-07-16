@@ -62,11 +62,10 @@ export default function SafariDetailPage() {
     const totalPax = itinerary.totalPaxCount || 1;
     const perPerson = cost.grandTotalRack / totalPax;
     const currency = cost.currency || "USD";
-    const wasPrice = Math.ceil(perPerson * 1.3);
     const paxLabel = itinerary.paxBreakdown && itinerary.paxBreakdown.length > 0
       ? itinerary.paxBreakdown.map(p => `${p.nationCategoryName || ""} ${p.ageCategoryName || ""}`.trim()).join(", ")
       : null;
-    return { currency, perPerson, wasPrice, totalPax, paxLabel, formatted: `${currency} ${Math.ceil(perPerson).toLocaleString()}` };
+    return { currency, perPerson, totalPax, paxLabel, formatted: `${currency} ${Math.ceil(perPerson).toLocaleString()}` };
   };
 
   const safariCode = (params.id as string) || itinerary.code;
@@ -100,7 +99,6 @@ export default function SafariDetailPage() {
             startLocation={itinerary.startLocation}
             endLocation={itinerary.endLocation}
             price={price}
-            wasPrice={priceInfo ? `${priceInfo.currency} ${priceInfo.wasPrice.toLocaleString()}` : undefined}
             paxLabel={priceInfo?.paxLabel || undefined}
           />
         </div>
@@ -146,7 +144,6 @@ export default function SafariDetailPage() {
                     startLocation={itinerary.startLocation}
                     endLocation={itinerary.endLocation}
                     price={price}
-                    wasPrice={priceInfo ? `${priceInfo.currency} ${priceInfo.wasPrice.toLocaleString()}` : undefined}
                     paxLabel={priceInfo?.paxLabel || undefined}
                   />
                 </div>
@@ -195,7 +192,6 @@ export default function SafariDetailPage() {
         safariCode={safariCode}
         safariName={itinerary.name}
         price={price}
-        wasPrice={priceInfo ? `${priceInfo.currency} ${priceInfo.wasPrice.toLocaleString()}` : undefined}
       />
     </div>
   );
