@@ -3,6 +3,7 @@ import { fetchHomepageData } from "@/lib/api";
 import { buildAlternates } from "@/lib/seo";
 import HeroSection from "@/components/sections/HeroSection";
 import SafarisSection from "@/components/sections/SafarisSection";
+import BookVacationSection from "@/components/sections/BookVacationSection";
 import ParksSection from "@/components/sections/ParksSection";
 import ActivitiesSection from "@/components/sections/ActivitiesSection";
 import TestimonialsSection from "@/components/sections/TestimonialsSection";
@@ -44,6 +45,7 @@ export default async function HomePage({
         initialSafaris={data.safaris ?? []}
         totalItems={data.safarisTotalItems ?? 0}
       />
+      <BookVacationSection />
       <ParksSection
         initialParks={data.parks ?? []}
         totalItems={data.parksTotalItems ?? 0}
