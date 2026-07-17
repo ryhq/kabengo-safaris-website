@@ -22,7 +22,6 @@ export interface Itinerary {
   totalPaxCount?: number;
   totalDaysCount?: number;
   primaryImageUrl?: string;
-  featured?: boolean;
   fromPriceUsd?: number;
   costSummary?: CostSummary[];
   paxBreakdown?: PaxBreakdown[];

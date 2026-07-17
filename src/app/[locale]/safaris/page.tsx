@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { motion } from "framer-motion";
 import { Link } from "@/i18n/navigation";
-import { Search, ChevronDown, X, ArrowRight, Check, Star, MessageCircle } from "lucide-react";
+import { Search, ChevronDown, X, ArrowRight, Check, MessageCircle } from "lucide-react";
 import PageHero from "@/components/ui/PageHero";
 import SkeletonCard from "@/components/ui/SkeletonCard";
 import SafariCard from "@/components/safari/SafariCard";
@@ -15,9 +15,14 @@ import type { Itinerary } from "@/types";
 const PAGE_SIZE = 9;
 const SERIF = "var(--font-source-serif), Georgia, serif";
 
-/* Brushed/torn organic mask — reused from the homepage "Book your dream safari" section. */
-const PHOTO_MASK =
-  "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Cdefs%3E%3Cfilter id='r' x='-20%25' y='-20%25' width='140%25' height='140%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.012' numOctaves='3' seed='14' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='52' xChannelSelector='R' yChannelSelector='G'/%3E%3C/filter%3E%3C/defs%3E%3Cellipse cx='400' cy='300' rx='352' ry='262' fill='white' filter='url(%23r)'/%3E%3C/svg%3E\") center/100% 100% no-repeat";
+/* Big, soft brushed/torn blob (URL) — reused from the homepage "Book your dream safari" background patch. */
+const BLOB_URL =
+  "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 600'%3E%3Cdefs%3E%3Cfilter id='b' x='-25%25' y='-25%25' width='150%25' height='150%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.008' numOctaves='3' seed='29' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='72' xChannelSelector='R' yChannelSelector='G'/%3E%3C/filter%3E%3C/defs%3E%3Ccircle cx='300' cy='300' r='250' fill='white' filter='url(%23b)'/%3E%3C/svg%3E\")";
+/* Centered blob for the big background patch. */
+const BG_MASK = `${BLOB_URL} center/contain no-repeat`;
+/* Same blob family anchored to the RIGHT edge — clips the photo's right border to the organic shape while its left/top/bottom sit off-canvas (stay flush). Shallower, finer tear so it hugs the divider and doesn't eat the guide's outstretched hand. */
+const RIGHT_BLOB =
+  "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 600'%3E%3Cdefs%3E%3Cfilter id='rb' x='-25%25' y='-25%25' width='150%25' height='150%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.011' numOctaves='3' seed='29' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='26' xChannelSelector='R' yChannelSelector='G'/%3E%3C/filter%3E%3C/defs%3E%3Ccircle cx='300' cy='300' r='250' fill='white' filter='url(%23rb)'/%3E%3C/svg%3E\") right center / 140% 240% no-repeat";
 
 const DURATIONS = [
   { key: "all", min: undefined, max: undefined },
@@ -33,7 +38,7 @@ const TRIP_TYPE_LABEL: Record<string, string> = { "": "all", PRIVATE: "private",
 const BUDGETS = ["", "ULTRA_LUXURY", "LUXURY", "MID_RANGE", "BUDGET", "BACKPACKER"] as const;
 const BUDGET_LABEL: Record<string, string> = { "": "all", ULTRA_LUXURY: "ultraLuxury", LUXURY: "luxury", MID_RANGE: "midRange", BUDGET: "budget", BACKPACKER: "backpacker" };
 const SORTS = [
-  { key: "popular", sortBy: "featured", dir: "desc" },
+  { key: "popular", sortBy: "newest", dir: "desc" },
   { key: "priceAsc", sortBy: "price", dir: "asc" },
   { key: "priceDesc", sortBy: "price", dir: "desc" },
   { key: "duration", sortBy: "duration", dir: "asc" },
@@ -97,7 +102,6 @@ export default function SafarisPage() {
   const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
-  const [featured, setFeatured] = useState<Itinerary[]>([]);
 
   const anyFilter = !!debouncedSearch || durationKey !== "all" || !!tripType || !!budget;
   const dur = DURATIONS.find((d) => d.key === durationKey)!;
@@ -135,16 +139,6 @@ export default function SafarisPage() {
     return () => { alive = false; };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedSearch, durationKey, tripType, budget, sortKey, locale]);
-
-  // editor's picks (once)
-  useEffect(() => {
-    let alive = true;
-    apiClient
-      .get(`/public/safaris?page=0&size=2&featured=true&sortBy=featured&sortDirection=desc`, { headers: { "Accept-Language": locale } })
-      .then((res) => { if (alive) { const d = res.data?.data; setFeatured(d?.safaris || d || []); } })
-      .catch(() => {});
-    return () => { alive = false; };
-  }, [locale]);
 
   const hasMore = items.length < totalItems;
   const loadMore = async () => {
@@ -211,21 +205,6 @@ export default function SafarisPage() {
       </div>
 
       <main style={{ maxWidth: 1220, margin: "0 auto", padding: "clamp(28px,4vw,44px) clamp(16px,5vw,56px) 0" }}>
-        {/* ===== Editor's picks (only when browsing unfiltered) ===== */}
-        {!anyFilter && featured.length > 0 && (
-          <section aria-label={f("featuredHeading")} style={{ marginBottom: "clamp(32px,5vw,48px)" }}>
-            <div className="flex items-center gap-2.5" style={{ marginBottom: 16 }}>
-              <Star size={17} fill="#c48f2b" stroke="none" />
-              <h2 style={{ fontFamily: SERIF, fontWeight: 700, color: "#2a2018", fontSize: "clamp(20px,2.6vw,26px)", margin: 0 }}>{f("featuredHeading")}</h2>
-            </div>
-            <div className="grid" style={{ gridTemplateColumns: "repeat(auto-fill,minmax(300px,1fr))", gap: "clamp(16px,2.2vw,24px)" }}>
-              {featured.slice(0, 2).map((item) => (
-                <SafariCard key={`feat-${item.code}`} safari={item} />
-              ))}
-            </div>
-          </section>
-        )}
-
         {/* ===== Results ===== */}
         {loading ? (
           <div className="grid" style={{ gridTemplateColumns: "repeat(auto-fill,minmax(300px,1fr))", gap: "clamp(18px,2.4vw,28px)" }}>
@@ -263,16 +242,19 @@ export default function SafarisPage() {
       </main>
 
       {/* ===== Editorial brushed band ===== */}
-      <section style={{ padding: "clamp(56px,8vw,100px) clamp(16px,5vw,56px)" }}>
-        <div className="grid grid-cols-1 md:grid-cols-2 items-stretch" style={{ maxWidth: 1120, margin: "0 auto", background: "#1b3717", borderRadius: 22, overflow: "visible" }}>
-          {/* photo cell — brushed shape breaks out beyond the card top & bottom (desktop) */}
-          <div style={{ position: "relative", minHeight: 300 }}>
-            <style>{`
-              .tf-photo{position:absolute;inset:clamp(-12px,-1vw,0px)}
-              @media(min-width:768px){.tf-photo{inset:auto;top:clamp(-78px,-6vw,-44px);bottom:clamp(-78px,-6vw,-44px);left:clamp(-60px,-4vw,-28px);right:0}}
-            `}</style>
-            <div className="tf-photo" style={{ background: "50% 15%/cover no-repeat url('/images/guide-binoculars.jpg')", WebkitMask: PHOTO_MASK, mask: PHOTO_MASK }} role="img" aria-label="A Kabengo Safaris guide spotting wildlife at Ngorongoro" />
-          </div>
+      <section style={{ padding: "clamp(104px,13vw,184px) clamp(16px,5vw,56px)" }}>
+        <div style={{ position: "relative", maxWidth: 1120, margin: "0 auto" }}>
+          {/* big rough blob BEHIND the card — larger than the card, protrudes beyond its left/top/bottom edges (homepage style) */}
+          <div aria-hidden="true" style={{ position: "absolute", zIndex: 0, pointerEvents: "none", right: "50%", top: "50%", transform: "translateY(-50%)", width: "clamp(700px,85%,1125px)", aspectRatio: "1 / 1", background: "#d6ac54", WebkitMask: BG_MASK, mask: BG_MASK }} />
+          {/* the card — clean rounded container with elevation; clips the photo to its rounded corners */}
+          <div className="grid grid-cols-1 md:grid-cols-2 items-stretch" style={{ position: "relative", zIndex: 1, background: "#1b3717", borderRadius: 22, overflow: "hidden", boxShadow: "0 30px 60px rgba(27,55,23,.30)" }}>
+            {/* photo cell — image flush to the card top/left/bottom; RIGHT edge clipped to the organic gold shape */}
+            <div style={{ position: "relative", minHeight: 360, overflow: "hidden" }}>
+              {/* gold frame behind the photo — same blob shape, slightly larger, so its right edge shows as the image's organic gold border */}
+              <div aria-hidden="true" style={{ position: "absolute", inset: 0, background: "#d6ac54", WebkitMask: RIGHT_BLOB, mask: RIGHT_BLOB, transform: "scale(1.03)" }} />
+              {/* photo — right edge clipped to the blob shape; top/left/bottom stay flush (clipped by the card's rounded corners) */}
+              <div role="img" aria-label="A Kabengo Safaris guide spotting wildlife at Ngorongoro" style={{ position: "absolute", inset: 0, background: "50% 28%/cover no-repeat url('/images/guide-binoculars.jpg')", WebkitMask: RIGHT_BLOB, mask: RIGHT_BLOB }} />
+            </div>
           {/* copy cell */}
           <div style={{ padding: "clamp(30px,4vw,52px)", display: "flex", flexDirection: "column", justifyContent: "center" }}>
             <div style={{ color: "#c48f2b", fontSize: 12, fontWeight: 600, letterSpacing: ".2em", textTransform: "uppercase", marginBottom: 14 }}>{f("bandEyebrow")}</div>
@@ -287,6 +269,7 @@ export default function SafarisPage() {
                 <span key={label} className="inline-flex items-center" style={{ gap: 7, color: "#f3e6c8", fontSize: 13, fontWeight: 500 }}><Check size={14} strokeWidth={2.4} style={{ color: "#c48f2b" }} />{label}</span>
               ))}
             </div>
+          </div>
           </div>
         </div>
       </section>
