@@ -265,9 +265,13 @@ export default function SafarisPage() {
       {/* ===== Editorial brushed band ===== */}
       <section style={{ padding: "clamp(56px,8vw,100px) clamp(16px,5vw,56px)" }}>
         <div className="grid grid-cols-1 md:grid-cols-2 items-stretch" style={{ maxWidth: 1120, margin: "0 auto", background: "#1b3717", borderRadius: 22, overflow: "visible" }}>
-          {/* photo cell — brushed shape enlarged so it spills beyond the card edges */}
-          <div style={{ position: "relative", minHeight: 280 }}>
-            <div style={{ position: "absolute", inset: "clamp(-44px,-3vw,-20px)", background: "50% 40%/cover no-repeat url('/images/guide-binoculars.jpg')", WebkitMask: PHOTO_MASK, mask: PHOTO_MASK }} role="img" aria-label="A Kabengo Safaris guide spotting wildlife at Ngorongoro" />
+          {/* photo cell — brushed shape breaks out beyond the card top & bottom (desktop) */}
+          <div style={{ position: "relative", minHeight: 300 }}>
+            <style>{`
+              .tf-photo{position:absolute;inset:clamp(-12px,-1vw,0px)}
+              @media(min-width:768px){.tf-photo{inset:auto;top:clamp(-78px,-6vw,-44px);bottom:clamp(-78px,-6vw,-44px);left:clamp(-60px,-4vw,-28px);right:0}}
+            `}</style>
+            <div className="tf-photo" style={{ background: "50% 15%/cover no-repeat url('/images/guide-binoculars.jpg')", WebkitMask: PHOTO_MASK, mask: PHOTO_MASK }} role="img" aria-label="A Kabengo Safaris guide spotting wildlife at Ngorongoro" />
           </div>
           {/* copy cell */}
           <div style={{ padding: "clamp(30px,4vw,52px)", display: "flex", flexDirection: "column", justifyContent: "center" }}>
