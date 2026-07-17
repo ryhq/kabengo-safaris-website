@@ -663,5 +663,31 @@
     "stayTitle": "Où séjourner",
     "stayDesc": "Lodges et camps de toile pour tous les styles",
     "cta": "Explorer"
+  },
+  "safariFinder": {
+    "sortLabel": "Trier",
+    "sortPopular": "Les plus populaires",
+    "sortPriceAsc": "Prix : croissant",
+    "sortPriceDesc": "Prix : décroissant",
+    "sortDuration": "Durée",
+    "sortNewest": "Plus récents",
+    "featuredHeading": "Coups de cœur",
+    "showMore": "Voir plus de safaris",
+    "emptyTitle": "Aucun voyage ne correspond — pour l'instant",
+    "emptyBody": "Dites-nous ce que vous cherchez et notre équipe d'Arusha le concevra sur mesure.",
+    "bandEyebrow": "Vous hésitez sur le safari ?",
+    "bandTitle": "Nous le concevons autour de vous",
+    "bandBody1": "Notre équipe locale d'Arusha crée des voyages sur mesure de A à Z — vos dates, votre rythme, votre budget.",
+    "bandBody2": "Partagez une idée et nous en ferons une proposition honnête et détaillée.",
+    "bottomTitle": "Vous ne trouvez pas le voyage parfait ? Dites-nous votre rêve.",
+    "bottomSubtitle": "Aucun voyage n'est standard ici — chaque safari Kabengo est conçu pour un seul groupe à la fois.",
+    "faqQ1": "Quelle est la meilleure période ?",
+    "faqA1": "Juin–octobre pour l'observation en saison sèche ; janvier–février pour la mise bas. Nous conseillons selon vos dates.",
+    "faqQ2": "Combien coûte un safari ?",
+    "faqA2": "La plupart des voyages sur mesure se situent entre 2 000 et 6 000 $ par personne, hors vols internationaux.",
+    "faqQ3": "Comment se passe la réservation ?",
+    "faqA3": "Partagez vos idées, nous envoyons une proposition, vous l'affinez, puis un acompte confirme le voyage. Aucun paiement pour demander.",
+    "faqQ4": "Les voyages sont-ils privés ?",
+    "faqA4": "Oui — chaque safari Kabengo est privé par défaut, avec votre guide et votre 4×4. Départs en groupe sur demande."
   }
 }

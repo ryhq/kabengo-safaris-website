@@ -663,5 +663,31 @@
     "stayTitle": "Unterkünfte",
     "stayDesc": "Safari-Lodges & Zeltcamps für jeden Stil",
     "cta": "Entdecken"
+  },
+  "safariFinder": {
+    "sortLabel": "Sortieren",
+    "sortPopular": "Beliebteste",
+    "sortPriceAsc": "Preis: aufsteigend",
+    "sortPriceDesc": "Preis: absteigend",
+    "sortDuration": "Dauer",
+    "sortNewest": "Neueste",
+    "featuredHeading": "Empfehlungen",
+    "showMore": "Weitere Safaris anzeigen",
+    "emptyTitle": "Noch keine passenden Reisen",
+    "emptyBody": "Sagen Sie uns, was Sie suchen — unser Team in Arusha baut es von Grund auf.",
+    "bandEyebrow": "Unsicher, welche Safari?",
+    "bandTitle": "Wir gestalten sie um Sie herum",
+    "bandBody1": "Unser lokales Team in Arusha entwirft maßgeschneiderte Reisen von Grund auf — Ihre Daten, Ihr Tempo, Ihr Budget.",
+    "bandBody2": "Teilen Sie eine grobe Idee und wir machen ein ehrliches, detailliertes Angebot daraus.",
+    "bottomTitle": "Keine passende Reise gefunden? Sagen Sie uns Ihren Traum.",
+    "bottomSubtitle": "Keine Reise ist hier von der Stange — jede Kabengo-Safari wird für eine Reisegruppe gebaut.",
+    "faqQ1": "Wann ist die beste Reisezeit?",
+    "faqA1": "Juni–Oktober für die klassische Trockenzeit; Januar–Februar für die Kalbungssaison. Wir beraten je nach Ihren Daten.",
+    "faqQ2": "Was kostet eine Safari typischerweise?",
+    "faqA2": "Die meisten maßgeschneiderten Reisen liegen zwischen 2.000 und 6.000 $ pro Person, ohne internationale Flüge.",
+    "faqQ3": "Wie funktioniert die Buchung?",
+    "faqA3": "Teilen Sie Ihre Ideen, wir senden ein Angebot, Sie verfeinern es, dann sichert eine Anzahlung die Reise. Anfragen sind kostenlos.",
+    "faqQ4": "Sind die Reisen privat?",
+    "faqA4": "Ja — jede Kabengo-Safari ist standardmäßig privat, mit eigenem Guide und 4×4. Gruppenreisen auf Anfrage."
   }
 }

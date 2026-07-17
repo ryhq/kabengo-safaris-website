@@ -661,5 +661,31 @@
     "stayTitle": "Where to stay",
     "stayDesc": "Safari lodges & tented camps for every style",
     "cta": "Explore"
+  },
+  "safariFinder": {
+    "sortLabel": "Sort",
+    "sortPopular": "Most popular",
+    "sortPriceAsc": "Price: low to high",
+    "sortPriceDesc": "Price: high to low",
+    "sortDuration": "Duration",
+    "sortNewest": "Newest",
+    "featuredHeading": "Editor's picks",
+    "showMore": "Show more safaris",
+    "emptyTitle": "No trips match — yet",
+    "emptyBody": "Tell us what you're after and our Arusha team will build it from scratch.",
+    "bandEyebrow": "Not sure which safari?",
+    "bandTitle": "We'll build it around you",
+    "bandBody1": "Our local Arusha team designs tailor-made trips from the ground up — your dates, your pace, your budget.",
+    "bandBody2": "Share a rough idea and we'll turn it into an honest, detailed proposal.",
+    "bottomTitle": "Can't find the perfect trip? Tell us your dream.",
+    "bottomSubtitle": "No trip here is off the shelf — every Kabengo safari is built for one set of travellers at a time.",
+    "faqQ1": "When is the best time to go?",
+    "faqA1": "June–October for classic dry-season game viewing; January–February for the calving season. We advise for your exact dates.",
+    "faqQ2": "What does a safari typically cost?",
+    "faqA2": "Most tailor-made trips land between $2,000 and $6,000 per person, excluding international flights.",
+    "faqQ3": "How does booking work?",
+    "faqA3": "Share your ideas, we send a proposal, you refine it, then a deposit secures the trip. No payment to enquire.",
+    "faqQ4": "Are trips private?",
+    "faqA4": "Yes — every Kabengo safari is private by default, with your own guide and 4×4. Group departures on request."
   }
 }

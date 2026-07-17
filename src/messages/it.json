@@ -663,5 +663,31 @@
     "stayTitle": "Dove alloggiare",
     "stayDesc": "Lodge e campi tendati per ogni stile",
     "cta": "Esplora"
+  },
+  "safariFinder": {
+    "sortLabel": "Ordina",
+    "sortPopular": "Più popolari",
+    "sortPriceAsc": "Prezzo: dal più basso",
+    "sortPriceDesc": "Prezzo: dal più alto",
+    "sortDuration": "Durata",
+    "sortNewest": "Più recenti",
+    "featuredHeading": "Scelti per te",
+    "showMore": "Mostra altri safari",
+    "emptyTitle": "Nessun viaggio corrisponde — ancora",
+    "emptyBody": "Dicci cosa cerchi e il nostro team di Arusha lo costruirà da zero.",
+    "bandEyebrow": "Non sai quale safari scegliere?",
+    "bandTitle": "Lo costruiamo su di te",
+    "bandBody1": "Il nostro team locale di Arusha progetta viaggi su misura da zero — le tue date, il tuo ritmo, il tuo budget.",
+    "bandBody2": "Condividi un'idea e la trasformeremo in una proposta onesta e dettagliata.",
+    "bottomTitle": "Non trovi il viaggio perfetto? Raccontaci il tuo sogno.",
+    "bottomSubtitle": "Qui nessun viaggio è preconfezionato — ogni safari Kabengo è costruito per un solo gruppo alla volta.",
+    "faqQ1": "Qual è il periodo migliore?",
+    "faqA1": "Giugno–ottobre per la stagione secca; gennaio–febbraio per la stagione dei parti. Consigliamo in base alle tue date.",
+    "faqQ2": "Quanto costa un safari?",
+    "faqA2": "La maggior parte dei viaggi su misura costa tra 2.000 e 6.000 $ a persona, esclusi i voli internazionali.",
+    "faqQ3": "Come funziona la prenotazione?",
+    "faqA3": "Condividi le idee, inviamo una proposta, la perfezioni, poi un acconto conferma il viaggio. Chiedere è gratis.",
+    "faqQ4": "I viaggi sono privati?",
+    "faqA4": "Sì — ogni safari Kabengo è privato di default, con guida e 4×4 tuoi. Partenze di gruppo su richiesta."
   }
 }

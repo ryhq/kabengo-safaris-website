@@ -663,5 +663,31 @@
     "stayTitle": "Onde ficar",
     "stayDesc": "Lodges e campos de tenda para todos os estilos",
     "cta": "Explorar"
+  },
+  "safariFinder": {
+    "sortLabel": "Ordenar",
+    "sortPopular": "Mais populares",
+    "sortPriceAsc": "Preço: do menor ao maior",
+    "sortPriceDesc": "Preço: do maior ao menor",
+    "sortDuration": "Duração",
+    "sortNewest": "Mais recentes",
+    "featuredHeading": "Escolhas do editor",
+    "showMore": "Ver mais safáris",
+    "emptyTitle": "Nenhuma viagem corresponde — ainda",
+    "emptyBody": "Diga-nos o que procura e a nossa equipa de Arusha criá-la-á de raiz.",
+    "bandEyebrow": "Não sabe qual safári escolher?",
+    "bandTitle": "Criamo-lo à sua medida",
+    "bandBody1": "A nossa equipa local de Arusha cria viagens sob medida de raiz — as suas datas, o seu ritmo, o seu orçamento.",
+    "bandBody2": "Partilhe uma ideia e transformá-la-emos numa proposta honesta e detalhada.",
+    "bottomTitle": "Não encontra a viagem perfeita? Conte-nos o seu sonho.",
+    "bottomSubtitle": "Aqui nenhuma viagem é padronizada — cada safári Kabengo é criado para um só grupo de cada vez.",
+    "faqQ1": "Qual é a melhor altura para ir?",
+    "faqA1": "Junho–outubro para a estação seca; janeiro–fevereiro para a época das crias. Aconselhamos conforme as suas datas.",
+    "faqQ2": "Quanto custa um safári?",
+    "faqA2": "A maioria das viagens sob medida custa entre 2.000 e 6.000 $ por pessoa, sem voos internacionais.",
+    "faqQ3": "Como funciona a reserva?",
+    "faqA3": "Partilhe as suas ideias, enviamos uma proposta, refina-a, e um depósito garante a viagem. Consultar é grátis.",
+    "faqQ4": "As viagens são privadas?",
+    "faqA4": "Sim — cada safári Kabengo é privado por defeito, com o seu guia e 4×4. Partidas em grupo a pedido."
   }
 }

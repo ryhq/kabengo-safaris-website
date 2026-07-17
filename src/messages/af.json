@@ -661,5 +661,31 @@
     "stayTitle": "Waar om te bly",
     "stayDesc": "Safari-lodges en tentkampe vir elke styl",
     "cta": "Verken"
+  },
+  "safariFinder": {
+    "sortLabel": "Sorteer",
+    "sortPopular": "Gewildste",
+    "sortPriceAsc": "Prys: laag na hoog",
+    "sortPriceDesc": "Prys: hoog na laag",
+    "sortDuration": "Duur",
+    "sortNewest": "Nuutste",
+    "featuredHeading": "Redakteurskeuses",
+    "showMore": "Wys meer safari's",
+    "emptyTitle": "Geen reise pas — nog nie",
+    "emptyBody": "Sê vir ons wat jy soek en ons Arusha-span sal dit van vooraf bou.",
+    "bandEyebrow": "Onseker watter safari?",
+    "bandTitle": "Ons bou dit om jou",
+    "bandBody1": "Ons plaaslike Arusha-span ontwerp pasgemaakte reise van vooraf — jou datums, jou tempo, jou begroting.",
+    "bandBody2": "Deel 'n rowwe idee en ons maak dit 'n eerlike, gedetailleerde voorstel.",
+    "bottomTitle": "Kry jy nie die perfekte reis nie? Sê vir ons jou droom.",
+    "bottomSubtitle": "Geen reis hier is van die rak nie — elke Kabengo-safari word vir een groep op 'n slag gebou.",
+    "faqQ1": "Wanneer is die beste tyd om te gaan?",
+    "faqA1": "Junie–Oktober vir die droë seisoen; Januarie–Februarie vir die kalfseisoen. Ons adviseer vir jou datums.",
+    "faqQ2": "Wat kos 'n safari gewoonlik?",
+    "faqA2": "Die meeste pasgemaakte reise kos tussen $2,000 en $6,000 per persoon, sonder internasionale vlugte.",
+    "faqQ3": "Hoe werk bespreking?",
+    "faqA3": "Deel jou idees, ons stuur 'n voorstel, jy verfyn dit, en 'n deposito verseker die reis. Navrae is gratis.",
+    "faqQ4": "Is reise privaat?",
+    "faqA4": "Ja — elke Kabengo-safari is by verstek privaat, met jou eie gids en 4×4. Groepvertrekke op aanvraag."
   }
 }
