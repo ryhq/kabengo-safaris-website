@@ -39,12 +39,10 @@ const BUDGETS = ["", "ULTRA_LUXURY", "LUXURY", "MID_RANGE", "BUDGET", "BACKPACKE
 const BUDGET_LABEL: Record<string, string> = { "": "all", ULTRA_LUXURY: "ultraLuxury", LUXURY: "luxury", MID_RANGE: "midRange", BUDGET: "budget", BACKPACKER: "backpacker" };
 const SORTS = [
   { key: "popular", sortBy: "newest", dir: "desc" },
-  { key: "priceAsc", sortBy: "price", dir: "asc" },
-  { key: "priceDesc", sortBy: "price", dir: "desc" },
   { key: "duration", sortBy: "duration", dir: "asc" },
   { key: "newest", sortBy: "newest", dir: "desc" },
 ] as const;
-const SORT_LABEL_KEY: Record<string, string> = { popular: "sortPopular", priceAsc: "sortPriceAsc", priceDesc: "sortPriceDesc", duration: "sortDuration", newest: "sortNewest" };
+const SORT_LABEL_KEY: Record<string, string> = { popular: "sortPopular", duration: "sortDuration", newest: "sortNewest" };
 
 interface Opt { value: string; label: string }
 
@@ -253,7 +251,7 @@ export default function SafarisPage() {
               {/* gold frame behind the photo — same blob shape, slightly larger, so its right edge shows as the image's organic gold border */}
               <div aria-hidden="true" style={{ position: "absolute", inset: 0, background: "#d6ac54", WebkitMask: RIGHT_BLOB, mask: RIGHT_BLOB, transform: "scale(1.03)" }} />
               {/* photo — right edge clipped to the blob shape; top/left/bottom stay flush (clipped by the card's rounded corners) */}
-              <div role="img" aria-label="A Kabengo Safaris guide spotting wildlife at Ngorongoro" style={{ position: "absolute", inset: 0, background: "50% 28%/cover no-repeat url('/images/guide-binoculars.jpg')", WebkitMask: RIGHT_BLOB, mask: RIGHT_BLOB }} />
+              <div role="img" aria-label="A Kabengo Safaris guide spotting wildlife at Ngorongoro" style={{ position: "absolute", inset: 0, background: "50% 30%/cover no-repeat url('/images/guide-binoculars.jpg')", WebkitMask: RIGHT_BLOB, mask: RIGHT_BLOB }} />
             </div>
           {/* copy cell */}
           <div style={{ padding: "clamp(30px,4vw,52px)", display: "flex", flexDirection: "column", justifyContent: "center" }}>
@@ -288,7 +286,12 @@ export default function SafarisPage() {
             <span className="inline-flex items-center" style={{ gap: 8, fontSize: 13.5, color: "rgba(242,236,224,.85)" }}><Check size={15} strokeWidth={2.4} style={{ color: "#c48f2b" }} />TATO / TALA</span>
             <span className="inline-flex items-center" style={{ gap: 8, fontSize: 13.5, color: "rgba(242,236,224,.85)" }}><Check size={15} strokeWidth={2.4} style={{ color: "#c48f2b" }} />{trust[2]}</span>
           </div>
-          <div className="grid" style={{ gridTemplateColumns: "repeat(auto-fit,minmax(220px,1fr))", gap: 14, marginTop: 40, textAlign: "left" }}>
+          <style>{`
+            .tf-faq { display: grid; grid-template-columns: 1fr; gap: 14px; margin-top: 40px; text-align: left; }
+            @media (min-width: 560px) { .tf-faq { grid-template-columns: repeat(2, 1fr); } }
+            @media (min-width: 960px) { .tf-faq { grid-template-columns: repeat(4, 1fr); } }
+          `}</style>
+          <div className="tf-faq">
             {faqs.map((q) => (
               <div key={q.q} style={{ background: "rgba(242,236,224,.06)", border: "1px solid rgba(242,236,224,.12)", borderRadius: 12, padding: "18px 20px" }}>
                 <div style={{ fontFamily: SERIF, fontWeight: 600, color: "#fff", fontSize: 15.5, marginBottom: 7 }}>{q.q}</div>
