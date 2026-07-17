@@ -251,7 +251,7 @@ export default function SafarisPage() {
               {/* gold frame behind the photo — same blob shape, slightly larger, so its right edge shows as the image's organic gold border */}
               <div aria-hidden="true" style={{ position: "absolute", inset: 0, background: "#d6ac54", WebkitMask: RIGHT_BLOB, mask: RIGHT_BLOB, transform: "scale(1.03)" }} />
               {/* photo — right edge clipped to the blob shape; top/left/bottom stay flush (clipped by the card's rounded corners) */}
-              <div role="img" aria-label="A Kabengo Safaris guide spotting wildlife at Ngorongoro" style={{ position: "absolute", inset: 0, background: "50% 30%/cover no-repeat url('/images/guide-binoculars.jpg')", WebkitMask: RIGHT_BLOB, mask: RIGHT_BLOB }} />
+              <div role="img" aria-label="A Kabengo Safaris guide spotting wildlife at Ngorongoro" style={{ position: "absolute", inset: 0, background: "50% 7%/cover no-repeat url('/images/guide-binoculars.jpg')", WebkitMask: RIGHT_BLOB, mask: RIGHT_BLOB }} />
             </div>
           {/* copy cell */}
           <div style={{ padding: "clamp(30px,4vw,52px)", display: "flex", flexDirection: "column", justifyContent: "center" }}>
