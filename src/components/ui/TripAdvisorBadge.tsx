@@ -6,11 +6,13 @@ import { ExternalLink } from "lucide-react";
 
 const TRIPADVISOR_URL =
   "https://www.tripadvisor.com/Attraction_Review-g297913-d34283345-Reviews-Kabengo_Safaris-Arusha_Arusha_Region.html";
+/* Deep-link that opens TripAdvisor's "write a review" editor for this listing. */
+const TRIPADVISOR_WRITE_REVIEW_URL = "https://www.tripadvisor.com/UserReviewEdit-d34283345";
 
 /* Live figures from the TripAdvisor listing — bump these as reviews grow
    (or later wire the TripAdvisor Content API to fetch them automatically). */
 const TRIPADVISOR_RATING = 5.0;
-const TRIPADVISOR_REVIEW_COUNT = 1;
+const TRIPADVISOR_REVIEW_COUNT: number = 2;
 const TA_GREEN = "#00aa6c";
 
 function TripAdvisorLogo({ className = "w-6 h-6" }: { className?: string }) {
@@ -175,21 +177,28 @@ export function TripAdvisorReviewSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="bg-white rounded-2xl border border-stone-200 shadow-sm p-8 sm:p-10 flex flex-col items-center gap-5"
+          className="bg-white rounded-2xl border border-stone-200 shadow-sm p-8 sm:p-10 flex flex-col items-center gap-6"
         >
           <div className="flex items-center gap-3">
             <RatingBubbles rating={TRIPADVISOR_RATING} size={18} />
             <span className="font-semibold text-stone-800 text-lg">{TRIPADVISOR_RATING.toFixed(1)}</span>
             <span className="text-stone-500 text-sm">· {TRIPADVISOR_REVIEW_COUNT} review{TRIPADVISOR_REVIEW_COUNT === 1 ? "" : "s"}</span>
           </div>
+
+          {/* Scan-to-review QR */}
+          <a href={TRIPADVISOR_WRITE_REVIEW_URL} target="_blank" rel="noopener noreferrer" aria-label="Write a review on Tripadvisor" className="block">
+            <img src="/images/tripadvisor-qr.png" alt="Scan to write a review on Tripadvisor" width={190} height={285} style={{ width: 190, height: "auto", borderRadius: 14 }} />
+          </a>
+          <p className="text-stone-500 text-sm -mt-1">{t("scanToReview")}</p>
+
           <a
-            href={TRIPADVISOR_URL}
+            href={TRIPADVISOR_WRITE_REVIEW_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-7 py-3.5 bg-[#00aa6c] text-white font-semibold rounded-xl hover:bg-[#008a57] transition-colors shadow-sm"
           >
             <TripAdvisorLogo className="w-5 h-5" />
-            {t("viewOnTripadvisor")}
+            {t("reviewOnTripadvisor")}
             <ExternalLink size={16} />
           </a>
         </motion.div>
