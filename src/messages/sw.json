@@ -318,7 +318,8 @@
     "emptyBody": "Bado hakuna maoni hapa — lakini kila safari nzuri huanza na mtu kuthubutu. Kama umeitembelea Tanzania nasi, maneno yako humsaidia msafiri ajaye kuota ndoto kubwa zaidi.",
     "emptyCta": "Andika maoni ya kwanza",
     "yourEmail": "Your Email",
-    "emailPlaceholder": "you@example.com"
+    "emailPlaceholder": "you@example.com",
+    "basedOn": "Kulingana na hakiki {count} za wageni"
   },
   "blog": {
     "title": "Jarida la Safari",

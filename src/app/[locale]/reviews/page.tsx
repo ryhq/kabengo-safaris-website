@@ -42,6 +42,21 @@ export default function TestimonialsPage() {
   const [loadingMore, setLoadingMore] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [totalItems, setTotalItems] = useState(0);
+  const [summary, setSummary] = useState<{ ratingValue: number; reviewCount: number } | null>(null);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await apiClient.get(`/public/testimonies/summary`, { headers: { "Accept-Language": locale } });
+        const d = res.data?.data;
+        if (res.data?.success && d?.reviewCount > 0 && d?.averageRating) {
+          setSummary({ ratingValue: d.averageRating, reviewCount: d.reviewCount });
+        }
+      } catch {
+        /* aggregate is optional — omit if unavailable */
+      }
+    })();
+  }, [locale]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -96,6 +111,26 @@ export default function TestimonialsPage() {
   return (
     <>
       <PageHero heroPage="TESTIMONIALS" fallbackTitle={t("title")} fallbackSubtitle={t("subtitle")} />
+
+      {/* Dynamic aggregate rating — sourced live from guest reviews */}
+      {summary && summary.reviewCount > 0 && (
+        <section className="bg-white border-b border-stone-100 py-8">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-10 text-center sm:text-left">
+            <div className="flex items-baseline gap-2">
+              <span className="font-serif font-bold text-stone-800" style={{ fontSize: "clamp(44px,7vw,64px)", lineHeight: 1 }}>{summary.ratingValue.toFixed(1)}</span>
+              <span className="text-stone-400 text-lg font-medium">/ 5</span>
+            </div>
+            <div>
+              <div className="flex justify-center sm:justify-start gap-1 mb-1.5">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <Star key={i} size={22} className={i < Math.round(summary.ratingValue) ? "text-amber-400 fill-amber-400" : "text-stone-200"} />
+                ))}
+              </div>
+              <p className="text-stone-500 text-sm">{t("basedOn", { count: summary.reviewCount })}</p>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Featured Testimonial */}
       {!loading && featured && (

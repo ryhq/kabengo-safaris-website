@@ -316,7 +316,8 @@
     "writeAnother": "Напишіть ще один відгук",
     "emptyTitle": "Be the first to share your story",
     "emptyBody": "No reviews here yet — but every great safari begins with someone taking the leap. If you've explored Tanzania with us, your words help the next traveler dream bigger.",
-    "emptyCta": "Write the first review"
+    "emptyCta": "Write the first review",
+    "basedOn": "На основі {count} відгуків гостей"
   },
   "blog": {
     "title": "Сафарі-журнал",
