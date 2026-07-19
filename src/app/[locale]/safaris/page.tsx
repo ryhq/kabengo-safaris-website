@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { motion } from "framer-motion";
 import { Link } from "@/i18n/navigation";
@@ -50,8 +50,16 @@ function Dropdown({ label, active, open, onToggle, onClose, options, value, onPi
   label: string; active: boolean; open: boolean; onToggle: () => void; onClose: () => void;
   options: Opt[]; value: string; onPick: (v: string) => void; ariaLabel: string;
 }) {
+  const ref = useRef<HTMLDivElement>(null);
+  // Close automatically when focus/click leaves the dropdown (matches the /book planner dropdown).
+  useEffect(() => {
+    if (!open) return;
+    const onDoc = (e: MouseEvent) => { if (ref.current && !ref.current.contains(e.target as Node)) onClose(); };
+    document.addEventListener("mousedown", onDoc);
+    return () => document.removeEventListener("mousedown", onDoc);
+  }, [open, onClose]);
   return (
-    <div style={{ position: "relative", flex: "0 1 auto" }}>
+    <div ref={ref} style={{ position: "relative", flex: "0 1 auto" }}>
       <button type="button" onClick={onToggle} aria-haspopup="listbox" aria-expanded={open} aria-label={ariaLabel}
         className="flex items-center gap-2.5 rounded-lg text-sm whitespace-nowrap cursor-pointer transition-colors"
         style={{ border: `1.5px solid ${active || open ? "#c48f2b" : "#e4ddd1"}`, background: active ? "#f3e6c8" : "#fff", color: active ? "#96631a" : "#2a2018", fontWeight: active ? 600 : 500, padding: "12px 14px", boxShadow: open ? "0 0 0 3px #f3e6c8" : "none" }}>
@@ -59,21 +67,18 @@ function Dropdown({ label, active, open, onToggle, onClose, options, value, onPi
         <ChevronDown size={15} strokeWidth={2} style={{ color: active || open ? "#96631a" : "#7a6f61", transform: open ? "rotate(180deg)" : "none", transition: "transform .2s" }} />
       </button>
       {open && (
-        <>
-          <div onClick={onClose} style={{ position: "fixed", inset: 0, zIndex: 40 }} />
-          <div role="listbox" aria-label={ariaLabel} style={{ position: "absolute", top: "calc(100% + 6px)", left: 0, minWidth: 190, background: "#fff", border: "1px solid #e4ddd1", borderRadius: 11, boxShadow: "0 16px 44px rgba(62,21,2,.2)", padding: 6, zIndex: 41, maxHeight: 300, overflow: "auto" }}>
-            {options.map((o) => {
-              const sel = o.value === value;
-              return (
-                <button key={o.value} type="button" role="option" aria-selected={sel} onClick={() => { onPick(o.value); onClose(); }}
-                  className="flex items-center justify-between gap-4 w-full text-left rounded-md cursor-pointer"
-                  style={{ background: sel ? "#f3e6c8" : "transparent", color: sel ? "#96631a" : "#2a2018", fontWeight: sel ? 600 : 500, border: "none", padding: "10px 12px", fontSize: 14 }}>
-                  {o.label}{sel && <Check size={15} style={{ color: "#c48f2b" }} />}
-                </button>
-              );
-            })}
-          </div>
-        </>
+        <div role="listbox" aria-label={ariaLabel} style={{ position: "absolute", top: "calc(100% + 6px)", left: 0, minWidth: 190, background: "#fff", border: "1px solid #e4ddd1", borderRadius: 11, boxShadow: "0 16px 44px rgba(62,21,2,.2)", padding: 6, zIndex: 41, maxHeight: 300, overflow: "auto" }}>
+          {options.map((o) => {
+            const sel = o.value === value;
+            return (
+              <button key={o.value} type="button" role="option" aria-selected={sel} onClick={() => { onPick(o.value); onClose(); }}
+                className="flex items-center justify-between gap-4 w-full text-left rounded-md cursor-pointer"
+                style={{ background: sel ? "#f3e6c8" : "transparent", color: sel ? "#96631a" : "#2a2018", fontWeight: sel ? 600 : 500, border: "none", padding: "10px 12px", fontSize: 14 }}>
+                {o.label}{sel && <Check size={15} style={{ color: "#c48f2b" }} />}
+              </button>
+            );
+          })}
+        </div>
       )}
     </div>
   );

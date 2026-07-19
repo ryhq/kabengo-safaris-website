@@ -126,6 +126,8 @@ export default function Navbar() {
         .filter((l) => localeSet.has(l.code))
         .map((l) => ({ code: l.code, label: l.name || LOCALE_NAMES[l.code] || l.code.toUpperCase() }))
     : routing.locales.map((code) => ({ code, label: LOCALE_NAMES[code] || code.toUpperCase() }));
+  // Don't offer the language that's already active.
+  const otherLocales = availableLocales.filter((l) => l.code !== locale);
 
   // Build nav links based on API data
   const staticLinks = [
@@ -340,7 +342,7 @@ export default function Navbar() {
                       className="absolute right-0 mt-2 w-40 rounded-2xl shadow-[0_8px_40px_rgba(0,0,0,0.18)] overflow-hidden py-2 z-50 origin-top-right glass-card"
                       style={{ backdropFilter: "blur(12px) saturate(150%)" }}
                     >
-                      {availableLocales.map((locale, i) => (
+                      {otherLocales.map((locale, i) => (
                         <motion.button
                           key={locale.code}
                           initial={{ opacity: 0, x: -8 }}
@@ -500,15 +502,11 @@ export default function Navbar() {
                         className="overflow-hidden"
                       >
                         <div className="pl-6 space-y-0.5 pb-1">
-                          {availableLocales.map((l) => (
+                          {otherLocales.map((l) => (
                             <button
                               key={l.code}
                               onClick={() => { switchLocale(l.code); setIsOpen(false); }}
-                              className={`block w-full text-left px-4 py-2 text-sm rounded-xl cursor-pointer ${
-                                l.code === locale
-                                  ? "text-white bg-white/20 font-medium"
-                                  : "text-white/70 hover:text-white hover:bg-white/20"
-                              }`}
+                              className="block w-full text-left px-4 py-2 text-sm rounded-xl cursor-pointer text-white/70 hover:text-white hover:bg-white/20"
                             >
                               {l.label}
                             </button>
