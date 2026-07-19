@@ -80,16 +80,16 @@
     "testimonialsSubtitle": "Real stories from unforgettable safari adventures",
     "ctaTitle": "Ready for Your African Adventure?",
     "ctaSubtitle": "Let us craft the perfect safari experience tailored just for you",
-    "ctaCta": "Plan Your Safari",
+    "ctaCta": "Beplan jou safari",
     "whyChooseUsTitle": "Why Choose Kabengo Safaris",
     "whyChooseUsSubtitle": "Trusted by travelers worldwide for unforgettable African adventures",
     "safarisEyebrow": "Pasgemaakte reise",
     "exploreAll": "Sien alle safari's"
   },
   "safaris": {
-    "title": "Safari Packages",
-    "subtitle": "Find your perfect African adventure — from day trips to multi-week expeditions",
-    "searchPlaceholder": "Search by name, destination, or package code...",
+    "title": "Safari-pakkette",
+    "subtitle": "Vind jou perfekte Afrika-avontuur — van dagreise tot ekspedisies van etlike weke",
+    "searchPlaceholder": "Soek volgens naam, bestemming of pakketkode...",
     "duration": "{days} Days",
     "nights": "{nights} nights",
     "status": {
@@ -98,37 +98,37 @@
       "COMPLETED": "Completed"
     },
     "filters": {
-      "tripType": "Trip Type",
-      "budget": "Budget",
-      "duration": "Duration",
+      "tripType": "Reistipe",
+      "budget": "Begroting",
+      "duration": "Duur",
       "moreFilters": "Filters",
       "durations": {
-        "all": "All Safaris",
-        "dayTrip": "Day Trips",
-        "short": "2–3 Days",
-        "medium": "4–6 Days",
-        "week": "7–9 Days",
-        "extended": "10+ Days"
+        "all": "Alle safari's",
+        "dayTrip": "Dagreise",
+        "short": "2–3 dae",
+        "medium": "4–6 dae",
+        "week": "7–9 dae",
+        "extended": "10+ dae"
       },
       "tripTypes": {
-        "all": "All",
-        "private": "Private",
-        "group": "Group",
-        "custom": "Custom",
-        "honeymoon": "Honeymoon",
-        "family": "Family",
-        "photography": "Photography",
-        "adventure": "Adventure"
+        "all": "Almal",
+        "private": "Privaat",
+        "group": "Groep",
+        "custom": "Pasgemaak",
+        "honeymoon": "Wittebrood",
+        "family": "Gesin",
+        "photography": "Fotografie",
+        "adventure": "Avontuur"
       },
       "budgetCategories": {
-        "all": "All",
-        "ultraLuxury": "Ultra Luxury",
-        "luxury": "Luxury",
-        "midRange": "Mid Range",
-        "budget": "Budget",
-        "backpacker": "Backpacker"
+        "all": "Almal",
+        "ultraLuxury": "Ultra-luuks",
+        "luxury": "Luuks",
+        "midRange": "Middelklas",
+        "budget": "Bekostigbaar",
+        "backpacker": "Rugsakreisiger"
       },
-      "clear": "Clear filters"
+      "clear": "Vee filters uit"
     },
     "detail": {
       "itinerary": "Day-by-Day Itinerary",
@@ -180,7 +180,7 @@
     },
     "sectionHeading": "Choose Your Adventure",
     "sectionSubheading": "Browse safari packages by duration, style, and budget",
-    "resultCount": "{count} {count, plural, one {safari} other {safaris}} found",
+    "resultCount": "{count} {count, plural, one {safari} other {safari's}} gevind",
     "dayTrip": "Day Trip",
     "daysNights": "{days}D / {nights}N"
   },

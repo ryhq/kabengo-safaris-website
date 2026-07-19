@@ -119,15 +119,15 @@
         "backpacker": "Zaino in Spalla"
       },
       "clear": "Cancella filtri",
-      "duration": "Duration",
+      "duration": "Durata",
       "moreFilters": "Filters",
       "durations": {
-        "all": "All Safaris",
-        "dayTrip": "Day Trips",
-        "short": "2–3 Days",
-        "medium": "4–6 Days",
-        "week": "7–9 Days",
-        "extended": "10+ Days"
+        "all": "Tutti i safari",
+        "dayTrip": "Escursioni giornaliere",
+        "short": "2–3 giorni",
+        "medium": "4–6 giorni",
+        "week": "7–9 giorni",
+        "extended": "10+ giorni"
       }
     },
     "detail": {
@@ -180,7 +180,7 @@
     },
     "sectionHeading": "Trova il Tuo Safari Perfetto",
     "sectionSubheading": "Viaggi artigianali attraverso i paesaggi più straordinari dell'Africa",
-    "resultCount": "{count} {count, plural, one {safari} other {safaris}} found",
+    "resultCount": "{count} {count, plural, one {safari trovato} other {safari trovati}}",
     "dayTrip": "Day Trip",
     "daysNights": "{days}D / {nights}N"
   },

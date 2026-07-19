@@ -115,19 +115,19 @@
         "ultraLuxury": "Ultra Luxe",
         "luxury": "Luxe",
         "midRange": "Gamme Moyenne",
-        "budget": "Budget",
+        "budget": "Économique",
         "backpacker": "Routard"
       },
       "clear": "Effacer les filtres",
-      "duration": "Duration",
+      "duration": "Durée",
       "moreFilters": "Filters",
       "durations": {
-        "all": "All Safaris",
-        "dayTrip": "Day Trips",
-        "short": "2–3 Days",
-        "medium": "4–6 Days",
-        "week": "7–9 Days",
-        "extended": "10+ Days"
+        "all": "Tous les safaris",
+        "dayTrip": "Excursions d'une journée",
+        "short": "2–3 jours",
+        "medium": "4–6 jours",
+        "week": "7–9 jours",
+        "extended": "10 jours et +"
       }
     },
     "detail": {
@@ -180,7 +180,7 @@
     },
     "sectionHeading": "Trouvez Votre Safari Idéal",
     "sectionSubheading": "Des voyages sur mesure à travers les plus beaux paysages d'Afrique",
-    "resultCount": "{count} {count, plural, one {safari} other {safaris}} found",
+    "resultCount": "{count} {count, plural, one {safari trouvé} other {safaris trouvés}}",
     "dayTrip": "Day Trip",
     "daysNights": "{days}D / {nights}N"
   },

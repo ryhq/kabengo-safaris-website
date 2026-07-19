@@ -119,15 +119,15 @@
         "backpacker": "Mochileiro"
       },
       "clear": "Limpar filtros",
-      "duration": "Duration",
+      "duration": "Duração",
       "moreFilters": "Filters",
       "durations": {
-        "all": "All Safaris",
-        "dayTrip": "Day Trips",
-        "short": "2–3 Days",
-        "medium": "4–6 Days",
-        "week": "7–9 Days",
-        "extended": "10+ Days"
+        "all": "Todos os safáris",
+        "dayTrip": "Passeios de um dia",
+        "short": "2–3 dias",
+        "medium": "4–6 dias",
+        "week": "7–9 dias",
+        "extended": "10+ dias"
       }
     },
     "detail": {
@@ -180,7 +180,7 @@
     },
     "sectionHeading": "Encontre o Seu Safari Perfeito",
     "sectionSubheading": "Viagens artesanais pelas paisagens mais deslumbrantes de África",
-    "resultCount": "{count} {count, plural, one {safari} other {safaris}} found",
+    "resultCount": "{count} {count, plural, one {safári encontrado} other {safáris encontrados}}",
     "dayTrip": "Day Trip",
     "daysNights": "{days}D / {nights}N"
   },

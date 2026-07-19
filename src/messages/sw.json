@@ -119,15 +119,15 @@
         "backpacker": "Msafiri"
       },
       "clear": "Ondoa vichujio",
-      "duration": "Duration",
+      "duration": "Muda",
       "moreFilters": "Filters",
       "durations": {
-        "all": "All Safaris",
-        "dayTrip": "Day Trips",
-        "short": "2–3 Days",
-        "medium": "4–6 Days",
-        "week": "7–9 Days",
-        "extended": "10+ Days"
+        "all": "Safari Zote",
+        "dayTrip": "Safari za Siku Moja",
+        "short": "Siku 2–3",
+        "medium": "Siku 4–6",
+        "week": "Siku 7–9",
+        "extended": "Siku 10+"
       }
     },
     "detail": {
@@ -180,7 +180,7 @@
     },
     "sectionHeading": "Pata Safari Yako Bora",
     "sectionSubheading": "Safari za kipekee kupitia mandhari ya Afrika yenye kupendeza",
-    "resultCount": "{count} {count, plural, one {safari} other {safaris}} found",
+    "resultCount": "Safari {count} zimepatikana",
     "dayTrip": "Day Trip",
     "daysNights": "{days}D / {nights}N"
   },

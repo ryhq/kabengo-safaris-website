@@ -80,16 +80,16 @@
     "testimonialsSubtitle": "Real stories from unforgettable safari adventures",
     "ctaTitle": "Ready for Your African Adventure?",
     "ctaSubtitle": "Let us craft the perfect safari experience tailored just for you",
-    "ctaCta": "Plan Your Safari",
+    "ctaCta": "خطط لرحلة السفاري الخاصة بك",
     "whyChooseUsTitle": "Why Choose Kabengo Safaris",
     "whyChooseUsSubtitle": "Trusted by travelers worldwide for unforgettable African adventures",
     "safarisEyebrow": "رحلات مصمّمة خصيصًا",
     "exploreAll": "استكشف كل الرحلات"
   },
   "safaris": {
-    "title": "Safari Packages",
-    "subtitle": "Find your perfect African adventure — from day trips to multi-week expeditions",
-    "searchPlaceholder": "Search by name, destination, or package code...",
+    "title": "باقات السفاري",
+    "subtitle": "اعثر على مغامرتك الأفريقية المثالية — من الرحلات اليومية إلى الرحلات الاستكشافية التي تمتد لأسابيع",
+    "searchPlaceholder": "ابحث بالاسم أو الوجهة أو رمز الباقة...",
     "duration": "{days} Days",
     "nights": "{nights} nights",
     "status": {
@@ -98,37 +98,37 @@
       "COMPLETED": "Completed"
     },
     "filters": {
-      "tripType": "Trip Type",
-      "budget": "Budget",
-      "duration": "Duration",
+      "tripType": "نوع الرحلة",
+      "budget": "الميزانية",
+      "duration": "المدة",
       "moreFilters": "Filters",
       "durations": {
-        "all": "All Safaris",
-        "dayTrip": "Day Trips",
-        "short": "2–3 Days",
-        "medium": "4–6 Days",
-        "week": "7–9 Days",
-        "extended": "10+ Days"
+        "all": "جميع رحلات السفاري",
+        "dayTrip": "رحلات يومية",
+        "short": "2–3 أيام",
+        "medium": "4–6 أيام",
+        "week": "7–9 أيام",
+        "extended": "10+ أيام"
       },
       "tripTypes": {
-        "all": "All",
-        "private": "Private",
-        "group": "Group",
-        "custom": "Custom",
-        "honeymoon": "Honeymoon",
-        "family": "Family",
-        "photography": "Photography",
-        "adventure": "Adventure"
+        "all": "الكل",
+        "private": "خاصة",
+        "group": "جماعية",
+        "custom": "مخصصة",
+        "honeymoon": "شهر العسل",
+        "family": "عائلية",
+        "photography": "تصوير فوتوغرافي",
+        "adventure": "مغامرة"
       },
       "budgetCategories": {
-        "all": "All",
-        "ultraLuxury": "Ultra Luxury",
-        "luxury": "Luxury",
-        "midRange": "Mid Range",
-        "budget": "Budget",
-        "backpacker": "Backpacker"
+        "all": "الكل",
+        "ultraLuxury": "فاخرة للغاية",
+        "luxury": "فاخرة",
+        "midRange": "متوسطة",
+        "budget": "اقتصادية",
+        "backpacker": "حقيبة الظهر"
       },
-      "clear": "Clear filters"
+      "clear": "مسح عوامل التصفية"
     },
     "detail": {
       "itinerary": "Day-by-Day Itinerary",
@@ -180,7 +180,7 @@
     },
     "sectionHeading": "Choose Your Adventure",
     "sectionSubheading": "Browse safari packages by duration, style, and budget",
-    "resultCount": "{count} {count, plural, one {safari} other {safaris}} found",
+    "resultCount": "تم العثور على {count} رحلة سفاري",
     "dayTrip": "Day Trip",
     "daysNights": "{days}D / {nights}N"
   },
