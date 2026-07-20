@@ -794,5 +794,33 @@
     "guestFavouritesSub": "los lodges y campamentos más reservados por nuestros viajeros",
     "safariStat": "{count, plural, one {En # safari} other {En # safaris}}",
     "sortPopular": "Más reservados"
+  },
+  "activitiesFinder": {
+    "searchPlaceholder": "Buscar experiencias…",
+    "sortAria": "Ordenar experiencias",
+    "sortPopular": "Más populares",
+    "sortAz": "A–Z",
+    "sortZa": "Z–A",
+    "popularTitle": "Experiencias más populares",
+    "popularSub": "las actividades que más añaden nuestros viajeros",
+    "allActivities": "Todas las experiencias",
+    "resultCount": "{count} {count, plural, one {experiencia} other {experiencias}}",
+    "noActivities": "No se encontraron experiencias",
+    "safariStat": "{count, plural, one {En # safari} other {En # safaris}}",
+    "prev": "Anterior",
+    "next": "Siguiente",
+    "emptyTitle": "Ninguna experiencia coincide",
+    "emptyBody": "Prueba otra búsqueda — o cuéntanos qué sueñas y lo integraremos en tu safari.",
+    "clearFilters": "Borrar búsqueda",
+    "bandTitle": "¿Listo para crear tu aventura?",
+    "bandBody": "Cuéntanos qué experiencias te entusiasman — safaris en globo, safaris a pie, visitas culturales, extensiones a Zanzíbar — y nuestro equipo local las integrará en un viaje a medida por Tanzania.",
+    "trustReply": "Respuesta en 24 horas",
+    "faqQ1": "¿Las actividades están incluidas en mi safari?",
+    "faqA1": "La mayoría de las experiencias se integran directamente en tu itinerario a medida. Cuéntanos qué te entusiasma y lo incluiremos en tu presupuesto.",
+    "faqQ2": "¿Puedo añadir una experiencia a un viaje existente?",
+    "faqA2": "Sí. Vuelos en globo, safaris nocturnos, visitas culturales y extensiones a Zanzíbar pueden añadirse a cualquier itinerario — solo pídelo a tu planificador de safaris.",
+    "faqQ3": "¿Las experiencias tienen coste adicional?",
+    "faqA3": "Algunas incluyen tasas de parque o de operador (por ejemplo los safaris en globo o el trekking de chimpancés). Presupuestamos todo con transparencia antes de que confirmes.",
+    "showMore": "Ver más"
   }
 }

@@ -794,5 +794,33 @@
     "guestFavouritesSub": "os lodges e acampamentos mais reservados pelos nossos viajantes",
     "safariStat": "{count, plural, one {Em # safari} other {Em # safaris}}",
     "sortPopular": "Mais reservados"
+  },
+  "activitiesFinder": {
+    "searchPlaceholder": "Pesquisar experiências…",
+    "sortAria": "Ordenar experiências",
+    "sortPopular": "Mais populares",
+    "sortAz": "A–Z",
+    "sortZa": "Z–A",
+    "popularTitle": "Experiências mais populares",
+    "popularSub": "as atividades que os nossos viajantes mais adicionam",
+    "allActivities": "Todas as experiências",
+    "resultCount": "{count} {count, plural, one {experiência} other {experiências}}",
+    "noActivities": "Nenhuma experiência encontrada",
+    "safariStat": "{count, plural, one {Em # safari} other {Em # safaris}}",
+    "prev": "Anterior",
+    "next": "Seguinte",
+    "emptyTitle": "Nenhuma experiência corresponde",
+    "emptyBody": "Tente outra pesquisa — ou diga-nos o que sonha e integramo-lo no seu safari.",
+    "clearFilters": "Limpar pesquisa",
+    "bandTitle": "Pronto para criar a sua aventura?",
+    "bandBody": "Diga-nos que experiências o entusiasmam — safaris de balão, safaris a pé, visitas culturais, extensões a Zanzibar — e a nossa equipa local integra-as numa viagem à medida pela Tanzânia.",
+    "trustReply": "Resposta em 24 horas",
+    "faqQ1": "As atividades estão incluídas no meu safari?",
+    "faqA1": "A maioria das experiências é integrada diretamente no seu itinerário à medida. Diga-nos o que o entusiasma e incluímo-lo no seu orçamento.",
+    "faqQ2": "Posso adicionar uma experiência a uma viagem existente?",
+    "faqA2": "Sim. Voos de balão, safaris noturnos, visitas culturais e extensões a Zanzibar podem ser adicionados a qualquer itinerário — basta pedir ao seu planeador de safaris.",
+    "faqQ3": "As experiências têm custo adicional?",
+    "faqA3": "Algumas têm taxas de parque ou de operador (por exemplo safaris de balão ou trekking de chimpanzés). Orçamentamos tudo com transparência antes de confirmar.",
+    "showMore": "Ver mais"
   }
 }

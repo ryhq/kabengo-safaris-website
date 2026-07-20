@@ -794,5 +794,33 @@
     "guestFavouritesSub": "les lodges et campements les plus réservés par nos voyageurs",
     "safariStat": "{count, plural, one {Dans # safari} other {Dans # safaris}}",
     "sortPopular": "Les plus réservés"
+  },
+  "activitiesFinder": {
+    "searchPlaceholder": "Rechercher des expériences…",
+    "sortAria": "Trier les expériences",
+    "sortPopular": "Les plus populaires",
+    "sortAz": "A–Z",
+    "sortZa": "Z–A",
+    "popularTitle": "Expériences les plus populaires",
+    "popularSub": "les activités que nos voyageurs ajoutent le plus",
+    "allActivities": "Toutes les expériences",
+    "resultCount": "{count} {count, plural, one {expérience} other {expériences}}",
+    "noActivities": "Aucune expérience trouvée",
+    "safariStat": "{count, plural, one {Dans # safari} other {Dans # safaris}}",
+    "prev": "Précédent",
+    "next": "Suivant",
+    "emptyTitle": "Aucune expérience ne correspond",
+    "emptyBody": "Essayez une autre recherche — ou dites-nous ce dont vous rêvez et nous l'intégrerons à votre safari.",
+    "clearFilters": "Effacer la recherche",
+    "bandTitle": "Prêt à composer votre aventure ?",
+    "bandBody": "Dites-nous quelles expériences vous font envie — safaris en montgolfière, safaris à pied, visites culturelles, extensions à Zanzibar — et notre équipe locale les intégrera à un voyage sur mesure en Tanzanie.",
+    "trustReply": "Réponse sous 24 heures",
+    "faqQ1": "Les activités sont-elles incluses dans mon safari ?",
+    "faqA1": "La plupart des expériences sont intégrées directement à votre itinéraire sur mesure. Dites-nous ce qui vous plaît et nous l'inclurons dans votre devis.",
+    "faqQ2": "Puis-je ajouter une expérience à un voyage existant ?",
+    "faqA2": "Oui. Vols en montgolfière, safaris de nuit, visites culturelles et extensions à Zanzibar peuvent être ajoutés à tout itinéraire — demandez simplement à votre conseiller safari.",
+    "faqQ3": "Les expériences coûtent-elles un supplément ?",
+    "faqA3": "Certaines comportent des frais de parc ou d'opérateur (par exemple les safaris en montgolfière ou le trekking des chimpanzés). Nous chiffrons tout en toute transparence avant votre confirmation.",
+    "showMore": "Voir plus"
   }
 }

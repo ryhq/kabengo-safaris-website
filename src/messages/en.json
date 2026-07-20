@@ -792,5 +792,33 @@
     "guestFavouritesSub": "the lodges & camps our travellers book most",
     "safariStat": "{count, plural, one {In # safari} other {In # safaris}}",
     "sortPopular": "Most booked"
+  },
+  "activitiesFinder": {
+    "searchPlaceholder": "Search experiences…",
+    "sortAria": "Sort experiences",
+    "sortPopular": "Most popular",
+    "sortAz": "A–Z",
+    "sortZa": "Z–A",
+    "popularTitle": "Most popular experiences",
+    "popularSub": "the activities our travellers add most",
+    "allActivities": "All experiences",
+    "resultCount": "{count} {count, plural, one {experience} other {experiences}}",
+    "noActivities": "No experiences found",
+    "safariStat": "{count, plural, one {In # safari} other {In # safaris}}",
+    "prev": "Previous",
+    "next": "Next",
+    "emptyTitle": "No experiences match",
+    "emptyBody": "Try a different search — or tell us what you're dreaming of and we'll build it into your safari.",
+    "clearFilters": "Clear search",
+    "bandTitle": "Ready to build your adventure?",
+    "bandBody": "Tell us which experiences excite you — balloon safaris, walking safaris, cultural visits, Zanzibar add-ons — and our local team will weave them into a tailor-made Tanzania trip.",
+    "trustReply": "Replies within 24 hours",
+    "faqQ1": "Are activities included in my safari?",
+    "faqA1": "Most experiences are built right into your tailor-made itinerary. Tell us what excites you and we'll include it in your quote.",
+    "faqQ2": "Can I add an experience to an existing trip?",
+    "faqA2": "Yes. Balloon flights, night drives, cultural visits and Zanzibar extensions can be added to any itinerary — just ask your safari planner.",
+    "faqQ3": "Do experiences cost extra?",
+    "faqA3": "Some carry park or operator fees (for example balloon safaris or chimp trekking). We quote everything transparently before you confirm.",
+    "showMore": "Show more"
   }
 }

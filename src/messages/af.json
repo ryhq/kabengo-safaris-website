@@ -792,5 +792,33 @@
     "guestFavouritesSub": "die lodges en kampe wat ons reisigers die meeste bespreek",
     "safariStat": "{count, plural, one {In # safari} other {In # safari's}}",
     "sortPopular": "Mees bespreek"
+  },
+  "activitiesFinder": {
+    "searchPlaceholder": "Soek ervarings…",
+    "sortAria": "Sorteer ervarings",
+    "sortPopular": "Gewildste",
+    "sortAz": "A–Z",
+    "sortZa": "Z–A",
+    "popularTitle": "Gewildste ervarings",
+    "popularSub": "die aktiwiteite wat ons reisigers die meeste byvoeg",
+    "allActivities": "Alle ervarings",
+    "resultCount": "{count} {count, plural, one {ervaring} other {ervarings}}",
+    "noActivities": "Geen ervarings gevind nie",
+    "safariStat": "{count, plural, one {In # safari} other {In # safari's}}",
+    "prev": "Vorige",
+    "next": "Volgende",
+    "emptyTitle": "Geen ervarings pas nie",
+    "emptyBody": "Probeer 'n ander soektog — of vertel ons waarvan jy droom en ons bou dit in jou safari in.",
+    "clearFilters": "Vee soektog uit",
+    "bandTitle": "Gereed om jou avontuur te bou?",
+    "bandBody": "Vertel ons watter ervarings jou opgewonde maak — lugballonsafari's, stapsafari's, kulturele besoeke, Zanzibar-uitbreidings — en ons plaaslike span weef dit in 'n pasgemaakte Tanzanië-reis in.",
+    "trustReply": "Antwoord binne 24 uur",
+    "faqQ1": "Is aktiwiteite by my safari ingesluit?",
+    "faqA1": "Die meeste ervarings word direk in jou pasgemaakte reisplan ingebou. Vertel ons wat jou opgewonde maak en ons sluit dit by jou kwotasie in.",
+    "faqQ2": "Kan ek 'n ervaring by 'n bestaande reis voeg?",
+    "faqA2": "Ja. Ballonvlugte, nagritte, kulturele besoeke en Zanzibar-uitbreidings kan by enige reisplan gevoeg word — vra net jou safari-beplanner.",
+    "faqQ3": "Kos ervarings ekstra?",
+    "faqA3": "Sommige het park- of operateurfooie (byvoorbeeld ballonsafari's of sjimpansee-stap). Ons kwoteer alles deursigtig voordat jy bevestig.",
+    "showMore": "Wys meer"
   }
 }

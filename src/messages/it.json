@@ -794,5 +794,33 @@
     "guestFavouritesSub": "i lodge e i campi più prenotati dai nostri viaggiatori",
     "safariStat": "{count, plural, one {In # safari} other {In # safari}}",
     "sortPopular": "Più prenotati"
+  },
+  "activitiesFinder": {
+    "searchPlaceholder": "Cerca esperienze…",
+    "sortAria": "Ordina esperienze",
+    "sortPopular": "Più popolari",
+    "sortAz": "A–Z",
+    "sortZa": "Z–A",
+    "popularTitle": "Esperienze più popolari",
+    "popularSub": "le attività che i nostri viaggiatori aggiungono di più",
+    "allActivities": "Tutte le esperienze",
+    "resultCount": "{count} {count, plural, one {esperienza} other {esperienze}}",
+    "noActivities": "Nessuna esperienza trovata",
+    "safariStat": "{count, plural, one {In # safari} other {In # safari}}",
+    "prev": "Precedente",
+    "next": "Successivo",
+    "emptyTitle": "Nessuna esperienza corrisponde",
+    "emptyBody": "Prova una ricerca diversa — oppure dicci cosa sogni e lo integreremo nel tuo safari.",
+    "clearFilters": "Cancella ricerca",
+    "bandTitle": "Pronto a creare la tua avventura?",
+    "bandBody": "Dicci quali esperienze ti entusiasmano — safari in mongolfiera, safari a piedi, visite culturali, estensioni a Zanzibar — e il nostro team locale le integrerà in un viaggio su misura in Tanzania.",
+    "trustReply": "Risposta entro 24 ore",
+    "faqQ1": "Le attività sono incluse nel mio safari?",
+    "faqA1": "La maggior parte delle esperienze è integrata direttamente nel tuo itinerario su misura. Dicci cosa ti entusiasma e lo includeremo nel preventivo.",
+    "faqQ2": "Posso aggiungere un'esperienza a un viaggio esistente?",
+    "faqA2": "Sì. Voli in mongolfiera, safari notturni, visite culturali ed estensioni a Zanzibar possono essere aggiunti a qualsiasi itinerario — basta chiederlo al tuo consulente safari.",
+    "faqQ3": "Le esperienze hanno un costo aggiuntivo?",
+    "faqA3": "Alcune prevedono tasse di parco o di operatore (ad esempio i safari in mongolfiera o il trekking degli scimpanzé). Preventiviamo tutto con trasparenza prima della tua conferma.",
+    "showMore": "Mostra altro"
   }
 }

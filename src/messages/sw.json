@@ -794,5 +794,33 @@
     "guestFavouritesSub": "malazi ambayo wasafiri wetu huhifadhi zaidi",
     "safariStat": "{count, plural, one {Katika safari #} other {Katika safari #}}",
     "sortPopular": "Zilizohifadhiwa zaidi"
+  },
+  "activitiesFinder": {
+    "searchPlaceholder": "Tafuta matukio…",
+    "sortAria": "Panga matukio",
+    "sortPopular": "Maarufu zaidi",
+    "sortAz": "A–Z",
+    "sortZa": "Z–A",
+    "popularTitle": "Matukio maarufu zaidi",
+    "popularSub": "shughuli ambazo wasafiri wetu huongeza zaidi",
+    "allActivities": "Matukio yote",
+    "resultCount": "{count} {count, plural, one {tukio} other {matukio}}",
+    "noActivities": "Hakuna matukio yaliyopatikana",
+    "safariStat": "{count, plural, one {Katika safari #} other {Katika safari #}}",
+    "prev": "Iliyotangulia",
+    "next": "Inayofuata",
+    "emptyTitle": "Hakuna tukio linalolingana",
+    "emptyBody": "Jaribu utafutaji tofauti — au tuambie unachotamani nasi tutakiweka katika safari yako.",
+    "clearFilters": "Futa utafutaji",
+    "bandTitle": "Uko tayari kuunda matukio yako?",
+    "bandBody": "Tuambie matukio yanayokuvutia — safari za puto, safari za kutembea, ziara za kitamaduni, nyongeza za Zanzibar — na timu yetu ya wenyeji itayaunganisha katika safari yako maalum ya Tanzania.",
+    "trustReply": "Hujibu ndani ya saa 24",
+    "faqQ1": "Je, matukio yamejumuishwa katika safari yangu?",
+    "faqA1": "Matukio mengi hujengwa moja kwa moja katika ratiba yako maalum. Tuambie kinachokuvutia nasi tutakijumuisha katika bei yako.",
+    "faqQ2": "Je, naweza kuongeza tukio kwenye safari iliyopo?",
+    "faqA2": "Ndiyo. Safari za puto, safari za usiku, ziara za kitamaduni na nyongeza za Zanzibar zinaweza kuongezwa kwenye ratiba yoyote — muulize mpangaji wako wa safari.",
+    "faqQ3": "Je, matukio yanagharimu ziada?",
+    "faqA3": "Baadhi yana ada za hifadhi au za waendeshaji (kwa mfano safari za puto au kutembelea sokwe). Tunatoa bei ya kila kitu kwa uwazi kabla hujathibitisha.",
+    "showMore": "Onyesha zaidi"
   }
 }

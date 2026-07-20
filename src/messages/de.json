@@ -794,5 +794,33 @@
     "guestFavouritesSub": "die von unseren Reisenden meistgebuchten Lodges & Camps",
     "safariStat": "{count, plural, one {In # Safari} other {In # Safaris}}",
     "sortPopular": "Meistgebucht"
+  },
+  "activitiesFinder": {
+    "searchPlaceholder": "Erlebnisse suchen…",
+    "sortAria": "Erlebnisse sortieren",
+    "sortPopular": "Beliebteste",
+    "sortAz": "A–Z",
+    "sortZa": "Z–A",
+    "popularTitle": "Beliebteste Erlebnisse",
+    "popularSub": "die von unseren Reisenden am häufigsten gewählten Aktivitäten",
+    "allActivities": "Alle Erlebnisse",
+    "resultCount": "{count} {count, plural, one {Erlebnis} other {Erlebnisse}}",
+    "noActivities": "Keine Erlebnisse gefunden",
+    "safariStat": "{count, plural, one {In # Safari} other {In # Safaris}}",
+    "prev": "Zurück",
+    "next": "Weiter",
+    "emptyTitle": "Keine passenden Erlebnisse",
+    "emptyBody": "Versuchen Sie eine andere Suche — oder sagen Sie uns, wovon Sie träumen, und wir bauen es in Ihre Safari ein.",
+    "clearFilters": "Suche zurücksetzen",
+    "bandTitle": "Bereit, Ihr Abenteuer zusammenzustellen?",
+    "bandBody": "Sagen Sie uns, welche Erlebnisse Sie begeistern — Ballonsafaris, Wandersafaris, kulturelle Besuche, Sansibar-Verlängerungen — und unser lokales Team fügt sie zu einer maßgeschneiderten Tansania-Reise zusammen.",
+    "trustReply": "Antwort innerhalb von 24 Stunden",
+    "faqQ1": "Sind Aktivitäten in meiner Safari enthalten?",
+    "faqA1": "Die meisten Erlebnisse sind direkt in Ihre maßgeschneiderte Reiseroute integriert. Sagen Sie uns, was Sie begeistert, und wir nehmen es in Ihr Angebot auf.",
+    "faqQ2": "Kann ich ein Erlebnis zu einer bestehenden Reise hinzufügen?",
+    "faqA2": "Ja. Ballonfahrten, Nachtfahrten, kulturelle Besuche und Sansibar-Verlängerungen können jeder Reiseroute hinzugefügt werden — fragen Sie einfach Ihren Safari-Planer.",
+    "faqQ3": "Kosten Erlebnisse extra?",
+    "faqA3": "Einige beinhalten Park- oder Veranstaltergebühren (zum Beispiel Ballonsafaris oder Schimpansen-Trekking). Wir kalkulieren alles transparent, bevor Sie bestätigen.",
+    "showMore": "Mehr anzeigen"
   }
 }
