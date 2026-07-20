@@ -5,8 +5,9 @@ import { useTranslations, useLocale } from "next-intl";
 import { motion } from "framer-motion";
 import { Link, useRouter, usePathname } from "@/i18n/navigation";
 import { useSearchParams } from "next/navigation";
-import { Search, ChevronDown, X, ArrowRight, Check, MessageCircle } from "lucide-react";
+import { Search, ChevronDown, X, ArrowRight, Check, MessageCircle, Star, MapPin } from "lucide-react";
 import PageHero from "@/components/ui/PageHero";
+import FeaturedCarousel from "@/components/ui/FeaturedCarousel";
 import SkeletonCard from "@/components/ui/SkeletonCard";
 import SafariCard from "@/components/safari/SafariCard";
 import { useDebounce } from "@/lib/useDebounce";
@@ -85,6 +86,53 @@ function Dropdown({ label, active, open, onToggle, onClose, options, value, onPi
   );
 }
 
+const CURRENCY_SYMBOLS: Record<string, string> = { USD: "$", EUR: "€", GBP: "£" };
+const PICK_FALLBACK = "linear-gradient(150deg,#5a7a3a 0%,#274e22 55%,#12280f 100%)";
+
+function fromPrice(item: Itinerary): string | null {
+  const gt = item.costSummary?.[0]?.grandTotalRack;
+  if (!gt || gt <= 0) return null;
+  const pax = item.totalPaxCount && item.totalPaxCount > 0 ? item.totalPaxCount : 1;
+  const cur = item.costSummary?.[0]?.currency;
+  const sym = cur ? CURRENCY_SYMBOLS[cur] ?? `${cur} ` : "$";
+  return `${sym}${Math.round(gt / pax).toLocaleString()}`;
+}
+
+/** Horizontal detail card (image left / details right) — used as each carousel slide in "traveller favourites". */
+function renderSafariCard(item: Itinerary) {
+  const price = fromPrice(item);
+  const kicker = [item.totalDays ? `${item.totalDays} ${item.totalDays === 1 ? "Day" : "Days"}` : null, item.tripTypeDisplayName].filter(Boolean).join(" · ");
+  const route = item.startLocation && item.endLocation ? `${item.startLocation} → ${item.endLocation}` : null;
+  const tagline = item.description || "";
+  const bg = item.primaryImageUrl ? `center/cover no-repeat url('${item.primaryImageUrl}')` : PICK_FALLBACK;
+  return (
+    <Link href={`/safaris/${item.code}`} aria-label={item.name} className="group grid grid-cols-1 sm:grid-cols-[40%_1fr] h-full bg-white rounded-2xl overflow-hidden border border-[#e4ddd1] shadow-sm hover:shadow-xl transition-shadow duration-500">
+      <div className="relative" style={{ minHeight: 200, background: bg }}>
+        <span className="absolute top-3 left-3 flex items-center justify-center" style={{ width: 32, height: 32, borderRadius: "50%", background: "rgba(20,12,4,.68)", border: "1px solid rgba(196,143,43,.6)" }} aria-hidden="true"><Star size={15} fill="#c48f2b" stroke="none" /></span>
+      </div>
+      <div style={{ padding: "clamp(18px,2.2vw,26px)", display: "flex", flexDirection: "column" }}>
+        {kicker && <div style={{ color: "#96631a", fontSize: 11.5, fontWeight: 700, letterSpacing: ".14em", textTransform: "uppercase", marginBottom: 10 }}>{kicker}</div>}
+        <h3 style={{ fontFamily: SERIF, fontWeight: 700, color: "#2a2018", fontSize: "clamp(19px,2.1vw,23px)", lineHeight: 1.16, margin: 0 }}>{item.name}</h3>
+        {route && <div className="flex items-center gap-1.5" style={{ color: "#7a6f61", fontSize: 13, marginTop: 8 }}><MapPin size={13} style={{ flexShrink: 0, color: "#96631a" }} />{route}</div>}
+        {tagline && <p className="line-clamp-2" style={{ color: "#4a3f34", fontSize: 14, lineHeight: 1.5, margin: "12px 0 0" }}>{tagline}</p>}
+        <div className="flex items-center justify-between gap-3" style={{ borderTop: "1px solid #ece4d4", paddingTop: 16, marginTop: "auto" }}>
+          <div style={{ minWidth: 0 }}>
+            {price ? (
+              <>
+                <div style={{ color: "#7a6f61", fontSize: 12 }}>From</div>
+                <div style={{ fontFamily: SERIF, fontWeight: 700, color: "#96631a", fontSize: 24, lineHeight: 1.05 }}>{price} <span style={{ fontSize: 13, color: "#7a6f61", fontWeight: 500 }}>pp*</span></div>
+              </>
+            ) : (
+              <div style={{ fontFamily: SERIF, fontWeight: 600, color: "#2a2018", fontSize: 16 }}>Enquire</div>
+            )}
+          </div>
+          <span className="flex items-center justify-center bg-[#3d1402] text-[#f3e6c8] group-hover:bg-brand-green transition-colors" style={{ width: 44, height: 44, borderRadius: "50%", flexShrink: 0 }}><ArrowRight size={18} strokeWidth={2.4} /></span>
+        </div>
+      </div>
+    </Link>
+  );
+}
+
 export default function SafarisPage() {
   const t = useTranslations("safaris");
   const f = useTranslations("safariFinder");
@@ -134,6 +182,7 @@ export default function SafarisPage() {
   const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
+  const [popular, setPopular] = useState<Itinerary[]>([]);
 
   const anyFilter = !!debouncedSearch || durationKey !== "all" || !!tripType || !!budget;
   const dur = DURATIONS.find((d) => d.key === durationKey)!;
@@ -171,6 +220,16 @@ export default function SafarisPage() {
     return () => { alive = false; };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedSearch, durationKey, tripType, budget, sortKey, locale]);
+
+  // most-booked strip (itineraries converted into the most actual safaris) — fetched once
+  useEffect(() => {
+    let alive = true;
+    apiClient
+      .get(`/public/safaris/popular?size=8`, { headers: { "Accept-Language": locale } })
+      .then((res) => { if (alive) setPopular(res.data?.data || []); })
+      .catch(() => {});
+    return () => { alive = false; };
+  }, [locale]);
 
   const hasMore = items.length < totalItems;
   const loadMore = async () => {
@@ -237,6 +296,18 @@ export default function SafarisPage() {
       </div>
 
       <main style={{ maxWidth: 1220, margin: "0 auto", padding: "clamp(28px,4vw,44px) clamp(16px,5vw,56px) 0" }}>
+        {/* ===== Traveller favourites (auto-scroll carousel, only when browsing unfiltered) ===== */}
+        {!anyFilter && popular.length > 0 && (
+          <div style={{ marginBottom: "clamp(36px,5vw,52px)" }}>
+            <FeaturedCarousel wide title={f("travellerFavourites")} items={popular} renderCard={renderSafariCard} />
+          </div>
+        )}
+
+        {/* ===== All safaris heading (unfiltered, once results are in) ===== */}
+        {!anyFilter && !loading && items.length > 0 && (
+          <h2 style={{ fontFamily: SERIF, fontWeight: 700, color: "#2a2018", fontSize: "clamp(20px,2.6vw,26px)", margin: "0 0 18px" }}>{f("allSafaris")}</h2>
+        )}
+
         {/* ===== Results ===== */}
         {loading ? (
           <div className="grid" style={{ gridTemplateColumns: "repeat(auto-fill,minmax(300px,1fr))", gap: "clamp(18px,2.4vw,28px)" }}>
