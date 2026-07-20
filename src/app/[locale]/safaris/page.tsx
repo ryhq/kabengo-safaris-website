@@ -3,7 +3,8 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { motion } from "framer-motion";
-import { Link } from "@/i18n/navigation";
+import { Link, useRouter, usePathname } from "@/i18n/navigation";
+import { useSearchParams } from "next/navigation";
 import { Search, ChevronDown, X, ArrowRight, Check, MessageCircle } from "lucide-react";
 import PageHero from "@/components/ui/PageHero";
 import SkeletonCard from "@/components/ui/SkeletonCard";
@@ -91,14 +92,42 @@ export default function SafarisPage() {
   const hiw = useTranslations("howItWorks");
   const nav = useTranslations("footer");
   const locale = useLocale();
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
-  const [search, setSearch] = useState("");
+  // Initialise filters/search from the URL (shareable + back-button friendly), validated against allowed values.
+  const [search, setSearch] = useState(() => searchParams.get("q") ?? "");
   const debouncedSearch = useDebounce(search, 400);
-  const [durationKey, setDurationKey] = useState("all");
-  const [tripType, setTripType] = useState("");
-  const [budget, setBudget] = useState("");
-  const [sortKey, setSortKey] = useState("popular");
+  const [durationKey, setDurationKey] = useState(() => {
+    const v = searchParams.get("duration");
+    return v && DURATIONS.some((d) => d.key === v) ? v : "all";
+  });
+  const [tripType, setTripType] = useState(() => {
+    const v = searchParams.get("type");
+    return v && (TRIP_TYPES as readonly string[]).includes(v) ? v : "";
+  });
+  const [budget, setBudget] = useState(() => {
+    const v = searchParams.get("budget");
+    return v && (BUDGETS as readonly string[]).includes(v) ? v : "";
+  });
+  const [sortKey, setSortKey] = useState(() => {
+    const v = searchParams.get("sort");
+    return v && SORTS.some((s) => s.key === v) ? v : "popular";
+  });
   const [openDD, setOpenDD] = useState<string | null>(null);
+
+  // Reflect the active filters/search back into the URL query string.
+  useEffect(() => {
+    const q: Record<string, string> = {};
+    if (debouncedSearch) q.q = debouncedSearch;
+    if (durationKey !== "all") q.duration = durationKey;
+    if (tripType) q.type = tripType;
+    if (budget) q.budget = budget;
+    if (sortKey !== "popular") q.sort = sortKey;
+    router.replace({ pathname, query: q }, { scroll: false });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouncedSearch, durationKey, tripType, budget, sortKey]);
 
   const [items, setItems] = useState<Itinerary[]>([]);
   const [totalItems, setTotalItems] = useState(0);
