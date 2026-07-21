@@ -7,6 +7,7 @@ import { Link } from "@/i18n/navigation";
 import PageHero from "@/components/ui/PageHero";
 import SkeletonCard from "@/components/ui/SkeletonCard";
 import FeaturedCarousel from "@/components/ui/FeaturedCarousel";
+import ReviewCard from "@/components/ui/ReviewCard";
 import TestimonyForm from "@/components/testimonials/TestimonyForm";
 import { TripAdvisorReviewCard } from "@/components/ui/TripAdvisorBadge";
 import { apiClient } from "@/lib/api";
@@ -146,21 +147,7 @@ export default function ReviewsPage() {
   };
 
   /** Tall, truncating, clickable review card for the carousel. */
-  const renderReviewCard = (item: TestimonyItem) => (
-    <article className={`relative flex flex-col ${item.sourceUrl ? "transition-shadow hover:shadow-[0_12px_34px_rgba(62,21,2,.12)]" : ""}`} style={{ height: CARD_H, background: "#fff", border: "1px solid #e4ddd1", borderRadius: 18, padding: "26px 26px 22px" }}>
-      {item.sourceUrl && <a href={item.sourceUrl} target="_blank" rel="noopener noreferrer" aria-label={t("readOnSource", { source: item.sourceDisplayName || "" })} className="absolute inset-0 z-[5]" style={{ borderRadius: 18 }} />}
-      <Quote size={30} style={{ position: "absolute", top: 22, right: 22, color: "rgba(196,143,43,.16)" }} fill="currentColor" stroke="none" />
-      <div style={{ marginBottom: 14 }}>{isTripadvisor(item.sourceDisplayName) ? <Bubbles rating={item.rating} /> : <Stars rating={item.rating} />}</div>
-      {item.reviewTitle && (
-        <h3 style={{ fontFamily: SERIF, fontWeight: 700, color: "#2a2018", fontSize: 17.5, lineHeight: 1.25, margin: "0 0 8px", paddingRight: 34, ...clamp(2) }}>{item.reviewTitle}</h3>
-      )}
-      <p style={{ color: "#4a3f34", fontSize: 14.5, lineHeight: 1.6, margin: 0, flex: 1, minHeight: 0, ...clamp(item.reviewTitle ? 6 : 8) }}>&ldquo;{item.message}&rdquo;</p>
-      <div className="flex items-center justify-between" style={{ gap: 10, paddingTop: 16, marginTop: 14, borderTop: "1px solid #f1ece3" }}>
-        <AuthorRow item={item} />
-        {item.sourceDisplayName && <div className="flex-shrink-0"><SourceBadge source={item.sourceDisplayName} /></div>}
-      </div>
-    </article>
-  );
+  const renderReviewCard = (item: TestimonyItem) => <ReviewCard item={item} height={CARD_H} />;
 
   return (
     <>
