@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { memo, useEffect, useMemo, useRef, useState } from "react";
 import { MapContainer, TileLayer, Marker, Polyline, useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
@@ -31,6 +31,14 @@ function pinIcon(n: number, state: "done" | "active" | "pending") {
     iconAnchor: [size / 2, size / 2],
   });
 }
+
+/* Memoized day pin — stable icon identity so its entry animation plays ONCE
+   (not restarted every animation frame). Only re-creates when n/active change. */
+const DayPin = memo(function DayPin({ n, lat, lng, active }: { n: number; lat: number; lng: number; active: boolean }) {
+  const icon = useMemo(() => pinIcon(n, active ? "active" : "done"), [n, active]);
+  const pos = useMemo(() => [lat, lng] as LL, [lat, lng]);
+  return <Marker position={pos} icon={icon} zIndexOffset={active ? 1000 : 0} />;
+});
 
 /* ── fit the whole route once ─────────────────────────────────────────────── */
 function FitAll({ pts }: { pts: LL[] }) {
@@ -110,11 +118,10 @@ function AnimatedRoute({ pts, stops, runId, onProgress }: { pts: LL[]; stops: Ro
       {revealed.length > 1 && (
         <Polyline positions={revealed} pathOptions={{ color: "#c48f2b", weight: 4, dashArray: "1 13", lineCap: "round", opacity: 0.98 }} />
       )}
-      {/* stops revealed so far */}
+      {/* stops revealed so far — each pops in once as the route reaches it */}
       {stops.map((s, i) => {
         if (cum[i] > target + 1e-9) return null;
-        const state = i === passed && t < 1 ? "active" : "done";
-        return <Marker key={`${runId}-${s.n}`} position={[s.lat, s.lng]} icon={pinIcon(s.n, state as "done" | "active")} zIndexOffset={state === "active" ? 1000 : 0} />;
+        return <DayPin key={`${runId}-${s.n}`} n={s.n} lat={s.lat} lng={s.lng} active={i === passed && t < 1} />;
       })}
       <FitAll pts={pts} />
     </>
