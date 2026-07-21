@@ -8,7 +8,7 @@ import PageHero from "@/components/ui/PageHero";
 import SkeletonCard from "@/components/ui/SkeletonCard";
 import FeaturedCarousel from "@/components/ui/FeaturedCarousel";
 import TestimonyForm from "@/components/testimonials/TestimonyForm";
-import { TripAdvisorReviewSection } from "@/components/ui/TripAdvisorBadge";
+import { TripAdvisorReviewCard } from "@/components/ui/TripAdvisorBadge";
 import { apiClient } from "@/lib/api";
 
 interface TestimonyItem {
@@ -228,12 +228,10 @@ export default function ReviewsPage() {
         </div>
       </section>
 
-      {/* ===== Rate us on TripAdvisor ===== */}
-      <TripAdvisorReviewSection />
-
-      {/* ===== Share your story (last) ===== */}
+      {/* ===== Leave a review — Tripadvisor + share-your-story (one row on large screens) ===== */}
       <section id="share-story" style={{ background: "#faf8f5", borderTop: "1px solid #e4ddd1", padding: "clamp(44px,6vw,80px) clamp(16px,5vw,56px)", scrollMarginTop: 96 }}>
-        <div style={{ maxWidth: 1120, margin: "0 auto" }}>
+        <div className="grid grid-cols-1 lg:grid-cols-[0.85fr_1.5fr] items-stretch" style={{ maxWidth: 1220, margin: "0 auto", gap: "clamp(20px,2.5vw,32px)" }}>
+          <TripAdvisorReviewCard />
           <TestimonyForm />
         </div>
       </section>

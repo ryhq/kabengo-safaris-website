@@ -153,56 +153,54 @@ export function TripAdvisorReviewSection() {
 
   return (
     <section className="py-16 bg-gradient-to-b from-white to-stone-50">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-10"
-        >
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-[#00aa6c]/10 rounded-2xl mb-4">
-            <TripAdvisorLogo className="w-10 h-10 text-[#00aa6c]" />
-          </div>
-          <h2 className="text-2xl sm:text-3xl font-bold text-stone-800 font-serif mb-3">
-            {t("reviewOnTripadvisor")}
-          </h2>
-          <p className="text-stone-500 max-w-lg mx-auto">
-            {t("reviewOnTripadvisorDesc")}
-          </p>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="bg-white rounded-2xl border border-stone-200 shadow-sm p-8 sm:p-10 flex flex-col items-center gap-6"
-        >
-          <div className="flex items-center gap-3">
-            <RatingBubbles rating={TRIPADVISOR_RATING} size={18} />
-            <span className="font-semibold text-stone-800 text-lg">{TRIPADVISOR_RATING.toFixed(1)}</span>
-            <span className="text-stone-500 text-sm">· {TRIPADVISOR_REVIEW_COUNT} review{TRIPADVISOR_REVIEW_COUNT === 1 ? "" : "s"}</span>
-          </div>
-
-          {/* Scan-to-review QR */}
-          <a href={TRIPADVISOR_WRITE_REVIEW_URL} target="_blank" rel="noopener noreferrer" aria-label="Write a review on Tripadvisor" className="block">
-            <img src="/images/tripadvisor-qr.png" alt="Scan to write a review on Tripadvisor" width={190} height={285} style={{ width: 190, height: "auto", borderRadius: 14 }} />
-          </a>
-          <p className="text-stone-500 text-sm -mt-1">{t("scanToReview")}</p>
-
-          <a
-            href={TRIPADVISOR_WRITE_REVIEW_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-7 py-3.5 bg-[#00aa6c] text-white font-semibold rounded-xl hover:bg-[#008a57] transition-colors shadow-sm"
-          >
-            <TripAdvisorLogo className="w-5 h-5" />
-            {t("reviewOnTripadvisor")}
-            <ExternalLink size={16} />
-          </a>
-        </motion.div>
+      <div className="max-w-md mx-auto px-4 sm:px-6 lg:px-8">
+        <TripAdvisorReviewCard />
       </div>
     </section>
+  );
+}
+
+/**
+ * Self-contained "Review us on Tripadvisor" card (no section chrome) — for
+ * embedding side-by-side with the review form. Fills its column height.
+ */
+export function TripAdvisorReviewCard() {
+  const t = useTranslations("common");
+  return (
+    <div className="h-full flex flex-col items-center justify-center text-center bg-white rounded-2xl border border-stone-200 shadow-sm" style={{ padding: "clamp(28px,3.5vw,44px)", gap: 16 }}>
+      <div className="inline-flex items-center justify-center rounded-2xl" style={{ width: 60, height: 60, background: "rgba(0,170,108,.1)" }}>
+        <TripAdvisorLogo className="w-9 h-9 text-[#00aa6c]" />
+      </div>
+      <div>
+        <h2 className="font-bold text-stone-800 font-serif" style={{ fontSize: "clamp(20px,2.2vw,26px)", margin: "0 0 8px" }}>
+          {t("reviewOnTripadvisor")}
+        </h2>
+        <p className="text-stone-500 mx-auto" style={{ fontSize: 14.5, lineHeight: 1.55, maxWidth: 340 }}>
+          {t("reviewOnTripadvisorDesc")}
+        </p>
+      </div>
+
+      <div className="flex items-center gap-2.5">
+        <RatingBubbles rating={TRIPADVISOR_RATING} size={17} />
+        <span className="font-semibold text-stone-800">{TRIPADVISOR_RATING.toFixed(1)}</span>
+        <span className="text-stone-500 text-sm">· {TRIPADVISOR_REVIEW_COUNT} review{TRIPADVISOR_REVIEW_COUNT === 1 ? "" : "s"}</span>
+      </div>
+
+      <a href={TRIPADVISOR_WRITE_REVIEW_URL} target="_blank" rel="noopener noreferrer" aria-label="Write a review on Tripadvisor" className="block">
+        <img src="/images/tripadvisor-qr.png" alt="Scan to write a review on Tripadvisor" width={158} height={237} style={{ width: 158, height: "auto", borderRadius: 14 }} />
+      </a>
+      <p className="text-stone-500 text-sm" style={{ marginTop: -4 }}>{t("scanToReview")}</p>
+
+      <a
+        href={TRIPADVISOR_WRITE_REVIEW_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-flex items-center gap-2 px-6 py-3.5 bg-[#00aa6c] text-white font-semibold rounded-xl hover:bg-[#008a57] transition-colors shadow-sm"
+      >
+        <TripAdvisorLogo className="w-5 h-5" />
+        {t("reviewOnTripadvisor")}
+        <ExternalLink size={16} />
+      </a>
+    </div>
   );
 }
