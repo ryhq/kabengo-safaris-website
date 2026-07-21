@@ -73,7 +73,7 @@ const CSS = `
 .itd .mobile-only{display:block}
 @media(min-width:980px){
   .itd .journey-cols{grid-template-columns:360px minmax(0,1fr);gap:36px;align-items:start}
-  .itd .journey-left{display:flex;position:sticky;top:96px}
+  .itd .journey-left{display:flex;position:sticky;top:150px}
   .itd .glance-strip{grid-template-columns:repeat(4,1fr)}
   .itd .mobile-only{display:none!important}
 }
@@ -305,7 +305,7 @@ export default function SafariDetailPage() {
       <style>{CSS}</style>
 
       {/* sticky sub-bar */}
-      <div style={{ position: "fixed", top: 80, left: 0, right: 0, zIndex: 90, transform: scrolled ? "none" : "translateY(-120%)", opacity: scrolled ? 1 : 0, transition: "transform .3s,opacity .3s", background: "rgba(250,248,245,.92)", backdropFilter: "blur(12px)", borderBottom: "1px solid #e4ddd1" }}>
+      <div style={{ position: "fixed", top: 80, left: 0, right: 0, zIndex: 40, transform: scrolled ? "none" : "translateY(-120%)", opacity: scrolled ? 1 : 0, transition: "transform .3s,opacity .3s", background: "rgba(250,248,245,.92)", backdropFilter: "blur(12px)", borderBottom: "1px solid #e4ddd1" }}>
         <div style={{ maxWidth: 1240, margin: "0 auto", padding: "10px clamp(18px,5vw,56px)", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16 }}>
           <div style={{ minWidth: 0, display: "flex", alignItems: "baseline", gap: 14, flexWrap: "wrap" }}>
             <span style={{ fontFamily: SERIF, fontWeight: 700, color: "#2a2018", fontSize: 15, maxWidth: "min(46vw,340px)", ...ONE_LINE }}>{itin.name}</span>
