@@ -939,6 +939,7 @@
     "durationValue": "{days} أيام · {nights} ليالٍ",
     "parksValue": "{count} حدائق",
     "vehiclesValue": "{count} مركبة 4x4 خاصة",
-    "nights": "{count, plural, other {# ليالٍ}}"
+    "nights": "{count, plural, other {# ليالٍ}}",
+    "playRoute": "تشغيل المسار"
   }
 }

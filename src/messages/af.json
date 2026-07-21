@@ -939,6 +939,7 @@
     "durationValue": "{days} dae · {nights} nagte",
     "parksValue": "{count, plural, one {# park} other {# parke}}",
     "vehiclesValue": "{count, plural, one {# privaat 4x4} other {# privaat 4x4's}}",
-    "nights": "{count, plural, one {# nag} other {# nagte}}"
+    "nights": "{count, plural, one {# nag} other {# nagte}}",
+    "playRoute": "Speel roete"
   }
 }

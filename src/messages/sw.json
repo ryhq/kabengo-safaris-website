@@ -941,6 +941,7 @@
     "durationValue": "Siku {days} · Usiku {nights}",
     "parksValue": "Hifadhi {count}",
     "vehiclesValue": "Gari {count} la 4x4 la binafsi",
-    "nights": "{count, plural, one {Usiku #} other {Usiku #}}"
+    "nights": "{count, plural, one {Usiku #} other {Usiku #}}",
+    "playRoute": "Cheza njia"
   }
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import { useParams, notFound } from "next/navigation";
 import { useTranslations, useLocale } from "next-intl";
@@ -10,10 +10,14 @@ import ContextualFAQ from "@/components/ui/ContextualFAQ";
 import FeaturedCarousel from "@/components/ui/FeaturedCarousel";
 import ReviewCard, { type ReviewItem } from "@/components/ui/ReviewCard";
 import type { MapStopGeo } from "@/components/safari/ItineraryRouteMap";
+import type { RouteStop } from "@/components/safari/ItineraryRouteModal";
+import { Maximize2 } from "lucide-react";
 import { apiClient } from "@/lib/api";
 
 // Real OSM route map — client-only (Leaflet needs window).
 const ItineraryRouteMap = dynamic(() => import("@/components/safari/ItineraryRouteMap"), { ssr: false, loading: () => null });
+// Full-screen animated route map — client-only, loaded on demand.
+const ItineraryRouteModal = dynamic(() => import("@/components/safari/ItineraryRouteModal"), { ssr: false, loading: () => null });
 
 // ── types (local — includes fields the global Itinerary type doesn't yet carry) ──
 interface DayPark { parkSlug?: string; parkName?: string; primaryImageUrl?: string; latitude?: number; longitude?: number }
@@ -73,7 +77,7 @@ const CSS = `
 .itd .mobile-only{display:block}
 @media(min-width:980px){
   .itd .journey-cols{grid-template-columns:360px minmax(0,1fr);gap:36px;align-items:start}
-  .itd .journey-left{display:flex;position:sticky;top:150px}
+  .itd .journey-left{display:flex;position:sticky;top:150px;max-height:calc(100vh - 166px)}
   .itd .glance-strip{grid-template-columns:repeat(4,1fr)}
   .itd .mobile-only{display:none!important}
 }
@@ -147,6 +151,7 @@ export default function SafariDetailPage() {
   const [open, setOpen] = useState<Record<number, boolean>>({ 1: true });
   const [allExpanded, setAllExpanded] = useState(false);
   const [active, setActive] = useState(1);
+  const [mapModal, setMapModal] = useState(false);
   const [openFaq, setOpenFaq] = useState(0);
   const [scrolled, setScrolled] = useState(false);
 
@@ -195,6 +200,20 @@ export default function SafariDetailPage() {
     onScroll();
     return () => { window.removeEventListener("scroll", onScroll); cancelAnimationFrame(raf); };
   }, [days]);
+
+  // keep the active day visible inside the (internally-scrolling) rail
+  const railRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const c = railRef.current;
+    if (!c) return;
+    const btn = c.querySelector<HTMLElement>(`[data-rail-day="${active}"]`);
+    if (!btn) return;
+    const cRect = c.getBoundingClientRect();
+    const bRect = btn.getBoundingClientRect();
+    if (bRect.top < cRect.top + 8 || bRect.bottom > cRect.bottom - 8) {
+      c.scrollTo({ top: c.scrollTop + (bRect.top - cRect.top) - 12, behavior: "smooth" });
+    }
+  }, [active]);
 
   const gotoDay = useCallback((n: number) => {
     setActive(n); setOpen((o) => ({ ...o, [n]: true }));
@@ -253,6 +272,7 @@ export default function SafariDetailPage() {
 
   const stops: MapStop[] = days.filter((d) => d.isOvernight || d.dayNumber === 1).map((d) => { const c = resolveStopCoord(d); return { n: d.dayNumber, lat: c?.lat, lng: c?.lng }; });
   const geoStops: MapStopGeo[] = stops.filter((s) => s.lat != null && s.lng != null).map((s) => ({ n: s.n, lat: s.lat as number, lng: s.lng as number }));
+  const routeStops: RouteStop[] = geoStops.map((s) => { const d = days.find((x) => x.dayNumber === s.n); return { n: s.n, lat: s.lat, lng: s.lng, label: d?.title, sub: d ? `${d.startLocation} → ${d.endLocation}` : undefined }; });
 
   const costRows = cost ? [
     cost.accommodationRack ? { label: t("costAccommodation"), value: money(cost.accommodationRack) } : null,
@@ -400,16 +420,23 @@ export default function SafariDetailPage() {
           <div className="journey-cols">
             {/* sticky map + day rail (desktop) */}
             <aside className="journey-left" style={{ flexDirection: "column", gap: 16 }}>
-              <div style={{ background: "#fff", border: "1px solid #e4ddd1", borderRadius: 16, overflow: "hidden", width: "100%" }}>
-                <div style={{ position: "relative", height: 300, background: "linear-gradient(150deg,#8aa06a,#4a5a2a)", isolation: "isolate" }}>{geoStops.length ? <ItineraryRouteMap stops={geoStops} active={active} /> : <RouteMap stops={stops} active={active} />}</div>
+              <div style={{ flexShrink: 0, background: "#fff", border: "1px solid #e4ddd1", borderRadius: 16, overflow: "hidden", width: "100%" }}>
+                <div style={{ position: "relative", height: 300, background: "linear-gradient(150deg,#8aa06a,#4a5a2a)", isolation: "isolate" }}>
+                  {geoStops.length ? <ItineraryRouteMap stops={geoStops} active={active} /> : <RouteMap stops={stops} active={active} />}
+                  {routeStops.length > 1 && (
+                    <button onClick={() => setMapModal(true)} aria-label={t("playRoute")} title={t("playRoute")} className="inline-flex items-center" style={{ position: "absolute", right: 10, bottom: 10, zIndex: 500, gap: 7, background: "rgba(255,255,255,.95)", color: "#3d1402", fontWeight: 600, fontSize: 12.5, border: "1px solid #e4ddd1", borderRadius: 999, padding: "7px 13px", cursor: "pointer", boxShadow: "0 4px 16px rgba(0,0,0,.22)" }}>
+                      <Maximize2 size={14} strokeWidth={2.4} />{t("playRoute")}
+                    </button>
+                  )}
+                </div>
                 <div style={{ padding: "12px 16px", borderTop: "1px solid #e4ddd1", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10 }}>
                   <span style={{ fontSize: 12.5, color: "#7a6f61", ...ONE_LINE }}>{itin.startLocation} → {itin.endLocation}</span>
                   <span style={{ fontSize: 12.5, fontWeight: 600, color: "#274e22", whiteSpace: "nowrap" }}>{durationShort}</span>
                 </div>
               </div>
-              <div style={{ background: "#fff", border: "1px solid #e4ddd1", borderRadius: 16, padding: "12px 8px", width: "100%" }}>
+              <div ref={railRef} style={{ flex: "1 1 auto", minHeight: 0, overflowY: "auto", background: "#fff", border: "1px solid #e4ddd1", borderRadius: 16, padding: "12px 8px", width: "100%" }}>
                 {days.map((d) => { const on = d.dayNumber === active; return (
-                  <button key={d.dayNumber} onClick={() => gotoDay(d.dayNumber)} aria-current={on} className="flex items-center w-full text-left" style={{ gap: 12, background: on ? "#f3e6c8" : "transparent", border: "none", borderRadius: 10, padding: "10px 12px", cursor: "pointer", transition: "background .2s" }}>
+                  <button key={d.dayNumber} data-rail-day={d.dayNumber} onClick={() => gotoDay(d.dayNumber)} aria-current={on} className="flex items-center w-full text-left" style={{ gap: 12, background: on ? "#f3e6c8" : "transparent", border: "none", borderRadius: 10, padding: "10px 12px", cursor: "pointer", transition: "background .2s" }}>
                     <span className="flex items-center justify-center flex-shrink-0" style={{ width: 30, height: 30, borderRadius: "50%", background: on ? "#c48f2b" : "#fff", color: on ? "#fff" : "#7a6f61", border: `2px solid ${on ? "#c48f2b" : "#e4ddd1"}`, fontSize: 12, fontWeight: 700 }}>{d.dayNumber}</span>
                     <span style={{ minWidth: 0, flex: 1 }}><span style={{ display: "block", fontSize: 13.5, fontWeight: 600, color: on ? "#96631a" : "#2a2018", ...ONE_LINE }}>{d.title}</span><span style={{ fontSize: 11.5, color: "#7a6f61" }}>{d.startLocation} → {d.endLocation}</span></span>
                     {d.isOvernight && <span title={t("legendOvernight")} className="flex-shrink-0" style={{ color: "#274e22", display: "flex" }}>{MoonIcon}</span>}
@@ -601,6 +628,11 @@ export default function SafariDetailPage() {
         <Link href={bookHref} className="inline-flex items-center gap-2" style={{ flexShrink: 0, background: "#c48f2b", color: "#3d1402", fontWeight: 600, fontSize: 15, borderRadius: 8, padding: "13px 22px" }}>{t("tailor")}</Link>
       </div>
       <div className="mobile-only" style={{ height: 70 }} aria-hidden="true" />
+
+      {/* full-screen animated route */}
+      {routeStops.length > 1 && (
+        <ItineraryRouteModal open={mapModal} onClose={() => setMapModal(false)} stops={routeStops} title={itin.name} subtitle={`${itin.startLocation} → ${itin.endLocation} · ${durationShort}`} />
+      )}
     </div>
   );
 }

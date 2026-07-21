@@ -941,6 +941,7 @@
     "durationValue": "{days} dias · {nights} noites",
     "parksValue": "{count, plural, one {# parque} other {# parques}}",
     "vehiclesValue": "{count, plural, one {# 4x4 privado} other {# 4x4 privados}}",
-    "nights": "{count, plural, one {# noite} other {# noites}}"
+    "nights": "{count, plural, one {# noite} other {# noites}}",
+    "playRoute": "Ver o percurso"
   }
 }
