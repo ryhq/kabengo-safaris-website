@@ -868,7 +868,9 @@
     "mobilePlanTo": "Plan a trip to",
     "enquire": "Enquire",
     "replyBadge": "Reply within 24 hrs",
-    "accredited": "TATO / TALA accredited"
+    "accredited": "TATO / TALA accredited",
+    "safarisTitle": "Safaris that visit {name}",
+    "safarisSub": "Ready-made routes you can tailor."
   },
   "activityDetail": {
     "eyebrow": "Safari experience",
@@ -887,6 +889,8 @@
     "bandTitle": "Ready to add {name} to your safari?",
     "bandBody": "Tell our Arusha team what you're dreaming of. We'll build a tailor-made trip that includes {name} and reply within 24 hours.",
     "mobilePlanTo": "Add to a safari",
-    "enquire": "Enquire"
+    "enquire": "Enquire",
+    "safarisTitle": "Safaris featuring {name}",
+    "safarisSub": "Ready-made routes you can tailor."
   }
 }

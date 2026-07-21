@@ -868,7 +868,9 @@
     "mobilePlanTo": "Beplan 'n reis na",
     "enquire": "Navraag",
     "replyBadge": "Antwoord binne 24 uur",
-    "accredited": "TATO / TALA geakkrediteer"
+    "accredited": "TATO / TALA geakkrediteer",
+    "safarisTitle": "Safari's wat {name} besoek",
+    "safarisSub": "Klaargemaakte roetes wat jy kan aanpas."
   },
   "activityDetail": {
     "eyebrow": "Safari-ervaring",
@@ -887,6 +889,8 @@
     "bandTitle": "Gereed om {name} by jou safari te voeg?",
     "bandBody": "Vertel ons Arusha-span waarvan jy droom. Ons bou 'n pasgemaakte reis wat {name} insluit en antwoord binne 24 uur.",
     "mobilePlanTo": "Voeg by 'n safari",
-    "enquire": "Navraag"
+    "enquire": "Navraag",
+    "safarisTitle": "Safari's met {name}",
+    "safarisSub": "Klaargemaakte roetes wat jy kan aanpas."
   }
 }

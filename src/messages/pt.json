@@ -870,7 +870,9 @@
     "mobilePlanTo": "Planeie uma viagem a",
     "enquire": "Saber mais",
     "replyBadge": "Resposta em 24 h",
-    "accredited": "Acreditado TATO / TALA"
+    "accredited": "Acreditado TATO / TALA",
+    "safarisTitle": "Safáris que visitam {name}",
+    "safarisSub": "Rotas prontas que pode personalizar."
   },
   "activityDetail": {
     "eyebrow": "Experiência de safári",
@@ -889,6 +891,8 @@
     "bandTitle": "Pronto para adicionar {name} ao seu safári?",
     "bandBody": "Diga à nossa equipa de Arusha o que sonha. Criaremos uma viagem à medida que inclui {name} e responderemos em 24 horas.",
     "mobilePlanTo": "Adicionar a um safári",
-    "enquire": "Saber mais"
+    "enquire": "Saber mais",
+    "safarisTitle": "Safáris com {name}",
+    "safarisSub": "Rotas prontas que pode personalizar."
   }
 }

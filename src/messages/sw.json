@@ -870,7 +870,9 @@
     "mobilePlanTo": "Panga safari kwenda",
     "enquire": "Uliza",
     "replyBadge": "Jibu ndani ya saa 24",
-    "accredited": "Imeidhinishwa na TATO / TALA"
+    "accredited": "Imeidhinishwa na TATO / TALA",
+    "safarisTitle": "Safari zinazotembelea {name}",
+    "safarisSub": "Njia zilizotayarishwa unazoweza kubinafsisha."
   },
   "activityDetail": {
     "eyebrow": "Tukio la safari",
@@ -889,6 +891,8 @@
     "bandTitle": "Uko tayari kuongeza {name} kwenye safari yako?",
     "bandBody": "Iambie timu yetu ya Arusha unachotamani. Tutaandaa safari maalum inayojumuisha {name} na kujibu ndani ya saa 24.",
     "mobilePlanTo": "Ongeza kwenye safari",
-    "enquire": "Uliza"
+    "enquire": "Uliza",
+    "safarisTitle": "Safari zenye {name}",
+    "safarisSub": "Njia zilizotayarishwa unazoweza kubinafsisha."
   }
 }

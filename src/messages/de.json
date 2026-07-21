@@ -870,7 +870,9 @@
     "mobilePlanTo": "Reise planen nach",
     "enquire": "Anfragen",
     "replyBadge": "Antwort in 24 Std.",
-    "accredited": "TATO / TALA akkreditiert"
+    "accredited": "TATO / TALA akkreditiert",
+    "safarisTitle": "Safaris, die {name} besuchen",
+    "safarisSub": "Fertige Routen, die Sie anpassen können."
   },
   "activityDetail": {
     "eyebrow": "Safari-Erlebnis",
@@ -889,6 +891,8 @@
     "bandTitle": "Bereit, {name} zu Ihrer Safari hinzuzufügen?",
     "bandBody": "Sagen Sie unserem Team in Arusha, wovon Sie träumen. Wir gestalten eine maßgeschneiderte Reise mit {name} und antworten innerhalb von 24 Stunden.",
     "mobilePlanTo": "Zur Safari hinzufügen",
-    "enquire": "Anfragen"
+    "enquire": "Anfragen",
+    "safarisTitle": "Safaris mit {name}",
+    "safarisSub": "Fertige Routen, die Sie anpassen können."
   }
 }

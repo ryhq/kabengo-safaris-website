@@ -870,7 +870,9 @@
     "mobilePlanTo": "Pianifica un viaggio a",
     "enquire": "Richiedi",
     "replyBadge": "Risposta entro 24 h",
-    "accredited": "Accreditato TATO / TALA"
+    "accredited": "Accreditato TATO / TALA",
+    "safarisTitle": "Safari che visitano {name}",
+    "safarisSub": "Itinerari pronti da personalizzare."
   },
   "activityDetail": {
     "eyebrow": "Esperienza safari",
@@ -889,6 +891,8 @@
     "bandTitle": "Pronto ad aggiungere {name} al tuo safari?",
     "bandBody": "Racconta al nostro team di Arusha cosa sogni. Creeremo un viaggio su misura che include {name} e risponderemo entro 24 ore.",
     "mobilePlanTo": "Aggiungi a un safari",
-    "enquire": "Richiedi"
+    "enquire": "Richiedi",
+    "safarisTitle": "Safari con {name}",
+    "safarisSub": "Itinerari pronti da personalizzare."
   }
 }

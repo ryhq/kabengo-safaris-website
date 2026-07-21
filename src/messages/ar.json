@@ -868,7 +868,9 @@
     "mobilePlanTo": "خطّط لرحلة إلى",
     "enquire": "استفسر",
     "replyBadge": "رد خلال 24 ساعة",
-    "accredited": "معتمد من TATO / TALA"
+    "accredited": "معتمد من TATO / TALA",
+    "safarisTitle": "رحلات السفاري التي تزور {name}",
+    "safarisSub": "مسارات جاهزة يمكنك تخصيصها."
   },
   "activityDetail": {
     "eyebrow": "تجربة سفاري",
@@ -887,6 +889,8 @@
     "bandTitle": "هل أنت مستعد لإضافة {name} إلى رحلتك؟",
     "bandBody": "أخبر فريقنا في أروشا بما تحلم به. سنصمم رحلة مخصصة تشمل {name} ونرد خلال 24 ساعة.",
     "mobilePlanTo": "أضِف إلى سفاري",
-    "enquire": "استفسر"
+    "enquire": "استفسر",
+    "safarisTitle": "رحلات السفاري التي تشمل {name}",
+    "safarisSub": "مسارات جاهزة يمكنك تخصيصها."
   }
 }

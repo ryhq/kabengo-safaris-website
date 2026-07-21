@@ -21,6 +21,16 @@ interface ParkDetail {
   accessInformation?: string; tags?: string; primaryImageUrl?: string;
 }
 interface ActivityItem { slug: string; name: string; description?: string; seasonAvailability?: string; primaryImage?: string; primaryImageUrl?: string }
+interface SafariItem { code: string; name: string; totalDays?: number; tripTypeDisplayName?: string; totalPaxCount?: number; primaryImageUrl?: string; costSummary?: { grandTotalRack?: number; currency?: string }[] }
+const CURRENCY_SYMBOLS: Record<string, string> = { USD: "$", EUR: "€", GBP: "£", TZS: "TSh " };
+function safariFromPrice(s: SafariItem): string | null {
+  const gt = s.costSummary?.[0]?.grandTotalRack;
+  if (!gt || gt <= 0) return null;
+  const pax = s.totalPaxCount && s.totalPaxCount > 0 ? s.totalPaxCount : 1;
+  const cur = s.costSummary?.[0]?.currency;
+  const sym = cur ? CURRENCY_SYMBOLS[cur] ?? `${cur} ` : "$";
+  return `${sym}${Math.round(gt / pax).toLocaleString()}`;
+}
 
 const SERIF = "var(--font-source-serif), Georgia, serif";
 const ONE_LINE: React.CSSProperties = { whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" };
@@ -88,6 +98,7 @@ export default function ParkDetailPage() {
   const [park, setPark] = useState<ParkDetail | null>(null);
   const [images, setImages] = useState<ParkImage[]>([]);
   const [activities, setActivities] = useState<ActivityItem[]>([]);
+  const [safaris, setSafaris] = useState<SafariItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [moreOpen, setMoreOpen] = useState(false);
   const [openFaq, setOpenFaq] = useState(0);
@@ -106,6 +117,9 @@ export default function ParkDetailPage() {
     let alive = true;
     apiClient.get(`/public/parks/${params.id}/activities?page=0&size=${ACTIVITIES_PAGE_SIZE}`, { headers: { "Accept-Language": locale } })
       .then((res) => { if (alive && res.data.success) setActivities(res.data.data?.activities || []); })
+      .catch(() => {});
+    apiClient.get(`/public/parks/${params.id}/safaris?page=0&size=12`, { headers: { "Accept-Language": locale } })
+      .then((res) => { if (alive && res.data.success) setSafaris(res.data.data?.safaris || []); })
       .catch(() => {});
     // also try to pull a few more gallery images
     apiClient.get(`/public/parks/${params.id}/images?page=0&size=${IMAGES_PAGE_SIZE}`, { headers: { "Accept-Language": locale } })
@@ -154,6 +168,27 @@ export default function ParkDetailPage() {
           <div style={{ minWidth: 0 }}>
             {a.seasonAvailability && <div style={{ color: "#f3e6c8", fontSize: 11, fontWeight: 600, letterSpacing: ".08em", textTransform: "uppercase", marginBottom: 6, ...ONE_LINE }}>{a.seasonAvailability}</div>}
             <h3 style={{ fontFamily: SERIF, fontWeight: 700, color: "#fff", fontSize: 21, lineHeight: 1.14, margin: 0, textShadow: "0 1px 12px rgba(20,12,4,.5)", ...ONE_LINE }}>{a.name}</h3>
+          </div>
+          <span className="flex items-center justify-center bg-white text-[#2a2018] group-hover:bg-brand-green group-hover:text-white transition-colors" style={{ flexShrink: 0, width: 44, height: 44, borderRadius: "50%" }}><Arrow size={17} /></span>
+        </div>
+      </article>
+    );
+  };
+
+  // Editorial safari card for "Safaris that visit this park".
+  const renderSafariCard = (s: SafariItem) => {
+    const bg = s.primaryImageUrl ? `50% 45%/cover no-repeat url('${s.primaryImageUrl}')` : gradFor(s.code);
+    const kicker = [s.totalDays ? `${s.totalDays} ${s.totalDays === 1 ? "Day" : "Days"}` : null, s.tripTypeDisplayName].filter(Boolean).join(" · ");
+    const price = safariFromPrice(s);
+    return (
+      <article className="group relative" style={{ height: 300, borderRadius: 20, overflow: "hidden", background: bg }}>
+        <Link href={`/safaris/${s.code}`} aria-label={s.name} className="absolute inset-0 z-[5]" />
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg,transparent 28%,rgba(20,12,4,.55) 58%,rgba(20,12,4,.92) 100%)" }} />
+        {price && <div className="absolute" style={{ top: 14, right: 14, background: "#3d1402", color: "#f3e6c8", fontSize: 11.5, fontWeight: 600, padding: "5px 10px", borderRadius: 20 }}>From {price} pp</div>}
+        <div className="absolute left-0 right-0 bottom-0 flex items-end justify-between" style={{ padding: 22, gap: 14 }}>
+          <div style={{ minWidth: 0 }}>
+            {kicker && <div style={{ color: "#f3e6c8", fontSize: 11, fontWeight: 600, letterSpacing: ".08em", textTransform: "uppercase", marginBottom: 6, ...ONE_LINE }}>{kicker}</div>}
+            <h3 style={{ fontFamily: SERIF, fontWeight: 700, color: "#fff", fontSize: 21, lineHeight: 1.14, margin: 0, textShadow: "0 1px 12px rgba(20,12,4,.5)", ...ONE_LINE }}>{s.name}</h3>
           </div>
           <span className="flex items-center justify-center bg-white text-[#2a2018] group-hover:bg-brand-green group-hover:text-white transition-colors" style={{ flexShrink: 0, width: 44, height: 44, borderRadius: "50%" }}><Arrow size={17} /></span>
         </div>
@@ -279,6 +314,13 @@ export default function ParkDetailPage() {
             {activities.length > 0 && (
               <section style={{ marginBottom: "clamp(36px,5vw,52px)" }}>
                 <FeaturedCarousel title={t("thingsToDo")} subtitle={t("thingsToDoSub")} items={activities} renderCard={renderActivityCard} />
+              </section>
+            )}
+
+            {/* (8) SAFARIS THAT VISIT THIS PARK */}
+            {safaris.length > 0 && (
+              <section style={{ marginBottom: "clamp(36px,5vw,52px)" }}>
+                <FeaturedCarousel title={t("safarisTitle", { name: shortName })} subtitle={t("safarisSub")} items={safaris} renderCard={renderSafariCard} />
               </section>
             )}
 
