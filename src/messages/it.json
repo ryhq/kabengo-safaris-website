@@ -327,7 +327,9 @@
     "prev": "Precedente",
     "next": "Successivo",
     "viewAll": "Leggi tutte le recensioni",
-    "reviewsShort": "{count} recensioni"
+    "reviewsShort": "{count} recensioni",
+    "ctaTitle": "Pronto a creare la tua storia?",
+    "ctaBody": "Unisciti ai viaggiatori che ci hanno dato cinque stelle. Raccontaci il safari dei tuoi sogni e il nostro team locale lo realizzerà — senza impegno."
   },
   "blog": {
     "title": "Diario Safari",

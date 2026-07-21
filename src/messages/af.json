@@ -325,7 +325,9 @@
     "prev": "Vorige",
     "next": "Volgende",
     "viewAll": "Lees alle resensies",
-    "reviewsShort": "{count} resensies"
+    "reviewsShort": "{count} resensies",
+    "ctaTitle": "Gereed om jou eie storie te skep?",
+    "ctaBody": "Sluit aan by die reisigers wat ons vyf sterre gegee het. Vertel ons van jou droom-safari en ons plaaslike span sal dit skep — sonder verpligting."
   },
   "blog": {
     "title": "Safari Journal",

@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useTranslations, useLocale } from "next-intl";
-import { Star, BadgeCheck, Quote, MapPin } from "lucide-react";
+import { Star, BadgeCheck, Quote, MapPin, ArrowRight, MessageCircle } from "lucide-react";
+import { Link } from "@/i18n/navigation";
 import PageHero from "@/components/ui/PageHero";
 import SkeletonCard from "@/components/ui/SkeletonCard";
 import FeaturedCarousel from "@/components/ui/FeaturedCarousel";
@@ -85,6 +86,8 @@ function fmtDate(d?: string, locale?: string) {
 
 export default function ReviewsPage() {
   const t = useTranslations("testimonials");
+  const home = useTranslations("home");
+  const nav = useTranslations("footer");
   const locale = useLocale();
   const [testimonies, setTestimonies] = useState<TestimonyItem[]>([]);
   const [loading, setLoading] = useState(true);
@@ -213,15 +216,27 @@ export default function ReviewsPage() {
         </div>
       </section>
 
-      {/* ===== Share your story ===== */}
-      <section id="share-story" style={{ background: "#faf8f5", borderTop: "1px solid #e4ddd1", padding: "clamp(44px,6vw,80px) clamp(16px,5vw,56px)", scrollMarginTop: 96 }}>
-        <div style={{ maxWidth: 1120, margin: "0 auto" }}>
-          <TestimonyForm />
+      {/* ===== Plan your safari CTA (converts the warmed lead) ===== */}
+      <section style={{ background: "#3d1402", color: "#faf8f5", padding: "clamp(52px,7vw,88px) clamp(16px,5vw,56px)" }}>
+        <div style={{ maxWidth: 760, margin: "0 auto", textAlign: "center" }}>
+          <h2 style={{ fontFamily: SERIF, fontWeight: 700, color: "#fff", fontSize: "clamp(26px,4vw,42px)", lineHeight: 1.08, margin: "0 0 14px" }}>{t("ctaTitle")}</h2>
+          <p style={{ color: "rgba(242,236,224,.82)", fontSize: 17, lineHeight: 1.55, margin: "0 0 30px" }}>{t("ctaBody")}</p>
+          <div className="flex flex-wrap gap-3 justify-center">
+            <Link href="/plan" className="inline-flex items-center gap-2 font-semibold rounded-lg" style={{ background: "#c48f2b", color: "#3d1402", fontSize: 16, padding: "16px 30px", boxShadow: "0 10px 28px rgba(196,143,43,.4)" }}>{home("ctaCta")}<ArrowRight size={17} strokeWidth={2.3} /></Link>
+            <a href="https://wa.me/255786345408" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 font-semibold rounded-lg" style={{ background: "rgba(242,236,224,.08)", color: "#fff", border: "1.5px solid rgba(242,236,224,.4)", fontSize: 16, padding: "15px 28px" }}><MessageCircle size={18} strokeWidth={2.2} />{nav("whatsapp")}</a>
+          </div>
         </div>
       </section>
 
       {/* ===== Rate us on TripAdvisor ===== */}
       <TripAdvisorReviewSection />
+
+      {/* ===== Share your story (last) ===== */}
+      <section id="share-story" style={{ background: "#faf8f5", borderTop: "1px solid #e4ddd1", padding: "clamp(44px,6vw,80px) clamp(16px,5vw,56px)", scrollMarginTop: 96 }}>
+        <div style={{ maxWidth: 1120, margin: "0 auto" }}>
+          <TestimonyForm />
+        </div>
+      </section>
     </>
   );
 }

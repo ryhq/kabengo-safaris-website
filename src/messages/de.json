@@ -327,7 +327,9 @@
     "prev": "Zurück",
     "next": "Weiter",
     "viewAll": "Alle Bewertungen lesen",
-    "reviewsShort": "{count} Bewertungen"
+    "reviewsShort": "{count} Bewertungen",
+    "ctaTitle": "Bereit für Ihre eigene Geschichte?",
+    "ctaBody": "Schließen Sie sich den Reisenden an, die uns fünf Sterne gegeben haben. Sagen Sie uns Ihre Traumsafari, und unser lokales Team gestaltet sie — unverbindlich."
   },
   "blog": {
     "title": "Safari-Journal",

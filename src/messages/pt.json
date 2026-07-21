@@ -327,7 +327,9 @@
     "prev": "Anterior",
     "next": "Seguinte",
     "viewAll": "Ler todas as avaliações",
-    "reviewsShort": "{count} avaliações"
+    "reviewsShort": "{count} avaliações",
+    "ctaTitle": "Pronto para criar a sua própria história?",
+    "ctaBody": "Junte-se aos viajantes que nos deram cinco estrelas. Diga-nos o seu safári de sonho e a nossa equipa local irá criá-lo — sem compromisso."
   },
   "blog": {
     "title": "Diário Safari",

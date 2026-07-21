@@ -327,7 +327,9 @@
     "prev": "Iliyotangulia",
     "next": "Inayofuata",
     "viewAll": "Soma hakiki zote",
-    "reviewsShort": "hakiki {count}"
+    "reviewsShort": "hakiki {count}",
+    "ctaTitle": "Uko tayari kuunda hadithi yako?",
+    "ctaBody": "Jiunge na wasafiri waliotupa nyota tano. Tuambie safari unayoiota nasi timu yetu ya wenyeji itaiandaa — bila masharti."
   },
   "blog": {
     "title": "Jarida la Safari",

@@ -325,7 +325,9 @@
     "prev": "Previous",
     "next": "Next",
     "viewAll": "Read all reviews",
-    "reviewsShort": "{count} reviews"
+    "reviewsShort": "{count} reviews",
+    "ctaTitle": "Ready to create your own story?",
+    "ctaBody": "Join the travellers who rated us five stars. Tell us your dream safari and our local team will craft it — with no obligation."
   },
   "blog": {
     "title": "Safari Journal",

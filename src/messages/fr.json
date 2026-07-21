@@ -327,7 +327,9 @@
     "prev": "Précédent",
     "next": "Suivant",
     "viewAll": "Lire tous les avis",
-    "reviewsShort": "{count} avis"
+    "reviewsShort": "{count} avis",
+    "ctaTitle": "Prêt à écrire votre propre histoire ?",
+    "ctaBody": "Rejoignez les voyageurs qui nous ont attribué cinq étoiles. Dites-nous le safari de vos rêves et notre équipe locale le concevra — sans engagement."
   },
   "blog": {
     "title": "Journal Safari",
