@@ -1,19 +1,48 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useEffect, useState } from "react";
+import { useTranslations, useLocale } from "next-intl";
 import { motion } from "framer-motion";
 import { ExternalLink } from "lucide-react";
+import { apiClient } from "@/lib/api";
 
 const TRIPADVISOR_URL =
   "https://www.tripadvisor.com/Attraction_Review-g297913-d34283345-Reviews-Kabengo_Safaris-Arusha_Arusha_Region.html";
 /* Deep-link that opens TripAdvisor's "write a review" editor for this listing. */
 const TRIPADVISOR_WRITE_REVIEW_URL = "https://www.tripadvisor.com/UserReviewEdit-d34283345";
 
-/* Live figures from the TripAdvisor listing — bump these as reviews grow
-   (or later wire the TripAdvisor Content API to fetch them automatically). */
+/* Fallback figures shown until the live summary loads (or if it fails). These
+   also match the TripAdvisor listing, so SSR/first paint is never wrong. */
 const TRIPADVISOR_RATING = 5.0;
 const TRIPADVISOR_REVIEW_COUNT: number = 5;
 const TA_GREEN = "#00aa6c";
+
+/**
+ * Live rating + review count from the backend summary endpoint, so the count
+ * grows automatically as guest reviews are added — no manual bumps. Falls back
+ * to the constants above until the request resolves (or if it errors).
+ */
+function useTripAdvisorStats() {
+  const locale = useLocale();
+  const [stats, setStats] = useState<{ rating: number; count: number }>({
+    rating: TRIPADVISOR_RATING,
+    count: TRIPADVISOR_REVIEW_COUNT,
+  });
+  useEffect(() => {
+    let alive = true;
+    apiClient
+      .get(`/public/testimonies/summary`, { headers: { "Accept-Language": locale } })
+      .then((res) => {
+        const d = res.data?.data;
+        if (alive && res.data?.success && d?.reviewCount > 0 && d?.averageRating) {
+          setStats({ rating: d.averageRating, count: d.reviewCount });
+        }
+      })
+      .catch(() => {});
+    return () => { alive = false; };
+  }, [locale]);
+  return stats;
+}
 
 function TripAdvisorLogo({ className = "w-6 h-6" }: { className?: string }) {
   return (
@@ -63,13 +92,14 @@ export function TripAdvisorIcon() {
  * always renders and links to the live listing.
  */
 export function TripAdvisorWidget() {
+  const { rating, count } = useTripAdvisorStats();
   return (
     <a
       href={TRIPADVISOR_URL}
       target="_blank"
       rel="noopener noreferrer"
       className="flex items-center gap-3 no-underline"
-      aria-label={`Kabengo Safaris on Tripadvisor — rated ${TRIPADVISOR_RATING.toFixed(1)} from ${TRIPADVISOR_REVIEW_COUNT} review${TRIPADVISOR_REVIEW_COUNT === 1 ? "" : "s"}`}
+      aria-label={`Kabengo Safaris on Tripadvisor — rated ${rating.toFixed(1)} from ${count} review${count === 1 ? "" : "s"}`}
     >
       <span className="flex items-center justify-center rounded-full flex-shrink-0" style={{ width: 44, height: 44, background: "rgba(0,170,108,.12)", color: TA_GREEN }}>
         <TripAdvisorLogo className="w-7 h-7" />
@@ -77,11 +107,11 @@ export function TripAdvisorWidget() {
       <span className="min-w-0">
         <span className="block font-bold leading-none" style={{ color: TA_GREEN, fontSize: 15 }}>Tripadvisor</span>
         <span className="flex items-center gap-2" style={{ marginTop: 5 }}>
-          <RatingBubbles rating={TRIPADVISOR_RATING} />
-          <span className="font-semibold" style={{ color: "#2a2018", fontSize: 14 }}>{TRIPADVISOR_RATING.toFixed(1)}</span>
+          <RatingBubbles rating={rating} />
+          <span className="font-semibold" style={{ color: "#2a2018", fontSize: 14 }}>{rating.toFixed(1)}</span>
         </span>
         <span className="block" style={{ color: "#7a6f61", fontSize: 12, marginTop: 3 }}>
-          {TRIPADVISOR_REVIEW_COUNT} review{TRIPADVISOR_REVIEW_COUNT === 1 ? "" : "s"}
+          {count} review{count === 1 ? "" : "s"}
         </span>
       </span>
     </a>
@@ -93,6 +123,7 @@ export function TripAdvisorWidget() {
  */
 export function TripAdvisorAboutSection() {
   const t = useTranslations("common");
+  const { rating, count } = useTripAdvisorStats();
 
   return (
     <motion.section
@@ -120,9 +151,9 @@ export function TripAdvisorAboutSection() {
               {t("tripadvisor")}
             </h3>
             <div className="flex items-center justify-center sm:justify-start gap-2 mb-2">
-              <RatingBubbles rating={TRIPADVISOR_RATING} size={16} />
-              <span className="text-white font-semibold">{TRIPADVISOR_RATING.toFixed(1)}</span>
-              <span className="text-white/70 text-sm">· {TRIPADVISOR_REVIEW_COUNT} review{TRIPADVISOR_REVIEW_COUNT === 1 ? "" : "s"}</span>
+              <RatingBubbles rating={rating} size={16} />
+              <span className="text-white font-semibold">{rating.toFixed(1)}</span>
+              <span className="text-white/70 text-sm">· {count} review{count === 1 ? "" : "s"}</span>
             </div>
             <p className="text-white/80 text-sm max-w-md">
               {t("tripadvisorAboutDesc")}
@@ -166,6 +197,7 @@ export function TripAdvisorReviewSection() {
  */
 export function TripAdvisorReviewCard() {
   const t = useTranslations("common");
+  const { rating, count } = useTripAdvisorStats();
   return (
     <div className="h-full flex flex-col items-center justify-center text-center bg-white rounded-2xl border border-stone-200 shadow-sm" style={{ padding: "clamp(28px,3.5vw,44px)", gap: 16 }}>
       <div className="inline-flex items-center justify-center rounded-2xl" style={{ width: 60, height: 60, background: "rgba(0,170,108,.1)" }}>
@@ -181,9 +213,9 @@ export function TripAdvisorReviewCard() {
       </div>
 
       <div className="flex items-center gap-2.5">
-        <RatingBubbles rating={TRIPADVISOR_RATING} size={17} />
-        <span className="font-semibold text-stone-800">{TRIPADVISOR_RATING.toFixed(1)}</span>
-        <span className="text-stone-500 text-sm">· {TRIPADVISOR_REVIEW_COUNT} review{TRIPADVISOR_REVIEW_COUNT === 1 ? "" : "s"}</span>
+        <RatingBubbles rating={rating} size={17} />
+        <span className="font-semibold text-stone-800">{rating.toFixed(1)}</span>
+        <span className="text-stone-500 text-sm">· {count} review{count === 1 ? "" : "s"}</span>
       </div>
 
       <a href={TRIPADVISOR_WRITE_REVIEW_URL} target="_blank" rel="noopener noreferrer" aria-label="Write a review on Tripadvisor" className="block">
