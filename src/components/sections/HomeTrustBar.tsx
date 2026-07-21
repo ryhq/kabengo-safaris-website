@@ -33,7 +33,7 @@ export default function HomeTrustBar() {
   if (!summary) return null;
 
   return (
-    <section style={{ background: "#fff", borderBottom: "1px solid #e4ddd1", padding: "12px clamp(16px,5vw,56px)" }}>
+    <section className="sticky top-20 z-30" style={{ background: "rgba(255,255,255,.92)", backdropFilter: "blur(12px)", borderTop: "1px solid #e4ddd1", borderBottom: "1px solid #e4ddd1", padding: "12px clamp(16px,5vw,56px)" }}>
       <Link href="/reviews" className="group flex flex-wrap items-center justify-center no-underline" style={{ maxWidth: 1100, margin: "0 auto", gap: "8px 20px" }}>
         <span className="inline-flex items-center" style={{ gap: 8 }}>
           <span style={{ fontFamily: SERIF, fontWeight: 700, color: "#2a2018", fontSize: 18, lineHeight: 1 }}>{summary.rating.toFixed(1)}</span>
