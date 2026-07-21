@@ -645,7 +645,9 @@
       "Jibu ndani ya saa 24"
     ],
     "railReviews": "kutokana na hakiki {count} za wageni",
-    "railChip": "Bila malipo · Bila wajibu · Huchukua ~dakika 2"
+    "railChip": "Bila malipo · Bila wajibu · Huchukua ~dakika 2",
+    "contextPark": "Tunapanga kuzunguka {park} — badilisha wakati wowote",
+    "contextParkRemove": "Ondoa {park}"
   },
   "howItWorks": {
     "eyebrow": "Jinsi inavyofanya kazi",

@@ -2,8 +2,9 @@
 
 import { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
+import { useSearchParams } from "next/navigation";
 import { Link } from "@/i18n/navigation";
-import { User, Users, UsersRound, Heart, Baby, HelpCircle, ArrowRight, Check, Search, MapPin, Binoculars, Footprints, Waves, MountainSnow, Drum } from "lucide-react";
+import { User, Users, UsersRound, Heart, Baby, HelpCircle, ArrowRight, Check, Search, MapPin, Binoculars, Footprints, Waves, MountainSnow, Drum, X } from "lucide-react";
 import { submitBookingInquiry, fetchPublicParks, type PublicParkOption } from "@/lib/api";
 import DateRangePicker from "@/components/ui/DateRangePicker";
 import PlannerDropdown from "@/components/planner/PlannerDropdown";
@@ -79,9 +80,15 @@ export default function SafariPlanner({ embedded = false }: { embedded?: boolean
   const TRUST = t.raw("trust") as string[];
   const AGE_OPTIONS = Array.from({ length: 16 }, (_, n) => ({ value: String(n), label: n === 0 ? t("under1") : `${n} ${t("yrsAbbr")}` }));
 
+  // Deep-link context: /plan?park={slug}&parkName={name} pre-selects a park (e.g. from a park detail page).
+  const searchParams = useSearchParams();
+  const prefillPark = searchParams.get("park") || "";
+  const prefillParkName = searchParams.get("parkName") || "";
+
   const [step, setStep] = useState(0);
   const [acts, setActs] = useState<Record<string, boolean>>({});
-  const [dests, setDests] = useState<Record<string, boolean>>({});
+  const [dests, setDests] = useState<Record<string, boolean>>(() => (prefillPark ? { [prefillPark]: true } : {}));
+  const [ctxParkDismissed, setCtxParkDismissed] = useState(false);
   const [parks, setParks] = useState<PublicParkOption[]>([]);
   const [parksLoading, setParksLoading] = useState(true);
   const [parkSearch, setParkSearch] = useState("");
@@ -269,6 +276,17 @@ export default function SafariPlanner({ embedded = false }: { embedded?: boolean
               </div>
             )}
           </div>
+
+          {/* deep-link context: pre-selected park */}
+          {prefillParkName && !ctxParkDismissed && inFlow && (
+            <div style={{ margin: "16px clamp(22px,4vw,40px) 0", display: "flex", alignItems: "center", gap: 10, background: "var(--accent-gold-soft)", border: "1px solid rgba(196,143,43,.35)", borderRadius: 10, padding: "10px 12px" }}>
+              <MapPin size={15} strokeWidth={2.2} style={{ color: "var(--accent-gold-deep)", flexShrink: 0 }} />
+              <span style={{ fontSize: 13.5, fontWeight: 600, color: "var(--accent-gold-deep)", flex: 1, minWidth: 0 }}>{t("contextPark", { park: prefillParkName })}</span>
+              <button type="button" onClick={() => { setDests((d) => ({ ...d, [prefillPark]: false })); setCtxParkDismissed(true); }} aria-label={t("contextParkRemove", { park: prefillParkName })} style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: 24, height: 24, borderRadius: "50%", border: "none", background: "rgba(150,99,26,.14)", color: "var(--accent-gold-deep)", cursor: "pointer", flexShrink: 0 }}>
+                <X size={13} strokeWidth={2.6} />
+              </button>
+            </div>
+          )}
 
           {/* body */}
           <div style={{ padding: "clamp(24px,4vw,40px)", ...(embedded ? { flex: 1, overflowY: "auto", minHeight: 0 } : { minHeight: 380 }) }}>

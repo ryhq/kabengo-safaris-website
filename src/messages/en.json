@@ -643,7 +643,9 @@
       "Reply within 24 hrs"
     ],
     "railReviews": "based on {count} guest reviews",
-    "railChip": "Free · No obligation · Takes ~2 minutes"
+    "railChip": "Free · No obligation · Takes ~2 minutes",
+    "contextPark": "Planning around {park} — change anytime",
+    "contextParkRemove": "Remove {park}"
   },
   "howItWorks": {
     "eyebrow": "How it works",

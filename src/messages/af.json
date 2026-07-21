@@ -643,7 +643,9 @@
       "Antwoord binne 24 uur"
     ],
     "railReviews": "gebaseer op {count} gaste-resensies",
-    "railChip": "Gratis · Geen verpligting · Neem ~2 minute"
+    "railChip": "Gratis · Geen verpligting · Neem ~2 minute",
+    "contextPark": "Beplanning rondom {park} — verander enige tyd",
+    "contextParkRemove": "Verwyder {park}"
   },
   "howItWorks": {
     "eyebrow": "Hoe dit werk",

@@ -645,7 +645,9 @@
       "Risposta entro 24 h"
     ],
     "railReviews": "in base a {count} recensioni degli ospiti",
-    "railChip": "Gratis · Senza impegno · Circa 2 minuti"
+    "railChip": "Gratis · Senza impegno · Circa 2 minuti",
+    "contextPark": "Viaggio intorno a {park} — modificabile in qualsiasi momento",
+    "contextParkRemove": "Rimuovi {park}"
   },
   "howItWorks": {
     "eyebrow": "Come funziona",
