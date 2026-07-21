@@ -317,7 +317,11 @@
     "emptyTitle": "Be the first to share your story",
     "emptyBody": "No reviews here yet — but every great safari begins with someone taking the leap. If you've explored Tanzania with us, your words help the next traveler dream bigger.",
     "emptyCta": "Write the first review",
-    "basedOn": "Based on {count} guest reviews"
+    "basedOn": "Based on {count} guest reviews",
+    "reviewsHeading": "What our guests say",
+    "reviewsSub": "Real stories from real safaris across Tanzania",
+    "showMore": "Show more",
+    "readOnSource": "Read this review on {source}"
   },
   "blog": {
     "title": "Safari Journal",

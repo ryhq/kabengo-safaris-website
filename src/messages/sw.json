@@ -319,7 +319,11 @@
     "emptyCta": "Andika maoni ya kwanza",
     "yourEmail": "Your Email",
     "emailPlaceholder": "you@example.com",
-    "basedOn": "Kulingana na hakiki {count} za wageni"
+    "basedOn": "Kulingana na hakiki {count} za wageni",
+    "reviewsHeading": "Wageni wetu wanasema nini",
+    "reviewsSub": "Hadithi za kweli kutoka safari halisi kote Tanzania",
+    "showMore": "Onyesha zaidi",
+    "readOnSource": "Soma ukaguzi huu kwenye {source}"
   },
   "blog": {
     "title": "Jarida la Safari",

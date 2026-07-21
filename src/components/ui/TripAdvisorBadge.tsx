@@ -12,7 +12,7 @@ const TRIPADVISOR_WRITE_REVIEW_URL = "https://www.tripadvisor.com/UserReviewEdit
 /* Live figures from the TripAdvisor listing — bump these as reviews grow
    (or later wire the TripAdvisor Content API to fetch them automatically). */
 const TRIPADVISOR_RATING = 5.0;
-const TRIPADVISOR_REVIEW_COUNT: number = 2;
+const TRIPADVISOR_REVIEW_COUNT: number = 4;
 const TA_GREEN = "#00aa6c";
 
 function TripAdvisorLogo({ className = "w-6 h-6" }: { className?: string }) {

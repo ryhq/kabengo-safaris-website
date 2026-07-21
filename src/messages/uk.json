@@ -317,7 +317,11 @@
     "emptyTitle": "Be the first to share your story",
     "emptyBody": "No reviews here yet — but every great safari begins with someone taking the leap. If you've explored Tanzania with us, your words help the next traveler dream bigger.",
     "emptyCta": "Write the first review",
-    "basedOn": "На основі {count} відгуків гостей"
+    "basedOn": "На основі {count} відгуків гостей",
+    "reviewsHeading": "Що кажуть наші гості",
+    "reviewsSub": "Справжні історії справжніх сафарі по всій Танзанії",
+    "showMore": "Показати більше",
+    "readOnSource": "Читати цей відгук на {source}"
   },
   "blog": {
     "title": "Сафарі-журнал",
