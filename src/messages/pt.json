@@ -288,7 +288,10 @@
     "wildlife": "Fauna",
     "activities": "Activities",
     "accommodations": "Accommodations",
-    "viewEntity": "View {entity}"
+    "viewEntity": "View {entity}",
+    "ctaTitle": "Pronto para ver com os seus próprios olhos?",
+    "ctaBody": "Estes são momentos reais de verdadeiras viagens Kabengo. Diga-nos o seu sonho e a nossa equipa local criará um safári à medida.",
+    "startPlanning": "Gosta? Comece a planear"
   },
   "testimonials": {
     "title": "Avaliações",

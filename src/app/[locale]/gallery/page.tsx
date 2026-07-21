@@ -5,7 +5,7 @@ import { useTranslations, useLocale } from "next-intl";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
-import { ChevronLeft, ChevronRight, X, ExternalLink } from "lucide-react";
+import { ChevronLeft, ChevronRight, X, ExternalLink, ArrowRight, MessageCircle } from "lucide-react";
 import PageHero from "@/components/ui/PageHero";
 import { apiClient } from "@/lib/api";
 
@@ -43,6 +43,8 @@ const ENTITY_LABEL_MAP: Record<string, string> = {
 export default function GalleryPage() {
   const t = useTranslations("gallery");
   const common = useTranslations("common");
+  const home = useTranslations("home");
+  const nav = useTranslations("footer");
   const locale = useLocale();
 
   const [images, setImages] = useState<GalleryImage[]>([]);
@@ -209,6 +211,18 @@ export default function GalleryPage() {
         </div>
       </section>
 
+      {/* Conversion band — capture the inspired lead */}
+      <section style={{ background: "#3d1402", color: "#faf8f5", padding: "clamp(52px,7vw,88px) clamp(16px,5vw,56px)" }}>
+        <div style={{ maxWidth: 760, margin: "0 auto", textAlign: "center" }}>
+          <h2 style={{ fontFamily: "var(--font-source-serif), Georgia, serif", fontWeight: 700, color: "#fff", fontSize: "clamp(26px,4vw,42px)", lineHeight: 1.08, margin: "0 0 14px" }}>{t("ctaTitle")}</h2>
+          <p style={{ color: "rgba(242,236,224,.82)", fontSize: 17, lineHeight: 1.55, margin: "0 0 30px" }}>{t("ctaBody")}</p>
+          <div className="flex flex-wrap gap-3 justify-center">
+            <Link href={`/${locale}/plan`} className="inline-flex items-center gap-2 font-semibold rounded-lg" style={{ background: "#c48f2b", color: "#3d1402", fontSize: 16, padding: "16px 30px", boxShadow: "0 10px 28px rgba(196,143,43,.4)" }}>{home("ctaCta")}<ArrowRight size={17} strokeWidth={2.3} /></Link>
+            <a href="https://wa.me/255786345408" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 font-semibold rounded-lg" style={{ background: "rgba(242,236,224,.08)", color: "#fff", border: "1.5px solid rgba(242,236,224,.4)", fontSize: 16, padding: "15px 28px" }}><MessageCircle size={18} strokeWidth={2.2} />{nav("whatsapp")}</a>
+          </div>
+        </div>
+      </section>
+
       {/* Lightbox */}
       <AnimatePresence>
         {lightboxIndex !== null && images[lightboxIndex] && (() => {
@@ -314,19 +328,31 @@ export default function GalleryPage() {
               {/* Bottom bar */}
               <div className="absolute bottom-0 left-0 right-0 z-10 px-4 sm:px-6 py-4 flex items-center justify-between" onClick={(e) => e.stopPropagation()}>
                 {/* Counter */}
-                <span className="text-white/50 text-sm font-medium tabular-nums">
+                <span className="text-white/50 text-sm font-medium tabular-nums flex-shrink-0">
                   {lightboxIndex + 1} / {images.length}
                 </span>
 
-                {/* View entity link */}
-                <Link
-                  href={`/${locale}/${ENTITY_ROUTE_MAP[img.entityType]}/${img.entitySlug}`}
-                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white text-sm font-medium transition-all"
-                  onClick={close}
-                >
-                  {t("viewEntity", { entity: ENTITY_LABEL_MAP[img.entityType] })}
-                  <ExternalLink size={14} />
-                </Link>
+                <div className="flex items-center gap-2 sm:gap-3">
+                  {/* Start planning nudge */}
+                  <Link
+                    href={`/${locale}/plan`}
+                    className="hidden sm:inline-flex items-center gap-1.5 text-white/70 hover:text-white text-sm font-medium transition-colors"
+                    onClick={close}
+                  >
+                    {t("startPlanning")}
+                    <ArrowRight size={14} />
+                  </Link>
+
+                  {/* View entity link */}
+                  <Link
+                    href={`/${locale}/${ENTITY_ROUTE_MAP[img.entityType]}/${img.entitySlug}`}
+                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white text-sm font-medium transition-all"
+                    onClick={close}
+                  >
+                    {t("viewEntity", { entity: ENTITY_LABEL_MAP[img.entityType] })}
+                    <ExternalLink size={14} />
+                  </Link>
+                </div>
               </div>
             </motion.div>
           );

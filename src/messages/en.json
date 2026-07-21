@@ -286,7 +286,10 @@
     "parks": "Parks",
     "activities": "Activities",
     "accommodations": "Accommodations",
-    "viewEntity": "View {entity}"
+    "viewEntity": "View {entity}",
+    "ctaTitle": "Ready to see it for yourself?",
+    "ctaBody": "These are real moments from real Kabengo journeys. Tell us your dream and our local team will craft a tailor-made safari to match.",
+    "startPlanning": "Love this? Start planning"
   },
   "testimonials": {
     "title": "Reviews",

@@ -288,7 +288,10 @@
     "wildlife": "Wanyamapori",
     "activities": "Activities",
     "accommodations": "Accommodations",
-    "viewEntity": "View {entity}"
+    "viewEntity": "View {entity}",
+    "ctaTitle": "Uko tayari kuiona wewe mwenyewe?",
+    "ctaBody": "Hizi ni nyakati halisi kutoka safari halisi za Kabengo. Tuambie ndoto yako nasi timu yetu ya wenyeji itaandaa safari maalum kukufaa.",
+    "startPlanning": "Unaipenda? Anza kupanga"
   },
   "testimonials": {
     "title": "Mapitio",

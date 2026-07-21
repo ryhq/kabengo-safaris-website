@@ -286,7 +286,10 @@
     "parks": "Parks",
     "activities": "Activities",
     "accommodations": "Accommodations",
-    "viewEntity": "View {entity}"
+    "viewEntity": "View {entity}",
+    "ctaTitle": "هل أنت مستعد لرؤيته بنفسك؟",
+    "ctaBody": "هذه لحظات حقيقية من رحلات كابينغو الحقيقية. أخبرنا بحلمك وسيصمم فريقنا المحلي رحلة سفاري مخصصة لك.",
+    "startPlanning": "أعجبك؟ ابدأ التخطيط"
   },
   "testimonials": {
     "title": "Reviews",
