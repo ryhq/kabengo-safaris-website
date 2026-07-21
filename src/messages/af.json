@@ -323,7 +323,9 @@
     "showMore": "Wys meer",
     "readOnSource": "Lees hierdie resensie op {source}",
     "prev": "Vorige",
-    "next": "Volgende"
+    "next": "Volgende",
+    "viewAll": "Lees alle resensies",
+    "reviewsShort": "{count} resensies"
   },
   "blog": {
     "title": "Safari Journal",

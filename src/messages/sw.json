@@ -325,7 +325,9 @@
     "showMore": "Onyesha zaidi",
     "readOnSource": "Soma ukaguzi huu kwenye {source}",
     "prev": "Iliyotangulia",
-    "next": "Inayofuata"
+    "next": "Inayofuata",
+    "viewAll": "Soma hakiki zote",
+    "reviewsShort": "hakiki {count}"
   },
   "blog": {
     "title": "Jarida la Safari",

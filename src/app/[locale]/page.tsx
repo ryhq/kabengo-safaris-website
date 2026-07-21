@@ -2,11 +2,12 @@ import { getTranslations } from "next-intl/server";
 import { fetchHomepageData } from "@/lib/api";
 import { buildAlternates } from "@/lib/seo";
 import HeroSection from "@/components/sections/HeroSection";
+import HomeTrustBar from "@/components/sections/HomeTrustBar";
 import SafarisSection from "@/components/sections/SafarisSection";
 import BookVacationSection from "@/components/sections/BookVacationSection";
 import HowItWorksSection from "@/components/sections/HowItWorksSection";
 import ExploreSection from "@/components/sections/ExploreSection";
-import TestimonialsSection from "@/components/sections/TestimonialsSection";
+import GuestReviewsSection from "@/components/sections/GuestReviewsSection";
 import CTASection from "@/components/sections/CTASection";
 import WhyChooseUsSection from "@/components/sections/WhyChooseUsSection";
 
@@ -40,6 +41,7 @@ export default async function HomePage({
   return (
     <>
       <HeroSection heroes={data.heroes ?? []} />
+      <HomeTrustBar />
       <SafarisSection
         initialSafaris={data.safaris ?? []}
         totalItems={data.safarisTotalItems ?? 0}
@@ -47,11 +49,8 @@ export default async function HomePage({
       <BookVacationSection />
       <HowItWorksSection />
       <ExploreSection />
-      <TestimonialsSection
-        initialTestimonies={data.testimonies ?? []}
-        totalItems={data.testimoniesTotalItems ?? 0}
-      />
       <WhyChooseUsSection />
+      <GuestReviewsSection />
       <CTASection />
     </>
   );

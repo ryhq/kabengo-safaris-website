@@ -325,7 +325,9 @@
     "showMore": "Mostra altro",
     "readOnSource": "Leggi questa recensione su {source}",
     "prev": "Precedente",
-    "next": "Successivo"
+    "next": "Successivo",
+    "viewAll": "Leggi tutte le recensioni",
+    "reviewsShort": "{count} recensioni"
   },
   "blog": {
     "title": "Diario Safari",

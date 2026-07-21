@@ -325,7 +325,9 @@
     "showMore": "Voir plus",
     "readOnSource": "Lire cet avis sur {source}",
     "prev": "Précédent",
-    "next": "Suivant"
+    "next": "Suivant",
+    "viewAll": "Lire tous les avis",
+    "reviewsShort": "{count} avis"
   },
   "blog": {
     "title": "Journal Safari",

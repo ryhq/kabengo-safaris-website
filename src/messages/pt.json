@@ -325,7 +325,9 @@
     "showMore": "Ver mais",
     "readOnSource": "Ler esta avaliação no {source}",
     "prev": "Anterior",
-    "next": "Seguinte"
+    "next": "Seguinte",
+    "viewAll": "Ler todas as avaliações",
+    "reviewsShort": "{count} avaliações"
   },
   "blog": {
     "title": "Diário Safari",

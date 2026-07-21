@@ -325,7 +325,9 @@
     "showMore": "Mehr anzeigen",
     "readOnSource": "Diese Bewertung auf {source} lesen",
     "prev": "Zurück",
-    "next": "Weiter"
+    "next": "Weiter",
+    "viewAll": "Alle Bewertungen lesen",
+    "reviewsShort": "{count} Bewertungen"
   },
   "blog": {
     "title": "Safari-Journal",

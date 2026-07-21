@@ -323,7 +323,9 @@
     "showMore": "Show more",
     "readOnSource": "Read this review on {source}",
     "prev": "Previous",
-    "next": "Next"
+    "next": "Next",
+    "viewAll": "Read all reviews",
+    "reviewsShort": "{count} reviews"
   },
   "blog": {
     "title": "Safari Journal",

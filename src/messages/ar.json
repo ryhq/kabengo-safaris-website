@@ -323,7 +323,9 @@
     "showMore": "عرض المزيد",
     "readOnSource": "اقرأ هذه المراجعة على {source}",
     "prev": "السابق",
-    "next": "التالي"
+    "next": "التالي",
+    "viewAll": "اقرأ كل المراجعات",
+    "reviewsShort": "{count} مراجعات"
   },
   "blog": {
     "title": "Safari Journal",

@@ -323,7 +323,9 @@
     "showMore": "Показати більше",
     "readOnSource": "Читати цей відгук на {source}",
     "prev": "Назад",
-    "next": "Далі"
+    "next": "Далі",
+    "viewAll": "Читати всі відгуки",
+    "reviewsShort": "{count} відгуків"
   },
   "blog": {
     "title": "Сафарі-журнал",
