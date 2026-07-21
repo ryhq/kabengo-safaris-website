@@ -7,7 +7,11 @@ import { Link } from "@/i18n/navigation";
 import ParkDetailSkeleton from "@/components/park/ParkDetailSkeleton";
 import FeaturedCarousel from "@/components/ui/FeaturedCarousel";
 import PhotoWheel from "@/components/park/PhotoWheel";
+import dynamic from "next/dynamic";
 import { apiClient } from "@/lib/api";
+
+// Real OSM map — client-only (Leaflet needs window). Shared with the itinerary map.
+const ParkMap = dynamic(() => import("@/components/ui/ParkMap"), { ssr: false, loading: () => null });
 
 const IMAGES_PAGE_SIZE = 12;
 const ACTIVITIES_PAGE_SIZE = 12;
@@ -347,8 +351,8 @@ export default function ParkDetailPage() {
                 </div>
               );
               const Map = hasCoords ? (
-                <div style={{ position: "relative", border: "1px solid #e4ddd1", borderRadius: 14, overflow: "hidden", minHeight: 320, height: "100%" }}>
-                  <iframe title={park.name} src={`https://www.google.com/maps?q=${park.latitude},${park.longitude}&z=9&hl=${locale}&output=embed`} style={{ width: "100%", height: "100%", minHeight: 320, border: 0, display: "block" }} loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
+                <div style={{ position: "relative", border: "1px solid #e4ddd1", borderRadius: 14, overflow: "hidden", minHeight: 320, height: "100%", isolation: "isolate" }}>
+                  <ParkMap latitude={park.latitude as number} longitude={park.longitude as number} name={park.name} />
                 </div>
               ) : (park.location || park.region) ? (
                 <div style={{ background: "#e6ece2", border: "1px solid #e4ddd1", borderRadius: 14, padding: 20, display: "flex", alignItems: "center", gap: 12 }}>
