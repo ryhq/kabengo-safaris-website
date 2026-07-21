@@ -6,7 +6,9 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { X, RotateCcw, Play, Pause, ChevronLeft, ChevronRight } from "lucide-react";
 
-export interface RouteStop { n: number; lat: number; lng: number; label?: string; sub?: string }
+export interface RouteStop { n: number; nEnd?: number; lat: number; lng: number; label?: string; sub?: string; pinLabel?: string }
+
+const dayRange = (s: { n: number; nEnd?: number }) => (s.nEnd && s.nEnd !== s.n ? `${s.n}–${s.nEnd}` : String(s.n));
 
 /* ── geometry helpers ─────────────────────────────────────────────────────── */
 type LL = [number, number];
@@ -19,23 +21,24 @@ function lerp(a: LL, b: LL, f: number): LL {
   return [a[0] + (b[0] - a[0]) * f, a[1] + (b[1] - a[1]) * f];
 }
 
-/* ── numbered day pin ─────────────────────────────────────────────────────── */
-function pinIcon(n: number, active: boolean) {
+/* ── numbered day pin (label may be a range like "8–10") ──────────────────── */
+function pinIcon(label: string, active: boolean) {
   const size = active ? 40 : 32;
+  const w = label.length > 2 ? size + (label.length - 2) * 9 : size;
   const bg = active ? "#c48f2b" : "#3d1402";
   const anim = active ? "ta-pop .45s cubic-bezier(.34,1.56,.64,1)" : "ta-drop .4s ease";
   return L.divIcon({
     className: "",
-    html: `<div style="width:${size}px;height:${size}px;border-radius:50%;background:${bg};border:2.5px solid #fff;box-shadow:0 3px 12px rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;color:#fff;font:700 ${active ? 14 : 12}px Inter,system-ui,sans-serif;animation:${anim}">${n}</div>`,
-    iconSize: [size, size],
-    iconAnchor: [size / 2, size / 2],
+    html: `<div style="min-width:${size}px;width:${w}px;height:${size}px;padding:0 ${label.length > 2 ? 7 : 0}px;border-radius:${size}px;background:${bg};border:2.5px solid #fff;box-shadow:0 3px 12px rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;color:#fff;font:700 ${active ? 14 : 12}px Inter,system-ui,sans-serif;white-space:nowrap;animation:${anim}">${label}</div>`,
+    iconSize: [w, size],
+    iconAnchor: [w / 2, size / 2],
   });
 }
 
 /* Memoized day pin — stable icon identity so its entry animation plays ONCE
-   (not restarted every animation frame). Only re-creates when n/active change. */
-const DayPin = memo(function DayPin({ n, lat, lng, active }: { n: number; lat: number; lng: number; active: boolean }) {
-  const icon = useMemo(() => pinIcon(n, active), [n, active]);
+   (not restarted every animation frame). Only re-creates when label/active change. */
+const DayPin = memo(function DayPin({ label, lat, lng, active }: { label: string; lat: number; lng: number; active: boolean }) {
+  const icon = useMemo(() => pinIcon(label, active), [label, active]);
   const pos = useMemo(() => [lat, lng] as LL, [lat, lng]);
   return <Marker position={pos} icon={icon} zIndexOffset={active ? 1000 : 0} />;
 });
@@ -84,7 +87,7 @@ function RouteLayer({ pts, stops, cum, total, t, passed }: { pts: LL[]; stops: R
       {/* stops revealed so far — each pops in once as the route reaches it */}
       {stops.map((s, i) => {
         if (cum[i] > target + 1e-9) return null;
-        return <DayPin key={s.n} n={s.n} lat={s.lat} lng={s.lng} active={i === passed} />;
+        return <DayPin key={s.n} label={s.pinLabel ?? String(s.n)} lat={s.lat} lng={s.lng} active={i === passed} />;
       })}
       <FitAll pts={pts} />
     </>
@@ -270,7 +273,7 @@ export default function ItineraryRouteModal({
           {/* current-stop caption (top-right, clear of zoom control) */}
           {activeStop && (
             <div style={{ position: "absolute", right: "clamp(10px,2vw,18px)", top: "clamp(10px,2vw,18px)", zIndex: 500, maxWidth: "min(64%,360px)", background: "rgba(255,255,255,.94)", backdropFilter: "blur(8px)", border: "1px solid #e4ddd1", borderRadius: 12, padding: "10px 14px", boxShadow: "0 8px 26px rgba(0,0,0,.18)" }}>
-              <span style={{ display: "inline-block", background: "#274e22", color: "#faf8f5", fontSize: 11, fontWeight: 700, letterSpacing: ".05em", textTransform: "uppercase", padding: "3px 8px", borderRadius: 5, marginBottom: 6 }}>Day {activeStop.n}</span>
+              <span style={{ display: "inline-block", background: "#274e22", color: "#faf8f5", fontSize: 11, fontWeight: 700, letterSpacing: ".05em", textTransform: "uppercase", padding: "3px 8px", borderRadius: 5, marginBottom: 6 }}>{dayRange(activeStop).includes("–") ? "Days" : "Day"} {dayRange(activeStop)}</span>
               <div style={{ fontFamily: "var(--font-source-serif),Georgia,serif", fontWeight: 700, color: "#2a2018", fontSize: 15, lineHeight: 1.25 }}>{activeStop.label || `Stop ${activeStop.n}`}</div>
               {activeStop.sub && <div style={{ color: "#7a6f61", fontSize: 12.5, marginTop: 2 }}>{activeStop.sub}</div>}
             </div>
@@ -301,7 +304,7 @@ export default function ItineraryRouteModal({
             />
 
             <span style={{ flexShrink: 0, fontSize: 12.5, fontWeight: 700, color: "#3d1402", fontVariantNumeric: "tabular-nums" }}>
-              {activeStop ? `Day ${activeStop.n}` : ""}
+              {activeStop ? `${dayRange(activeStop).includes("–") ? "Days" : "Day"} ${dayRange(activeStop)}` : ""}
             </span>
             <button onClick={replay} aria-label="Replay route" title="Replay route" style={{ ...iconBtn, width: 36, height: 36 }}>
               <RotateCcw size={16} strokeWidth={2.4} />

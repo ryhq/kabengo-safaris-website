@@ -271,8 +271,18 @@ export default function SafariDetailPage() {
   days.forEach((d) => { const a = (d.accommodations || [])[0]; if (!a || !a.accommodationName) return; const last = stays[stays.length - 1]; if (last && last.slug === a.accommodationSlug) last.nights += 1; else stays.push({ name: a.accommodationName, slug: a.accommodationSlug, sub: a.board || d.endLocation, image: a.primaryImageUrl, nights: a.nights || 1 }); });
 
   const stops: MapStop[] = days.filter((d) => d.isOvernight || d.dayNumber === 1).map((d) => { const c = resolveStopCoord(d); return { n: d.dayNumber, lat: c?.lat, lng: c?.lng }; });
-  const geoStops: MapStopGeo[] = stops.filter((s) => s.lat != null && s.lng != null).map((s) => ({ n: s.n, lat: s.lat as number, lng: s.lng as number }));
-  const routeStops: RouteStop[] = geoStops.map((s) => { const d = days.find((x) => x.dayNumber === s.n); return { n: s.n, lat: s.lat, lng: s.lng, label: d?.title, sub: d ? `${d.startLocation} → ${d.endLocation}` : undefined }; });
+  const geoStopsRaw = stops.filter((s) => s.lat != null && s.lng != null).map((s) => ({ n: s.n, lat: s.lat as number, lng: s.lng as number }));
+  // Merge consecutive stops at the same coordinate (e.g. several nights in one park)
+  // into a single pin labelled with the day range, e.g. "8–10".
+  const groupedStops = geoStopsRaw.reduce((acc, s) => {
+    const prev = acc[acc.length - 1];
+    if (prev && Math.abs(prev.lat - s.lat) < 1e-4 && Math.abs(prev.lng - s.lng) < 1e-4) prev.nEnd = s.n;
+    else acc.push({ nStart: s.n, nEnd: s.n, lat: s.lat, lng: s.lng });
+    return acc;
+  }, [] as { nStart: number; nEnd: number; lat: number; lng: number }[]);
+  const rangeLabel = (g: { nStart: number; nEnd: number }) => (g.nStart === g.nEnd ? String(g.nStart) : `${g.nStart}–${g.nEnd}`);
+  const geoStops: MapStopGeo[] = groupedStops.map((g) => ({ n: g.nStart, nEnd: g.nEnd, lat: g.lat, lng: g.lng, label: rangeLabel(g) }));
+  const routeStops: RouteStop[] = groupedStops.map((g) => { const d = days.find((x) => x.dayNumber === g.nStart); return { n: g.nStart, nEnd: g.nEnd, lat: g.lat, lng: g.lng, pinLabel: rangeLabel(g), label: d?.title, sub: d ? `${d.startLocation} → ${d.endLocation}` : undefined }; });
 
   const costRows = cost ? [
     cost.accommodationRack ? { label: t("costAccommodation"), value: money(cost.accommodationRack) } : null,
