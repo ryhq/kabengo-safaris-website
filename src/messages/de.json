@@ -323,7 +323,9 @@
     "reviewsHeading": "Was unsere Gäste sagen",
     "reviewsSub": "Echte Geschichten von echten Safaris in ganz Tansania",
     "showMore": "Mehr anzeigen",
-    "readOnSource": "Diese Bewertung auf {source} lesen"
+    "readOnSource": "Diese Bewertung auf {source} lesen",
+    "prev": "Zurück",
+    "next": "Weiter"
   },
   "blog": {
     "title": "Safari-Journal",

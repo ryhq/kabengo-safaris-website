@@ -321,7 +321,9 @@
     "reviewsHeading": "Wat ons gaste sê",
     "reviewsSub": "Ware stories van ware safari's regoor Tanzanië",
     "showMore": "Wys meer",
-    "readOnSource": "Lees hierdie resensie op {source}"
+    "readOnSource": "Lees hierdie resensie op {source}",
+    "prev": "Vorige",
+    "next": "Volgende"
   },
   "blog": {
     "title": "Safari Journal",

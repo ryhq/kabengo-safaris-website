@@ -323,7 +323,9 @@
     "reviewsHeading": "Wageni wetu wanasema nini",
     "reviewsSub": "Hadithi za kweli kutoka safari halisi kote Tanzania",
     "showMore": "Onyesha zaidi",
-    "readOnSource": "Soma ukaguzi huu kwenye {source}"
+    "readOnSource": "Soma ukaguzi huu kwenye {source}",
+    "prev": "Iliyotangulia",
+    "next": "Inayofuata"
   },
   "blog": {
     "title": "Jarida la Safari",

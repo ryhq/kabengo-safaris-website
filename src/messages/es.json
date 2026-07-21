@@ -323,7 +323,9 @@
     "reviewsHeading": "Lo que dicen nuestros huéspedes",
     "reviewsSub": "Historias reales de safaris reales por Tanzania",
     "showMore": "Ver más",
-    "readOnSource": "Leer esta reseña en {source}"
+    "readOnSource": "Leer esta reseña en {source}",
+    "prev": "Anterior",
+    "next": "Siguiente"
   },
   "blog": {
     "title": "Diario Safari",

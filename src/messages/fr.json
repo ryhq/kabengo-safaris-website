@@ -323,7 +323,9 @@
     "reviewsHeading": "Ce que disent nos voyageurs",
     "reviewsSub": "De vraies histoires de vrais safaris à travers la Tanzanie",
     "showMore": "Voir plus",
-    "readOnSource": "Lire cet avis sur {source}"
+    "readOnSource": "Lire cet avis sur {source}",
+    "prev": "Précédent",
+    "next": "Suivant"
   },
   "blog": {
     "title": "Journal Safari",

@@ -321,7 +321,9 @@
     "reviewsHeading": "ماذا يقول ضيوفنا",
     "reviewsSub": "قصص حقيقية من رحلات سفاري حقيقية عبر تنزانيا",
     "showMore": "عرض المزيد",
-    "readOnSource": "اقرأ هذه المراجعة على {source}"
+    "readOnSource": "اقرأ هذه المراجعة على {source}",
+    "prev": "السابق",
+    "next": "التالي"
   },
   "blog": {
     "title": "Safari Journal",

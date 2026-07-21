@@ -321,7 +321,9 @@
     "reviewsHeading": "What our guests say",
     "reviewsSub": "Real stories from real safaris across Tanzania",
     "showMore": "Show more",
-    "readOnSource": "Read this review on {source}"
+    "readOnSource": "Read this review on {source}",
+    "prev": "Previous",
+    "next": "Next"
   },
   "blog": {
     "title": "Safari Journal",

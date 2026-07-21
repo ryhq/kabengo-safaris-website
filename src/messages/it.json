@@ -323,7 +323,9 @@
     "reviewsHeading": "Cosa dicono i nostri ospiti",
     "reviewsSub": "Storie vere di safari veri in tutta la Tanzania",
     "showMore": "Mostra altro",
-    "readOnSource": "Leggi questa recensione su {source}"
+    "readOnSource": "Leggi questa recensione su {source}",
+    "prev": "Precedente",
+    "next": "Successivo"
   },
   "blog": {
     "title": "Diario Safari",
