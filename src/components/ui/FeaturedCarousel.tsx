@@ -13,7 +13,7 @@ const AUTO_MS = 3500;
  * prev/next + dots + auto-advance drive the scroll. Pauses on hover.
  */
 export default function FeaturedCarousel<T>({
-  title, subtitle, items, renderCard, prevLabel = "Previous", nextLabel = "Next", wide = false,
+  title, subtitle, items, renderCard, prevLabel = "Previous", nextLabel = "Next", wide = false, autoMs = AUTO_MS,
 }: {
   title: string;
   subtitle?: string;
@@ -23,6 +23,8 @@ export default function FeaturedCarousel<T>({
   nextLabel?: string;
   /** Wider cards (horizontal detail cards): 2-up on desktop instead of 3. */
   wide?: boolean;
+  /** Auto-advance interval in ms (larger = slower). */
+  autoMs?: number;
 }) {
   const railRef = useRef<HTMLDivElement>(null);
   const [winW, setWinW] = useState(1280);
@@ -67,10 +69,10 @@ export default function FeaturedCarousel<T>({
         railRef.current?.scrollTo({ left: n * step(), behavior: "smooth" });
         return n;
       });
-    }, AUTO_MS);
+    }, autoMs);
     return () => clearInterval(id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [paused, pages]);
+  }, [paused, pages, autoMs]);
 
   if (!items.length) return null;
 
