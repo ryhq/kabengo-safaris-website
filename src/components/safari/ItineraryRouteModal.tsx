@@ -117,52 +117,17 @@ export default function ItineraryRouteModal({
     return { cum: c, total: tot, frac: c.map((v) => v / tot) };
   }, [pts]);
 
-  // playback state (refs drive the rAF loop; `force` re-renders each changed frame)
+  // playback: `tRef` is the displayed fraction; a single tween drives it, used
+  // for BOTH auto-play (tween to 1) and manual steps (tween to a day). Pause
+  // simply drops the tween, freezing exactly where it is — no drift/lag.
   const tRef = useRef(0);
-  const targetRef = useRef(0);
+  const tween = useRef<{ from: number; to: number; start: number | null; dur: number; auto: boolean } | null>(null);
   const playingRef = useRef(false);
   const [playing, setPlaying] = useState(false);
   const [, force] = useReducer((x) => x + 1, 0);
 
-  const autoSec = Math.min(13, Math.max(5, stops.length * 0.95));
-
-  // reset + autoplay + scroll-lock whenever the modal opens
-  useEffect(() => {
-    if (!open) return;
-    tRef.current = 0;
-    targetRef.current = 0;
-    playingRef.current = true;
-    setPlaying(true);
-    force();
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => { document.body.style.overflow = prevOverflow; };
-  }, [open]);
-
-  // the animation loop — advances target while playing, eases t toward target
-  useEffect(() => {
-    if (!open) return;
-    let raf = 0;
-    let lastTs: number | null = null;
-    const loop = (ts: number) => {
-      if (lastTs == null) lastTs = ts;
-      const dt = Math.min(0.05, (ts - lastTs) / 1000);
-      lastTs = ts;
-      let changed = false;
-      if (playingRef.current) {
-        targetRef.current = Math.min(1, targetRef.current + dt / autoSec);
-        if (targetRef.current >= 1) { playingRef.current = false; setPlaying(false); }
-        changed = true;
-      }
-      const d = targetRef.current - tRef.current;
-      if (Math.abs(d) > 0.0004) { tRef.current += d * Math.min(1, dt * 7); changed = true; }
-      else if (tRef.current !== targetRef.current) { tRef.current = targetRef.current; changed = true; }
-      if (changed) force();
-      raf = requestAnimationFrame(loop);
-    };
-    raf = requestAnimationFrame(loop);
-    return () => cancelAnimationFrame(raf);
-  }, [open, autoSec]);
+  const autoMsTotal = Math.min(13000, Math.max(5000, stops.length * 950));
+  const easeInOut = (p: number) => (p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2);
 
   const currentPassed = () => {
     const target = tRef.current * total;
@@ -171,33 +136,74 @@ export default function ItineraryRouteModal({
     return p;
   };
 
+  const startTween = (to: number, dur: number, auto: boolean) => {
+    tween.current = { from: tRef.current, to, start: null, dur: Math.max(1, dur), auto };
+    force();
+  };
+
+  const play = () => {
+    if (tRef.current >= 0.999) tRef.current = 0; // restart from the top when at the end
+    playingRef.current = true;
+    setPlaying(true);
+    startTween(1, autoMsTotal * (1 - tRef.current), true);
+  };
+  const pause = () => {
+    playingRef.current = false;
+    setPlaying(false);
+    tween.current = null; // freeze exactly where we are
+    force();
+  };
+  const togglePlay = () => { if (playingRef.current) pause(); else play(); };
+
   const stepTo = (i: number) => {
     const clamped = Math.max(0, Math.min(last, i));
     playingRef.current = false;
     setPlaying(false);
-    targetRef.current = frac[clamped];
-    force();
-  };
-
-  const togglePlay = () => {
-    if (playingRef.current) {
-      playingRef.current = false;
-      setPlaying(false);
-    } else {
-      if (tRef.current >= 0.999) { tRef.current = 0; targetRef.current = 0; } // restart from the top
-      playingRef.current = true;
-      setPlaying(true);
-    }
-    force();
+    startTween(frac[clamped], 550, false);
   };
 
   const replay = () => {
     tRef.current = 0;
-    targetRef.current = 0;
     playingRef.current = true;
     setPlaying(true);
-    force();
+    startTween(1, autoMsTotal, true);
   };
+
+  // the tween loop
+  useEffect(() => {
+    if (!open) return;
+    let raf = 0;
+    const loop = (ts: number) => {
+      const a = tween.current;
+      if (a) {
+        if (a.start == null) a.start = ts;
+        const p = Math.min(1, (ts - a.start) / a.dur);
+        tRef.current = a.from + (a.to - a.from) * easeInOut(p);
+        if (p >= 1) {
+          tRef.current = a.to;
+          const wasAuto = a.auto;
+          tween.current = null;
+          if (wasAuto && a.to >= 1) { playingRef.current = false; setPlaying(false); }
+        }
+        force();
+      }
+      raf = requestAnimationFrame(loop);
+    };
+    raf = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(raf);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open]);
+
+  // reset + autoplay + scroll-lock whenever the modal opens
+  useEffect(() => {
+    if (!open) return;
+    tRef.current = 0;
+    play();
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = prevOverflow; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open]);
 
   // keyboard shortcuts: Esc close · Space play/pause · ←/→ step days
   useEffect(() => {
