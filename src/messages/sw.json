@@ -647,7 +647,8 @@
     "railReviews": "kutokana na hakiki {count} za wageni",
     "railChip": "Bila malipo · Bila wajibu · Huchukua ~dakika 2",
     "contextPark": "Tunapanga kuzunguka {park} — badilisha wakati wowote",
-    "contextParkRemove": "Ondoa {park}"
+    "contextParkRemove": "Ondoa {park}",
+    "contextActivity": "Tunapanga kuzunguka {activity} — badilisha wakati wowote"
   },
   "howItWorks": {
     "eyebrow": "Jinsi inavyofanya kazi",
@@ -870,5 +871,24 @@
     "enquire": "Uliza",
     "replyBadge": "Jibu ndani ya saa 24",
     "accredited": "Imeidhinishwa na TATO / TALA"
+  },
+  "activityDetail": {
+    "eyebrow": "Tukio la safari",
+    "aboutHeading": "Kuhusu tukio hili",
+    "safety": "Taarifa za usalama",
+    "factSeason": "Msimu",
+    "factMinAge": "Umri wa chini",
+    "factMaxGroup": "Kikundi cha juu",
+    "factEquipment": "Vya kuleta",
+    "parksOffering": "Hifadhi zinazotoa tukio hili",
+    "parksOfferingSub": "Liunganishe katika safari kwenye hifadhi hizi.",
+    "inPhotos": "{name} kwa picha",
+    "railTitle": "Ongeza {name} kwenye safari yako",
+    "railSub": "Pendekezo la bure, bila masharti kutoka kwa mtaalamu wa hapa — tukio hili tayari limezingatiwa.",
+    "railEnquire": "Uliza kuhusu tukio hili",
+    "bandTitle": "Uko tayari kuongeza {name} kwenye safari yako?",
+    "bandBody": "Iambie timu yetu ya Arusha unachotamani. Tutaandaa safari maalum inayojumuisha {name} na kujibu ndani ya saa 24.",
+    "mobilePlanTo": "Ongeza kwenye safari",
+    "enquire": "Uliza"
   }
 }

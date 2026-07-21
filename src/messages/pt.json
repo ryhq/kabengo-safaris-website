@@ -647,7 +647,8 @@
     "railReviews": "com base em {count} avaliações de hóspedes",
     "railChip": "Grátis · Sem compromisso · Cerca de 2 minutos",
     "contextPark": "A planear em torno de {park} — altere quando quiser",
-    "contextParkRemove": "Remover {park}"
+    "contextParkRemove": "Remover {park}",
+    "contextActivity": "A planear em torno de {activity} — altere quando quiser"
   },
   "howItWorks": {
     "eyebrow": "Como funciona",
@@ -870,5 +871,24 @@
     "enquire": "Saber mais",
     "replyBadge": "Resposta em 24 h",
     "accredited": "Acreditado TATO / TALA"
+  },
+  "activityDetail": {
+    "eyebrow": "Experiência de safári",
+    "aboutHeading": "Sobre esta experiência",
+    "safety": "Informações de segurança",
+    "factSeason": "Época",
+    "factMinAge": "Idade mín.",
+    "factMaxGroup": "Grupo máx.",
+    "factEquipment": "O que levar",
+    "parksOffering": "Parques que oferecem esta experiência",
+    "parksOfferingSub": "Integre-a num safári por estes parques.",
+    "inPhotos": "{name} em fotos",
+    "railTitle": "Adicione {name} ao seu safári",
+    "railSub": "Proposta gratuita e sem compromisso de um especialista local — esta experiência já em contexto.",
+    "railEnquire": "Saber mais sobre esta experiência",
+    "bandTitle": "Pronto para adicionar {name} ao seu safári?",
+    "bandBody": "Diga à nossa equipa de Arusha o que sonha. Criaremos uma viagem à medida que inclui {name} e responderemos em 24 horas.",
+    "mobilePlanTo": "Adicionar a um safári",
+    "enquire": "Saber mais"
   }
 }

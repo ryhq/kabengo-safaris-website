@@ -38,8 +38,8 @@ const CSS = `
 .pd .factstrip{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;align-items:stretch}
 .pd .factstrip>div{height:100%}
 .pd .stretch::after{content:"";position:absolute;inset:0;z-index:4}
-.pd .detail-grid{display:grid;grid-template-columns:1fr;gap:28px}
-.pd .getting-grid{display:grid;grid-template-columns:1fr;gap:16px}
+.pd .detail-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:28px}
+.pd .getting-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:16px}
 .pd .mobile-bar{display:flex}
 @media(min-width:980px){
   .pd .detail-grid{grid-template-columns:minmax(0,1fr) 340px;gap:40px}
@@ -181,7 +181,7 @@ export default function ParkDetailPage() {
   );
 
   return (
-    <div className="pd" style={{ fontFamily: "var(--font-inter), Inter, system-ui, sans-serif", background: "linear-gradient(175deg,#faf8f5,#f1ece3 140%)", color: "#4a3f34" }}>
+    <div className="pd" style={{ fontFamily: "var(--font-inter), Inter, system-ui, sans-serif", background: "linear-gradient(175deg,#faf8f5,#f1ece3 140%)", color: "#4a3f34", overflowX: "clip" }}>
       <style>{CSS}</style>
 
       {/* ===== (1) TALL HERO — kicker + title, bottom-left ===== */}
@@ -195,7 +195,7 @@ export default function ParkDetailPage() {
             <Link href="/parks" style={{ color: "rgba(242,236,224,.72)" }}>{nav("parks")}</Link><span>/</span><span style={{ color: "#f3e6c8" }}>{park.name}</span>
           </div>
           {kicker && <div style={{ color: "#f3e6c8", fontSize: 12.5, fontWeight: 600, letterSpacing: ".14em", textTransform: "uppercase", marginBottom: 12 }}>{kicker}</div>}
-          <h1 style={{ fontFamily: SERIF, fontWeight: 700, color: "#fff", fontSize: "clamp(36px,6.4vw,66px)", lineHeight: 1.02, letterSpacing: "-.015em", margin: 0, maxWidth: 860, textShadow: "0 2px 24px rgba(20,12,4,.4)" }}>{park.name}</h1>
+          <h1 style={{ fontFamily: SERIF, fontWeight: 700, color: "#fff", fontSize: "clamp(30px,6.4vw,66px)", lineHeight: 1.04, letterSpacing: "-.015em", margin: 0, maxWidth: 860, overflowWrap: "break-word", textShadow: "0 2px 24px rgba(20,12,4,.4)" }}>{park.name}</h1>
         </div>
       </header>
 
@@ -211,7 +211,7 @@ export default function ParkDetailPage() {
                     {facts.map((f) => (
                       <div key={f.label} style={{ background: "#fff", border: "1px solid #e4ddd1", borderRadius: 12, padding: "15px 16px" }}>
                         <div style={{ fontSize: 11, color: "#7a6f61", textTransform: "uppercase", letterSpacing: ".06em", marginBottom: 3 }}>{f.label}</div>
-                        <div style={{ fontWeight: 600, color: "#2a2018", fontSize: 15, lineHeight: 1.3 }}>{f.value}</div>
+                        <div style={{ fontWeight: 600, color: "#2a2018", fontSize: 15, lineHeight: 1.3, overflowWrap: "anywhere" }}>{f.value}</div>
                       </div>
                     ))}
                   </div>

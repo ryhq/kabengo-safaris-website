@@ -647,7 +647,8 @@
     "railReviews": "según {count} opiniones de huéspedes",
     "railChip": "Gratis · Sin compromiso · Unos 2 minutos",
     "contextPark": "Planificando en torno a {park} — cámbialo cuando quieras",
-    "contextParkRemove": "Quitar {park}"
+    "contextParkRemove": "Quitar {park}",
+    "contextActivity": "Planificando en torno a {activity} — cámbialo cuando quieras"
   },
   "howItWorks": {
     "eyebrow": "Cómo funciona",
@@ -870,5 +871,24 @@
     "enquire": "Consultar",
     "replyBadge": "Respuesta en 24 h",
     "accredited": "Acreditado TATO / TALA"
+  },
+  "activityDetail": {
+    "eyebrow": "Experiencia de safari",
+    "aboutHeading": "Sobre esta experiencia",
+    "safety": "Información de seguridad",
+    "factSeason": "Temporada",
+    "factMinAge": "Edad mín.",
+    "factMaxGroup": "Grupo máx.",
+    "factEquipment": "Qué llevar",
+    "parksOffering": "Parques que ofrecen esta experiencia",
+    "parksOfferingSub": "Inclúyela en un safari por estos parques.",
+    "inPhotos": "{name} en fotos",
+    "railTitle": "Añade {name} a tu safari",
+    "railSub": "Propuesta gratuita y sin compromiso de un experto local — esta experiencia ya en contexto.",
+    "railEnquire": "Consultar sobre esta experiencia",
+    "bandTitle": "¿Listo para añadir {name} a tu safari?",
+    "bandBody": "Cuéntale a nuestro equipo de Arusha lo que sueñas. Diseñaremos un viaje a medida que incluya {name} y responderemos en 24 horas.",
+    "mobilePlanTo": "Añadir a un safari",
+    "enquire": "Consultar"
   }
 }

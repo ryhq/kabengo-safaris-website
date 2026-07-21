@@ -84,11 +84,13 @@ export default function SafariPlanner({ embedded = false }: { embedded?: boolean
   const searchParams = useSearchParams();
   const prefillPark = searchParams.get("park") || "";
   const prefillParkName = searchParams.get("parkName") || "";
+  const prefillActivityName = searchParams.get("activityName") || "";
 
   const [step, setStep] = useState(0);
   const [acts, setActs] = useState<Record<string, boolean>>({});
   const [dests, setDests] = useState<Record<string, boolean>>(() => (prefillPark ? { [prefillPark]: true } : {}));
   const [ctxParkDismissed, setCtxParkDismissed] = useState(false);
+  const [ctxActDismissed, setCtxActDismissed] = useState(false);
   const [parks, setParks] = useState<PublicParkOption[]>([]);
   const [parksLoading, setParksLoading] = useState(true);
   const [parkSearch, setParkSearch] = useState("");
@@ -154,6 +156,7 @@ export default function SafariPlanner({ embedded = false }: { embedded?: boolean
     if (daysUnsure) parts.push("Trip length: help me decide");
     if (budgetUnsure) parts.push("Budget: help me decide");
     if (children > 0 && childAges.length) parts.push(`Children ages: ${childAges.join(", ")}`);
+    if (prefillActivityName && !ctxActDismissed) parts.push(`Interested in: ${prefillActivityName}`);
     return parts.join(". ");
   };
 
@@ -283,6 +286,17 @@ export default function SafariPlanner({ embedded = false }: { embedded?: boolean
               <MapPin size={15} strokeWidth={2.2} style={{ color: "var(--accent-gold-deep)", flexShrink: 0 }} />
               <span style={{ fontSize: 13.5, fontWeight: 600, color: "var(--accent-gold-deep)", flex: 1, minWidth: 0 }}>{t("contextPark", { park: prefillParkName })}</span>
               <button type="button" onClick={() => { setDests((d) => ({ ...d, [prefillPark]: false })); setCtxParkDismissed(true); }} aria-label={t("contextParkRemove", { park: prefillParkName })} style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: 24, height: 24, borderRadius: "50%", border: "none", background: "rgba(150,99,26,.14)", color: "var(--accent-gold-deep)", cursor: "pointer", flexShrink: 0 }}>
+                <X size={13} strokeWidth={2.6} />
+              </button>
+            </div>
+          )}
+
+          {/* deep-link context: activity interest */}
+          {prefillActivityName && !ctxActDismissed && inFlow && (
+            <div style={{ margin: "16px clamp(22px,4vw,40px) 0", display: "flex", alignItems: "center", gap: 10, background: "var(--accent-gold-soft)", border: "1px solid rgba(196,143,43,.35)", borderRadius: 10, padding: "10px 12px" }}>
+              <Binoculars size={15} strokeWidth={2.2} style={{ color: "var(--accent-gold-deep)", flexShrink: 0 }} />
+              <span style={{ fontSize: 13.5, fontWeight: 600, color: "var(--accent-gold-deep)", flex: 1, minWidth: 0 }}>{t("contextActivity", { activity: prefillActivityName })}</span>
+              <button type="button" onClick={() => setCtxActDismissed(true)} aria-label={t("contextParkRemove", { park: prefillActivityName })} style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: 24, height: 24, borderRadius: "50%", border: "none", background: "rgba(150,99,26,.14)", color: "var(--accent-gold-deep)", cursor: "pointer", flexShrink: 0 }}>
                 <X size={13} strokeWidth={2.6} />
               </button>
             </div>

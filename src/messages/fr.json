@@ -647,7 +647,8 @@
     "railReviews": "d'après {count} avis de voyageurs",
     "railChip": "Gratuit · Sans engagement · Environ 2 minutes",
     "contextPark": "Voyage autour de {park} — modifiable à tout moment",
-    "contextParkRemove": "Retirer {park}"
+    "contextParkRemove": "Retirer {park}",
+    "contextActivity": "Voyage autour de {activity} — modifiable à tout moment"
   },
   "howItWorks": {
     "eyebrow": "Comment ça marche",
@@ -870,5 +871,24 @@
     "enquire": "Se renseigner",
     "replyBadge": "Réponse sous 24 h",
     "accredited": "Accrédité TATO / TALA"
+  },
+  "activityDetail": {
+    "eyebrow": "Expérience safari",
+    "aboutHeading": "À propos de cette expérience",
+    "safety": "Informations de sécurité",
+    "factSeason": "Saison",
+    "factMinAge": "Âge min.",
+    "factMaxGroup": "Groupe max.",
+    "factEquipment": "À apporter",
+    "parksOffering": "Parcs proposant cette expérience",
+    "parksOfferingSub": "Intégrez-la à un safari dans ces parcs.",
+    "inPhotos": "{name} en photos",
+    "railTitle": "Ajoutez {name} à votre safari",
+    "railSub": "Proposition gratuite et sans engagement d'un expert local — cette expérience déjà prise en compte.",
+    "railEnquire": "Se renseigner sur cette expérience",
+    "bandTitle": "Prêt à ajouter {name} à votre safari ?",
+    "bandBody": "Dites à notre équipe d'Arusha ce dont vous rêvez. Nous concevrons un voyage sur mesure incluant {name} et répondrons sous 24 heures.",
+    "mobilePlanTo": "Ajouter à un safari",
+    "enquire": "Se renseigner"
   }
 }

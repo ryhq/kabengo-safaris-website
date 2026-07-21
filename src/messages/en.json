@@ -645,7 +645,8 @@
     "railReviews": "based on {count} guest reviews",
     "railChip": "Free · No obligation · Takes ~2 minutes",
     "contextPark": "Planning around {park} — change anytime",
-    "contextParkRemove": "Remove {park}"
+    "contextParkRemove": "Remove {park}",
+    "contextActivity": "Planning around {activity} — change anytime"
   },
   "howItWorks": {
     "eyebrow": "How it works",
@@ -868,5 +869,24 @@
     "enquire": "Enquire",
     "replyBadge": "Reply within 24 hrs",
     "accredited": "TATO / TALA accredited"
+  },
+  "activityDetail": {
+    "eyebrow": "Safari experience",
+    "aboutHeading": "About this experience",
+    "safety": "Safety information",
+    "factSeason": "Season",
+    "factMinAge": "Min. age",
+    "factMaxGroup": "Max group",
+    "factEquipment": "What to bring",
+    "parksOffering": "Parks offering this experience",
+    "parksOfferingSub": "Build it into a safari in these parks.",
+    "inPhotos": "{name} in photos",
+    "railTitle": "Add {name} to your safari",
+    "railSub": "Free, no-obligation proposal from a local expert — this experience already in context.",
+    "railEnquire": "Enquire about this experience",
+    "bandTitle": "Ready to add {name} to your safari?",
+    "bandBody": "Tell our Arusha team what you're dreaming of. We'll build a tailor-made trip that includes {name} and reply within 24 hours.",
+    "mobilePlanTo": "Add to a safari",
+    "enquire": "Enquire"
   }
 }

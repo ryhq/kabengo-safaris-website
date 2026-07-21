@@ -645,7 +645,8 @@
     "railReviews": "gebaseer op {count} gaste-resensies",
     "railChip": "Gratis · Geen verpligting · Neem ~2 minute",
     "contextPark": "Beplanning rondom {park} — verander enige tyd",
-    "contextParkRemove": "Verwyder {park}"
+    "contextParkRemove": "Verwyder {park}",
+    "contextActivity": "Beplanning rondom {activity} — verander enige tyd"
   },
   "howItWorks": {
     "eyebrow": "Hoe dit werk",
@@ -868,5 +869,24 @@
     "enquire": "Navraag",
     "replyBadge": "Antwoord binne 24 uur",
     "accredited": "TATO / TALA geakkrediteer"
+  },
+  "activityDetail": {
+    "eyebrow": "Safari-ervaring",
+    "aboutHeading": "Oor hierdie ervaring",
+    "safety": "Veiligheidsinligting",
+    "factSeason": "Seisoen",
+    "factMinAge": "Min. ouderdom",
+    "factMaxGroup": "Maks. groep",
+    "factEquipment": "Wat om saam te bring",
+    "parksOffering": "Parke wat hierdie ervaring bied",
+    "parksOfferingSub": "Bou dit in 'n safari in hierdie parke in.",
+    "inPhotos": "{name} in foto's",
+    "railTitle": "Voeg {name} by jou safari",
+    "railSub": "Gratis, geen-verpligting voorstel van 'n plaaslike kenner — hierdie ervaring reeds in konteks.",
+    "railEnquire": "Navraag oor hierdie ervaring",
+    "bandTitle": "Gereed om {name} by jou safari te voeg?",
+    "bandBody": "Vertel ons Arusha-span waarvan jy droom. Ons bou 'n pasgemaakte reis wat {name} insluit en antwoord binne 24 uur.",
+    "mobilePlanTo": "Voeg by 'n safari",
+    "enquire": "Navraag"
   }
 }

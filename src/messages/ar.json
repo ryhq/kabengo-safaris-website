@@ -645,7 +645,8 @@
     "railReviews": "استنادًا إلى {count} تقييمات للضيوف",
     "railChip": "مجاني · دون التزام · يستغرق ~دقيقتين",
     "contextPark": "التخطيط حول {park} — يمكنك التغيير في أي وقت",
-    "contextParkRemove": "إزالة {park}"
+    "contextParkRemove": "إزالة {park}",
+    "contextActivity": "التخطيط حول {activity} — يمكنك التغيير في أي وقت"
   },
   "howItWorks": {
     "eyebrow": "كيف تسير الأمور",
@@ -868,5 +869,24 @@
     "enquire": "استفسر",
     "replyBadge": "رد خلال 24 ساعة",
     "accredited": "معتمد من TATO / TALA"
+  },
+  "activityDetail": {
+    "eyebrow": "تجربة سفاري",
+    "aboutHeading": "حول هذه التجربة",
+    "safety": "معلومات السلامة",
+    "factSeason": "الموسم",
+    "factMinAge": "أدنى عمر",
+    "factMaxGroup": "أقصى مجموعة",
+    "factEquipment": "ما يجب إحضاره",
+    "parksOffering": "الحدائق التي تقدّم هذه التجربة",
+    "parksOfferingSub": "أضِفها إلى رحلة سفاري في هذه الحدائق.",
+    "inPhotos": "{name} بالصور",
+    "railTitle": "أضِف {name} إلى رحلة السفاري خاصتك",
+    "railSub": "عرض مجاني وبدون التزام من خبير محلي — هذه التجربة مدرجة بالفعل.",
+    "railEnquire": "استفسر عن هذه التجربة",
+    "bandTitle": "هل أنت مستعد لإضافة {name} إلى رحلتك؟",
+    "bandBody": "أخبر فريقنا في أروشا بما تحلم به. سنصمم رحلة مخصصة تشمل {name} ونرد خلال 24 ساعة.",
+    "mobilePlanTo": "أضِف إلى سفاري",
+    "enquire": "استفسر"
   }
 }
