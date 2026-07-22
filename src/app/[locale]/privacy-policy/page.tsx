@@ -1,10 +1,15 @@
 import type { Metadata } from "next";
+import { buildAlternates } from "@/lib/seo";
 import { ObfuscatedEmail, ObfuscatedPhone } from "@/components/ui/ObfuscatedContact";
 
-export const metadata: Metadata = {
-  title: "Privacy Policy",
-  description: "Learn how Kabengo Safaris collects, uses, and protects your personal information.",
-};
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params;
+  return {
+    title: "Privacy Policy",
+    description: "Learn how Kabengo Safaris collects, uses, and protects your personal information.",
+    alternates: buildAlternates(locale, "/privacy-policy"),
+  };
+}
 
 export default function PrivacyPolicyPage() {
   return (

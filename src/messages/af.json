@@ -377,7 +377,14 @@
   "blog": {
     "title": "Safari Journal",
     "subtitle": "Stories, tips, and insights from the African wilderness",
-    "comingSoonMessage": "We're working on exciting stories and travel guides. Check back soon!"
+    "comingSoonMessage": "We're working on exciting stories and travel guides. Check back soon!",
+    "latest": "Nuutste artikels",
+    "readTime": "{min} min lees",
+    "by": "Deur {author}",
+    "backToBlog": "Alle artikels",
+    "faqHeading": "Gereelde vrae",
+    "ctaTitle": "Gereed om jou safari te beplan?",
+    "ctaBody": "Vertel ons van jou droomreis en n plaaslike spesialis in Arusha sal n pasgemaakte voorstel skep — gratis, geen verpligting."
   },
   "about": {
     "title": "About Kabengo Safaris",

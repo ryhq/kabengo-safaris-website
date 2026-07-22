@@ -394,3 +394,34 @@ export function getFAQJsonLd(items: { q: string; a: string }[]) {
     })),
   };
 }
+
+/** BlogPosting schema for blog articles. */
+export function getArticleJsonLd(opts: {
+  locale: string;
+  slug: string;
+  title: string;
+  description: string;
+  datePublished: string;
+  author: string;
+  image?: string;
+}) {
+  const url = localeUrl(opts.locale, `/blog/${opts.slug}`);
+  return {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: opts.title,
+    description: opts.description,
+    datePublished: opts.datePublished,
+    dateModified: opts.datePublished,
+    inLanguage: opts.locale,
+    mainEntityOfPage: { "@type": "WebPage", "@id": url },
+    url,
+    ...(opts.image && { image: [opts.image] }),
+    author: { "@type": "Person", name: opts.author },
+    publisher: {
+      "@type": "Organization",
+      name: "Kabengo Safaris",
+      url: localeUrl(opts.locale),
+    },
+  };
+}

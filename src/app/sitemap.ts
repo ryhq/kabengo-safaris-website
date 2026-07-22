@@ -6,6 +6,7 @@ import {
   fetchAllAccommodationIds,
   fetchAllActivityIds,
 } from "@/lib/server-api";
+import { getAllPosts } from "@/content/blog";
 
 const BASE_URL = "https://kabengosafaris.com";
 
@@ -31,6 +32,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/reviews",
     "/contact",
     "/book",
+    "/blog",
     "/faq",
     "/gallery",
     "/privacy-policy",
@@ -115,6 +117,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         lastModified: new Date(),
         changeFrequency: "monthly",
         priority: 0.7,
+        alternates: buildAlternates(locales, path),
+      });
+    }
+  }
+
+  // Blog posts (file-based content)
+  for (const post of getAllPosts()) {
+    const path = `/blog/${post.slug}`;
+    for (const locale of locales) {
+      entries.push({
+        url: `${BASE_URL}/${locale}${path}`,
+        lastModified: new Date(post.date),
+        changeFrequency: "monthly",
+        priority: 0.6,
         alternates: buildAlternates(locales, path),
       });
     }

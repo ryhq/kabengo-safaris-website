@@ -379,7 +379,14 @@
   "blog": {
     "title": "Diario Safari",
     "subtitle": "Storie e consigli dalla natura africana",
-    "comingSoonMessage": "Stiamo preparando storie emozionanti. Torna presto!"
+    "comingSoonMessage": "Stiamo preparando storie emozionanti. Torna presto!",
+    "latest": "Ultimi articoli",
+    "readTime": "{min} min di lettura",
+    "by": "Di {author}",
+    "backToBlog": "Tutti gli articoli",
+    "faqHeading": "Domande frequenti",
+    "ctaTitle": "Pronto a pianificare il tuo safari?",
+    "ctaBody": "Raccontaci il viaggio dei tuoi sogni e uno specialista locale ad Arusha creerà una proposta su misura — gratis, senza impegno."
   },
   "about": {
     "title": "Chi Siamo",

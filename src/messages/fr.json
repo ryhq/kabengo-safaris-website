@@ -379,7 +379,14 @@
   "blog": {
     "title": "Journal Safari",
     "subtitle": "Histoires et conseils de la brousse africaine",
-    "comingSoonMessage": "Nous préparons des histoires passionnantes. Revenez bientôt!"
+    "comingSoonMessage": "Nous préparons des histoires passionnantes. Revenez bientôt!",
+    "latest": "Derniers articles",
+    "readTime": "{min} min de lecture",
+    "by": "Par {author}",
+    "backToBlog": "Tous les articles",
+    "faqHeading": "Questions fréquentes",
+    "ctaTitle": "Prêt à planifier votre safari ?",
+    "ctaBody": "Décrivez-nous le voyage de vos rêves et un spécialiste local à Arusha créera une proposition sur mesure — gratuite, sans engagement."
   },
   "about": {
     "title": "À Propos de Kabengo Safaris",

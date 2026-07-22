@@ -379,7 +379,14 @@
   "blog": {
     "title": "Jarida la Safari",
     "subtitle": "Hadithi, vidokezo, na maarifa kutoka nyika za Afrika",
-    "comingSoonMessage": "Tunafanya kazi kwa hadithi na miongozo ya kusafiri. Rudi hivi karibuni!"
+    "comingSoonMessage": "Tunafanya kazi kwa hadithi na miongozo ya kusafiri. Rudi hivi karibuni!",
+    "latest": "Makala mapya",
+    "readTime": "Dakika {min} kusoma",
+    "by": "Na {author}",
+    "backToBlog": "Makala yote",
+    "faqHeading": "Maswali yanayoulizwa",
+    "ctaTitle": "Uko tayari kupanga safari yako?",
+    "ctaBody": "Tuambie safari yako ya ndoto na mtaalamu wa kienyeji Arusha atabuni pendekezo lililoboreshwa — bila malipo, bila masharti."
   },
   "about": {
     "title": "Kuhusu Kabengo Safaris",

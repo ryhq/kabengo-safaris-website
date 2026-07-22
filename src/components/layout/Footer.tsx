@@ -88,6 +88,7 @@ export default function Footer() {
   const company = [
     { href: "/about", label: nav("about") },
     { href: "/reviews", label: nav("testimonials") },
+    { href: "/blog", label: nav("blog") },
     { href: "/contact", label: nav("contact") },
     { href: "/faq", label: nav("faq") },
   ];

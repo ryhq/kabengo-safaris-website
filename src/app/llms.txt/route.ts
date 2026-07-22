@@ -24,6 +24,7 @@ const CONTENT = `# Kabengo Safaris
 - [Accommodations](${BASE}/en/accommodations): Lodges and tented camps built into trips.
 - [Activities](${BASE}/en/activities): Game drives, walking safaris, cultural visits, balloon safaris and more.
 - [Guest reviews](${BASE}/en/reviews): Verified Tripadvisor reviews.
+- [Safari Journal (blog)](${BASE}/en/blog): Guides and tips — best time for the Great Migration, how many days you need, and more.
 - [FAQ](${BASE}/en/faq): Planning, cost, best time to visit, safety and what's included.
 - [Gallery](${BASE}/en/gallery): Photos from Tanzania and Zanzibar.
 

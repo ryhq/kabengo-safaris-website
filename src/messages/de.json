@@ -379,7 +379,14 @@
   "blog": {
     "title": "Safari-Journal",
     "subtitle": "Geschichten und Tipps aus der afrikanischen Wildnis",
-    "comingSoonMessage": "Wir arbeiten an spannenden Geschichten. Schauen Sie bald wieder vorbei!"
+    "comingSoonMessage": "Wir arbeiten an spannenden Geschichten. Schauen Sie bald wieder vorbei!",
+    "latest": "Neueste Artikel",
+    "readTime": "{min} Min. Lesezeit",
+    "by": "Von {author}",
+    "backToBlog": "Alle Artikel",
+    "faqHeading": "Häufige Fragen",
+    "ctaTitle": "Bereit, Ihre Safari zu planen?",
+    "ctaBody": "Erzählen Sie uns von Ihrer Traumreise und ein lokaler Spezialist in Arusha erstellt ein maßgeschneidertes Angebot — kostenlos, unverbindlich."
   },
   "about": {
     "title": "Über Kabengo Safaris",

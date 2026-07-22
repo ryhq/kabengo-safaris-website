@@ -1,10 +1,15 @@
 import type { Metadata } from "next";
+import { buildAlternates } from "@/lib/seo";
 import { ObfuscatedEmail, ObfuscatedPhone } from "@/components/ui/ObfuscatedContact";
 
-export const metadata: Metadata = {
-  title: "Terms & Conditions",
-  description: "Terms and conditions for booking safaris and using the Kabengo Safaris website.",
-};
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params;
+  return {
+    title: "Terms & Conditions",
+    description: "Terms and conditions for booking safaris and using the Kabengo Safaris website.",
+    alternates: buildAlternates(locale, "/terms"),
+  };
+}
 
 export default function TermsPage() {
   return (
