@@ -1,10 +1,18 @@
 // /llms.txt — a concise, LLM-friendly map of the site (emerging GEO convention).
-// Curated key pages + factual summary so answer engines can cite Kabengo accurately.
+// Curated key pages + factual summary + an auto-generated list of blog articles
+// (so publishing a post automatically updates this file). See docs/SEO-GEO-STRATEGY.md.
+import { getAllPosts } from "@/content/blog";
+
 export const revalidate = 86400; // 1 day
 
 const BASE = "https://kabengosafaris.com";
 
-const CONTENT = `# Kabengo Safaris
+export function GET() {
+  const articles = getAllPosts()
+    .map((p) => `- [${p.title}](${BASE}/en/blog/${p.slug}): ${p.excerpt}`)
+    .join("\n");
+
+  const content = `# Kabengo Safaris
 
 > Kabengo Safaris is a Tanzania-based, family-run tour operator in Arusha that designs private, tailor-made safaris across northern Tanzania (Serengeti, Ngorongoro Crater, Tarangire, Lake Manyara) and Zanzibar beach holidays. TATO/TALA licensed, guides who speak your language, rated 5.0 on Tripadvisor. Every trip is custom-built — there is no fixed booking cart; travellers request a free, no-obligation proposal and a local specialist replies within 24 hours.
 
@@ -24,17 +32,18 @@ const CONTENT = `# Kabengo Safaris
 - [Accommodations](${BASE}/en/accommodations): Lodges and tented camps built into trips.
 - [Activities](${BASE}/en/activities): Game drives, walking safaris, cultural visits, balloon safaris and more.
 - [Guest reviews](${BASE}/en/reviews): Verified Tripadvisor reviews.
-- [Safari Journal (blog)](${BASE}/en/blog): Guides and tips — best time for the Great Migration, how many days you need, and more.
 - [FAQ](${BASE}/en/faq): Planning, cost, best time to visit, safety and what's included.
 - [Gallery](${BASE}/en/gallery): Photos from Tanzania and Zanzibar.
+
+## Guides & articles (Safari Journal)
+${articles}
 
 ## Notes
 - Available in 10 languages (en, sw, fr, de, es, it, pt, af, uk, ar) via /{locale}/ paths; English is the default.
 - Complete list of URLs: ${BASE}/sitemap.xml
 `;
 
-export function GET() {
-  return new Response(CONTENT, {
+  return new Response(content, {
     headers: {
       "Content-Type": "text/plain; charset=utf-8",
       "Cache-Control": "public, max-age=86400",
