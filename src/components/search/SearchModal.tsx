@@ -17,8 +17,12 @@ import {
   ArrowRight,
   Loader2,
   ChevronDown,
+  BookOpen,
+  HelpCircle,
 } from "lucide-react";
 import { apiClient } from "@/lib/api";
+import { getAllPosts } from "@/content/blog";
+import { FAQ_ITEMS } from "@/content/faq";
 
 interface SearchResult {
   slug?: string;
@@ -261,8 +265,23 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
+  // Local (frontend-only) content: blog posts + FAQs, searched client-side.
+  const q = query.trim().toLowerCase();
+  const localActive = q.length >= 2;
+  const blogMatches = localActive
+    ? getAllPosts().filter((p) => {
+        const body = p.body.map((b) => ("text" in b ? b.text : "items" in b ? b.items.join(" ") : "")).join(" ");
+        return `${p.title} ${p.excerpt} ${p.tags.join(" ")} ${body}`.toLowerCase().includes(q);
+      }).slice(0, 5)
+    : [];
+  const faqMatches = localActive
+    ? FAQ_ITEMS.filter((f) => `${f.q} ${f.a}`.toLowerCase().includes(q)).slice(0, 5)
+    : [];
+  const localCount = blogMatches.length + faqMatches.length;
+
   const hasResults = data && data.totalResults > 0;
-  const noResults = data && data.totalResults === 0 && query.trim().length >= 2;
+  const anyResults = !!hasResults || localCount > 0;
+  const noResults = localActive && !loading && !hasResults && localCount === 0;
 
   // Check if any category has more items than currently shown (max backend limit is 20)
   const hasMoreToLoad = currentLimit < 20 && data ? CATEGORIES.some((cat) => {
@@ -444,6 +463,52 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
                   );
                 })}
 
+                {/* Journal (blog) — frontend content */}
+                {blogMatches.length > 0 && (
+                  <div className="border-b border-white/10 last:border-b-0">
+                    <div className="px-5 pt-4 pb-2 flex items-center gap-2">
+                      <BookOpen size={15} className="text-brand-green" />
+                      <span className="text-xs font-semibold text-white/60 uppercase tracking-wider">{t("blog")}</span>
+                      <span className="text-xs text-white/40">({blogMatches.length})</span>
+                    </div>
+                    <div className="px-3 pb-3">
+                      {blogMatches.map((p) => (
+                        <Link key={p.slug} href={`/blog/${p.slug}`} onClick={handleNavigate} className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-white/10 transition-colors group">
+                          <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center flex-shrink-0"><BookOpen size={18} className="text-brand-green" /></div>
+                          <div className="flex-1 min-w-0">
+                            <p className="text-sm font-medium text-white group-hover:text-brand-green transition-colors truncate">{p.title}</p>
+                            <p className="text-xs text-white/40 truncate">{p.excerpt}</p>
+                          </div>
+                          <ArrowRight size={14} className="text-white/30 group-hover:text-brand-green flex-shrink-0 transition-colors" />
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* FAQ — frontend content */}
+                {faqMatches.length > 0 && (
+                  <div className="border-b border-white/10 last:border-b-0">
+                    <div className="px-5 pt-4 pb-2 flex items-center gap-2">
+                      <HelpCircle size={15} className="text-brand-green" />
+                      <span className="text-xs font-semibold text-white/60 uppercase tracking-wider">{t("faq")}</span>
+                      <span className="text-xs text-white/40">({faqMatches.length})</span>
+                    </div>
+                    <div className="px-3 pb-3">
+                      {faqMatches.map((f, i) => (
+                        <Link key={i} href="/faq" onClick={handleNavigate} className="flex items-start gap-3 px-3 py-2.5 rounded-xl hover:bg-white/10 transition-colors group">
+                          <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center flex-shrink-0"><HelpCircle size={18} className="text-brand-green" /></div>
+                          <div className="flex-1 min-w-0">
+                            <p className="text-sm font-medium text-white group-hover:text-brand-green transition-colors truncate">{f.q}</p>
+                            <p className="text-xs text-white/40 truncate">{f.a}</p>
+                          </div>
+                          <ArrowRight size={14} className="text-white/30 group-hover:text-brand-green flex-shrink-0 transition-colors mt-1" />
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
                 {/* Show More button */}
                 {hasResults && hasMoreToLoad && (
                   <div className="px-5 py-3">
@@ -464,10 +529,10 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
               </div>
 
               {/* Footer */}
-              {hasResults && (
+              {anyResults && (
                 <div className="px-5 py-3 border-t border-white/10">
                   <p className="text-xs text-white/40 text-center">
-                    {s("resultsFound", { count: data.totalResults })}
+                    {s("resultsFound", { count: (data?.totalResults ?? 0) + localCount })}
                   </p>
                 </div>
               )}
