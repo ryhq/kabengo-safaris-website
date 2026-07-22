@@ -26,7 +26,7 @@ export default function BackToTopButton() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 10 }}
           transition={{ duration: 0.2 }}
-          className="fixed bottom-[8.5rem] lg:bottom-[5rem] right-5 lg:right-6 z-40 w-12 h-12 bg-brand-brown/80 hover:bg-brand-brown text-white rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all cursor-pointer"
+          className="fixed bottom-[9.5rem] lg:bottom-[5rem] right-5 lg:right-6 z-40 w-12 h-12 bg-brand-brown/80 hover:bg-brand-brown text-white rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all cursor-pointer"
         >
           <ChevronUp size={20} />
         </motion.button>

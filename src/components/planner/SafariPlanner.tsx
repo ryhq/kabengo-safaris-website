@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import { Link } from "@/i18n/navigation";
-import { User, Users, UsersRound, Heart, Baby, HelpCircle, ArrowRight, Check, Search, MapPin, Binoculars, Footprints, Waves, MountainSnow, Drum, X } from "lucide-react";
+import { User, Users, UsersRound, Heart, Baby, HelpCircle, ArrowRight, Check, Search, MapPin, Binoculars, Footprints, Waves, MountainSnow, Drum, BedDouble, X } from "lucide-react";
 import { submitBookingInquiry, fetchPublicParks, type PublicParkOption } from "@/lib/api";
 import DateRangePicker from "@/components/ui/DateRangePicker";
 import PlannerDropdown from "@/components/planner/PlannerDropdown";
@@ -85,12 +85,14 @@ export default function SafariPlanner({ embedded = false }: { embedded?: boolean
   const prefillPark = searchParams.get("park") || "";
   const prefillParkName = searchParams.get("parkName") || "";
   const prefillActivityName = searchParams.get("activityName") || "";
+  const prefillAccommodationName = searchParams.get("accommodationName") || "";
 
   const [step, setStep] = useState(0);
   const [acts, setActs] = useState<Record<string, boolean>>({});
   const [dests, setDests] = useState<Record<string, boolean>>(() => (prefillPark ? { [prefillPark]: true } : {}));
   const [ctxParkDismissed, setCtxParkDismissed] = useState(false);
   const [ctxActDismissed, setCtxActDismissed] = useState(false);
+  const [ctxAccDismissed, setCtxAccDismissed] = useState(false);
   const [parks, setParks] = useState<PublicParkOption[]>([]);
   const [parksLoading, setParksLoading] = useState(true);
   const [parkSearch, setParkSearch] = useState("");
@@ -157,6 +159,7 @@ export default function SafariPlanner({ embedded = false }: { embedded?: boolean
     if (budgetUnsure) parts.push("Budget: help me decide");
     if (children > 0 && childAges.length) parts.push(`Children ages: ${childAges.join(", ")}`);
     if (prefillActivityName && !ctxActDismissed) parts.push(`Interested in: ${prefillActivityName}`);
+    if (prefillAccommodationName && !ctxAccDismissed) parts.push(`Interested in staying at: ${prefillAccommodationName}`);
     return parts.join(". ");
   };
 
@@ -297,6 +300,17 @@ export default function SafariPlanner({ embedded = false }: { embedded?: boolean
               <Binoculars size={15} strokeWidth={2.2} style={{ color: "var(--accent-gold-deep)", flexShrink: 0 }} />
               <span style={{ fontSize: 13.5, fontWeight: 600, color: "var(--accent-gold-deep)", flex: 1, minWidth: 0 }}>{t("contextActivity", { activity: prefillActivityName })}</span>
               <button type="button" onClick={() => setCtxActDismissed(true)} aria-label={t("contextParkRemove", { park: prefillActivityName })} style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: 24, height: 24, borderRadius: "50%", border: "none", background: "rgba(150,99,26,.14)", color: "var(--accent-gold-deep)", cursor: "pointer", flexShrink: 0 }}>
+                <X size={13} strokeWidth={2.6} />
+              </button>
+            </div>
+          )}
+
+          {/* deep-link context: accommodation interest */}
+          {prefillAccommodationName && !ctxAccDismissed && inFlow && (
+            <div style={{ margin: "16px clamp(22px,4vw,40px) 0", display: "flex", alignItems: "center", gap: 10, background: "var(--accent-gold-soft)", border: "1px solid rgba(196,143,43,.35)", borderRadius: 10, padding: "10px 12px" }}>
+              <BedDouble size={15} strokeWidth={2.2} style={{ color: "var(--accent-gold-deep)", flexShrink: 0 }} />
+              <span style={{ fontSize: 13.5, fontWeight: 600, color: "var(--accent-gold-deep)", flex: 1, minWidth: 0 }}>{t("contextAccommodation", { accommodation: prefillAccommodationName })}</span>
+              <button type="button" onClick={() => setCtxAccDismissed(true)} aria-label={t("contextParkRemove", { park: prefillAccommodationName })} style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: 24, height: 24, borderRadius: "50%", border: "none", background: "rgba(150,99,26,.14)", color: "var(--accent-gold-deep)", cursor: "pointer", flexShrink: 0 }}>
                 <X size={13} strokeWidth={2.6} />
               </button>
             </div>
