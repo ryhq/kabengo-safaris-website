@@ -14,7 +14,8 @@
     "viewAll": "Tazama {label} Zote",
     "viewAllCount": "Tazama {label} {count} zote...",
     "language": "Lugha",
-    "bookNow": "Weka Nafasi"
+    "bookNow": "Weka Nafasi",
+    "planYourSafari": "Panga Safari Yako"
   },
   "hero": {
     "title": "Gundua Uchawi wa Afrika",
@@ -67,7 +68,12 @@
     "placeholder": "Tafuta mbuga, safari, shughuli...",
     "minChars": "Andika angalau herufi 2 kutafuta",
     "resultsFound": "Matokeo {count} yamepatikana",
-    "showMore": "Onyesha zaidi"
+    "showMore": "Onyesha zaidi",
+    "recent": "Utafutaji wa hivi karibuni",
+    "clear": "Futa",
+    "explore": "Gundua",
+    "planYourSafari": "Panga safari yako",
+    "planYourSafariSub": "Tuambie ndoto yako — tunaiboresha"
   },
   "home": {
     "safarisTitle": "Safari Zetu",

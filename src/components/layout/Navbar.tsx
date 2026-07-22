@@ -297,16 +297,16 @@ export default function Navbar() {
               </Link>
             ))}
 
-            {/* Book Now CTA */}
+            {/* Plan Your Safari CTA */}
             <Link
-              href="/book"
+              href="/plan"
               className={`px-5 py-2.5 rounded-lg text-sm font-semibold whitespace-nowrap transition-all ${
                 scrolled
                   ? "bg-brand-green text-white hover:bg-brand-green/90"
                   : "bg-white/15 text-white hover:bg-white/25 border border-white/30"
               }`}
             >
-              {t("bookNow")}
+              {t("planYourSafari")}
             </Link>
 
             {/* Search Button */}
@@ -466,13 +466,13 @@ export default function Navbar() {
                 </Link>
               ))}
 
-              {/* Book Now CTA — Mobile */}
+              {/* Plan Your Safari CTA — Mobile */}
               <Link
-                href="/book"
+                href="/plan"
                 onClick={() => setIsOpen(false)}
                 className="block mx-2 mt-2 px-4 py-3 rounded-xl text-base font-semibold text-center bg-brand-green text-white hover:bg-brand-green/90 transition-all"
               >
-                {t("bookNow")}
+                {t("planYourSafari")}
               </Link>
 
               {navData?.translationEnabled && (

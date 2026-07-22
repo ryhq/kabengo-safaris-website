@@ -14,7 +14,8 @@
     "viewAll": "View All {label}",
     "viewAllCount": "View all {count} {label}...",
     "language": "Language",
-    "bookNow": "Book Now"
+    "bookNow": "Book Now",
+    "planYourSafari": "خطّط لرحلتك"
   },
   "hero": {
     "title": "Discover the Magic of Africa",
@@ -67,7 +68,12 @@
     "placeholder": "Search parks, safaris, activities...",
     "minChars": "Type at least 2 characters to search",
     "resultsFound": "{count} {count, plural, one {result} other {results}} found",
-    "showMore": "Show More"
+    "showMore": "Show More",
+    "recent": "عمليات البحث الأخيرة",
+    "clear": "مسح",
+    "explore": "استكشف",
+    "planYourSafari": "خطّط لرحلة السفاري",
+    "planYourSafariSub": "أخبرنا بحلمك — نصمّمه لك"
   },
   "home": {
     "safarisTitle": "Our Safari Experiences",

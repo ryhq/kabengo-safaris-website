@@ -14,7 +14,8 @@
     "viewAll": "Ver todos {label}",
     "viewAllCount": "Ver todos os {count} {label}...",
     "language": "Idioma",
-    "bookNow": "Reservar"
+    "bookNow": "Reservar",
+    "planYourSafari": "Planeie o seu safari"
   },
   "hero": {
     "title": "Descubra a Magia de África",
@@ -67,7 +68,12 @@
     "placeholder": "Pesquisar parques, safaris, atividades...",
     "minChars": "Digite pelo menos 2 caracteres para pesquisar",
     "resultsFound": "{count} {count, plural, one {resultado} other {resultados}} encontrado(s)",
-    "showMore": "Ver mais"
+    "showMore": "Ver mais",
+    "recent": "Pesquisas recentes",
+    "clear": "Limpar",
+    "explore": "Explorar",
+    "planYourSafari": "Planeie o seu safari",
+    "planYourSafariSub": "Diga-nos o seu sonho — nós adaptamos"
   },
   "home": {
     "safarisTitle": "As Nossas Experiências Safari",
