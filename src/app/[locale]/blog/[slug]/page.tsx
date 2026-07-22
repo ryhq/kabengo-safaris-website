@@ -4,14 +4,10 @@ import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { buildAlternates } from "@/lib/seo";
 import { JsonLd, getArticleJsonLd, getFAQJsonLd, getBreadcrumbJsonLd, localeUrl } from "@/lib/jsonld";
-import { getAllPosts, getPost, coverGrad, type Block } from "@/content/blog";
+import { getPost, coverGrad, type Block } from "@/content/blog";
 
 const SERIF = "var(--font-source-serif), Georgia, serif";
 const WHATSAPP = "https://wa.me/255786345408";
-
-export function generateStaticParams() {
-  return getAllPosts().map((p) => ({ slug: p.slug }));
-}
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string; slug: string }> }): Promise<Metadata> {
   const { locale, slug } = await params;
