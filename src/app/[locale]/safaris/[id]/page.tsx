@@ -75,11 +75,14 @@ const CSS = `
 .itd .journey-left{display:none}
 .itd .glance-strip{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
 .itd .mobile-only{display:block}
+.itd .subbar{display:none}
 @media(min-width:980px){
+  .itd .subbar{display:block}
   .itd .journey-cols{grid-template-columns:360px minmax(0,1fr);gap:36px;align-items:start}
   .itd .journey-left{display:flex;position:sticky;top:150px;max-height:calc(100vh - 166px)}
   .itd .glance-strip{grid-template-columns:repeat(4,1fr)}
   .itd .mobile-only{display:none!important}
+  .itd .desktop-only{display:inline-flex!important}
 }
 @media(prefers-reduced-motion:reduce){.itd *{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 `;
@@ -215,6 +218,20 @@ export default function SafariDetailPage() {
     }
   }, [active]);
 
+  // keep the active day visible inside the (horizontally-scrolling) mobile chip rail
+  const mobileRailRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const c = mobileRailRef.current;
+    if (!c) return;
+    const btn = c.querySelector<HTMLElement>(`[data-mobile-day="${active}"]`);
+    if (!btn) return;
+    const cRect = c.getBoundingClientRect();
+    const bRect = btn.getBoundingClientRect();
+    if (bRect.left < cRect.left + 8 || bRect.right > cRect.right - 8) {
+      c.scrollTo({ left: c.scrollLeft + (bRect.left - cRect.left) - 16, behavior: "smooth" });
+    }
+  }, [active]);
+
   const gotoDay = useCallback((n: number) => {
     setActive(n); setOpen((o) => ({ ...o, [n]: true }));
     setTimeout(() => { const el = document.getElementById("itd-day-" + n); if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 120, behavior: "smooth" }); }, 40);
@@ -335,7 +352,7 @@ export default function SafariDetailPage() {
       <style>{CSS}</style>
 
       {/* sticky sub-bar */}
-      <div style={{ position: "fixed", top: 80, left: 0, right: 0, zIndex: 40, transform: scrolled ? "none" : "translateY(-120%)", opacity: scrolled ? 1 : 0, transition: "transform .3s,opacity .3s", background: "rgba(250,248,245,.92)", backdropFilter: "blur(12px)", borderBottom: "1px solid #e4ddd1" }}>
+      <div className="subbar" style={{ position: "fixed", top: 80, left: 0, right: 0, zIndex: 40, transform: scrolled ? "none" : "translateY(-120%)", opacity: scrolled ? 1 : 0, transition: "transform .3s,opacity .3s", background: "rgba(250,248,245,.92)", backdropFilter: "blur(12px)", borderBottom: "1px solid #e4ddd1" }}>
         <div style={{ maxWidth: 1240, margin: "0 auto", padding: "10px clamp(18px,5vw,56px)", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16 }}>
           <div style={{ minWidth: 0, display: "flex", alignItems: "baseline", gap: 14, flexWrap: "wrap" }}>
             <span style={{ fontFamily: SERIF, fontWeight: 700, color: "#2a2018", fontSize: 15, maxWidth: "min(46vw,340px)", ...ONE_LINE }}>{itin.name}</span>
@@ -420,9 +437,9 @@ export default function SafariDetailPage() {
 
           {/* mobile day-chip scroller */}
           {days.length > 1 && (
-            <div className="mobile-only" style={{ position: "sticky", top: 132, zIndex: 60, margin: "0 -18px 18px", padding: "10px 18px", background: "rgba(250,248,245,.92)", backdropFilter: "blur(10px)", borderBottom: "1px solid #e4ddd1" }}>
-              <div style={{ display: "flex", gap: 8, overflowX: "auto", paddingBottom: 2 }}>
-                {days.map((d) => { const on = d.dayNumber === active; return <button key={d.dayNumber} onClick={() => gotoDay(d.dayNumber)} aria-current={on} style={{ flex: "0 0 auto", background: on ? "#c48f2b" : "#fff", color: on ? "#3d1402" : "#4a3f34", border: `1.5px solid ${on ? "#c48f2b" : "#e4ddd1"}`, fontWeight: 600, fontSize: 13, borderRadius: 20, padding: "8px 14px", cursor: "pointer", whiteSpace: "nowrap" }}>{t("glDuration") && `Day ${d.dayNumber}`}</button>; })}
+            <div className="mobile-only" style={{ position: "sticky", top: 80, zIndex: 60, margin: "0 -18px 18px", padding: "10px 18px", background: "rgba(250,248,245,.92)", backdropFilter: "blur(10px)", borderBottom: "1px solid #e4ddd1" }}>
+              <div ref={mobileRailRef} style={{ display: "flex", gap: 8, overflowX: "auto", paddingBottom: 2 }}>
+                {days.map((d) => { const on = d.dayNumber === active; return <button key={d.dayNumber} data-mobile-day={d.dayNumber} onClick={() => gotoDay(d.dayNumber)} aria-current={on} style={{ flex: "0 0 auto", background: on ? "#c48f2b" : "#fff", color: on ? "#3d1402" : "#4a3f34", border: `1.5px solid ${on ? "#c48f2b" : "#e4ddd1"}`, fontWeight: 600, fontSize: 13, borderRadius: 20, padding: "8px 14px", cursor: "pointer", whiteSpace: "nowrap" }}>{t("glDuration") && `Day ${d.dayNumber}`}</button>; })}
               </div>
             </div>
           )}
