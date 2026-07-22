@@ -124,6 +124,24 @@ export async function fetchActivityMeta(id: string, locale = "en"): Promise<Acti
   return data ? (data.activity ?? data) : null;
 }
 
+// ─── Full detail payloads (for server-rendering the detail page bodies) ──────
+// These return the raw wrapper the public API sends so the server page can seed
+// the client component's initial state (content lands in the SSR HTML for SEO/GEO).
+export type DetailPayload = Record<string, unknown> | null;
+
+export async function fetchParkDetail(id: string, locale = "en"): Promise<DetailPayload> {
+  return serverFetch<Record<string, unknown>>(`/public/parks/${id}`, locale);
+}
+export async function fetchAccommodationDetail(id: string, locale = "en"): Promise<DetailPayload> {
+  return serverFetch<Record<string, unknown>>(`/public/accommodations/${id}`, locale);
+}
+export async function fetchActivityDetail(id: string, locale = "en"): Promise<DetailPayload> {
+  return serverFetch<Record<string, unknown>>(`/public/activities/${id}`, locale);
+}
+export async function fetchSafariDetail(code: string, locale = "en"): Promise<DetailPayload> {
+  return serverFetch<Record<string, unknown>>(`/public/safaris/${code}`, locale);
+}
+
 // Testimony rating summary (for AggregateRating schema).
 // Returns null until the backend /public/testimonies/summary endpoint is deployed,
 // so schema simply omits ratings rather than breaking.
