@@ -24,16 +24,11 @@ export interface AggregateRatingInput {
   worstRating?: number;
 }
 
-function aggregateRating(a?: AggregateRatingInput | null) {
-  if (!a || !a.reviewCount || !a.ratingValue) return undefined;
-  return {
-    "@type": "AggregateRating",
-    ratingValue: a.ratingValue,
-    reviewCount: a.reviewCount,
-    bestRating: a.bestRating ?? 5,
-    worstRating: a.worstRating ?? 1,
-  };
-}
+// NOTE: aggregateRating / review markup was removed from the Organization (TravelAgency),
+// Reviews and Safari (TouristTrip) nodes — Google rejects self-serving reviews on your own
+// Organization/LocalBusiness and doesn't support review snippets on TouristTrip, which caused
+// the Search Console "Invalid object type for field '<parent_node>'" error. Real ratings come
+// from third-party sources (e.g. TripAdvisor) that Google reads directly.
 
 function stripHtml(html: string): string {
   return html.replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim();
@@ -52,8 +47,7 @@ export function JsonLd({ data }: { data: Record<string, unknown> }) {
 /**
  * TravelAgency (organization) schema — rendered once per page in the locale layout.
  */
-export function getOrganizationJsonLd(opts?: { aggregate?: AggregateRatingInput | null }) {
-  const ar = aggregateRating(opts?.aggregate);
+export function getOrganizationJsonLd(_opts?: { aggregate?: AggregateRatingInput | null }) {
   return {
     "@context": "https://schema.org",
     "@type": "TravelAgency",
@@ -85,7 +79,6 @@ export function getOrganizationJsonLd(opts?: { aggregate?: AggregateRatingInput 
       availableLanguage: ["English", "Swahili", "French", "German", "Spanish", "Italian", "Portuguese"],
     },
     sameAs: ORG_SAME_AS,
-    ...(ar && { aggregateRating: ar }),
   };
 }
 
@@ -158,7 +151,6 @@ export function getSafariJsonLd(
 ) {
   const locale = opts?.locale || "en";
   const cost = Array.isArray(safari.costSummary) ? safari.costSummary[0] : safari.costSummary;
-  const ar = aggregateRating(opts?.aggregate);
   const days = safari.days?.filter((d) => d.title || d.description) ?? [];
 
   return {
@@ -199,7 +191,6 @@ export function getSafariJsonLd(
         url: localeUrl(locale, `/safaris/${safari.code}`),
       },
     }),
-    ...(ar && { aggregateRating: ar }),
   };
 }
 
@@ -360,23 +351,11 @@ export function getReviewsJsonLd(opts: {
   aggregate?: AggregateRatingInput | null;
   reviews?: Array<{ authorName: string; authorCountry?: string; rating?: number; message?: string; reviewDate?: string }>;
 }) {
-  const ar = aggregateRating(opts.aggregate);
-  const reviews = (opts.reviews ?? []).filter((r) => r.authorName && r.rating);
   return {
     "@context": "https://schema.org",
     "@type": "TravelAgency",
     "@id": `${BASE_URL}/#organization`,
     name: "Kabengo Safaris",
-    ...(ar && { aggregateRating: ar }),
-    ...(reviews.length && {
-      review: reviews.slice(0, 20).map((r) => ({
-        "@type": "Review",
-        author: { "@type": "Person", name: r.authorName, ...(r.authorCountry && { address: r.authorCountry }) },
-        reviewRating: { "@type": "Rating", ratingValue: r.rating, bestRating: 5, worstRating: 1 },
-        ...(r.reviewDate && { datePublished: r.reviewDate }),
-        ...(r.message && { reviewBody: stripHtml(r.message).slice(0, 500) }),
-      })),
-    }),
   };
 }
 
