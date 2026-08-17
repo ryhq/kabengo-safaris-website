@@ -21,7 +21,7 @@ export default async function BlogIndexPage({ params }: { params: Promise<{ loca
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "blog" });
   const common = await getTranslations({ locale, namespace: "common" });
-  const posts = getAllPosts();
+  const posts = await getAllPosts(locale);
   const fmtDate = (iso: string) => new Intl.DateTimeFormat(locale, { year: "numeric", month: "long", day: "numeric" }).format(new Date(iso));
 
   return (
@@ -37,7 +37,7 @@ export default async function BlogIndexPage({ params }: { params: Promise<{ loca
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(300px,1fr))", gap: 24 }}>
           {posts.map((p) => (
             <article key={p.slug} style={{ background: "#fff", border: "1px solid #e4ddd1", borderRadius: 18, overflow: "hidden", boxShadow: "0 8px 28px rgba(62,21,2,.06)", display: "flex", flexDirection: "column" }}>
-              <Link href={`/blog/${p.slug}`} style={{ display: "block", position: "relative", aspectRatio: "16 / 9", background: coverGrad(p.slug) }} aria-label={p.title}>
+              <Link href={`/blog/${p.slug}`} style={{ display: "block", position: "relative", aspectRatio: "16 / 9", background: p.coverImageUrl ? `#274e22 url(${p.coverImageUrl}) center/cover no-repeat` : coverGrad(p.slug) }} aria-label={p.title}>
                 <span style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg,transparent 40%,rgba(20,12,4,.5))" }} />
               </Link>
               <div style={{ padding: "20px 22px", display: "flex", flexDirection: "column", flex: 1 }}>

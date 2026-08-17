@@ -11,8 +11,9 @@ const WHATSAPP = "https://wa.me/255786345408";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string; slug: string }> }): Promise<Metadata> {
   const { locale, slug } = await params;
-  const post = getPost(slug);
+  const post = await getPost(slug, locale);
   if (!post) return { title: "Not found" };
+  const images = post.coverImageUrl ? [post.coverImageUrl] : undefined;
   return {
     title: post.title,
     description: post.excerpt,
@@ -24,20 +25,29 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       url: `https://kabengosafaris.com/${locale}/blog/${slug}`,
       publishedTime: post.date,
       authors: [post.author],
+      images,
     },
-    twitter: { card: "summary_large_image", title: post.title, description: post.excerpt },
+    twitter: { card: "summary_large_image", title: post.title, description: post.excerpt, images },
   };
 }
 
 function renderBlock(b: Block, i: number) {
   if (b.type === "h2") return <h2 key={i} style={{ fontFamily: SERIF, fontWeight: 700, color: "#2a2018", fontSize: "clamp(22px,3vw,30px)", lineHeight: 1.15, margin: "36px 0 14px" }}>{b.text}</h2>;
+  if (b.type === "h3") return <h3 key={i} style={{ fontFamily: SERIF, fontWeight: 700, color: "#2a2018", fontSize: "clamp(19px,2.4vw,24px)", lineHeight: 1.2, margin: "28px 0 12px" }}>{b.text}</h3>;
   if (b.type === "ul") return <ul key={i} style={{ margin: "0 0 18px", paddingLeft: 22, color: "#4a3f34", fontSize: 16.5, lineHeight: 1.75 }}>{b.items.map((it, j) => <li key={j} style={{ marginBottom: 6 }}>{it}</li>)}</ul>;
+  if (b.type === "image") return (
+    <figure key={i} style={{ margin: "24px 0" }}>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src={b.url} alt={b.alt || ""} style={{ width: "100%", height: "auto", borderRadius: 12, display: "block" }} />
+      {b.caption && <figcaption style={{ color: "#7a6f61", fontSize: 13, textAlign: "center", marginTop: 8 }}>{b.caption}</figcaption>}
+    </figure>
+  );
   return <p key={i} style={{ color: "#4a3f34", fontSize: 16.5, lineHeight: 1.8, margin: "0 0 18px" }}>{b.text}</p>;
 }
 
 export default async function BlogPostPage({ params }: { params: Promise<{ locale: string; slug: string }> }) {
   const { locale, slug } = await params;
-  const post = getPost(slug);
+  const post = await getPost(slug, locale);
   if (!post) notFound();
 
   const t = await getTranslations({ locale, namespace: "blog" });
@@ -58,7 +68,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ local
       <JsonLd data={breadcrumb} />
 
       {/* hero */}
-      <header style={{ position: "relative", overflow: "hidden", padding: "clamp(110px,16vh,170px) clamp(18px,5vw,56px) clamp(36px,5vw,52px)", background: coverGrad(slug) }}>
+      <header style={{ position: "relative", overflow: "hidden", padding: "clamp(110px,16vh,170px) clamp(18px,5vw,56px) clamp(36px,5vw,52px)", background: post.coverImageUrl ? `#140c04 url(${post.coverImageUrl}) center/cover no-repeat` : coverGrad(slug) }}>
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg,rgba(20,12,4,.3) 0%,rgba(20,12,4,.4) 45%,rgba(20,12,4,.86) 100%)" }} />
         <div style={{ position: "relative", maxWidth: 760, margin: "0 auto" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8, color: "rgba(242,236,224,.72)", fontSize: 12.5, marginBottom: 14 }}>

@@ -7,8 +7,8 @@ export const revalidate = 86400; // 1 day
 
 const BASE = "https://kabengosafaris.com";
 
-export function GET() {
-  const articles = getAllPosts()
+export async function GET() {
+  const articles = (await getAllPosts())
     .map((p) => `- [${p.title}](${BASE}/en/blog/${p.slug}): ${p.excerpt}`)
     .join("\n");
 
@@ -21,6 +21,7 @@ export function GET() {
 - Private, custom itineraries only — no shared-bus group tours.
 - Fully licensed & bonded operator (TATO / TALA). Support in 10 languages. Reply within 24 hours.
 - Contact: info@kabengosafaris.com · phone/WhatsApp +255 786 345 408.
+- Find us: Tripadvisor 5.0/5 (https://www.tripadvisor.com/Attraction_Review-g297913-d34283345-Reviews-Kabengo_Safaris-Arusha_Arusha_Region.html) · Instagram @kabengosafaris (https://www.instagram.com/kabengosafaris/).
 
 ## Start here
 - [Plan your safari](${BASE}/en/plan): Tailor-made trip planner — share your dates, interests and budget for a free, no-obligation proposal.

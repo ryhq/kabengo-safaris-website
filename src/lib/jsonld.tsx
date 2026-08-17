@@ -78,6 +78,8 @@ export function getOrganizationJsonLd(_opts?: { aggregate?: AggregateRatingInput
       email: ORG_EMAIL,
       availableLanguage: ["English", "Swahili", "French", "German", "Spanish", "Italian", "Portuguese"],
     },
+    founder: { "@type": "Person", name: "Enock Fabian" },
+    priceRange: "$$ - $$$",
     sameAs: ORG_SAME_AS,
   };
 }

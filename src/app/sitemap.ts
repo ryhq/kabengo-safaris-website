@@ -122,8 +122,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   }
 
-  // Blog posts (file-based content)
-  for (const post of getAllPosts()) {
+  // Blog posts (from the public API, ISR-cached)
+  for (const post of await getAllPosts()) {
     const path = `/blog/${post.slug}`;
     for (const locale of locales) {
       entries.push({

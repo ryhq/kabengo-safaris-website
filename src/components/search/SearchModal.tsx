@@ -21,8 +21,6 @@ import {
   HelpCircle,
 } from "lucide-react";
 import { apiClient } from "@/lib/api";
-import { getAllPosts } from "@/content/blog";
-import { FAQ_ITEMS } from "@/content/faq";
 
 interface SearchResult {
   slug?: string;
@@ -48,6 +46,13 @@ interface SearchData {
   testimonies: SearchResult[];
   testimoniesTotalItems: number;
   totalResults: number;
+}
+
+interface BlogMeta {
+  slug: string;
+  title: string;
+  excerpt: string;
+  tags?: string[];
 }
 
 interface SearchModalProps {
@@ -90,6 +95,33 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
   const [recent, setRecent] = useState<string[]>([]);
   const [preview, setPreview] = useState<Partial<SearchData> | null>(null);
   const previewLocaleRef = useRef<string | null>(null);
+  const [blogIndex, setBlogIndex] = useState<BlogMeta[]>([]);
+  const [faqIndex, setFaqIndex] = useState<{ q: string; a: string }[]>([]);
+  const contentLocaleRef = useRef<string | null>(null);
+
+  // Blog + FAQ index — loaded once per locale on open, then searched client-side
+  // (matches title/excerpt/tags for posts, q/a for FAQs).
+  useEffect(() => {
+    if (!isOpen || contentLocaleRef.current === locale) return;
+    let alive = true;
+    const h = { headers: { "Accept-Language": locale } };
+    Promise.allSettled([
+      apiClient.get("/public/blogs", { params: { page: 0, size: 100 }, ...h }),
+      apiClient.get("/public/faqs", { ...h }),
+    ]).then((rs) => {
+      if (!alive) return;
+      if (rs[0].status === "fulfilled") {
+        const body = (rs[0].value as { data?: { success?: boolean; data?: { blogs?: BlogMeta[] } } }).data;
+        if (body?.success) setBlogIndex(body.data?.blogs ?? []);
+      }
+      if (rs[1].status === "fulfilled") {
+        const body = (rs[1].value as { data?: { success?: boolean; data?: { q: string; a: string }[] } }).data;
+        if (body?.success) setFaqIndex(body.data ?? []);
+      }
+      contentLocaleRef.current = locale;
+    });
+    return () => { alive = false; };
+  }, [isOpen, locale]);
 
   // Preload popular items per category on first open (per locale) for the empty state.
   useEffect(() => {
@@ -269,13 +301,12 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
   const q = query.trim().toLowerCase();
   const localActive = q.length >= 2;
   const blogMatches = localActive
-    ? getAllPosts().filter((p) => {
-        const body = p.body.map((b) => ("text" in b ? b.text : "items" in b ? b.items.join(" ") : "")).join(" ");
-        return `${p.title} ${p.excerpt} ${p.tags.join(" ")} ${body}`.toLowerCase().includes(q);
-      }).slice(0, 5)
+    ? blogIndex.filter((p) =>
+        `${p.title} ${p.excerpt} ${(p.tags ?? []).join(" ")}`.toLowerCase().includes(q)
+      ).slice(0, 5)
     : [];
   const faqMatches = localActive
-    ? FAQ_ITEMS.filter((f) => `${f.q} ${f.a}`.toLowerCase().includes(q)).slice(0, 5)
+    ? faqIndex.filter((f) => `${f.q} ${f.a}`.toLowerCase().includes(q)).slice(0, 5)
     : [];
   const localCount = blogMatches.length + faqMatches.length;
 
