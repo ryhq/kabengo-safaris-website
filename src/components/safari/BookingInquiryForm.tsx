@@ -58,6 +58,17 @@ const STEP_ICONS: Record<Step, React.ElementType> = {
   message: Send,
 };
 
+/**
+ * A traveller count from whatever is in the box.
+ *
+ * Blank, a stray minus, or anything that is not a number resolves to the fallback ONCE, here,
+ * rather than on every keystroke. Negatives are clamped because a party cannot be -2 people.
+ */
+function countOf(value: string, fallback: number): number {
+  const n = parseInt(value, 10);
+  return Number.isFinite(n) && n >= 0 ? n : fallback;
+}
+
 export default function BookingInquiryForm({ safariId }: BookingInquiryFormProps) {
   const t = useTranslations("bookingInquiry");
   const [step, setStep] = useState<Step>("safari");
@@ -74,8 +85,19 @@ export default function BookingInquiryForm({ safariId }: BookingInquiryFormProps
   const [country, setCountry] = useState("");
 
   // Trip
-  const [adults, setAdults] = useState(1);
-  const [children, setChildren] = useState(0);
+  /*
+   * Held as text, not as a number.
+   *
+   * These were numbers coerced on every keystroke with `parseInt(v) || 1`, which made the
+   * field impossible to empty: backspace gave "", parseInt gave NaN, the fallback put the 1
+   * straight back, and the guest's next keystroke landed after it. Two adults arrived as 12
+   * and five as 15 -- twice from the same family, who then had to be asked on WhatsApp which
+   * number was real.
+   *
+   * Empty is a legitimate thing to be mid-typing. It is resolved once, at submit.
+   */
+  const [adults, setAdults] = useState("1");
+  const [children, setChildren] = useState("0");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [budgetCategory, setBudgetCategory] = useState("");
@@ -170,8 +192,8 @@ export default function BookingInquiryForm({ safariId }: BookingInquiryFormProps
       email: email.trim(),
       phone: phone.trim() || undefined,
       country: country.trim() || undefined,
-      adults,
-      children,
+      adults: countOf(adults, 1),
+      children: countOf(children, 0),
       preferredStartDate: startDate || undefined,
       preferredEndDate: endDate || undefined,
       budgetCategory: budgetCategory || undefined,
@@ -493,7 +515,8 @@ export default function BookingInquiryForm({ safariId }: BookingInquiryFormProps
                         type="number"
                         min={1}
                         value={adults}
-                        onChange={(e) => setAdults(parseInt(e.target.value) || 1)}
+                        onChange={(e) => setAdults(e.target.value)}
+                        onBlur={() => setAdults(String(countOf(adults, 1)))}
                         required
                         className={inputClass}
                       />
@@ -504,7 +527,8 @@ export default function BookingInquiryForm({ safariId }: BookingInquiryFormProps
                         type="number"
                         min={0}
                         value={children}
-                        onChange={(e) => setChildren(parseInt(e.target.value) || 0)}
+                        onChange={(e) => setChildren(e.target.value)}
+                        onBlur={() => setChildren(String(countOf(children, 0)))}
                         className={inputClass}
                       />
                     </div>
