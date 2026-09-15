@@ -6,6 +6,7 @@ import { Link } from "@/i18n/navigation";
 import dynamic from "next/dynamic";
 import { Clock, Globe, Sparkles, Mail, Phone, MapPin, Send, Check, AlertCircle } from "lucide-react";
 import { apiClient } from "@/lib/api";
+import { getAttribution } from "@/lib/attribution";
 
 const ParkMap = dynamic(() => import("@/components/ui/ParkMap"), { ssr: false, loading: () => null });
 
@@ -73,7 +74,11 @@ export default function ContactPage() {
     setSending(true);
     setStatus("idle");
     try {
-      const res = await apiClient.post("/public/contact", form, { headers: { "Accept-Language": locale } });
+      const res = await apiClient.post(
+        "/public/contact",
+        { ...form, attribution: getAttribution() },
+        { headers: { "Accept-Language": locale } },
+      );
       if (res.data.success) {
         setStatus("success");
         setTouched(false);

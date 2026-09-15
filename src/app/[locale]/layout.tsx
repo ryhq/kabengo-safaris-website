@@ -7,6 +7,7 @@ import type { Metadata } from "next";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import ApiLocaleSync from "@/lib/ApiLocaleSync";
+import AttributionCapture from "@/components/analytics/AttributionCapture";
 import ImageProtection from "@/components/ui/ImageProtection";
 import { buildAlternates, ogLocale } from "@/lib/seo";
 import { JsonLd, getWebSiteJsonLd } from "@/lib/jsonld";
@@ -59,6 +60,7 @@ export default async function LocaleLayout({
         <JsonLd data={getWebSiteJsonLd(locale)} />
         <NextIntlClientProvider messages={messages}>
           <ApiLocaleSync />
+          <AttributionCapture />
           <ImageProtection />
           <Navbar />
           <main className="flex-1">{children}</main>

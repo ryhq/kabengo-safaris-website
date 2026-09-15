@@ -1,3 +1,5 @@
+import type { AttributionPayload } from "@/lib/attribution";
+
 // Itinerary (Safari Package template) - displayed as "Safari" to the public
 export interface Itinerary {
   name: string;
@@ -231,4 +233,6 @@ export interface BookingInquiryPayload {
   message?: string;
   safariIdentifier?: string;
   locale?: string;
+  /** Filled in by the api client from what the page stored on arrival, not by the form. */
+  attribution?: AttributionPayload;
 }

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getAttribution } from "@/lib/attribution";
 import type { Itinerary, Park, Accommodation, Activity, Testimony, Hero, ApiResponse, HomepageData, PaginatedData, BookingInquiryPayload } from "@/types";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:4450/api";
@@ -209,7 +210,12 @@ export async function fetchActivitiesPaginated(page: number, size: number): Prom
 
 export async function subscribeToNewsletter(email: string, name?: string): Promise<{ status: string; message: string }> {
   try {
-    const res = await apiClient.post("/public/newsletter/subscribe", { email, name, locale: getApiLocale() });
+    const res = await apiClient.post("/public/newsletter/subscribe", {
+      email,
+      name,
+      locale: getApiLocale(),
+      attribution: getAttribution(),
+    });
     return res.data;
   } catch (err) {
     console.error("[api] Newsletter subscription failed:", err);
@@ -248,6 +254,8 @@ export async function submitBookingInquiry(
     const res = await apiClient.post("/public/booking-inquiries", {
       ...data,
       locale: getApiLocale(),
+      /* How they found us, read from what the page stored when they arrived. */
+      attribution: getAttribution(),
     });
     return res.data;
   } catch (err) {
