@@ -13,11 +13,25 @@ interface ApiResponse<T> {
 /**
  * Fetch a single entity from the public API (server-side).
  */
-async function serverFetch<T>(path: string, locale = "en"): Promise<T | null> {
+/**
+ * How long a page may keep showing something after the office changed it.
+ *
+ * An hour is fine for a park description. It is not fine for anything that answers "is this trip
+ * for sale", because unpublishing a trip is a decision that should take effect while somebody is
+ * still watching — an hour of a withdrawn trip still being quotable is an hour too long.
+ */
+const DEFAULT_REVALIDATE = 3600;
+export const SALEABILITY_REVALIDATE = 300;
+
+async function serverFetch<T>(
+  path: string,
+  locale = "en",
+  revalidate: number = DEFAULT_REVALIDATE,
+): Promise<T | null> {
   try {
     const res = await fetch(`${API_BASE_URL}${path}`, {
       headers: { "Accept-Language": locale },
-      next: { revalidate: 3600 }, // Cache for 1 hour
+      next: { revalidate },
     });
     if (!res.ok) return null;
     const json: ApiResponse<T> = await res.json();
@@ -51,7 +65,7 @@ interface SafariMeta {
 }
 
 export async function fetchSafariMeta(id: string, locale = "en"): Promise<SafariMeta | null> {
-  return serverFetch<SafariMeta>(`/public/safaris/${id}`, locale);
+  return serverFetch<SafariMeta>(`/public/safaris/${id}`, locale, SALEABILITY_REVALIDATE);
 }
 
 // Park
@@ -139,7 +153,9 @@ export async function fetchActivityDetail(id: string, locale = "en"): Promise<De
   return serverFetch<Record<string, unknown>>(`/public/activities/${id}`, locale);
 }
 export async function fetchSafariDetail(code: string, locale = "en"): Promise<DetailPayload> {
-  return serverFetch<Record<string, unknown>>(`/public/safaris/${code}`, locale);
+  /* Five minutes, not an hour: this page is what says a trip is for sale. */
+  return serverFetch<Record<string, unknown>>(
+    `/public/safaris/${code}`, locale, SALEABILITY_REVALIDATE);
 }
 
 // Testimony rating summary (for AggregateRating schema).
