@@ -67,6 +67,19 @@ jobs:
             # Clean up archive
             rm -f deploy.tar.gz
 
+            # Drop Next's server-side fetch cache.
+            #
+            # The extract writes over the old files and leaves everything it does not replace, so
+            # .next/cache survived every deploy — and with it, up to an hour of API responses from
+            # BEFORE the deploy. That is harmless when a description changes and serious when the
+            # API starts refusing something: three unpublished trips went on being served from this
+            # cache, at 200, after the API had begun answering 404 for them, and after the page had
+            # been fixed to call notFound().
+            #
+            # Only fetch-cache. The ISR page cache and the optimised images can rebuild themselves
+            # lazily; this one holds answers that are now wrong.
+            rm -rf .next/cache/fetch-cache
+
             # Restart Passenger app
             mkdir -p tmp
             touch tmp/restart.txt
