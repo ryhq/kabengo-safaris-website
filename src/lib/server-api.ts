@@ -29,7 +29,18 @@ async function serverFetch<T>(
   revalidate: number = DEFAULT_REVALIDATE,
 ): Promise<T | null> {
   try {
-    const res = await fetch(`${API_BASE_URL}${path}`, {
+    /*
+     * The locale MUST be in the URL, not only in the Accept-Language header.
+     *
+     * Next.js keys its Data Cache on the request URL (plus method and body) and ignores request
+     * headers. With the locale living only in Accept-Language, all 10 locales collided on a single
+     * cache entry per path: whichever language warmed the cache first was then served to every
+     * other locale — the English page rendered German, the French page rendered German, and so on.
+     * The `hl` query param gives each locale its own cache key. The backend resolves translations
+     * from Accept-Language and ignores unknown query params, so `hl` is purely a cache discriminator.
+     */
+    const sep = path.includes("?") ? "&" : "?";
+    const res = await fetch(`${API_BASE_URL}${path}${sep}hl=${encodeURIComponent(locale)}`, {
       headers: { "Accept-Language": locale },
       next: { revalidate },
     });

@@ -43,7 +43,11 @@ interface ApiResponse<T> {
 
 async function api<T>(path: string, locale = "en"): Promise<T | null> {
   try {
-    const res = await fetch(`${API_BASE_URL}${path}`, {
+    // Locale must be in the URL: Next.js keys its Data Cache on the URL and ignores headers, so
+    // header-only locale made all 10 locales share one cache entry (English pages served German,
+    // etc.). `hl` is a per-locale cache discriminator; the backend translates off Accept-Language.
+    const sep = path.includes("?") ? "&" : "?";
+    const res = await fetch(`${API_BASE_URL}${path}${sep}hl=${encodeURIComponent(locale)}`, {
       headers: { "Accept-Language": locale },
       next: { revalidate: REVALIDATE },
     });

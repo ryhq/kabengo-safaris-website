@@ -18,7 +18,10 @@ interface ApiResponse<T> {
 /** Active global FAQs, ordered. Empty array on API failure. */
 export async function getFaqs(locale = "en"): Promise<FaqItem[]> {
   try {
-    const res = await fetch(`${API_BASE_URL}/public/faqs`, {
+    // Locale must be in the URL: Next.js keys its Data Cache on the URL and ignores headers, so
+    // header-only locale made all 10 locales share one cache entry. `hl` is a per-locale cache
+    // discriminator; the backend translates off Accept-Language and ignores unknown query params.
+    const res = await fetch(`${API_BASE_URL}/public/faqs?hl=${encodeURIComponent(locale)}`, {
       headers: { "Accept-Language": locale },
       next: { revalidate: REVALIDATE },
     });
