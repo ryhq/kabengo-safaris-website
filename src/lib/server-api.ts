@@ -23,10 +23,36 @@ interface ApiResponse<T> {
 const DEFAULT_REVALIDATE = 3600;
 export const SALEABILITY_REVALIDATE = 300;
 
+/**
+ * The labels a cached answer wears, so the office can throw it away before its timer expires.
+ *
+ * Every answer also wears "site", which is how one call empties the whole shelf. The names are
+ * shared by agreement with the API (WebsiteCacheTags there, KNOWN_TAGS in the revalidate route
+ * here) — a name that exists in only one of the three does nothing at all.
+ *
+ * They are collections, not records. A tag per record would be more precise and does not work:
+ * the API's ids are obfuscated and the obfuscation changes on every restart, so a per-record tag
+ * would stop matching after a deploy and fail silently, which is the one failure mode a cache
+ * must not have. Clearing all twenty park pages because one park changed is cheap and honest.
+ */
+export const CACHE_TAGS = {
+  all: "site",
+  safaris: "safaris",
+  parks: "parks",
+  accommodations: "accommodations",
+  activities: "activities",
+  testimonies: "testimonies",
+  heroes: "heroes",
+  blog: "blog",
+  faqs: "faqs",
+  brand: "brand",
+} as const;
+
 async function serverFetch<T>(
   path: string,
   locale = "en",
   revalidate: number = DEFAULT_REVALIDATE,
+  tags: string[] = [],
 ): Promise<T | null> {
   try {
     /*
@@ -42,7 +68,8 @@ async function serverFetch<T>(
     const sep = path.includes("?") ? "&" : "?";
     const res = await fetch(`${API_BASE_URL}${path}${sep}hl=${encodeURIComponent(locale)}`, {
       headers: { "Accept-Language": locale },
-      next: { revalidate },
+      // "site" on everything: one label the office can pull to empty the lot.
+      next: { revalidate, tags: [CACHE_TAGS.all, ...tags] },
     });
     if (!res.ok) return null;
     const json: ApiResponse<T> = await res.json();
@@ -76,7 +103,7 @@ interface SafariMeta {
 }
 
 export async function fetchSafariMeta(id: string, locale = "en"): Promise<SafariMeta | null> {
-  return serverFetch<SafariMeta>(`/public/safaris/${id}`, locale, SALEABILITY_REVALIDATE);
+  return serverFetch<SafariMeta>(`/public/safaris/${id}`, locale, SALEABILITY_REVALIDATE, [CACHE_TAGS.safaris]);
 }
 
 // Park
@@ -97,7 +124,7 @@ interface ParkMeta {
 
 export async function fetchParkMeta(id: string, locale = "en"): Promise<ParkMeta | null> {
   // The single-park endpoint wraps the entity as { park, images, totalImages }.
-  const data = await serverFetch<{ park?: ParkMeta } & ParkMeta>(`/public/parks/${id}`, locale);
+  const data = await serverFetch<{ park?: ParkMeta } & ParkMeta>(`/public/parks/${id}`, locale, DEFAULT_REVALIDATE, [CACHE_TAGS.parks]);
   return data ? (data.park ?? data) : null;
 }
 
@@ -129,6 +156,8 @@ export async function fetchAccommodationMeta(id: string, locale = "en"): Promise
   const data = await serverFetch<{ accommodation?: AccommodationMeta } & AccommodationMeta>(
     `/public/accommodations/${id}`,
     locale,
+    DEFAULT_REVALIDATE,
+    [CACHE_TAGS.accommodations],
   );
   return data ? (data.accommodation ?? data) : null;
 }
@@ -145,7 +174,7 @@ interface ActivityMeta {
 
 export async function fetchActivityMeta(id: string, locale = "en"): Promise<ActivityMeta | null> {
   // The single-activity endpoint wraps the entity as { activity, images, totalImages }.
-  const data = await serverFetch<{ activity?: ActivityMeta } & ActivityMeta>(`/public/activities/${id}`, locale);
+  const data = await serverFetch<{ activity?: ActivityMeta } & ActivityMeta>(`/public/activities/${id}`, locale, DEFAULT_REVALIDATE, [CACHE_TAGS.activities]);
   return data ? (data.activity ?? data) : null;
 }
 
@@ -155,18 +184,18 @@ export async function fetchActivityMeta(id: string, locale = "en"): Promise<Acti
 export type DetailPayload = Record<string, unknown> | null;
 
 export async function fetchParkDetail(id: string, locale = "en"): Promise<DetailPayload> {
-  return serverFetch<Record<string, unknown>>(`/public/parks/${id}`, locale);
+  return serverFetch<Record<string, unknown>>(`/public/parks/${id}`, locale, DEFAULT_REVALIDATE, [CACHE_TAGS.parks]);
 }
 export async function fetchAccommodationDetail(id: string, locale = "en"): Promise<DetailPayload> {
-  return serverFetch<Record<string, unknown>>(`/public/accommodations/${id}`, locale);
+  return serverFetch<Record<string, unknown>>(`/public/accommodations/${id}`, locale, DEFAULT_REVALIDATE, [CACHE_TAGS.accommodations]);
 }
 export async function fetchActivityDetail(id: string, locale = "en"): Promise<DetailPayload> {
-  return serverFetch<Record<string, unknown>>(`/public/activities/${id}`, locale);
+  return serverFetch<Record<string, unknown>>(`/public/activities/${id}`, locale, DEFAULT_REVALIDATE, [CACHE_TAGS.activities]);
 }
 export async function fetchSafariDetail(code: string, locale = "en"): Promise<DetailPayload> {
   /* Five minutes, not an hour: this page is what says a trip is for sale. */
   return serverFetch<Record<string, unknown>>(
-    `/public/safaris/${code}`, locale, SALEABILITY_REVALIDATE);
+    `/public/safaris/${code}`, locale, SALEABILITY_REVALIDATE, [CACHE_TAGS.safaris]);
 }
 
 // Testimony rating summary (for AggregateRating schema).
@@ -189,7 +218,7 @@ export interface TestimonyReview {
 
 /** Featured approved testimonies (for Review JSON-LD on the reviews page). */
 export async function fetchFeaturedTestimonies(locale = "en"): Promise<TestimonyReview[]> {
-  const data = await serverFetch<TestimonyReview[]>(`/public/testimonies/featured`, locale);
+  const data = await serverFetch<TestimonyReview[]>(`/public/testimonies/featured`, locale, DEFAULT_REVALIDATE, [CACHE_TAGS.testimonies]);
   return Array.isArray(data) ? data.filter((t) => t.authorName && t.rating) : [];
 }
 
@@ -199,7 +228,7 @@ export async function fetchTestimonySummary(): Promise<TestimonySummary | null> 
     reviewCount?: number;
     bestRating?: number;
     worstRating?: number;
-  }>(`/public/testimonies/summary`);
+  }>(`/public/testimonies/summary`, "en", DEFAULT_REVALIDATE, [CACHE_TAGS.testimonies]);
   if (!data || !data.averageRating || !data.reviewCount) return null;
   return {
     ratingValue: data.averageRating,
@@ -219,12 +248,12 @@ interface PaginatedResponse<T> {
   totalItems: number;
 }
 
-async function fetchAllIds(endpoint: string, itemsKey: string): Promise<SitemapItem[]> {
+async function fetchAllIds(endpoint: string, itemsKey: string, tag: string): Promise<SitemapItem[]> {
   const items: SitemapItem[] = [];
   try {
     // Fetch first page to get total
     const res = await fetch(`${API_BASE_URL}${endpoint}?page=0&size=100`, {
-      next: { revalidate: 3600 },
+      next: { revalidate: 3600, tags: [CACHE_TAGS.all, tag] },
     });
     if (!res.ok) return items;
     const json: ApiResponse<PaginatedResponse<SitemapItem>> = await res.json();
@@ -237,7 +266,7 @@ async function fetchAllIds(endpoint: string, itemsKey: string): Promise<SitemapI
     const totalPages = data.totalPages as number;
     for (let page = 1; page < totalPages; page++) {
       const pageRes = await fetch(`${API_BASE_URL}${endpoint}?page=${page}&size=100`, {
-        next: { revalidate: 3600 },
+        next: { revalidate: 3600, tags: [CACHE_TAGS.all, tag] },
       });
       if (!pageRes.ok) break;
       const pageJson: ApiResponse<PaginatedResponse<SitemapItem>> = await pageRes.json();
@@ -253,17 +282,17 @@ async function fetchAllIds(endpoint: string, itemsKey: string): Promise<SitemapI
 }
 
 export async function fetchAllSafariIds(): Promise<SitemapItem[]> {
-  return fetchAllIds("/public/safaris", "safaris");
+  return fetchAllIds("/public/safaris", "safaris", CACHE_TAGS.safaris);
 }
 
 export async function fetchAllParkIds(): Promise<SitemapItem[]> {
-  return fetchAllIds("/public/parks", "parks");
+  return fetchAllIds("/public/parks", "parks", CACHE_TAGS.parks);
 }
 
 export async function fetchAllAccommodationIds(): Promise<SitemapItem[]> {
-  return fetchAllIds("/public/accommodations", "accommodations");
+  return fetchAllIds("/public/accommodations", "accommodations", CACHE_TAGS.accommodations);
 }
 
 export async function fetchAllActivityIds(): Promise<SitemapItem[]> {
-  return fetchAllIds("/public/activities", "activities");
+  return fetchAllIds("/public/activities", "activities", CACHE_TAGS.activities);
 }

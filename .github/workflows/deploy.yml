@@ -80,6 +80,26 @@ jobs:
             # lazily; this one holds answers that are now wrong.
             rm -rf .next/cache/fetch-cache
 
+            # The key that lets the API tell this site to refresh itself.
+            #
+            # Runtime, not build time: the revalidate route reads it per request, so it must be in
+            # the server's environment rather than baked into the bundle. Next's standalone server
+            # loads .env.production from its own directory at startup, which is the one mechanism
+            # both hosts share — cPanel's Passenger and the droplet's systemd unit set environment
+            # in completely different places.
+            #
+            # Written every deploy so the secret is only ever in one place that anybody edits:
+            # GitHub. 600 because the whole point of this value is that nobody else has it. A
+            # missing secret writes nothing and leaves the endpoint refusing everything, which is
+            # the safe way to be misconfigured.
+            if [ -n "${{ secrets.REVALIDATE_SECRET }}" ]; then
+              umask 177
+              printf 'REVALIDATE_SECRET=%s\n' "${{ secrets.REVALIDATE_SECRET }}" > .env.production
+              echo "wrote .env.production"
+            else
+              echo "::warning::REVALIDATE_SECRET is not set - the website cannot be refreshed on demand"
+            fi
+
             # Restart Passenger app
             mkdir -p tmp
             touch tmp/restart.txt

@@ -1,3 +1,5 @@
+import { routing } from "@/i18n/routing";
+
 const BASE_URL = "https://kabengosafaris.com";
 
 /* ── Organization authority constants ──
@@ -10,7 +12,9 @@ const ORG_SAME_AS: string[] = [
 ];
 const ORG_PHONE = "+255786345408";
 const ORG_EMAIL = "info@kabengosafaris.com";
-const ORG_LANGUAGES = ["en", "sw", "fr", "de", "es", "it", "pt", "af", "uk"];
+// Derived from the routing table so it can never claim a language the site no longer
+// serves: Afrikaans sat here for a week after /af stopped existing.
+const ORG_LANGUAGES = [...routing.locales];
 
 /** Build a locale-aware absolute URL. */
 export function localeUrl(locale: string, path = ""): string {

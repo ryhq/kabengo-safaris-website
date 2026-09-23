@@ -3,6 +3,8 @@
 // (revalidate 600), so edits go near-live while staying resilient to blips.
 // Server-only: imported by server components, the sitemap and /llms.txt.
 
+import { CACHE_TAGS } from "@/lib/server-api";
+
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:4450/api";
 const REVALIDATE = 600; // 10 minutes
 
@@ -49,7 +51,7 @@ async function api<T>(path: string, locale = "en"): Promise<T | null> {
     const sep = path.includes("?") ? "&" : "?";
     const res = await fetch(`${API_BASE_URL}${path}${sep}hl=${encodeURIComponent(locale)}`, {
       headers: { "Accept-Language": locale },
-      next: { revalidate: REVALIDATE },
+      next: { revalidate: REVALIDATE, tags: [CACHE_TAGS.all, CACHE_TAGS.blog] },
     });
     if (!res.ok) return null;
     const json: ApiResponse<T> = await res.json();

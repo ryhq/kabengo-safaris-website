@@ -2,6 +2,8 @@
 // this reads the public backend at /api/public/faqs and caches for ~10 minutes.
 // Server-only: imported by the FAQ page (server) and its layout (JSON-LD).
 
+import { CACHE_TAGS } from "@/lib/server-api";
+
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:4450/api";
 const REVALIDATE = 600; // 10 minutes
 
@@ -23,7 +25,7 @@ export async function getFaqs(locale = "en"): Promise<FaqItem[]> {
     // discriminator; the backend translates off Accept-Language and ignores unknown query params.
     const res = await fetch(`${API_BASE_URL}/public/faqs?hl=${encodeURIComponent(locale)}`, {
       headers: { "Accept-Language": locale },
-      next: { revalidate: REVALIDATE },
+      next: { revalidate: REVALIDATE, tags: [CACHE_TAGS.all, CACHE_TAGS.faqs] },
     });
     if (!res.ok) return [];
     const json: ApiResponse<FaqItem[]> = await res.json();
