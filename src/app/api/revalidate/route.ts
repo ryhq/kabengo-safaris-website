@@ -49,7 +49,8 @@ const KNOWN_TAGS = [
   "heroes",
   "blog",
   "faqs",
-  "brand",
+  // No "brand": this site carries its own name, logo and contact details rather than fetching them,
+  // so a label for them would be accepted, reported as cleared, and clear nothing.
 ] as const;
 
 /** Constant time, so a wrong key cannot be discovered one character at a time. */

@@ -45,7 +45,6 @@ export const CACHE_TAGS = {
   heroes: "heroes",
   blog: "blog",
   faqs: "faqs",
-  brand: "brand",
 } as const;
 
 async function serverFetch<T>(
