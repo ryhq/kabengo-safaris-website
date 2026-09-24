@@ -1060,6 +1060,7 @@
     "parksValue": "{count, plural, one {# parc} other {# parcs}}",
     "vehiclesValue": "{count, plural, one {# 4x4 privé} other {# 4x4 privés}}",
     "nights": "{count, plural, one {# nuit} other {# nuits}}",
-    "playRoute": "Voir l’itinéraire"
+    "playRoute": "Voir l’itinéraire",
+    "orStayAt": "Ou séjournez à"
   }
 }

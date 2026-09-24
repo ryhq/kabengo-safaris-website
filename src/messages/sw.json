@@ -1060,6 +1060,7 @@
     "parksValue": "Hifadhi {count}",
     "vehiclesValue": "Gari {count} la 4x4 la binafsi",
     "nights": "{count, plural, one {Usiku #} other {Usiku #}}",
-    "playRoute": "Cheza njia"
+    "playRoute": "Cheza njia",
+    "orStayAt": "Au kaa katika"
   }
 }

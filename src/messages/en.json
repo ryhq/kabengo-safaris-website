@@ -182,8 +182,7 @@
         "q4": "Is travel insurance required?",
         "a4": "We strongly recommend comprehensive travel insurance that covers trip cancellation, medical emergencies, and evacuation. Some parks and activities may require proof of insurance."
       },
-      "lead": "{name} is a {days}-day, {nights}-night private guided safari in Tanzania with Kabengo Safaris — combining iconic parks and expert local guides in one tailor-made journey.",
-      "orStayAt": "Or stay at"
+      "lead": "{name} is a {days}-day, {nights}-night private guided safari in Tanzania with Kabengo Safaris — combining iconic parks and expert local guides in one tailor-made journey."
     },
     "sectionHeading": "Choose Your Adventure",
     "sectionSubheading": "Browse safari packages by duration, style, and budget",
@@ -1059,6 +1058,7 @@
     "parksValue": "{count, plural, one {# park} other {# parks}}",
     "vehiclesValue": "{count, plural, one {# private 4x4} other {# private 4x4s}}",
     "nights": "{count, plural, one {# night} other {# nights}}",
-    "playRoute": "Play route"
+    "playRoute": "Play route",
+    "orStayAt": "Or stay at"
   }
 }

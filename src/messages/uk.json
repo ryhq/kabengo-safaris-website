@@ -1058,6 +1058,7 @@
     "parksValue": "{count} парків",
     "vehiclesValue": "{count} приватний 4x4",
     "nights": "{count, plural, one {# ніч} few {# ночі} many {# ночей} other {# ночей}}",
-    "playRoute": "Показати маршрут"
+    "playRoute": "Показати маршрут",
+    "orStayAt": "Або проживання в"
   }
 }
