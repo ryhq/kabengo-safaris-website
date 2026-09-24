@@ -22,7 +22,7 @@ const ItineraryRouteModal = dynamic(() => import("@/components/safari/ItineraryR
 // ── types (local — includes fields the global Itinerary type doesn't yet carry) ──
 interface DayPark { parkSlug?: string; parkName?: string; primaryImageUrl?: string; latitude?: number; longitude?: number }
 interface DayActivity { activitySlug?: string; activityName?: string; durationHours?: number; isOptional?: boolean }
-interface DayAccommodation { accommodationSlug?: string; accommodationName?: string; primaryImageUrl?: string; board?: string; roomType?: string; roomStandard?: string; nights?: number }
+interface DayAccommodation { accommodationSlug?: string; accommodationName?: string; primaryImageUrl?: string; board?: string; roomType?: string; roomStandard?: string; nights?: number; isAlternative?: boolean }
 interface ItinDay {
   dayNumber: number; dayTag?: string; title?: string; description?: string;
   morningActivities?: string; afternoonActivities?: string; eveningActivities?: string;
@@ -287,7 +287,7 @@ export default function SafariDetailClient({ initialItin = null }: { initialItin
 
   // dedupe consecutive stays
   const stays: { name: string; slug?: string; sub?: string; image?: string; nights: number }[] = [];
-  days.forEach((d) => { const a = (d.accommodations || [])[0]; if (!a || !a.accommodationName) return; const last = stays[stays.length - 1]; if (last && last.slug === a.accommodationSlug) last.nights += 1; else stays.push({ name: a.accommodationName, slug: a.accommodationSlug, sub: a.board || d.endLocation, image: a.primaryImageUrl, nights: a.nights || 1 }); });
+  days.forEach((d) => { const a = (d.accommodations || []).find((x) => !x.isAlternative); if (!a || !a.accommodationName) return; const last = stays[stays.length - 1]; if (last && last.slug === a.accommodationSlug) last.nights += 1; else stays.push({ name: a.accommodationName, slug: a.accommodationSlug, sub: a.board || d.endLocation, image: a.primaryImageUrl, nights: a.nights || 1 }); });
 
   const stops: MapStop[] = days.filter((d) => d.isOvernight || d.dayNumber === 1).map((d) => { const c = resolveStopCoord(d); return { n: d.dayNumber, lat: c?.lat, lng: c?.lng }; });
   const geoStopsRaw = stops.filter((s) => s.lat != null && s.lng != null).map((s) => ({ n: s.n, lat: s.lat as number, lng: s.lng as number }));
@@ -478,7 +478,8 @@ export default function SafariDetailClient({ initialItin = null }: { initialItin
             <div className="flex flex-col" style={{ gap: 18 }}>
               {days.map((d) => {
                 const isOpen = !!open[d.dayNumber];
-                const acc = (d.accommodations || [])[0];
+                const acc = (d.accommodations || []).find((a) => !a.isAlternative);
+                const altAcc = (d.accommodations || []).filter((a) => a.isAlternative && a.accommodationName);
                 const meals = mealPills(d.mealsIncluded);
                 const timeBlocks = [d.morningActivities && { label: t("morning"), text: d.morningActivities }, d.afternoonActivities && { label: t("afternoon"), text: d.afternoonActivities }, d.eveningActivities && { label: t("evening"), text: d.eveningActivities }].filter(Boolean) as { label: string; text: string }[];
                 const activeCard = d.dayNumber === active;
@@ -528,6 +529,31 @@ export default function SafariDetailClient({ initialItin = null }: { initialItin
                                 <span className="flex-shrink-0" style={{ width: 52, height: 52, borderRadius: 8, background: acc.primaryImageUrl ? `50% 50%/cover no-repeat url('${acc.primaryImageUrl}')` : grad(acc.accommodationName) }} />
                                 <span style={{ minWidth: 0 }}><span style={{ display: "block", fontSize: 11, color: "#7a6f61", textTransform: "uppercase", letterSpacing: ".05em" }}>{t("stay")}</span><span style={{ fontFamily: SERIF, fontWeight: 600, color: "#2a2018", fontSize: 15, ...ONE_LINE, display: "block" }}>{acc.accommodationName}</span>{(acc.board || acc.roomStandard || acc.roomType) && <span style={{ fontSize: 12, color: "#7a6f61" }}>{[acc.roomStandard, acc.roomType].filter(Boolean).join(" ")}{acc.board ? ` · ${acc.board}` : ""}</span>}</span>
                               </Link>
+                            </div>
+                          )}
+                          {altAcc.length > 0 && (
+                            /*
+                              Lodges this trip also offers for the night.
+
+                              Shown under the priced one, quieter and smaller, because the price on
+                              the page is built on the lodge above. A traveller comparing properties
+                              wants to know the choice exists; a traveller reading straight through
+                              should not mistake it for a second hotel on the same night.
+                            */
+                            <div className="flex items-start" style={{ gap: 12 }}>
+                              <span className="flex-shrink-0" style={{ width: 26 }} />
+                              <div style={{ flex: 1, minWidth: 0 }}>
+                                <span style={{ display: "block", fontSize: 11, color: "#7a6f61", textTransform: "uppercase", letterSpacing: ".05em", marginBottom: 7 }}>{t("orStayAt")}</span>
+                                <div className="flex flex-wrap" style={{ gap: 7 }}>
+                                  {altAcc.map((a, i) => (
+                                    <Link key={i} href={a.accommodationSlug ? `/accommodations/${a.accommodationSlug}` : "#"} className="chip-link inline-flex items-center" style={{ gap: 8, background: "#fff", border: "1px dashed #d8cfc0", borderRadius: 20, padding: "5px 12px 5px 5px", color: "#4a3f34" }}>
+                                      <span className="flex-shrink-0" style={{ width: 26, height: 26, borderRadius: "50%", background: a.primaryImageUrl ? `50% 50%/cover no-repeat url('${a.primaryImageUrl}')` : grad(a.accommodationName || "") }} />
+                                      <span style={{ fontSize: 12.5, fontWeight: 600 }}>{a.accommodationName}</span>
+                                      {(a.roomStandard || a.board) && <span style={{ fontSize: 11.5, color: "#7a6f61", fontWeight: 500 }}>{[a.roomStandard, a.board].filter(Boolean).join(" · ")}</span>}
+                                    </Link>
+                                  ))}
+                                </div>
+                              </div>
                             </div>
                           )}
                           {d.mealsIncluded && (
