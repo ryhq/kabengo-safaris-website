@@ -1,117 +1,85 @@
 import type { Metadata } from "next";
 import { buildAlternates } from "@/lib/seo";
+import { fetchLegalNotice } from "@/lib/server-api";
 import { ObfuscatedEmail, ObfuscatedPhone } from "@/components/ui/ObfuscatedContact";
 
+/**
+ * The privacy notice, read from the API rather than written here.
+ *
+ * It used to be markup in this file, and that was wrong in two ways that both bit. There are two
+ * of these websites, near-identical, so one sentence meant two edits and two deploys and the two
+ * copies drifted. And the text made promises about systems this page knows nothing about: it
+ * stated plainly that we collect nothing automatically and set no cookies, which stopped being
+ * true the day the client portal shipped a session.
+ *
+ * Now there is one notice, edited at Settings and versioned, so the version a customer agreed to
+ * stays retrievable after the words have moved on.
+ *
+ * The contact block below is deliberately still local: it is the only part that is specific to
+ * this site, and the obfuscated email and phone components exist to keep those two out of the
+ * page source for scrapers.
+ */
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
+  const notice = await fetchLegalNotice("privacy-policy", locale);
   return {
-    title: "Privacy Policy",
-    description: "Learn how Kabengo Safaris collects, uses, and protects your personal information.",
+    title: notice?.title ?? "Privacy Policy",
+    description: "How we collect, use and protect your personal information.",
     alternates: buildAlternates(locale, "/privacy-policy"),
   };
 }
 
-export default function PrivacyPolicyPage() {
+export default async function PrivacyPolicyPage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  const notice = await fetchLegalNotice("privacy-policy", locale);
+
   return (
     <section className="py-20 bg-white">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <h1 className="text-3xl sm:text-4xl font-bold text-stone-900 font-serif mb-2">
-          Privacy Policy
+          {notice?.title ?? "Privacy Policy"}
         </h1>
-        <p className="text-sm text-stone-400 mb-10">Last updated: March 19, 2026</p>
+        {notice?.effectiveFrom && (
+          <p className="text-sm text-stone-400 mb-10">
+            In effect from {notice.effectiveFrom}
+            {notice.version ? ` · version ${notice.version}` : ""}
+          </p>
+        )}
 
-        <div className="prose prose-stone max-w-none space-y-8 text-stone-600 leading-relaxed text-[15px]">
-          <div>
-            <h2 className="text-xl font-bold text-stone-800 font-serif mb-3">1. Who We Are</h2>
+        {notice ? (
+          /*
+           * Rendered and escaped on the server from a small plain-text markup. Nothing a person
+           * typed reaches this as markup, which is why it can be injected at all.
+           */
+          <div
+            className="prose prose-stone max-w-none space-y-4 text-stone-600 leading-relaxed text-[15px] [&_h2]:text-xl [&_h2]:font-bold [&_h2]:text-stone-800 [&_h2]:font-serif [&_h2]:mt-8 [&_h2]:mb-3 [&_ul]:list-disc [&_ul]:pl-5 [&_li]:mb-1.5"
+            dangerouslySetInnerHTML={{ __html: notice.html }}
+          />
+        ) : (
+          /*
+           * Honest rather than blank. A heading over nothing reads as a company that has not got
+           * a policy, which is worse than one that says it is being updated and offers a person
+           * to ask.
+           */
+          <div className="prose prose-stone max-w-none text-stone-600 leading-relaxed text-[15px]">
             <p>
-              Kabengo Safaris is a safari tour company registered in Tanzania, based in Arusha. We operate the website{" "}
-              <strong>kabengosafaris.com</strong> and are committed to protecting your personal information.
-            </p>
-            <p className="mt-2">
-              <strong>Contact:</strong> <ObfuscatedEmail />
+              Our privacy notice is being updated. Ask us for the current version and we will send
+              it to you.
             </p>
           </div>
+        )}
 
-          <div>
-            <h2 className="text-xl font-bold text-stone-800 font-serif mb-3">2. Information We Collect</h2>
-            <p>We only collect information that you voluntarily provide to us through:</p>
-            <ul className="list-disc pl-5 mt-2 space-y-1.5">
-              <li><strong>Booking Inquiry Form</strong> — your name, email address, phone number, travel preferences, and message</li>
-              <li><strong>Contact Form</strong> — your name, email address, and message</li>
-              <li><strong>Newsletter Subscription</strong> — your email address</li>
-            </ul>
-            <p className="mt-3">
-              We do <strong>not</strong> collect any data automatically. We do not use cookies, analytics tools, tracking pixels, or any third-party monitoring services.
-            </p>
-          </div>
-
-          <div>
-            <h2 className="text-xl font-bold text-stone-800 font-serif mb-3">3. How We Use Your Information</h2>
-            <p>We use the information you provide solely for the following purposes:</p>
-            <ul className="list-disc pl-5 mt-2 space-y-1.5">
-              <li><strong>Booking inquiries</strong> — to respond to your safari inquiry, prepare a quote, and coordinate your trip</li>
-              <li><strong>Contact messages</strong> — to reply to your questions or feedback</li>
-              <li><strong>Newsletter</strong> — to send you occasional updates about our safaris and travel tips (you can unsubscribe at any time)</li>
-            </ul>
-          </div>
-
-          <div>
-            <h2 className="text-xl font-bold text-stone-800 font-serif mb-3">4. Data Sharing</h2>
-            <p>
-              We do <strong>not</strong> share, sell, rent, or trade your personal information with any third parties. Your data stays with us and is used only to serve you.
-            </p>
-          </div>
-
-          <div>
-            <h2 className="text-xl font-bold text-stone-800 font-serif mb-3">5. Data Storage & Security</h2>
-            <p>
-              Your data is stored securely on our server hosted by DigitalOcean, a trusted cloud infrastructure provider with data centers that comply with industry security standards.
-            </p>
-            <p className="mt-2">
-              We take reasonable measures to protect your information from unauthorized access, alteration, or destruction. However, no method of internet transmission is 100% secure.
-            </p>
-          </div>
-
-          <div>
-            <h2 className="text-xl font-bold text-stone-800 font-serif mb-3">6. Your Rights</h2>
-            <p>You have the right to:</p>
-            <ul className="list-disc pl-5 mt-2 space-y-1.5">
-              <li><strong>Access</strong> — request a copy of the personal data we hold about you</li>
-              <li><strong>Correction</strong> — ask us to correct any inaccurate information</li>
-              <li><strong>Deletion</strong> — request that we delete your personal data</li>
-              <li><strong>Unsubscribe</strong> — opt out of newsletter emails at any time</li>
-            </ul>
-            <p className="mt-3">
-              To exercise any of these rights, contact us at <strong><ObfuscatedEmail /></strong>.
-            </p>
-          </div>
-
-          <div>
-            <h2 className="text-xl font-bold text-stone-800 font-serif mb-3">7. Children&apos;s Privacy</h2>
-            <p>
-              Our website is not directed at children under 16. We do not knowingly collect personal information from children. If you believe a child has submitted personal data to us, please contact us and we will promptly delete it.
-            </p>
-          </div>
-
-          <div>
-            <h2 className="text-xl font-bold text-stone-800 font-serif mb-3">8. Changes to This Policy</h2>
-            <p>
-              We may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated &ldquo;Last updated&rdquo; date. We encourage you to review this page periodically.
-            </p>
-          </div>
-
-          <div>
-            <h2 className="text-xl font-bold text-stone-800 font-serif mb-3">9. Contact Us</h2>
-            <p>
-              If you have any questions about this Privacy Policy or how we handle your data, contact us at:
-            </p>
-            <p className="mt-2">
-              <strong>Kabengo Safaris</strong><br />
-              Arusha, Tanzania<br />
-              Email: <ObfuscatedEmail /><br />
-              Phone: <ObfuscatedPhone />
-            </p>
-          </div>
+        <div className="mt-10 border-t border-stone-200 pt-8 text-stone-600 text-[15px]">
+          <h2 className="text-xl font-bold text-stone-800 font-serif mb-3">Contact us</h2>
+          <p>
+            If you have any question about this notice, about what is held about you, or if you
+            would like it erased, write to us:
+          </p>
+          <p className="mt-2">
+            Email: <ObfuscatedEmail />
+            <br />
+            Phone: <ObfuscatedPhone />
+          </p>
         </div>
       </div>
     </section>

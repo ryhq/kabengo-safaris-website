@@ -295,3 +295,32 @@ export async function fetchAllAccommodationIds(): Promise<SitemapItem[]> {
 export async function fetchAllActivityIds(): Promise<SitemapItem[]> {
   return fetchAllIds("/public/activities", "activities", CACHE_TAGS.activities);
 }
+
+/**
+ * A legal notice, written once in the panel and read by both sites.
+ *
+ * The privacy policy used to be markup in this repo, which meant two copies of one text in two
+ * near-identical repositories and a deploy to change a sentence. It also meant the page could
+ * say things that stopped being true elsewhere: it promised no cookies and no automatic
+ * collection, which the client portal's session makes false the day it ships.
+ *
+ * `html` comes back already rendered and escaped by the API, from a small plain-text markup.
+ * Nothing here parses it, and nothing here may be given markup a person typed.
+ */
+export interface LegalNotice {
+  type: string;
+  slug: string;
+  title: string;
+  version: string;
+  effectiveFrom: string;
+  html: string;
+}
+
+export async function fetchLegalNotice(slug: string, locale = "en"): Promise<LegalNotice | null> {
+  /*
+   * A short window, not the hour the rest of the site uses. A privacy notice is republished
+   * precisely when something about it has changed and somebody needs the new text to be the one
+   * people read.
+   */
+  return serverFetch<LegalNotice>(`/public/legal/${slug}`, locale, 300, []);
+}
