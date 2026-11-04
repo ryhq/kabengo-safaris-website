@@ -1,11 +1,23 @@
-name: Build & Deploy Next.js to cPanel
+name: Build & Deploy Website to Droplet
+
+# Kabengo's website left cPanel on 2026-11-04 and now runs as a Next.js standalone
+# server behind nginx on the company's own droplet, the same shape Jatelo's uses.
+#
+# The previous version of this file deployed to cPanel and restarted Passenger by
+# touching tmp/restart.txt. Nothing on the droplet reads that file, so a deploy ran
+# green while the live site kept serving whatever was copied there by hand.
 
 on:
   push:
     branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-website
+  cancel-in-progress: false
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -19,89 +31,138 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Lint
         run: npm run lint || true
 
-      - name: Build Next.js (standalone)
+      # `prebuild` (scripts/sync-languages.mjs --apply) runs automatically here.
+      # It fetches the supported-language list from the backend and rewrites
+      # src/i18n/routing.ts, so THE BACKEND MUST BE REACHABLE OR THE BUILD FAILS
+      # — the script exits 1 on a fetch error. A build launched during an API
+      # restart dies here with a 502; retry rather than investigate.
+      - name: Build (standalone)
         env:
           NEXT_PUBLIC_API_BASE_URL: ${{ secrets.NEXT_PUBLIC_API_BASE_URL }}
         run: npm run build
 
-      - name: Prepare standalone package
+      # What the build actually decided the locales are. prebuild rewrote
+      # routing.ts from the API a moment ago, so this is the only place that
+      # knows the answer; a list kept by hand here goes stale the day a language
+      # is added or dropped and then reports the deploy broken.
+      - name: Read the locales this build produced
+        id: locales
         run: |
+          set -euo pipefail
+          list=$(node -e "
+            const s = require('fs').readFileSync('src/i18n/routing.ts','utf8');
+            const m = s.match(/locales:\s*(\[[^\]]*\])/);
+            if (!m) { console.error('could not read locales from routing.ts'); process.exit(1); }
+            process.stdout.write(JSON.parse(m[1]).join(' '));
+          ")
+          echo "locales=$list" >> "$GITHUB_OUTPUT"
+          echo "built with: $list"
+
+      - name: Assemble standalone bundle
+        run: |
+          set -euo pipefail
+          # next build --standalone deliberately omits these; the server 404s on
+          # every asset without them.
           cp -r .next/static .next/standalone/.next/static
           cp -r public .next/standalone/public
+          tar -C .next/standalone -czf deploy.tar.gz .
+          ls -lh deploy.tar.gz
 
-      - name: Create deployment archive
-        run: |
-          cd .next/standalone
-          tar -czf ../../deploy.tar.gz .
-
-      - name: Deploy to cPanel via SSH
+      - name: Upload bundle
         uses: appleboy/scp-action@v0.1.7
         with:
-          host: ${{ secrets.CPANEL_HOST }}
-          username: ${{ secrets.CPANEL_USERNAME }}
-          key: ${{ secrets.CPANEL_SSH_KEY }}
-          passphrase: ${{ secrets.CPANEL_SSH_KEY_PASSPHRASE }}
-          port: ${{ secrets.CPANEL_PORT }}
-          source: "deploy.tar.gz"
-          target: ${{ secrets.CPANEL_NEXTJS_APP_PATH }}
+          host: ${{ secrets.DROPLET_HOST }}
+          username: root
+          key: ${{ secrets.DROPLET_SSH_KEY }}
+          source: deploy.tar.gz
+          target: /opt/kabengosafaris/incoming-website/
 
-      - name: Extract and restart on cPanel
-        uses: appleboy/ssh-action@v1.2.0
+      - name: Swap in, restart, health-check, roll back on failure
+        uses: appleboy/ssh-action@v1.0.3
         with:
-          host: ${{ secrets.CPANEL_HOST }}
-          username: ${{ secrets.CPANEL_USERNAME }}
-          key: ${{ secrets.CPANEL_SSH_KEY }}
-          passphrase: ${{ secrets.CPANEL_SSH_KEY_PASSPHRASE }}
-          port: ${{ secrets.CPANEL_PORT }}
+          host: ${{ secrets.DROPLET_HOST }}
+          username: root
+          key: ${{ secrets.DROPLET_SSH_KEY }}
+          command_timeout: 10m
           script: |
-            cd ${{ secrets.CPANEL_NEXTJS_APP_PATH }}
+            set -euo pipefail
+            BASE=/opt/kabengosafaris
+            TAR=$BASE/incoming-website/deploy.tar.gz
 
-            # Extract new build (overwrite existing files)
-            tar -xzf deploy.tar.gz
+            test -s "$TAR" || { echo "::error::uploaded bundle missing or empty"; exit 1; }
 
-            # Clean up archive
-            rm -f deploy.tar.gz
+            # Unpack beside the live directory, then swap. Extracting in place
+            # would leave the site serving a half-written tree mid-deploy, and
+            # would keep stale files the new build no longer ships.
+            rm -rf "$BASE/website.new"
+            mkdir -p "$BASE/website.new"
+            tar -xzf "$TAR" -C "$BASE/website.new"
+            test -f "$BASE/website.new/server.js" || {
+              echo "::error::server.js missing from bundle"; exit 1; }
 
-            # Drop Next's server-side fetch cache.
-            #
-            # The extract writes over the old files and leaves everything it does not replace, so
-            # .next/cache survived every deploy — and with it, up to an hour of API responses from
-            # BEFORE the deploy. That is harmless when a description changes and serious when the
-            # API starts refusing something: three unpublished trips went on being served from this
-            # cache, at 200, after the API had begun answering 404 for them, and after the page had
-            # been fixed to call notFound().
-            #
-            # Only fetch-cache. The ISR page cache and the optimised images can rebuild themselves
-            # lazily; this one holds answers that are now wrong.
-            rm -rf .next/cache/fetch-cache
+            rm -rf "$BASE/website.old"
+            [ -d "$BASE/website" ] && mv "$BASE/website" "$BASE/website.old"
+            mv "$BASE/website.new" "$BASE/website"
 
             # The key that lets the API tell this site to refresh itself.
             #
-            # Runtime, not build time: the revalidate route reads it per request, so it must be in
-            # the server's environment rather than baked into the bundle. Next's standalone server
-            # loads .env.production from its own directory at startup, which is the one mechanism
-            # both hosts share — cPanel's Passenger and the droplet's systemd unit set environment
-            # in completely different places.
+            # Runtime, not build time: the revalidate route reads it per request, so it must be
+            # in the server's environment rather than baked into the bundle. Next's standalone
+            # server loads .env.production from its own directory at startup, which is the one
+            # mechanism both companies' hosts share.
             #
-            # Written every deploy so the secret is only ever in one place that anybody edits:
-            # GitHub. 600 because the whole point of this value is that nobody else has it. A
-            # missing secret writes nothing and leaves the endpoint refusing everything, which is
-            # the safe way to be misconfigured.
+            # Written every deploy, because the swap above replaces the whole directory — a file
+            # left from last time would not survive it. A missing secret writes nothing and
+            # leaves the endpoint refusing everything, which is the safe way to be misconfigured.
             if [ -n "${{ secrets.REVALIDATE_SECRET }}" ]; then
               umask 177
-              printf 'REVALIDATE_SECRET=%s\n' "${{ secrets.REVALIDATE_SECRET }}" > .env.production
+              printf 'REVALIDATE_SECRET=%s\n' "${{ secrets.REVALIDATE_SECRET }}" > "$BASE/website/.env.production"
               echo "wrote .env.production"
             else
               echo "::warning::REVALIDATE_SECRET is not set - the website cannot be refreshed on demand"
             fi
 
-            # Restart Passenger app
-            mkdir -p tmp
-            touch tmp/restart.txt
+            chown -R kabengo:kabengo "$BASE/website"
+            rm -rf "$BASE/incoming-website"
 
-            echo "Deployment complete - Next.js app restarted"
+            systemctl restart kabengo-website
+
+            ok=0
+            for i in $(seq 1 24); do
+              code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 10 \
+                       http://127.0.0.1:3000/en || true)
+              if [ "$code" = "200" ]; then ok=1; echo "healthy after $((i*5))s"; break; fi
+              sleep 5
+            done
+
+            if [ "$ok" -ne 1 ]; then
+              echo "::error::website health check failed — rolling back"
+              journalctl -u kabengo-website -n 60 --no-pager || true
+              if [ -d "$BASE/website.old" ]; then
+                rm -rf "$BASE/website"
+                mv "$BASE/website.old" "$BASE/website"
+                systemctl restart kabengo-website
+                echo "rolled back to previous build"
+              fi
+              exit 1
+            fi
+
+            rm -rf "$BASE/website.old"
+            systemctl is-active kabengo-website
+
+      - name: Verify through nginx
+        run: |
+          fail=0
+          # Every locale the build produced, not a list kept by hand.
+          for l in ${{ steps.locales.outputs.locales }}; do
+            code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 25 \
+                     "https://kabengosafaris.com/$l" || true)
+            echo "  /$l -> $code"
+            [ "$code" = "200" ] || fail=1
+          done
+          [ "$fail" -eq 0 ] || { echo "::error::public site did not return 200"; exit 1; }
