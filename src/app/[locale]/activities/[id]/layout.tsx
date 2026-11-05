@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { fetchActivityMeta } from "@/lib/server-api";
-import { buildAlternates } from "@/lib/seo";
+import { buildAlternates, DEFAULT_OG_IMAGE } from "@/lib/seo";
 import { JsonLd, getActivityJsonLd, getBreadcrumbJsonLd, localeUrl } from "@/lib/jsonld";
 
 export async function generateMetadata({
@@ -29,15 +29,13 @@ export async function generateMetadata({
       description,
       type: "website",
       url: `https://kabengosafaris.com/${locale}/activities/${activity.slug}`,
-      ...(activity.primaryImageUrl && {
-        images: [{ url: activity.primaryImageUrl, width: 1200, height: 630, alt: activity.name }],
-      }),
+      images: [{ url: activity.primaryImageUrl || DEFAULT_OG_IMAGE, width: 1200, height: 630, alt: activity.name }],
     },
     twitter: {
       card: "summary_large_image",
       title: activity.name,
       description,
-      ...(activity.primaryImageUrl && { images: [activity.primaryImageUrl] }),
+      images: [activity.primaryImageUrl || DEFAULT_OG_IMAGE],
     },
   };
 }

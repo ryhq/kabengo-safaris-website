@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { fetchParkMeta } from "@/lib/server-api";
-import { buildAlternates } from "@/lib/seo";
+import { buildAlternates, DEFAULT_OG_IMAGE } from "@/lib/seo";
 import { JsonLd, getParkJsonLd, getBreadcrumbJsonLd, getFAQJsonLd, localeUrl } from "@/lib/jsonld";
 
 export async function generateMetadata({
@@ -29,15 +29,13 @@ export async function generateMetadata({
       description,
       type: "website",
       url: `https://kabengosafaris.com/${locale}/parks/${park.slug}`,
-      ...(park.primaryImageUrl && {
-        images: [{ url: park.primaryImageUrl, width: 1200, height: 630, alt: park.name }],
-      }),
+      images: [{ url: park.primaryImageUrl || DEFAULT_OG_IMAGE, width: 1200, height: 630, alt: park.name }],
     },
     twitter: {
       card: "summary_large_image",
       title: park.name,
       description,
-      ...(park.primaryImageUrl && { images: [park.primaryImageUrl] }),
+      images: [park.primaryImageUrl || DEFAULT_OG_IMAGE],
     },
   };
 }
