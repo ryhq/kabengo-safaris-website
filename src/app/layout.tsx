@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { JsonLd, getOrganizationJsonLd } from "@/lib/jsonld";
 import { fetchTestimonySummary } from "@/lib/server-api";
+import { buildOpenGraph, buildTwitter } from "@/lib/seo";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -29,20 +30,17 @@ export const metadata: Metadata = {
     apple: "/images/favicon.svg",
   },
   manifest: "/manifest.json",
-  openGraph: {
-    type: "website",
-    siteName: "Kabengo Safaris",
+  openGraph: buildOpenGraph({
     title: "Kabengo Safaris - Unforgettable African Safari Experiences",
     description:
       "Premium safari tours, breathtaking destinations, and unforgettable wildlife experiences across East Africa.",
     url: "https://kabengosafaris.com",
-  },
-  twitter: {
-    card: "summary_large_image",
+  }),
+  twitter: buildTwitter({
     title: "Kabengo Safaris - Unforgettable African Safari Experiences",
     description:
       "Premium safari tours, breathtaking destinations, and unforgettable wildlife experiences across East Africa.",
-  },
+  }),
 };
 
 export default async function RootLayout({

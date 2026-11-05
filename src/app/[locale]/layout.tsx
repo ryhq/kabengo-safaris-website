@@ -9,7 +9,7 @@ import Footer from "@/components/layout/Footer";
 import ApiLocaleSync from "@/lib/ApiLocaleSync";
 import AttributionCapture from "@/components/analytics/AttributionCapture";
 import ImageProtection from "@/components/ui/ImageProtection";
-import { buildAlternates, ogLocale } from "@/lib/seo";
+import { buildAlternates, buildOpenGraph, buildTwitter } from "@/lib/seo";
 import { JsonLd, getWebSiteJsonLd } from "@/lib/jsonld";
 import WhatsAppButton from "@/components/ui/WhatsAppButton";
 import BackToTopButton from "@/components/ui/BackToTopButton";
@@ -21,9 +21,25 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
+  /*
+   * Only the locale belongs here -- but `openGraph: { locale }` alone REPLACED the root
+   * layout's whole block, taking og:type, og:site_name and the picture with it. Spelling the
+   * defaults out again is the only way they survive the merge.
+   */
   return {
     alternates: buildAlternates(locale),
-    openGraph: { locale: ogLocale(locale) },
+    openGraph: buildOpenGraph({
+      title: "Kabengo Safaris - Unforgettable African Safari Experiences",
+      description:
+        "Premium safari tours, breathtaking destinations, and unforgettable wildlife experiences across East Africa.",
+      url: `https://kabengosafaris.com/${locale}`,
+      locale,
+    }),
+    twitter: buildTwitter({
+      title: "Kabengo Safaris - Unforgettable African Safari Experiences",
+      description:
+        "Premium safari tours, breathtaking destinations, and unforgettable wildlife experiences across East Africa.",
+    }),
   };
 }
 
