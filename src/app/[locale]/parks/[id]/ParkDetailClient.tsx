@@ -9,6 +9,7 @@ import FeaturedCarousel from "@/components/ui/FeaturedCarousel";
 import PhotoWheel from "@/components/park/PhotoWheel";
 import dynamic from "next/dynamic";
 import { apiClient } from "@/lib/api";
+import { StarRating } from "@/components/ui/Glyphs";
 
 // Real OSM map — client-only (Leaflet needs window). Shared with the itinerary map.
 const ParkMap = dynamic(() => import("@/components/ui/ParkMap"), { ssr: false, loading: () => null });
@@ -77,7 +78,7 @@ function parseTags(raw?: string): string[] {
 /** Split a wildlife/list string into pills; returns [] if it reads like prose. */
 function parseList(raw?: string): string[] {
   if (!raw) return [];
-  const parts = raw.split(/[,;\n·|]+/).map((x) => x.trim()).filter(Boolean);
+  const parts = raw.split(/[,;\n||]+/).map((x) => x.trim()).filter(Boolean);
   if (parts.length < 2) return [];
   if (parts.some((p) => p.length > 34)) return [];
   return parts.slice(0, 16);
@@ -141,7 +142,7 @@ export default function ParkDetailClient({ initialPark = null, initialImages = [
   const planHref = `/plan?park=${encodeURIComponent(park.slug)}&parkName=${encodeURIComponent(park.name)}`;
   const heroImg = park.primaryImageUrl || (images[0]?.imageUrl ?? null);
   const heroBg = heroImg ? `50% 42%/cover no-repeat url('${heroImg}')` : gradFor(park.slug);
-  const kicker = [typeLabel, park.region].filter(Boolean).join(" · ");
+  const kicker = [typeLabel, park.region].filter(Boolean).join(" | ");
   const tags = parseTags(park.tags);
   const wildlife = parseList(park.wildlife);
   const hasCoords = park.latitude != null && park.longitude != null && park.latitude !== 0 && park.longitude !== 0;
@@ -161,7 +162,7 @@ export default function ParkDetailClient({ initialPark = null, initialImages = [
 
   const ecosystemText = [park.ecosystem, park.vegetation].filter(Boolean).join(" ");
 
-  // Editorial overlay card for "Things to do" — same design as /activities, no safari-count badge.
+  // Editorial overlay card for "Things to do" - same design as /activities, no safari-count badge.
   const renderActivityCard = (a: ActivityItem) => {
     const img = a.primaryImageUrl || a.primaryImage;
     const bg = img ? `50% 45%/cover no-repeat url('${img}')` : gradFor(a.slug);
@@ -183,7 +184,7 @@ export default function ParkDetailClient({ initialPark = null, initialImages = [
   // Editorial safari card for "Safaris that visit this park".
   const renderSafariCard = (s: SafariItem) => {
     const bg = s.primaryImageUrl ? `50% 45%/cover no-repeat url('${s.primaryImageUrl}')` : gradFor(s.code);
-    const kicker = [s.totalDays ? `${s.totalDays} ${s.totalDays === 1 ? "Day" : "Days"}` : null, s.tripTypeDisplayName].filter(Boolean).join(" · ");
+    const kicker = [s.totalDays ? `${s.totalDays} ${s.totalDays === 1 ? "Day" : "Days"}` : null, s.tripTypeDisplayName].filter(Boolean).join(" | ");
     const price = safariFromPrice(s);
     return (
       <article className="group relative" style={{ height: 300, borderRadius: 20, overflow: "hidden", background: bg }}>
@@ -214,7 +215,7 @@ export default function ParkDetailClient({ initialPark = null, initialImages = [
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#00aa6c" strokeWidth={2.2} style={{ flexShrink: 0 }}><path d="M20 6 9 17l-5-5" strokeLinecap="round" strokeLinejoin="round" /></svg>{t("railReply")}
         </div>
         <div className="flex items-center" style={{ gap: 8, paddingTop: 12, borderTop: "1px solid #e4ddd1", marginTop: 4 }}>
-          <span style={{ color: "#c48f2b", letterSpacing: 1, fontSize: 14 }}>★★★★★</span><span style={{ color: "#7a6f61", fontSize: 12.5 }}>5.0 · Tripadvisor · TATO/TALA</span>
+          <StarRating size={14} /><span style={{ color: "#7a6f61", fontSize: 12.5 }}>5.0 | Tripadvisor | TATO/TALA</span>
         </div>
       </div>
     </div>
@@ -224,7 +225,7 @@ export default function ParkDetailClient({ initialPark = null, initialImages = [
     <div className="pd" style={{ fontFamily: "var(--font-inter), Inter, system-ui, sans-serif", background: "linear-gradient(175deg,#faf8f5,#f1ece3 140%)", color: "#4a3f34", overflowX: "clip" }}>
       <style>{CSS}</style>
 
-      {/* ===== (1) TALL HERO — kicker + title, bottom-left ===== */}
+      {/* ===== (1) TALL HERO - kicker + title, bottom-left ===== */}
       <header style={{ position: "relative", overflow: "hidden", minHeight: "clamp(460px,70vh,640px)", display: "flex", alignItems: "flex-end", padding: "clamp(96px,12vh,124px) clamp(18px,5vw,56px) clamp(36px,5vw,56px)", background: heroBg }}>
         {!heroImg && (
           <svg aria-hidden="true" viewBox="0 0 240 160" style={{ position: "absolute", right: -20, bottom: 0, width: "min(380px,42vw)", opacity: 0.12, color: "#fff" }}><g fill="none" stroke="currentColor" strokeWidth={3} strokeLinecap="round"><path d="M120 160v-70" /><path d="M120 94c-24-6-48-22-64-28 14 12 38 26 56 30M120 94c24-6 50-20 66-26-16 12-42 24-60 28" /><path d="M50 68c20-14 42-14 70-12 28 2 50-2 72 8-18-14-42-16-70-16-30 0-52 6-72 20Z" /></g></svg>
@@ -315,7 +316,7 @@ export default function ParkDetailClient({ initialPark = null, initialImages = [
               </section>
             )}
 
-            {/* (7) THINGS TO DO — editorial cards in a carousel (no safari-count) */}
+            {/* (7) THINGS TO DO - editorial cards in a carousel (no safari-count) */}
             {activities.length > 0 && (
               <section style={{ marginBottom: "clamp(36px,5vw,52px)" }}>
                 <FeaturedCarousel title={t("thingsToDo")} subtitle={t("thingsToDoSub")} items={activities} renderCard={renderActivityCard} />
@@ -329,7 +330,7 @@ export default function ParkDetailClient({ initialPark = null, initialImages = [
               </section>
             )}
 
-            {/* (9) GALLERY — continuous photo wheel (swipeable) + lightbox on click */}
+            {/* (9) GALLERY - continuous photo wheel (swipeable) + lightbox on click */}
             {images.length > 0 && (
               <section style={{ marginBottom: "clamp(36px,5vw,52px)" }}>
                 <h2 style={{ fontFamily: SERIF, fontWeight: 700, color: "#2a2018", fontSize: "clamp(24px,3.2vw,32px)", margin: "0 0 18px" }}>{t("inPhotos", { name: shortName })}</h2>
@@ -337,7 +338,7 @@ export default function ParkDetailClient({ initialPark = null, initialImages = [
               </section>
             )}
 
-            {/* (10) GETTING THERE — info + real map (map takes the wide column) */}
+            {/* (10) GETTING THERE - info + real map (map takes the wide column) */}
             {(park.accessInformation || park.openingHours || hasCoords || park.location) && (() => {
               const AccessCard = park.accessInformation && (
                 <div style={{ background: "#fff", border: "1px solid #e4ddd1", borderRadius: 14, padding: 20 }}>
@@ -358,7 +359,7 @@ export default function ParkDetailClient({ initialPark = null, initialImages = [
               ) : (park.location || park.region) ? (
                 <div style={{ background: "#e6ece2", border: "1px solid #e4ddd1", borderRadius: 14, padding: 20, display: "flex", alignItems: "center", gap: 12 }}>
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#274e22" strokeWidth={1.8} style={{ flexShrink: 0 }}><path d="M12 21s-7-4.5-7-10a7 7 0 0 1 14 0c0 5.5-7 10-7 10Z" /><circle cx="12" cy="11" r="2.4" /></svg>
-                  <span style={{ color: "#274e22", fontWeight: 600, fontSize: 15 }}>{[park.location, park.district, park.region].filter(Boolean).join(" · ")}</span>
+                  <span style={{ color: "#274e22", fontWeight: 600, fontSize: 15 }}>{[park.location, park.district, park.region].filter(Boolean).join(" | ")}</span>
                 </div>
               ) : null;
               return (
@@ -412,7 +413,7 @@ export default function ParkDetailClient({ initialPark = null, initialImages = [
             </a>
           </div>
           <div className="flex flex-wrap justify-center" style={{ gap: "14px 26px", paddingTop: 26, borderTop: "1px solid rgba(242,236,224,.15)" }}>
-            <span className="inline-flex items-center" style={{ gap: 8, fontSize: 13.5, color: "rgba(242,236,224,.85)" }}><span style={{ color: "#00aa6c", fontWeight: 700, fontFamily: SERIF, fontSize: 16 }}>5.0</span><span style={{ color: "#c48f2b", letterSpacing: 1 }}>★★★★★</span>Tripadvisor</span>
+            <span className="inline-flex items-center" style={{ gap: 8, fontSize: 13.5, color: "rgba(242,236,224,.85)" }}><span style={{ color: "#00aa6c", fontWeight: 700, fontFamily: SERIF, fontSize: 16 }}>5.0</span><StarRating size={13} />Tripadvisor</span>
             <span className="inline-flex items-center" style={{ gap: 8, fontSize: 13.5, color: "rgba(242,236,224,.85)" }}><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#c48f2b" strokeWidth={2}><path d="M12 2 4 6v6c0 5 3.5 8 8 10 4.5-2 8-5 8-10V6Z" strokeLinejoin="round" /></svg>{t("accredited")}</span>
             <span className="inline-flex items-center" style={{ gap: 8, fontSize: 13.5, color: "rgba(242,236,224,.85)" }}><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#c48f2b" strokeWidth={2}><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 3" strokeLinecap="round" /></svg>{t("replyBadge")}</span>
           </div>

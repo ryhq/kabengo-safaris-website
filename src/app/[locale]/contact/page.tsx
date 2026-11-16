@@ -4,9 +4,10 @@ import { useState, useEffect } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import dynamic from "next/dynamic";
-import { Clock, Globe, Sparkles, Mail, Phone, MapPin, Send, Check, AlertCircle } from "lucide-react";
+import { AlertCircle, Check, Clock, Globe, Lock, Mail, MapPin, Phone, Send, Sparkles } from "lucide-react";
 import { apiClient } from "@/lib/api";
 import { getAttribution } from "@/lib/attribution";
+import { StarRating } from "@/components/ui/Glyphs";
 
 const ParkMap = dynamic(() => import("@/components/ui/ParkMap"), { ssr: false, loading: () => null });
 
@@ -18,8 +19,8 @@ const ARUSHA = { lat: -3.3869, lng: 36.683 };
 function useContact() {
   const [ready, setReady] = useState(false);
   useEffect(() => setReady(true), []);
-  const email = ready ? `${"info"}@${"kabengosafaris"}.com` : "…";
-  const phone = ready ? ["+255", "786", "345", "408"].join(" ") : "…";
+  const email = ready ? `${"info"}@${"kabengosafaris"}.com` : "...";
+  const phone = ready ? ["+255", "786", "345", "408"].join(" ") : "...";
   return { ready, email, phone, emailHref: ready ? `mailto:${email}` : "#", phoneHref: ready ? `tel:${phone.replace(/\s/g, "")}` : "#" };
 }
 
@@ -115,7 +116,7 @@ export default function ContactPage() {
         <h1 style={{ fontFamily: SERIF, fontWeight: 700, color: "#2a2018", fontSize: "clamp(32px,5.2vw,54px)", lineHeight: 1.04, letterSpacing: "-.015em", margin: "0 0 14px" }}>{t("heroTitle")}</h1>
         <p style={{ color: "#4a3f34", fontSize: "clamp(16px,2vw,19px)", lineHeight: 1.55, margin: "0 0 22px" }}>{t("heroSubtitle")}</p>
         <div className="flex flex-wrap justify-center" style={{ gap: 10 }}>
-          <span className="inline-flex items-center" style={{ gap: 7, background: "#fff", border: "1px solid #e4ddd1", borderRadius: 20, padding: "8px 15px", fontSize: 13, fontWeight: 500, color: "#4a3f34" }}><span style={{ color: "#c48f2b", letterSpacing: 1 }}>★★★★★</span>5.0 Tripadvisor</span>
+          <span className="inline-flex items-center" style={{ gap: 7, background: "#fff", border: "1px solid #e4ddd1", borderRadius: 20, padding: "8px 15px", fontSize: 13, fontWeight: 500, color: "#4a3f34" }}><StarRating size={13} />5.0 Tripadvisor</span>
           <span className="inline-flex items-center" style={{ gap: 7, background: "#fff", border: "1px solid #e4ddd1", borderRadius: 20, padding: "8px 15px", fontSize: 13, fontWeight: 500, color: "#4a3f34" }}><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#96631a" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="m9 11 3 3L22 4" /><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" /></svg>{t("licensedBadge")}</span>
         </div>
       </header>
@@ -186,7 +187,7 @@ export default function ContactPage() {
                     <label style={{ gridColumn: "1/-1" }}><span style={{ display: "block", fontSize: 13, fontWeight: 600, color: "#4a3f34", marginBottom: 7 }}>{t("message")} *</span><textarea rows={5} value={form.message} onChange={(e) => set("message", e.target.value)} className={`kfield ${msgBad ? "err" : ""}`} style={{ resize: "vertical", lineHeight: 1.6 }} placeholder={t("messagePlaceholder")} /></label>
                   </div>
                   <button type="submit" disabled={sending} className="flex items-center justify-center" style={{ width: "100%", gap: 9, marginTop: 22, background: "#c48f2b", color: "#3d1402", fontWeight: 600, fontSize: 16, border: "none", borderRadius: 10, padding: 16, cursor: "pointer", boxShadow: "0 8px 22px rgba(196,143,43,.4)", opacity: sending ? 0.7 : 1 }}>{sending ? t("sending") : t("send")}<Send size={17} /></button>
-                  <p style={{ textAlign: "center", color: "#7a6f61", fontSize: 12.5, margin: "14px 0 0" }}>🔒 {t("privacyNote")}</p>
+                  <p style={{ textAlign: "center", color: "#7a6f61", fontSize: 12.5, margin: "14px 0 0" }}><Lock size={12} style={{ display: "inline", verticalAlign: "-2px", marginRight: 5 }} aria-hidden="true" />{t("privacyNote")}</p>
                 </form>
               </div>
             )}
@@ -198,7 +199,7 @@ export default function ContactPage() {
           <h2 style={{ fontFamily: SERIF, fontWeight: 700, color: "#2a2018", fontSize: "clamp(24px,3.2vw,34px)", margin: "0 0 18px" }}>{t("findTitle")}</h2>
           <div className="find-cols">
             <div style={{ position: "relative", border: "1px solid #e4ddd1", borderRadius: 16, overflow: "hidden", minHeight: 300, isolation: "isolate", boxShadow: "0 10px 30px rgba(62,21,2,.08)" }}>
-              <ParkMap latitude={ARUSHA.lat} longitude={ARUSHA.lng} name="Kabengo Safaris · Arusha" zoom={12} />
+              <ParkMap latitude={ARUSHA.lat} longitude={ARUSHA.lng} name="Kabengo Safaris | Arusha" zoom={12} />
             </div>
             <div style={{ background: "#fff", border: "1px solid #e4ddd1", borderRadius: 16, padding: 24 }}>
               <div style={{ fontFamily: SERIF, fontWeight: 700, color: "#2a2018", fontSize: 18, marginBottom: 16 }}>{t("ourOffice")}</div>

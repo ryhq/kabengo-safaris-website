@@ -23,8 +23,8 @@ export default function GlassCombobox({
   options,
   value,
   onChange,
-  placeholder = "Select…",
-  searchPlaceholder = "Search…",
+  placeholder = "Select...",
+  searchPlaceholder = "Search...",
   icon,
 }: GlassComboboxProps) {
   const [open, setOpen] = useState(false);

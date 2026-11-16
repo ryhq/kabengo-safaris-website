@@ -155,9 +155,9 @@ export default function DateRangePicker({
 
   const displayValue =
     startDate && endDate
-      ? `${displayDate(startDate)}  —  ${displayDate(endDate)}`
+      ? `${displayDate(startDate)}  -  ${displayDate(endDate)}`
       : startDate
-        ? `${displayDate(startDate)}  —  …`
+        ? `${displayDate(startDate)}  -  ...`
         : "";
 
   const panel = open && mounted
@@ -258,7 +258,7 @@ export default function DateRangePicker({
               <div className="mt-3 pt-3 border-t border-stone-100 flex items-center justify-between text-xs text-stone-500">
                 <span>
                   {displayDate(startDate)}
-                  {endDate ? ` — ${displayDate(endDate)}` : ""}
+                  {endDate ? ` - ${displayDate(endDate)}` : ""}
                 </span>
                 <button
                   type="button"

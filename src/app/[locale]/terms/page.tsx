@@ -70,7 +70,7 @@ export default function TermsPage() {
                     <td className="px-4 py-3 text-green-700 font-medium">Full refund (minus deposit)</td>
                   </tr>
                   <tr>
-                    <td className="px-4 py-3">14–29 days before departure</td>
+                    <td className="px-4 py-3">14-29 days before departure</td>
                     <td className="px-4 py-3 text-amber-700 font-medium">50% refund</td>
                   </tr>
                   <tr>
@@ -146,7 +146,7 @@ export default function TermsPage() {
           <div>
             <h2 className="text-xl font-bold text-stone-800 font-serif mb-3">9. Intellectual Property</h2>
             <p>
-              All content on this website — including text, images, logos, and design — is the property of Kabengo Safaris and is protected by copyright law. You may not reproduce, distribute, or use any content without our written permission.
+              All content on this website - including text, images, logos, and design - is the property of Kabengo Safaris and is protected by copyright law. You may not reproduce, distribute, or use any content without our written permission.
             </p>
           </div>
 

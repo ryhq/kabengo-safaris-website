@@ -60,7 +60,7 @@ const PHONE_OPTIONS = [
   ["+353", "Ireland"], ["+45", "Denmark"], ["+46", "Sweden"], ["+47", "Norway"], ["+61", "Australia"],
   ["+64", "New Zealand"], ["+27", "South Africa"], ["+254", "Kenya"], ["+971", "UAE"], ["+91", "India"],
   ["+81", "Japan"], ["+86", "China"],
-].map(([code, c]) => ({ value: code, label: `${code} · ${c}` }));
+].map(([code, c]) => ({ value: code, label: `${code} | ${c}` }));
 
 const STEPS = ["interests", "where", "days", "who", "when", "travellers", "budget", "notes", "details", "review"] as const;
 const LAST = STEPS.length - 1; // index of the final step ("Review" — submits)
@@ -228,24 +228,24 @@ export default function SafariPlanner({ embedded = false }: { embedded?: boolean
   const whenSummary = whenFlexible
     ? t("flexibleDates")
     : startDate
-      ? `${fmtDate(startDate)}${endDate ? " – " + fmtDate(endDate) : ""}`
+      ? `${fmtDate(startDate)}${endDate ? " - " + fmtDate(endDate) : ""}`
       : selMonthNames.length
         ? selMonthNames.join(", ")
         : t("notSpecified");
   const travellersSummary = `${t("adults")} ${adults}, ${t("children")} ${children}${children > 0 ? ` (${t("agesLabel")} ${childAges.join(", ")})` : ""}`;
   const budgetSummary = budgetUnsure ? t("flexible") : `${budget >= 7500 ? "$7,500+" : "$" + budget.toLocaleString()} ${t("perPerson")}`;
   const reviewRows = [
-    { label: t("rowExperiences"), value: ACTIVITIES.filter((a) => acts[a.key]).map((a) => t(a.nameKey)).join(", ") || "—" },
+    { label: t("rowExperiences"), value: ACTIVITIES.filter((a) => acts[a.key]).map((a) => t(a.nameKey)).join(", ") || "-" },
     { label: t("rowDestinations"), value: parks.filter((p) => dests[p.slug]).map((p) => p.name).join(", ") || t("openToSuggestions") },
     { label: t("rowTripLength"), value: daysLabel },
-    { label: t("rowTravellingAs"), value: party ? t(PARTIES.find((p) => p.key === party)!.nameKey) : "—" },
+    { label: t("rowTravellingAs"), value: party ? t(PARTIES.find((p) => p.key === party)!.nameKey) : "-" },
     { label: t("rowWhen"), value: whenSummary },
     { label: t("rowTravellers"), value: travellersSummary },
     { label: t("rowBudget"), value: budgetSummary },
-    { label: t("rowNotes"), value: notes.trim() || "—" },
-    { label: t("rowContact"), value: `${firstName} ${lastName}`.trim() || "—" },
-    { label: t("rowEmail"), value: email.trim() || "—" },
-    { label: t("rowPhone"), value: phone.trim() ? `${phoneCode} ${phone.trim()}` : "—" },
+    { label: t("rowNotes"), value: notes.trim() || "-" },
+    { label: t("rowContact"), value: `${firstName} ${lastName}`.trim() || "-" },
+    { label: t("rowEmail"), value: email.trim() || "-" },
+    { label: t("rowPhone"), value: phone.trim() ? `${phoneCode} ${phone.trim()}` : "-" },
     { label: t("rowCountry"), value: country },
   ];
 
@@ -466,7 +466,7 @@ export default function SafariPlanner({ embedded = false }: { embedded?: boolean
                       <div key={label} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, background: "var(--sand)", borderRadius: 12, padding: "18px 20px" }}>
                         <div><div style={{ fontWeight: 600, fontSize: 16, color: "var(--ink)" }}>{label}</div><div style={{ fontSize: 13, color: "var(--muted)" }}>{hint}</div></div>
                         <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-                          <button onClick={() => setter(Math.max(min, val - 1))} aria-label={t("fewer", { label })} style={{ width: 40, height: 40, borderRadius: "50%", border: "none", background: val <= min ? "#cbb" : "var(--brand-olive)", color: "#fff", fontSize: 22, lineHeight: 1, cursor: "pointer" }}>−</button>
+                          <button onClick={() => setter(Math.max(min, val - 1))} aria-label={t("fewer", { label })} style={{ width: 40, height: 40, borderRadius: "50%", border: "none", background: val <= min ? "#cbb" : "var(--brand-olive)", color: "#fff", fontSize: 22, lineHeight: 1, cursor: "pointer" }}>-</button>
                           <span style={{ fontFamily: "var(--font-source-serif), Georgia, serif", fontWeight: 700, fontSize: 26, color: "var(--ink)", minWidth: 28, textAlign: "center" }}>{val}</span>
                           <button onClick={() => setter(Math.min(max, val + 1))} aria-label={t("more", { label })} style={{ width: 40, height: 40, borderRadius: "50%", border: "none", background: gold, color: "var(--brand-choc-dark)", fontSize: 22, lineHeight: 1, cursor: "pointer" }}>+</button>
                         </div>

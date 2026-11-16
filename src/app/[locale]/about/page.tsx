@@ -5,6 +5,7 @@ import { useTranslations, useLocale } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { MapPin, Route, ShieldCheck, Leaf, Target, Eye, Check, Globe, Layers, Star } from "lucide-react";
 import { apiClient } from "@/lib/api";
+import { StarRating, TierDots } from "@/components/ui/Glyphs";
 
 const SERIF = "var(--font-source-serif), Georgia, serif";
 const WHATSAPP = "https://wa.me/255786345408";
@@ -53,7 +54,7 @@ export default function AboutPage() {
 
   const heroChips = [
     { el: <><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="m9 11 3 3L22 4" /><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" /></svg>{t("licensedBadge")}</> },
-    { el: <><span style={{ color: "#c48f2b", letterSpacing: 1, fontSize: 12 }}>★★★★★</span>{rating} Tripadvisor</> },
+    { el: <><StarRating size={12} />{rating} Tripadvisor</> },
     { el: <><Globe size={15} />{t("chipMultilingual")}</> },
   ];
 
@@ -193,7 +194,7 @@ export default function AboutPage() {
                 <svg width="30" height="30" viewBox="0 0 24 24" fill="#fff"><circle cx="8" cy="13" r="3.4" /><circle cx="16" cy="13" r="3.4" /><path d="M12 7c2.5-1.6 6-2 8.5-1.2M12 7C9.5 5.4 6 5 3.5 5.8" stroke="#fff" strokeWidth="1.4" fill="none" strokeLinecap="round" /><circle cx="8" cy="13" r="1.1" fill="#00aa6c" /><circle cx="16" cy="13" r="1.1" fill="#00aa6c" /></svg>
               </div>
               <div>
-                <div className="flex items-center" style={{ gap: 10 }}><span style={{ fontFamily: SERIF, fontWeight: 700, color: "#2a2018", fontSize: 26, lineHeight: 1 }}>{rating}</span><span style={{ color: "#00aa6c", fontSize: 18, letterSpacing: 2 }}>●●●●●</span></div>
+                <div className="flex items-center" style={{ gap: 10 }}><span style={{ fontFamily: SERIF, fontWeight: 700, color: "#2a2018", fontSize: 26, lineHeight: 1 }}>{rating}</span><TierDots value={5} size={14} gap={3} color="#00aa6c" /></div>
                 <div style={{ color: "#7a6f61", fontSize: 13.5, marginTop: 3 }}>{t("tripRatedText", { rating, count: trip.count })}</div>
               </div>
             </div>
@@ -213,7 +214,7 @@ export default function AboutPage() {
             <a href={WHATSAPP} target="_blank" rel="noopener noreferrer" className="inline-flex items-center" style={{ gap: 9, background: "rgba(242,236,224,.1)", color: "#fff", fontWeight: 600, fontSize: 16, border: "1.5px solid rgba(242,236,224,.4)", borderRadius: 9, padding: "15px 26px" }}><WhatsAppIcon />{footer("whatsapp")}</a>
           </div>
           <div className="flex flex-wrap items-center justify-center" style={{ gap: "12px 26px", color: "rgba(242,236,224,.7)", fontSize: 13 }}>
-            <span className="inline-flex items-center" style={{ gap: 7 }}><span style={{ color: "#c48f2b", letterSpacing: 1 }}>★★★★★</span> {rating} Tripadvisor</span>
+            <span className="inline-flex items-center" style={{ gap: 7 }}><StarRating size={13} /> {rating} Tripadvisor</span>
             <span className="inline-flex items-center" style={{ gap: 7 }}><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#c48f2b" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="m9 11 3 3L22 4" /><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" /></svg>{t("licensedBadge")}</span>
             <span className="inline-flex items-center" style={{ gap: 7 }}><Check size={15} strokeWidth={2.4} color="#c48f2b" />{t("replyBadge")}</span>
           </div>

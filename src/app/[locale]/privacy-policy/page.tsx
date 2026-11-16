@@ -42,7 +42,7 @@ export default async function PrivacyPolicyPage({ params }: { params: Promise<{ 
         {notice?.effectiveFrom && (
           <p className="text-sm text-stone-400 mb-10">
             In effect from {notice.effectiveFrom}
-            {notice.version ? ` · version ${notice.version}` : ""}
+            {notice.version ? ` | version ${notice.version}` : ""}
           </p>
         )}
 

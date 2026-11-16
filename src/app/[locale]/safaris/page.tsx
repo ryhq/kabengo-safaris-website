@@ -13,6 +13,7 @@ import SafariCard from "@/components/safari/SafariCard";
 import { useDebounce } from "@/lib/useDebounce";
 import { apiClient } from "@/lib/api";
 import type { Itinerary } from "@/types";
+import { StarRating } from "@/components/ui/Glyphs";
 
 const PAGE_SIZE = 9;
 const SERIF = "var(--font-source-serif), Georgia, serif";
@@ -101,8 +102,8 @@ function fromPrice(item: Itinerary): string | null {
 /** Horizontal detail card (image left / details right) — used as each carousel slide in "traveller favourites". */
 function renderSafariCard(item: Itinerary) {
   const price = fromPrice(item);
-  const kicker = [item.totalDays ? `${item.totalDays} ${item.totalDays === 1 ? "Day" : "Days"}` : null, item.tripTypeDisplayName].filter(Boolean).join(" · ");
-  const route = item.startLocation && item.endLocation ? `${item.startLocation} → ${item.endLocation}` : null;
+  const kicker = [item.totalDays ? `${item.totalDays} ${item.totalDays === 1 ? "Day" : "Days"}` : null, item.tripTypeDisplayName].filter(Boolean).join(" | ");
+  const route = item.startLocation && item.endLocation ? `${item.startLocation} to ${item.endLocation}` : null;
   const tagline = item.description || "";
   const bg = item.primaryImageUrl ? `center/cover no-repeat url('${item.primaryImageUrl}')` : PICK_FALLBACK;
   return (
@@ -256,7 +257,7 @@ export default function SafarisPage() {
     if (durationKey !== "all") c.push({ label: t(`filters.durations.${durationKey}`), remove: () => setDurationKey("all") });
     if (tripType) c.push({ label: t(`filters.tripTypes.${TRIP_TYPE_LABEL[tripType]}`), remove: () => setTripType("") });
     if (budget) c.push({ label: t(`filters.budgetCategories.${BUDGET_LABEL[budget]}`), remove: () => setBudget("") });
-    if (debouncedSearch) c.push({ label: `“${debouncedSearch}”`, remove: () => setSearch("") });
+    if (debouncedSearch) c.push({ label: `"${debouncedSearch}"`, remove: () => setSearch("") });
     return c;
   }, [durationKey, tripType, budget, debouncedSearch, t]);
 
@@ -282,7 +283,7 @@ export default function SafarisPage() {
             <Dropdown ariaLabel={f("sortLabel")} label={f(SORT_LABEL_KEY[sortKey])} active={false} open={openDD === "s"} onToggle={() => setOpenDD(openDD === "s" ? null : "s")} onClose={() => setOpenDD(null)} value={sortKey} onPick={setSortKey} options={SORTS.map((s) => ({ value: s.key, label: f(SORT_LABEL_KEY[s.key]) }))} />
           </div>
           <div className="flex items-center flex-wrap gap-2" style={{ marginTop: 10, minHeight: 24 }}>
-            <span style={{ fontSize: 13, color: "#7a6f61", marginRight: 2 }}>{loading ? "…" : t("resultCount", { count: totalItems })}</span>
+            <span style={{ fontSize: 13, color: "#7a6f61", marginRight: 2 }}>{loading ? "..." : t("resultCount", { count: totalItems })}</span>
             {chips.map((c) => (
               <button key={c.label} onClick={c.remove} className="inline-flex items-center cursor-pointer" style={{ gap: 6, background: "#e6ece2", color: "#274e22", border: "1px solid rgba(39,78,34,.18)", fontSize: 12.5, fontWeight: 600, padding: "5px 9px 5px 11px", borderRadius: 20 }}>
                 {c.label}<X size={12} strokeWidth={2.6} />
@@ -335,7 +336,7 @@ export default function SafarisPage() {
             {hasMore && (
               <div className="flex justify-center" style={{ marginTop: "clamp(30px,4vw,44px)" }}>
                 <button onClick={loadMore} disabled={loadingMore} className="inline-flex items-center gap-2 font-semibold rounded-lg border-[1.5px] border-brand-green text-brand-green hover:bg-brand-green hover:text-brand-cream transition-colors cursor-pointer" style={{ padding: "14px 30px", fontSize: 15, opacity: loadingMore ? 0.6 : 1 }}>
-                  {loadingMore ? "…" : f("showMore")}
+                  {loadingMore ? "..." : f("showMore")}
                   <ArrowRight size={16} strokeWidth={2.2} style={{ transform: "rotate(90deg)" }} />
                 </button>
               </div>
@@ -387,7 +388,7 @@ export default function SafarisPage() {
             <a href="https://wa.me/255786345408" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 font-semibold rounded-lg" style={{ background: "rgba(242,236,224,.08)", color: "#fff", border: "1.5px solid rgba(242,236,224,.4)", fontSize: 16, padding: "15px 28px" }}><MessageCircle size={18} strokeWidth={2.2} />{nav("whatsapp")}</a>
           </div>
           <div className="flex flex-wrap justify-center" style={{ gap: "14px 26px", paddingTop: 26, borderTop: "1px solid rgba(242,236,224,.15)" }}>
-            <span className="inline-flex items-center" style={{ gap: 8, fontSize: 13.5, color: "rgba(242,236,224,.85)" }}><span style={{ color: "#00aa6c", fontWeight: 700, fontFamily: SERIF, fontSize: 16 }}>5.0</span><span style={{ color: "#c48f2b", letterSpacing: 1 }}>★★★★★</span>Tripadvisor</span>
+            <span className="inline-flex items-center" style={{ gap: 8, fontSize: 13.5, color: "rgba(242,236,224,.85)" }}><span style={{ color: "#00aa6c", fontWeight: 700, fontFamily: SERIF, fontSize: 16 }}>5.0</span><StarRating size={13} />Tripadvisor</span>
             <span className="inline-flex items-center" style={{ gap: 8, fontSize: 13.5, color: "rgba(242,236,224,.85)" }}><Check size={15} strokeWidth={2.4} style={{ color: "#c48f2b" }} />TATO / TALA</span>
             <span className="inline-flex items-center" style={{ gap: 8, fontSize: 13.5, color: "rgba(242,236,224,.85)" }}><Check size={15} strokeWidth={2.4} style={{ color: "#c48f2b" }} />{trust[2]}</span>
           </div>

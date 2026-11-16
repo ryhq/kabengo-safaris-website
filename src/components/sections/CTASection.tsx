@@ -27,7 +27,7 @@ export default function CTASection() {
         transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
         style={{ position: "relative", zIndex: 1, maxWidth: 720, margin: "0 auto", textAlign: "center" }}
       >
-        <div style={{ color: "#f3e6c8", fontSize: 12, fontWeight: 600, letterSpacing: ".22em", textTransform: "uppercase", marginBottom: 18 }}>Kabengo Safaris · Arusha, Tanzania</div>
+        <div style={{ color: "#f3e6c8", fontSize: 12, fontWeight: 600, letterSpacing: ".22em", textTransform: "uppercase", marginBottom: 18 }}>Kabengo Safaris | Arusha, Tanzania</div>
         <h2 style={{ fontFamily: SERIF, fontWeight: 700, color: "#fff", fontSize: "clamp(32px,5.2vw,58px)", lineHeight: 1.04, letterSpacing: "-.015em", margin: "0 0 18px", textShadow: "0 2px 24px rgba(20,12,4,.4)" }}>{t("ctaTitle")}</h2>
         <p style={{ color: "rgba(250,248,245,.9)", fontSize: "clamp(16px,2vw,19px)", lineHeight: 1.6, margin: "0 auto 34px", maxWidth: 560, textShadow: "0 1px 14px rgba(20,12,4,.45)" }}>{t("ctaSubtitle")}</p>
 

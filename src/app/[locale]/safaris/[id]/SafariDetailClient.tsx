@@ -13,6 +13,7 @@ import type { MapStopGeo } from "@/components/safari/ItineraryRouteMap";
 import type { RouteStop } from "@/components/safari/ItineraryRouteModal";
 import { Maximize2 } from "lucide-react";
 import { apiClient } from "@/lib/api";
+import { StarRating } from "@/components/ui/Glyphs";
 
 // Real OSM route map — client-only (Leaflet needs window).
 const ItineraryRouteMap = dynamic(() => import("@/components/safari/ItineraryRouteMap"), { ssr: false, loading: () => null });
@@ -255,16 +256,16 @@ export default function SafariDetailClient({ initialItin = null }: { initialItin
   const highlights = splitList(itin.highlights);
   const paxLine = (itin.paxBreakdown || []).map((p) => `${p.count} ${(p.nationCategoryName || "").toLowerCase()} ${(p.ageCategoryName || "").toLowerCase()}${(p.count || 0) > 1 ? "s" : ""}`.trim()).filter(Boolean).join(", ");
   const distinctParks = new Set<string>(); days.forEach((d) => (d.parks || []).forEach((p) => p.parkSlug && distinctParks.add(p.parkSlug)));
-  const tierDots = itin.budgetCategoryTier ? "●".repeat(itin.budgetCategoryTier) + "○".repeat(Math.max(0, 5 - itin.budgetCategoryTier)) : "";
+  const tier = itin.budgetCategoryTier ?? null;
   const durationShort = `${itin.totalDays ?? 0}d / ${itin.totalNights ?? 0}n`;
-  const eyebrow = [itin.tripTypeDisplayName, itin.budgetCategoryDisplayName, t("durationValue", { days: itin.totalDays ?? 0, nights: itin.totalNights ?? 0 })].filter(Boolean).join(" · ");
+  const eyebrow = [itin.tripTypeDisplayName, itin.budgetCategoryDisplayName, t("durationValue", { days: itin.totalDays ?? 0, nights: itin.totalNights ?? 0 })].filter(Boolean).join(" | ");
 
   const glance = [
     { icon: "M12 7v5l3 3", circle: true, label: t("glDuration"), value: t("durationValue", { days: itin.totalDays ?? 0, nights: itin.totalNights ?? 0 }) },
-    { icon: "pin", label: t("glRoute"), value: `${itin.startLocation ?? ""} → ${itin.endLocation ?? ""}` },
-    { icon: "grp", label: t("glGroup"), value: paxLine || "—" },
-    { icon: "acacia", label: t("glTripType"), value: itin.tripTypeDisplayName || "—" },
-    { icon: "star", label: t("glBudget"), value: `${itin.budgetCategoryDisplayName || ""}${tierDots ? " · " + tierDots : ""}` },
+    { icon: "pin", label: t("glRoute"), value: `${itin.startLocation ?? ""} to ${itin.endLocation ?? ""}` },
+    { icon: "grp", label: t("glGroup"), value: paxLine || "-" },
+    { icon: "acacia", label: t("glTripType"), value: itin.tripTypeDisplayName || "-" },
+    { icon: "star", label: t("glBudget"), value: `${itin.budgetCategoryDisplayName || ""}${tier ? " | " + tier : ""}` },
     { icon: "car", label: t("glVehicles"), value: t("vehiclesValue", { count: itin.carCount ?? 1 }) },
     { icon: "park", label: t("glParks"), value: t("parksValue", { count: distinctParks.size }) },
     ...(fromPrice ? [{ icon: "coin", label: t("glFrom"), value: `${fromPrice} pp` }] : []),
@@ -283,7 +284,7 @@ export default function SafariDetailClient({ initialItin = null }: { initialItin
     const set = (str || "").split(",").map((s) => s.trim().toUpperCase());
     return ([["B", t("breakfast")], ["L", t("lunch")], ["D", t("dinner")]] as [string, string][]).map(([k, label]) => ({ label, on: set.includes(k) }));
   };
-  const mealsShort = (str?: string) => (str || "").split(",").map((s) => s.trim().toUpperCase()).filter(Boolean).join(" · ");
+  const mealsShort = (str?: string) => (str || "").split(",").map((s) => s.trim().toUpperCase()).filter(Boolean).join(" | ");
 
   // dedupe consecutive stays
   const stays: { name: string; slug?: string; sub?: string; image?: string; nights: number }[] = [];
@@ -292,16 +293,16 @@ export default function SafariDetailClient({ initialItin = null }: { initialItin
   const stops: MapStop[] = days.filter((d) => d.isOvernight || d.dayNumber === 1).map((d) => { const c = resolveStopCoord(d); return { n: d.dayNumber, lat: c?.lat, lng: c?.lng }; });
   const geoStopsRaw = stops.filter((s) => s.lat != null && s.lng != null).map((s) => ({ n: s.n, lat: s.lat as number, lng: s.lng as number }));
   // Merge consecutive stops at the same coordinate (e.g. several nights in one park)
-  // into a single pin labelled with the day range, e.g. "8–10".
+  // into a single pin labelled with the day range, e.g. "8-10".
   const groupedStops = geoStopsRaw.reduce((acc, s) => {
     const prev = acc[acc.length - 1];
     if (prev && Math.abs(prev.lat - s.lat) < 1e-4 && Math.abs(prev.lng - s.lng) < 1e-4) prev.nEnd = s.n;
     else acc.push({ nStart: s.n, nEnd: s.n, lat: s.lat, lng: s.lng });
     return acc;
   }, [] as { nStart: number; nEnd: number; lat: number; lng: number }[]);
-  const rangeLabel = (g: { nStart: number; nEnd: number }) => (g.nStart === g.nEnd ? String(g.nStart) : `${g.nStart}–${g.nEnd}`);
+  const rangeLabel = (g: { nStart: number; nEnd: number }) => (g.nStart === g.nEnd ? String(g.nStart) : `${g.nStart}-${g.nEnd}`);
   const geoStops: MapStopGeo[] = groupedStops.map((g) => ({ n: g.nStart, nEnd: g.nEnd, lat: g.lat, lng: g.lng, label: rangeLabel(g) }));
-  const routeStops: RouteStop[] = groupedStops.map((g) => { const d = days.find((x) => x.dayNumber === g.nStart); return { n: g.nStart, nEnd: g.nEnd, lat: g.lat, lng: g.lng, pinLabel: rangeLabel(g), label: d?.title, sub: d ? `${d.startLocation} → ${d.endLocation}` : undefined }; });
+  const routeStops: RouteStop[] = groupedStops.map((g) => { const d = days.find((x) => x.dayNumber === g.nStart); return { n: g.nStart, nEnd: g.nEnd, lat: g.lat, lng: g.lng, pinLabel: rangeLabel(g), label: d?.title, sub: d ? `${d.startLocation} to ${d.endLocation}` : undefined }; });
 
   const costRows = cost ? [
     cost.accommodationRack ? { label: t("costAccommodation"), value: money(cost.accommodationRack) } : null,
@@ -309,7 +310,7 @@ export default function SafariDetailClient({ initialItin = null }: { initialItin
     cost.activitiesRack ? { label: t("costActivities"), value: money(cost.activitiesRack) } : null,
   ].filter(Boolean) as { label: string; value: string }[] : [];
 
-  // "Where you'll stay" — accommodation overlay card with a nights badge
+  // "Where you'll stay" - accommodation overlay card with a nights badge
   const renderStayCard = (s: { name: string; slug?: string; sub?: string; image?: string; nights: number }) => {
     const bg = s.image ? `50% 45%/cover no-repeat url('${s.image}')` : grad(s.name);
     return (
@@ -328,7 +329,7 @@ export default function SafariDetailClient({ initialItin = null }: { initialItin
     );
   };
 
-  // "Similar safaris" — editorial safari card with "From {price}*" pill
+  // "Similar safaris" - editorial safari card with "From {price}*" pill
   const renderSimilarCard = (s: SimilarSafari) => {
     const bg = s.primaryImageUrl ? `50% 45%/cover no-repeat url('${s.primaryImageUrl}')` : grad(s.code);
     const sp = s.costSummary?.[0]?.grandTotalRack && (s.totalPaxCount || 0) > 0 ? money(s.costSummary[0].grandTotalRack! / (s.totalPaxCount || 1)) : null;
@@ -339,7 +340,7 @@ export default function SafariDetailClient({ initialItin = null }: { initialItin
         {sp && <div className="absolute inline-flex items-center" style={{ top: 14, right: 14, background: "rgba(20,12,4,.6)", backdropFilter: "blur(4px)", border: "1px solid rgba(196,143,43,.6)", color: "#f3e6c8", fontSize: 12.5, fontWeight: 700, padding: "6px 12px", borderRadius: 20 }}>{t("from")} {sp}*</div>}
         <div className="absolute left-0 right-0 bottom-0 flex items-end justify-between" style={{ padding: 22, gap: 14 }}>
           <div style={{ minWidth: 0 }}>
-            {!!s.totalDays && <div style={{ color: "#f3e6c8", fontSize: 11, fontWeight: 600, letterSpacing: ".08em", textTransform: "uppercase", marginBottom: 6 }}>{t("durationValue", { days: s.totalDays, nights: Math.max(0, s.totalDays - 1) }).split("·")[0].trim()}</div>}
+            {!!s.totalDays && <div style={{ color: "#f3e6c8", fontSize: 11, fontWeight: 600, letterSpacing: ".08em", textTransform: "uppercase", marginBottom: 6 }}>{t("durationValue", { days: s.totalDays, nights: Math.max(0, s.totalDays - 1) }).split("|")[0].trim()}</div>}
             <h3 style={{ fontFamily: SERIF, fontWeight: 700, color: "#fff", fontSize: 20, lineHeight: 1.14, margin: 0, textShadow: "0 1px 12px rgba(20,12,4,.5)", display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{s.name}</h3>
             {s.description && <p style={{ color: "rgba(242,236,224,.82)", fontSize: 12.5, lineHeight: 1.4, margin: "6px 0 0", ...ONE_LINE }}>{s.description}</p>}
           </div>
@@ -378,7 +379,7 @@ export default function SafariDetailClient({ initialItin = null }: { initialItin
             {(itin.startLocation || itin.endLocation) && (
               <div className="flex items-center" style={{ gap: 10, color: "#fff", fontSize: "clamp(15px,2vw,18px)", fontWeight: 500, marginBottom: 22 }}>
                 <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#c48f2b" strokeWidth={2}><path d="M12 21s-7-4.5-7-10a7 7 0 0 1 14 0c0 5.5-7 10-7 10Z" /><circle cx="12" cy="11" r="2.3" /></svg>
-                {itin.startLocation} <span style={{ color: "#c48f2b" }}>→</span> {itin.endLocation}
+                {itin.startLocation} <span style={{ color: "#c48f2b" }}>to</span> {itin.endLocation}
               </div>
             )}
             <div className="flex flex-wrap items-center" style={{ gap: 12, marginBottom: 20 }}>
@@ -387,7 +388,7 @@ export default function SafariDetailClient({ initialItin = null }: { initialItin
             </div>
             <div className="flex flex-wrap items-center" style={{ gap: "10px 16px" }}>
               {fromPrice && <span className="inline-flex items-center" style={{ gap: 7, background: "rgba(250,248,245,.14)", backdropFilter: "blur(4px)", border: "1px solid rgba(250,248,245,.25)", borderRadius: 20, padding: "7px 14px", color: "#fff", fontSize: 13.5, fontWeight: 600 }}>{t("from").toLowerCase()} <span style={{ color: "#f3e6c8" }}>{fromPrice}</span> pp</span>}
-              {summary && <span className="inline-flex items-center" style={{ gap: 6, color: "rgba(242,236,224,.85)", fontSize: 13 }}><span style={{ color: "#c48f2b", letterSpacing: 1 }}>★★★★★</span> {summary.rating.toFixed(1)} · Tripadvisor</span>}
+              {summary && <span className="inline-flex items-center" style={{ gap: 6, color: "rgba(242,236,224,.85)", fontSize: 13 }}><StarRating size={13} /> {summary.rating.toFixed(1)} | Tripadvisor</span>}
             </div>
           </div>
         </div>
@@ -459,7 +460,7 @@ export default function SafariDetailClient({ initialItin = null }: { initialItin
                   )}
                 </div>
                 <div style={{ padding: "12px 16px", borderTop: "1px solid #e4ddd1", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10 }}>
-                  <span style={{ fontSize: 12.5, color: "#7a6f61", ...ONE_LINE }}>{itin.startLocation} → {itin.endLocation}</span>
+                  <span style={{ fontSize: 12.5, color: "#7a6f61", ...ONE_LINE }}>{itin.startLocation} to {itin.endLocation}</span>
                   <span style={{ fontSize: 12.5, fontWeight: 600, color: "#274e22", whiteSpace: "nowrap" }}>{durationShort}</span>
                 </div>
               </div>
@@ -467,7 +468,7 @@ export default function SafariDetailClient({ initialItin = null }: { initialItin
                 {days.map((d) => { const on = d.dayNumber === active; return (
                   <button key={d.dayNumber} data-rail-day={d.dayNumber} onClick={() => gotoDay(d.dayNumber)} aria-current={on} className="flex items-center w-full text-left" style={{ gap: 12, background: on ? "#f3e6c8" : "transparent", border: "none", borderRadius: 10, padding: "10px 12px", cursor: "pointer", transition: "background .2s" }}>
                     <span className="flex items-center justify-center flex-shrink-0" style={{ width: 30, height: 30, borderRadius: "50%", background: on ? "#c48f2b" : "#fff", color: on ? "#fff" : "#7a6f61", border: `2px solid ${on ? "#c48f2b" : "#e4ddd1"}`, fontSize: 12, fontWeight: 700 }}>{d.dayNumber}</span>
-                    <span style={{ minWidth: 0, flex: 1 }}><span style={{ display: "block", fontSize: 13.5, fontWeight: 600, color: on ? "#96631a" : "#2a2018", ...ONE_LINE }}>{d.title}</span><span style={{ fontSize: 11.5, color: "#7a6f61" }}>{d.startLocation} → {d.endLocation}</span></span>
+                    <span style={{ minWidth: 0, flex: 1 }}><span style={{ display: "block", fontSize: 13.5, fontWeight: 600, color: on ? "#96631a" : "#2a2018", ...ONE_LINE }}>{d.title}</span><span style={{ fontSize: 11.5, color: "#7a6f61" }}>{d.startLocation} to {d.endLocation}</span></span>
                     {d.isOvernight && <span title={t("legendOvernight")} className="flex-shrink-0" style={{ color: "#274e22", display: "flex" }}>{MoonIcon}</span>}
                   </button>
                 ); })}
@@ -493,8 +494,8 @@ export default function SafariDetailClient({ initialItin = null }: { initialItin
                         </div>
                         <h3 style={{ fontFamily: SERIF, fontWeight: 700, color: "#2a2018", fontSize: 19, lineHeight: 1.2, margin: "0 0 5px" }}>{d.title}</h3>
                         <div className="flex flex-wrap items-center" style={{ gap: "5px 12px", color: "#7a6f61", fontSize: 12.5 }}>
-                          {(d.startLocation || d.endLocation) && <span className="inline-flex items-center" style={{ gap: 5 }}><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}><path d="M12 21s-7-4.5-7-10a7 7 0 0 1 14 0c0 5.5-7 10-7 10Z" /></svg>{d.startLocation} → {d.endLocation}</span>}
-                          {!!d.distanceKm && d.distanceKm > 0 && <span className="inline-flex items-center" style={{ gap: 5 }}><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="M3 13l2-5h14l2 5M5 13h14v4H5zM8 17v2M16 17v2" /></svg>≈{d.distanceKm} km</span>}
+                          {(d.startLocation || d.endLocation) && <span className="inline-flex items-center" style={{ gap: 5 }}><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}><path d="M12 21s-7-4.5-7-10a7 7 0 0 1 14 0c0 5.5-7 10-7 10Z" /></svg>{d.startLocation} to {d.endLocation}</span>}
+                          {!!d.distanceKm && d.distanceKm > 0 && <span className="inline-flex items-center" style={{ gap: 5 }}><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="M3 13l2-5h14l2 5M5 13h14v4H5zM8 17v2M16 17v2" /></svg>~{d.distanceKm} km</span>}
                           {!isOpen && mealsShort(d.mealsIncluded) && <span>{mealsShort(d.mealsIncluded)}</span>}
                         </div>
                       </div>
@@ -527,7 +528,7 @@ export default function SafariDetailClient({ initialItin = null }: { initialItin
                               <span className="flex-shrink-0 flex justify-center" style={{ width: 26, color: "#274e22" }}><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round"><path d="M3 18V8M3 12h18M21 18v-4a2 2 0 0 0-2-2H9V9H3M6.5 12V9" /></svg></span>
                               <Link href={acc.accommodationSlug ? `/accommodations/${acc.accommodationSlug}` : "#"} className="tcard flex items-center" style={{ flex: 1, gap: 12, background: "#faf8f5", border: "1px solid #e4ddd1", borderRadius: 10, padding: "8px 12px 8px 8px" }}>
                                 <span className="flex-shrink-0" style={{ width: 52, height: 52, borderRadius: 8, background: acc.primaryImageUrl ? `50% 50%/cover no-repeat url('${acc.primaryImageUrl}')` : grad(acc.accommodationName) }} />
-                                <span style={{ minWidth: 0 }}><span style={{ display: "block", fontSize: 11, color: "#7a6f61", textTransform: "uppercase", letterSpacing: ".05em" }}>{t("stay")}</span><span style={{ fontFamily: SERIF, fontWeight: 600, color: "#2a2018", fontSize: 15, ...ONE_LINE, display: "block" }}>{acc.accommodationName}</span>{(acc.board || acc.roomStandard || acc.roomType) && <span style={{ fontSize: 12, color: "#7a6f61" }}>{[acc.roomStandard, acc.roomType].filter(Boolean).join(" ")}{acc.board ? ` · ${acc.board}` : ""}</span>}</span>
+                                <span style={{ minWidth: 0 }}><span style={{ display: "block", fontSize: 11, color: "#7a6f61", textTransform: "uppercase", letterSpacing: ".05em" }}>{t("stay")}</span><span style={{ fontFamily: SERIF, fontWeight: 600, color: "#2a2018", fontSize: 15, ...ONE_LINE, display: "block" }}>{acc.accommodationName}</span>{(acc.board || acc.roomStandard || acc.roomType) && <span style={{ fontSize: 12, color: "#7a6f61" }}>{[acc.roomStandard, acc.roomType].filter(Boolean).join(" ")}{acc.board ? ` | ${acc.board}` : ""}</span>}</span>
                               </Link>
                             </div>
                           )}
@@ -549,7 +550,7 @@ export default function SafariDetailClient({ initialItin = null }: { initialItin
                                     <Link key={i} href={a.accommodationSlug ? `/accommodations/${a.accommodationSlug}` : "#"} className="chip-link inline-flex items-center" style={{ gap: 8, background: "#fff", border: "1px dashed #d8cfc0", borderRadius: 20, padding: "5px 12px 5px 5px", color: "#4a3f34" }}>
                                       <span className="flex-shrink-0" style={{ width: 26, height: 26, borderRadius: "50%", background: a.primaryImageUrl ? `50% 50%/cover no-repeat url('${a.primaryImageUrl}')` : grad(a.accommodationName || "") }} />
                                       <span style={{ fontSize: 12.5, fontWeight: 600 }}>{a.accommodationName}</span>
-                                      {(a.roomStandard || a.board) && <span style={{ fontSize: 11.5, color: "#7a6f61", fontWeight: 500 }}>{[a.roomStandard, a.board].filter(Boolean).join(" · ")}</span>}
+                                      {(a.roomStandard || a.board) && <span style={{ fontSize: 11.5, color: "#7a6f61", fontWeight: 500 }}>{[a.roomStandard, a.board].filter(Boolean).join(" | ")}</span>}
                                     </Link>
                                   ))}
                                 </div>
@@ -568,7 +569,7 @@ export default function SafariDetailClient({ initialItin = null }: { initialItin
                             <div className="flex items-start" style={{ gap: 12 }}>
                               <span className="flex-shrink-0 flex justify-center" style={{ width: 26, color: "#274e22" }}><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8}><circle cx="12" cy="12" r="8" /><circle cx="12" cy="12" r="4" /></svg></span>
                               <div className="flex flex-wrap" style={{ gap: 7 }}>
-                                {(d.activities || []).map((a, i) => <Link key={i} href={a.activitySlug ? `/activities/${a.activitySlug}` : "#"} className="chip-link inline-flex items-center" style={{ gap: 6, background: "#fff", border: "1px solid #e4ddd1", fontSize: 12.5, fontWeight: 600, color: "#4a3f34", padding: "6px 12px", borderRadius: 20 }}>{a.activityName}<span style={{ color: "#7a6f61", fontWeight: 500 }}>{a.isOptional ? "· Opt." : a.durationHours ? `· ${a.durationHours}h` : ""}</span></Link>)}
+                                {(d.activities || []).map((a, i) => <Link key={i} href={a.activitySlug ? `/activities/${a.activitySlug}` : "#"} className="chip-link inline-flex items-center" style={{ gap: 6, background: "#fff", border: "1px solid #e4ddd1", fontSize: 12.5, fontWeight: 600, color: "#4a3f34", padding: "6px 12px", borderRadius: 20 }}>{a.activityName}<span style={{ color: "#7a6f61", fontWeight: 500 }}>{a.isOptional ? "| Opt." : a.durationHours ? `| ${a.durationHours}h` : ""}</span></Link>)}
                               </div>
                             </div>
                           )}
@@ -624,7 +625,7 @@ export default function SafariDetailClient({ initialItin = null }: { initialItin
           <div style={{ background: "linear-gradient(160deg,#e6ece2,#f1ece3)", border: "1px solid #e4ddd1", borderRadius: 18, padding: "clamp(24px,4vw,36px)", display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(260px,1fr))", gap: 28, alignItems: "center" }}>
             <div>
               <div style={{ color: "#7a6f61", fontSize: 13, marginBottom: 4 }}>{t("from")}</div>
-              <div className="flex items-baseline" style={{ gap: 8, marginBottom: 6 }}><span style={{ fontFamily: SERIF, fontWeight: 700, color: "#96631a", fontSize: "clamp(38px,6vw,54px)", lineHeight: 1 }}>{fromPrice || "—"}</span>{fromPrice && <span style={{ color: "#4a3f34", fontSize: 16, fontWeight: 600 }}>{t("perPerson")}</span>}</div>
+              <div className="flex items-baseline" style={{ gap: 8, marginBottom: 6 }}><span style={{ fontFamily: SERIF, fontWeight: 700, color: "#96631a", fontSize: "clamp(38px,6vw,54px)", lineHeight: 1 }}>{fromPrice || "-"}</span>{fromPrice && <span style={{ color: "#4a3f34", fontSize: 16, fontWeight: 600 }}>{t("perPerson")}</span>}</div>
               {paxLine && <div style={{ color: "#3e3117", fontSize: 14, marginBottom: 14 }}>{t("basis", { basis: paxLine })}</div>}
               {money(cost?.grandTotalRack) && <div style={{ color: "#7a6f61", fontSize: 13.5, lineHeight: 1.55 }}>{t("priceNote", { total: money(cost?.grandTotalRack)! })}</div>}
             </div>
@@ -638,7 +639,7 @@ export default function SafariDetailClient({ initialItin = null }: { initialItin
         {/* trust */}
         {(summary || reviews.length > 0) && (
           <section style={{ marginTop: "clamp(40px,5vw,60px)" }}>
-            {summary && <div className="flex items-center" style={{ gap: 12, marginBottom: 20 }}><span style={{ fontFamily: SERIF, fontWeight: 700, color: "#00aa6c", fontSize: 26 }}>{summary.rating.toFixed(1)}</span><div><div style={{ color: "#c48f2b", fontSize: 16, letterSpacing: 2 }}>★★★★★</div><div style={{ color: "#7a6f61", fontSize: 12.5 }}>{t("reviewsCount", { count: summary.count })}</div></div></div>}
+            {summary && <div className="flex items-center" style={{ gap: 12, marginBottom: 20 }}><span style={{ fontFamily: SERIF, fontWeight: 700, color: "#00aa6c", fontSize: 26 }}>{summary.rating.toFixed(1)}</span><div><StarRating size={16} gap={2} /><div style={{ color: "#7a6f61", fontSize: 12.5 }}>{t("reviewsCount", { count: summary.count })}</div></div></div>}
             {reviews.length > 0 && (
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(300px,1fr))", gap: 18 }}>
                 {reviews.slice(0, 2).map((r, i) => <ReviewCard key={i} item={r} height={340} />)}
@@ -670,7 +671,7 @@ export default function SafariDetailClient({ initialItin = null }: { initialItin
             <a href={WHATSAPP} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 font-semibold" style={{ background: "rgba(242,236,224,.08)", color: "#fff", border: "1.5px solid rgba(242,236,224,.4)", fontSize: 16, borderRadius: 8, padding: "15px 28px" }}><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.5 15.2L2 22l4.9-1.4A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-1.7-.1-.4-.1-.9-.3-1.6-.6-2.8-1.2-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8s.7-2 .9-2.2c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 1.9c.1.1.1.3 0 .5l-.4.5c-.2.2-.3.4-.1.6.5.8 1 1.4 1.7 1.9.5.3.8.4 1 .1l.6-.7c.2-.2.3-.2.6-.1l1.8.9c.2.1.4.2.4.3.1.2.1.6-.1 1.2Z" /></svg>{footer("whatsapp")}</a>
           </div>
           <div className="flex flex-wrap justify-center" style={{ gap: "14px 26px", paddingTop: 26, borderTop: "1px solid rgba(242,236,224,.15)" }}>
-            {summary && <span className="inline-flex items-center" style={{ gap: 8, fontSize: 13.5, color: "rgba(242,236,224,.85)" }}><span style={{ color: "#00aa6c", fontWeight: 700, fontFamily: SERIF, fontSize: 16 }}>{summary.rating.toFixed(1)}</span><span style={{ color: "#c48f2b", letterSpacing: 1 }}>★★★★★</span>Tripadvisor</span>}
+            {summary && <span className="inline-flex items-center" style={{ gap: 8, fontSize: 13.5, color: "rgba(242,236,224,.85)" }}><span style={{ color: "#00aa6c", fontWeight: 700, fontFamily: SERIF, fontSize: 16 }}>{summary.rating.toFixed(1)}</span><StarRating size={13} />Tripadvisor</span>}
             <span className="inline-flex items-center" style={{ gap: 8, fontSize: 13.5, color: "rgba(242,236,224,.85)" }}><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#c48f2b" strokeWidth={2}><path d="M12 2 4 6v6c0 5 3.5 8 8 10 4.5-2 8-5 8-10V6Z" strokeLinejoin="round" /></svg>{pd("accredited")}</span>
             <span className="inline-flex items-center" style={{ gap: 8, fontSize: 13.5, color: "rgba(242,236,224,.85)" }}><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#c48f2b" strokeWidth={2}><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 3" strokeLinecap="round" /></svg>{pd("replyBadge")}</span>
           </div>
@@ -679,14 +680,14 @@ export default function SafariDetailClient({ initialItin = null }: { initialItin
 
       {/* mobile sticky booking bar */}
       <div className="mobile-only" style={{ position: "fixed", bottom: 0, left: 0, right: 0, zIndex: 100, background: "#fff", borderTop: "1px solid #e4ddd1", boxShadow: "0 -6px 24px rgba(0,0,0,.1)", padding: "11px 16px", display: "flex", alignItems: "center", gap: 12 }}>
-        <div style={{ flex: 1, minWidth: 0 }}><div style={{ fontSize: 11, color: "#7a6f61" }}>{t("from")}</div><div style={{ fontFamily: SERIF, fontWeight: 700, color: "#96631a", fontSize: 20, lineHeight: 1 }}>{fromPrice || "—"} {fromPrice && <span style={{ color: "#7a6f61", fontSize: 12, fontWeight: 400 }}>pp</span>}</div></div>
+        <div style={{ flex: 1, minWidth: 0 }}><div style={{ fontSize: 11, color: "#7a6f61" }}>{t("from")}</div><div style={{ fontFamily: SERIF, fontWeight: 700, color: "#96631a", fontSize: 20, lineHeight: 1 }}>{fromPrice || "-"} {fromPrice && <span style={{ color: "#7a6f61", fontSize: 12, fontWeight: 400 }}>pp</span>}</div></div>
         <Link href={bookHref} className="inline-flex items-center gap-2" style={{ flexShrink: 0, background: "#c48f2b", color: "#3d1402", fontWeight: 600, fontSize: 15, borderRadius: 8, padding: "13px 22px" }}>{t("tailor")}</Link>
       </div>
       <div className="mobile-only" style={{ height: 70 }} aria-hidden="true" />
 
       {/* full-screen animated route */}
       {routeStops.length > 1 && (
-        <ItineraryRouteModal open={mapModal} onClose={() => setMapModal(false)} stops={routeStops} title={itin.name} subtitle={`${itin.startLocation} → ${itin.endLocation} · ${durationShort}`} />
+        <ItineraryRouteModal open={mapModal} onClose={() => setMapModal(false)} stops={routeStops} title={itin.name} subtitle={`${itin.startLocation} to ${itin.endLocation} | ${durationShort}`} />
       )}
     </div>
   );

@@ -30,7 +30,7 @@ export default function SafariInfoCards({
     totalPaxCount ? { icon: Users, label: t("detail.groupSize"), value: `${totalPaxCount} Travelers` } : null,
     startLocation ? { icon: MapPin, label: t("detail.start"), value: startLocation } : null,
     endLocation ? { icon: Route, label: t("detail.end"), value: endLocation } : null,
-    price ? { icon: DollarSign, label: `${t("detail.from")} · ${t("detail.perPerson")}`, value: price, subtext: paxLabel } : null,
+    price ? { icon: DollarSign, label: `${t("detail.from")} | ${t("detail.perPerson")}`, value: price, subtext: paxLabel } : null,
   ].filter(Boolean) as { icon: ElementType; label: string; value: string; subtext?: string }[];
 
   if (items.length === 0) return null;

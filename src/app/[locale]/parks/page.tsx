@@ -10,6 +10,7 @@ import SkeletonCard from "@/components/ui/SkeletonCard";
 import FeaturedCarousel from "@/components/ui/FeaturedCarousel";
 import { useDebounce } from "@/lib/useDebounce";
 import { apiClient } from "@/lib/api";
+import { StarRating } from "@/components/ui/Glyphs";
 
 interface ParkItem {
   slug: string;
@@ -212,7 +213,7 @@ export default function ParksPage() {
 
   const chips: { label: string; remove: () => void }[] = [];
   if (parkType !== "all") chips.push({ label: typeLabel(parkType), remove: () => setParkType("all") });
-  if (debouncedSearch) chips.push({ label: `“${debouncedSearch}”`, remove: () => setSearch("") });
+  if (debouncedSearch) chips.push({ label: `'${debouncedSearch}'`, remove: () => setSearch("") });
   activeTags.forEach((tg) => chips.push({ label: tg, remove: () => toggleTag(tg) }));
 
   // tall card for the featured "most visited" carousel
@@ -257,7 +258,7 @@ export default function ParksPage() {
             <Dropdown ariaLabel={pf("sortAria")} label={sortOpts.find((o) => o.value === sort)!.label} active={false} open={openDD === "sort"} onToggle={() => setOpenDD(openDD === "sort" ? null : "sort")} onClose={() => setOpenDD(null)} value={sort} onPick={setSort} options={sortOpts} />
           </div>
           <div className="flex items-center flex-wrap gap-2" style={{ marginTop: 10, minHeight: 24 }}>
-            <span style={{ fontSize: 13, color: "#7a6f61", marginRight: 2 }}>{loading ? "…" : totalItems === 0 ? pf("noParks") : pf("resultCount", { count: totalItems })}</span>
+            <span style={{ fontSize: 13, color: "#7a6f61", marginRight: 2 }}>{loading ? "..." : totalItems === 0 ? pf("noParks") : pf("resultCount", { count: totalItems })}</span>
             {chips.map((c) => (
               <button key={c.label} onClick={c.remove} className="inline-flex items-center cursor-pointer" style={{ gap: 6, background: "#e6ece2", color: "#274e22", border: "1px solid rgba(39,78,34,.18)", fontSize: 12.5, fontWeight: 600, padding: "5px 9px 5px 11px", borderRadius: 20 }}>
                 {c.label}<X size={12} strokeWidth={2.6} />
@@ -329,7 +330,7 @@ export default function ParksPage() {
             </div>
             {hasMore && (
               <div className="flex justify-center" style={{ marginTop: "clamp(30px,4vw,44px)" }}>
-                <button onClick={loadMore} disabled={loadingMore} className="inline-flex items-center gap-2 cursor-pointer transition-colors hover:bg-brand-green hover:text-brand-cream disabled:opacity-60" style={{ background: "none", color: "#274e22", fontWeight: 600, fontSize: 15, border: "1.5px solid #274e22", borderRadius: 8, padding: "14px 30px" }}>{loadingMore ? "…" : pf("showMore")}<ArrowDown size={16} strokeWidth={2.2} /></button>
+                <button onClick={loadMore} disabled={loadingMore} className="inline-flex items-center gap-2 cursor-pointer transition-colors hover:bg-brand-green hover:text-brand-cream disabled:opacity-60" style={{ background: "none", color: "#274e22", fontWeight: 600, fontSize: 15, border: "1.5px solid #274e22", borderRadius: 8, padding: "14px 30px" }}>{loadingMore ? "..." : pf("showMore")}<ArrowDown size={16} strokeWidth={2.2} /></button>
               </div>
             )}
           </section>
@@ -346,7 +347,7 @@ export default function ParksPage() {
             <a href="https://wa.me/255786345408" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 font-semibold rounded-lg" style={{ background: "rgba(242,236,224,.08)", color: "#fff", border: "1.5px solid rgba(242,236,224,.4)", fontSize: 16, padding: "15px 28px" }}><MessageCircle size={18} strokeWidth={2.2} />{nav("whatsapp")}</a>
           </div>
           <div className="flex flex-wrap justify-center" style={{ gap: "14px 26px", paddingTop: 26, borderTop: "1px solid rgba(242,236,224,.15)" }}>
-            <span className="inline-flex items-center" style={{ gap: 8, fontSize: 13.5, color: "rgba(242,236,224,.85)" }}><span style={{ color: "#00aa6c", fontWeight: 700, fontFamily: SERIF, fontSize: 16 }}>5.0</span><span style={{ color: "#c48f2b", letterSpacing: 1 }}>★★★★★</span>Tripadvisor</span>
+            <span className="inline-flex items-center" style={{ gap: 8, fontSize: 13.5, color: "rgba(242,236,224,.85)" }}><span style={{ color: "#00aa6c", fontWeight: 700, fontFamily: SERIF, fontSize: 16 }}>5.0</span><StarRating size={13} />Tripadvisor</span>
             <span className="inline-flex items-center" style={{ gap: 8, fontSize: 13.5, color: "rgba(242,236,224,.85)" }}><Check size={15} strokeWidth={2.4} style={{ color: "#c48f2b" }} />TATO / TALA</span>
             <span className="inline-flex items-center" style={{ gap: 8, fontSize: 13.5, color: "rgba(242,236,224,.85)" }}><Check size={15} strokeWidth={2.4} style={{ color: "#c48f2b" }} />{pf("trustReply")}</span>
           </div>

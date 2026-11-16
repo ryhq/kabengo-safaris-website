@@ -36,6 +36,12 @@ jobs:
       - name: Lint
         run: npm run lint || true
 
+      # Its own step, and not `|| true`. Lint is advisory here by choice; this is not.
+      # A stray em dash or a star glyph is content, it reaches a visitor, and the whole
+      # point of the sweep was that nobody notices one by reading.
+      - name: Typography
+        run: node scripts/check-typography.mjs
+
       # `prebuild` (scripts/sync-languages.mjs --apply) runs automatically here.
       # It fetches the supported-language list from the backend and rewrites
       # src/i18n/routing.ts, so THE BACKEND MUST BE REACHABLE OR THE BUILD FAILS

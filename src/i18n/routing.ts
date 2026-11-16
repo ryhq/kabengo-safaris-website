@@ -7,12 +7,11 @@
  * committed list is therefore a record of what the API said last, kept in the repo so a diff shows
  * when it changed — the lever is Settings → Translation, not this file.
  */
-
 import { defineRouting } from "next-intl/routing";
 import { createNavigation } from "next-intl/navigation";
 
 export const routing = defineRouting({
-  locales: ["en","fr","de","es","it","pt","sw","uk"],
+  locales: ["en","fr","de","es","it","pt","sw","uk","ru"],
   defaultLocale: "en",
 });
 

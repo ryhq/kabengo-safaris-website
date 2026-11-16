@@ -3,7 +3,8 @@
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { Star, BedDouble, Users, DollarSign, CalendarDays, Clock } from "lucide-react";
-import type { ElementType } from "react";
+import type { ElementType, ReactNode } from "react";
+import { StarRating } from "@/components/ui/Glyphs";
 
 interface AccommodationInfoCardsProps {
   starRating?: number;
@@ -20,10 +21,11 @@ export default function AccommodationInfoCards({
   starRating, totalRooms, maxGuests, priceRange, bestSeason, checkInPolicy, checkOutPolicy, categoryDisplayName,
 }: AccommodationInfoCardsProps) {
   const t = useTranslations("accommodations");
-  const items: { icon: ElementType; label: string; value: string }[] = [];
+  /* value is a node, not a string: a rating is drawn rather than spelled */
+  const items: { icon: ElementType; label: string; value: ReactNode }[] = [];
 
   if (starRating) {
-    items.push({ icon: Star, label: t("detail.rating"), value: `${"★".repeat(starRating)}${"☆".repeat(5 - starRating)}` });
+    items.push({ icon: Star, label: t("detail.rating"), value: <StarRating value={starRating} /> });
   } else if (categoryDisplayName) {
     items.push({ icon: Star, label: t("detail.category"), value: categoryDisplayName });
   }

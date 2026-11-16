@@ -165,7 +165,7 @@ export function getSafariJsonLd(
     name: safari.name,
     description: safari.description
       ? stripHtml(safari.description).slice(0, 300)
-      : `${safari.name} — a tailor-made Tanzania safari with Kabengo Safaris.`,
+      : `${safari.name} - a tailor-made Tanzania safari with Kabengo Safaris.`,
     ...(safari.primaryImageUrl && { image: safari.primaryImageUrl }),
     url: localeUrl(locale, `/safaris/${safari.code}`),
     provider: { "@id": `${BASE_URL}/#organization` },
@@ -225,7 +225,7 @@ export function getParkJsonLd(
     name: park.name,
     description: desc
       ? stripHtml(desc).slice(0, 300)
-      : `${park.name} — a national park in Tanzania.`,
+      : `${park.name} - a national park in Tanzania.`,
     ...(park.primaryImageUrl && { image: park.primaryImageUrl }),
     url: localeUrl(locale, `/parks/${park.slug}`),
     touristType: ["Safari", "Wildlife viewing", "Nature"],
@@ -290,7 +290,7 @@ export function getAccommodationJsonLd(
     name: acc.name,
     description: desc
       ? stripHtml(desc).slice(0, 300)
-      : `${acc.name} — safari accommodation in Tanzania.`,
+      : `${acc.name} - safari accommodation in Tanzania.`,
     ...(acc.primaryImageUrl && { image: acc.primaryImageUrl }),
     url: localeUrl(locale, `/accommodations/${acc.slug}`),
     ...(acc.website && { sameAs: [acc.website] }),
@@ -341,7 +341,7 @@ export function getActivityJsonLd(
     name: activity.name,
     description: desc
       ? stripHtml(desc).slice(0, 300)
-      : `${activity.name} — a safari activity in Tanzania.`,
+      : `${activity.name} - a safari activity in Tanzania.`,
     ...(activity.primaryImageUrl && { image: activity.primaryImageUrl }),
     url: localeUrl(locale, `/activities/${activity.slug}`),
     touristType: "Safari",

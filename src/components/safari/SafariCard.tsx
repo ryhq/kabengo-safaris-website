@@ -54,7 +54,7 @@ export default function SafariCard({ safari }: { safari: SafariCardData }) {
     startLocation, endLocation, highlights, description, totalPaxCount, costSummary,
   } = safari;
 
-  // Honest per-person "from" price — no fabricated "was" price.
+  // Honest per-person "from" price - no fabricated "was" price.
   const grandTotal = costSummary?.[0]?.grandTotalRack;
   const pax = totalPaxCount && totalPaxCount > 0 ? totalPaxCount : 1;
   const perPerson = grandTotal && grandTotal > 0 ? Math.round(grandTotal / pax) : null;
@@ -64,7 +64,7 @@ export default function SafariCard({ safari }: { safari: SafariCardData }) {
   const pillText = priceNum ? `From ${priceNum}*` : "Enquire";
   const priceFull = priceNum ? `${priceNum}* pp` : "";
 
-  const route = startLocation && endLocation ? `${startLocation}  →  ${endLocation}` : null;
+  const route = startLocation && endLocation ? `${startLocation}  to  ${endLocation}` : null;
   const chips = parseHighlights(highlights);
   const badges = [tripTypeDisplayName, budgetCategoryDisplayName].filter(Boolean) as string[];
   const tagline = chips[0] || description || "";
@@ -72,13 +72,13 @@ export default function SafariCard({ safari }: { safari: SafariCardData }) {
 
   return (
     <article className="ksafari relative flex flex-col bg-white border border-[#e4ddd1] rounded-[14px] overflow-hidden cursor-pointer">
-      {/* full-card link — click anywhere navigates to the safari */}
+      {/* full-card link - click anywhere navigates to the safari */}
       <Link href={`/safaris/${code}`} aria-label={name} className="absolute inset-0 z-[5]" />
       <div className="relative aspect-[4/3] overflow-hidden">
         <div className="ksafari-img absolute inset-0" style={{ background: bg }} />
         <div className="ksafari-rest absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(20,12,4,0) 28%, rgba(20,12,4,.5) 60%, rgba(20,12,4,.95) 100%)" }} />
 
-        {/* price pill — dark, high-contrast so it reads on any photo */}
+        {/* price pill - dark, high-contrast so it reads on any photo */}
         <div className="ksafari-rest absolute top-3.5 right-3.5" style={{ fontFamily: SERIF, background: "rgba(20,12,4,.82)", color: "#f3e6c8", fontSize: 18, fontWeight: 700, padding: "9px 15px", borderRadius: 7, border: "1px solid rgba(196,143,43,.55)", boxShadow: "0 2px 12px rgba(20,12,4,.45)" }}>{pillText}</div>
 
         {/* rest: kicker + title + tagline */}
@@ -91,11 +91,11 @@ export default function SafariCard({ safari }: { safari: SafariCardData }) {
         {/* rest: circular arrow */}
         <span className="ksafari-rest absolute flex items-center justify-center" style={{ bottom: 16, right: 14, width: 40, height: 40, borderRadius: "50%", background: "#fff", color: "#2a2018" }}><ArrowIcon size={17} /></span>
 
-        {/* hover overlay — green fill spreads up from the ground, content reveals above it */}
+        {/* hover overlay - green fill spreads up from the ground, content reveals above it */}
         <div className="ksafari-sweep absolute inset-0">
           <div className="ksafari-fill absolute inset-0" style={{ background: "linear-gradient(160deg, rgba(53,107,46,.78) 0%, rgba(31,67,25,.9) 52%, rgba(18,40,15,.96) 100%)" }} />
           <div className="relative flex flex-col" style={{ height: "100%", padding: 22, zIndex: 1 }}>
-            {/* essentials only — info group clips gracefully; price + CTA stay pinned */}
+            {/* essentials only - info group clips gracefully; price + CTA stay pinned */}
             <div className="flex flex-col" style={{ flex: 1, minHeight: 0, overflow: "hidden" }}>
               {badges.length > 0 && (
                 <div className="ksafari-reveal flex flex-wrap gap-1.5" style={{ marginBottom: 12, transitionDelay: ".04s" }}>

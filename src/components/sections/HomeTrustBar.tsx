@@ -5,6 +5,7 @@ import { useTranslations, useLocale } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { BadgeCheck, ArrowRight } from "lucide-react";
 import { apiClient } from "@/lib/api";
+import { StarRating } from "@/components/ui/Glyphs";
 
 const SERIF = "var(--font-source-serif), Georgia, serif";
 const TA_GREEN = "#00aa6c";
@@ -37,13 +38,13 @@ export default function HomeTrustBar() {
       <Link href="/reviews" className="group flex flex-wrap items-center justify-center no-underline" style={{ maxWidth: 1100, margin: "0 auto", gap: "8px 20px" }}>
         <span className="inline-flex items-center" style={{ gap: 8 }}>
           <span style={{ fontFamily: SERIF, fontWeight: 700, color: "#2a2018", fontSize: 18, lineHeight: 1 }}>{summary.rating.toFixed(1)}</span>
-          <span className="inline-flex" style={{ gap: 2, color: "#c48f2b", letterSpacing: 1, fontSize: 15 }}>★★★★★</span>
+          <StarRating size={15} gap={2} />
         </span>
         <span aria-hidden="true" className="hidden sm:block" style={{ width: 1, height: 18, background: "#e4ddd1" }} />
         <span className="inline-flex items-center" style={{ gap: 7 }}>
           <span style={{ width: 9, height: 9, borderRadius: "50%", background: TA_GREEN, display: "inline-block" }} />
           <span style={{ fontWeight: 700, color: TA_GREEN, fontSize: 13.5 }}>Tripadvisor</span>
-          <span style={{ color: "#7a6f61", fontSize: 13 }}>· {t("reviewsShort", { count: summary.count })}</span>
+          <span style={{ color: "#7a6f61", fontSize: 13 }}>| {t("reviewsShort", { count: summary.count })}</span>
         </span>
         <span aria-hidden="true" className="hidden sm:block" style={{ width: 1, height: 18, background: "#e4ddd1" }} />
         <span className="inline-flex items-center" style={{ gap: 7, color: "#4a3f34", fontSize: 13.5, fontWeight: 600 }}>

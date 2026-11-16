@@ -22,7 +22,7 @@ export default function GlassSelect({
   options,
   value,
   onChange,
-  placeholder = "Select…",
+  placeholder = "Select...",
   icon,
 }: GlassSelectProps) {
   const [open, setOpen] = useState(false);

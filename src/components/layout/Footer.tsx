@@ -7,12 +7,13 @@ import { Mail, Phone, MapPin, Instagram, ArrowRight, ShieldCheck, BadgeCheck } f
 import KabengoIcon from "@/components/ui/KabengoIcon";
 import { subscribeToNewsletter } from "@/lib/api";
 import { TripAdvisorIcon, TripAdvisorWidget } from "@/components/ui/TripAdvisorBadge";
+import { Check } from "lucide-react";
 
 /* Obfuscated contact — assembled client-side so bots can't scrape from HTML */
 function ObfuscatedEmail() {
   const [ready, setReady] = useState(false);
   useEffect(() => setReady(true), []);
-  if (!ready) return <span className="text-stone-300 text-sm">…</span>;
+  if (!ready) return <span className="text-stone-300 text-sm">...</span>;
   const full = `${"info"}@${"kabengosafaris.com"}`;
   return (
     <a href={`mailto:${full}`} className="text-stone-300 hover:text-white transition-colors text-sm">{full}</a>
@@ -22,7 +23,7 @@ function ObfuscatedEmail() {
 function ObfuscatedPhone() {
   const [ready, setReady] = useState(false);
   useEffect(() => setReady(true), []);
-  if (!ready) return <span className="text-stone-300 text-sm">…</span>;
+  if (!ready) return <span className="text-stone-300 text-sm">...</span>;
   const parts = ["+255", "786", "345", "408"];
   return (
     <a href={`tel:${parts.join("")}`} className="text-stone-300 hover:text-white transition-colors text-sm">{parts.join(" ")}</a>
@@ -67,7 +68,7 @@ function FooterNewsletter() {
         disabled={status === "loading"}
         className="w-full px-4 py-2.5 bg-accent-gold hover:bg-accent-gold/90 text-brand-brown-dark text-sm font-semibold rounded-lg transition-all disabled:opacity-50"
       >
-        {status === "done" ? "✓" : status === "loading" ? "..." : t("subscribeBtn")}
+        {status === "done" ? <Check size={16} aria-label="Subscribed" /> : status === "loading" ? "..." : t("subscribeBtn")}
       </button>
     </form>
   );
@@ -203,7 +204,7 @@ export default function Footer() {
           <p className="text-stone-400 text-sm">{t("copyright", { year: new Date().getFullYear() })}</p>
           <div className="flex items-center gap-4">
             <Link href="/privacy-policy" className="text-stone-400 hover:text-white text-sm transition-colors">{t("privacy")}</Link>
-            <span className="text-stone-600">·</span>
+            <span className="text-stone-600">|</span>
             <Link href="/terms" className="text-stone-400 hover:text-white text-sm transition-colors">{t("terms")}</Link>
           </div>
         </div>

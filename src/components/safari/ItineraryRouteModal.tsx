@@ -8,7 +8,7 @@ import { X, RotateCcw, Play, Pause, ChevronLeft, ChevronRight } from "lucide-rea
 
 export interface RouteStop { n: number; nEnd?: number; lat: number; lng: number; label?: string; sub?: string; pinLabel?: string }
 
-const dayRange = (s: { n: number; nEnd?: number }) => (s.nEnd && s.nEnd !== s.n ? `${s.n}–${s.nEnd}` : String(s.n));
+const dayRange = (s: { n: number; nEnd?: number }) => (s.nEnd && s.nEnd !== s.n ? `${s.n}-${s.nEnd}` : String(s.n));
 
 /* ── geometry helpers ─────────────────────────────────────────────────────── */
 type LL = [number, number];
@@ -273,7 +273,7 @@ export default function ItineraryRouteModal({
           {/* current-stop caption (top-right, clear of zoom control) */}
           {activeStop && (
             <div style={{ position: "absolute", right: "clamp(10px,2vw,18px)", top: "clamp(10px,2vw,18px)", zIndex: 500, maxWidth: "min(64%,360px)", background: "rgba(255,255,255,.94)", backdropFilter: "blur(8px)", border: "1px solid #e4ddd1", borderRadius: 12, padding: "10px 14px", boxShadow: "0 8px 26px rgba(0,0,0,.18)" }}>
-              <span style={{ display: "inline-block", background: "#274e22", color: "#faf8f5", fontSize: 11, fontWeight: 700, letterSpacing: ".05em", textTransform: "uppercase", padding: "3px 8px", borderRadius: 5, marginBottom: 6 }}>{dayRange(activeStop).includes("–") ? "Days" : "Day"} {dayRange(activeStop)}</span>
+              <span style={{ display: "inline-block", background: "#274e22", color: "#faf8f5", fontSize: 11, fontWeight: 700, letterSpacing: ".05em", textTransform: "uppercase", padding: "3px 8px", borderRadius: 5, marginBottom: 6 }}>{dayRange(activeStop).includes("-") ? "Days" : "Day"} {dayRange(activeStop)}</span>
               <div style={{ fontFamily: "var(--font-source-serif),Georgia,serif", fontWeight: 700, color: "#2a2018", fontSize: 15, lineHeight: 1.25 }}>{activeStop.label || `Stop ${activeStop.n}`}</div>
               {activeStop.sub && <div style={{ color: "#7a6f61", fontSize: 12.5, marginTop: 2 }}>{activeStop.sub}</div>}
             </div>
@@ -304,7 +304,7 @@ export default function ItineraryRouteModal({
             />
 
             <span style={{ flexShrink: 0, fontSize: 12.5, fontWeight: 700, color: "#3d1402", fontVariantNumeric: "tabular-nums" }}>
-              {activeStop ? `${dayRange(activeStop).includes("–") ? "Days" : "Day"} ${dayRange(activeStop)}` : ""}
+              {activeStop ? `${dayRange(activeStop).includes("-") ? "Days" : "Day"} ${dayRange(activeStop)}` : ""}
             </span>
             <button onClick={replay} aria-label="Replay route" title="Replay route" style={{ ...iconBtn, width: 36, height: 36 }}>
               <RotateCcw size={16} strokeWidth={2.4} />

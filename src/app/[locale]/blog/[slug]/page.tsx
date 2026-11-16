@@ -78,7 +78,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ local
             {post.tags.map((tag) => <span key={tag} style={{ background: "rgba(250,248,245,.14)", backdropFilter: "blur(4px)", border: "1px solid rgba(250,248,245,.25)", color: "#fff", fontSize: 12, fontWeight: 600, padding: "5px 12px", borderRadius: 20 }}>{tag}</span>)}
           </div>
           <h1 style={{ fontFamily: SERIF, fontWeight: 700, color: "#fff", fontSize: "clamp(28px,4.6vw,48px)", lineHeight: 1.08, letterSpacing: "-.015em", margin: "0 0 14px", textShadow: "0 2px 24px rgba(20,12,4,.4)" }}>{post.title}</h1>
-          <div style={{ color: "rgba(242,236,224,.85)", fontSize: 13.5 }}>{t("by", { author: post.author })} · {fmtDate(post.date)} · {t("readTime", { min: post.readMinutes })}</div>
+          <div style={{ color: "rgba(242,236,224,.85)", fontSize: 13.5 }}>{t("by", { author: post.author })} | {fmtDate(post.date)} | {t("readTime", { min: post.readMinutes })}</div>
         </div>
       </header>
 
@@ -104,7 +104,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ local
         )}
 
         <div style={{ margin: "clamp(36px,5vw,52px) 0 0", paddingBottom: 8 }}>
-          <Link href="/blog" style={{ color: "#96631a", fontWeight: 600, fontSize: 14 }}>← {t("backToBlog")}</Link>
+          <Link href="/blog" style={{ color: "#96631a", fontWeight: 600, fontSize: 14 }}>{t("backToBlog")}</Link>
         </div>
       </main>
 
@@ -114,7 +114,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ local
           <h2 style={{ fontFamily: SERIF, fontWeight: 700, color: "#fff", fontSize: "clamp(26px,4vw,40px)", lineHeight: 1.1, margin: "0 0 16px" }}>{t("ctaTitle")}</h2>
           <p style={{ color: "rgba(242,236,224,.82)", fontSize: 17, lineHeight: 1.6, margin: "0 auto 28px", maxWidth: 520 }}>{t("ctaBody")}</p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 12, justifyContent: "center" }}>
-            <Link href="/plan" style={{ background: "#c48f2b", color: "#3d1402", fontWeight: 600, fontSize: 16, borderRadius: 9, padding: "16px 30px", boxShadow: "0 10px 30px rgba(196,143,43,.4)" }}>{nav("planYourSafari")} →</Link>
+            <Link href="/plan" style={{ background: "#c48f2b", color: "#3d1402", fontWeight: 600, fontSize: 16, borderRadius: 9, padding: "16px 30px", boxShadow: "0 10px 30px rgba(196,143,43,.4)" }}>{nav("planYourSafari")}</Link>
             <a href={WHATSAPP} target="_blank" rel="noopener noreferrer" style={{ background: "rgba(242,236,224,.1)", color: "#fff", fontWeight: 600, fontSize: 16, border: "1.5px solid rgba(242,236,224,.4)", borderRadius: 9, padding: "15px 26px" }}>{footer("whatsapp")}</a>
           </div>
         </div>

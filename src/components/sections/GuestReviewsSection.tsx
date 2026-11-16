@@ -92,8 +92,8 @@ export default function GuestReviewsSection() {
             {item.isVerifiedBooking && <span className="inline-flex items-center flex-shrink-0" style={{ gap: 3, fontSize: 11, fontWeight: 600, color: "#3a7a2a" }}><BadgeCheck size={13} strokeWidth={2.4} />{t("verified")}</span>}
           </div>
           <div style={{ color: "#7a6f61", fontSize: 12.5, ...ONE_LINE }}>
-            {meta.length > 0 && <span className="inline-flex items-center" style={{ gap: 4 }}>{item.authorCountry && <MapPin size={11} />}{meta.join(" · ")}</span>}
-            {meta.length > 0 && date && <span> · </span>}
+            {meta.length > 0 && <span className="inline-flex items-center" style={{ gap: 4 }}>{item.authorCountry && <MapPin size={11} />}{meta.join(" | ")}</span>}
+            {meta.length > 0 && date && <span> | </span>}
             {date}
           </div>
         </div>

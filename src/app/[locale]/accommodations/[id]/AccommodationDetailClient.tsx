@@ -10,6 +10,7 @@ import FeaturedCarousel from "@/components/ui/FeaturedCarousel";
 import PhotoWheel from "@/components/park/PhotoWheel";
 import dynamic from "next/dynamic";
 import { apiClient } from "@/lib/api";
+import { StarRating } from "@/components/ui/Glyphs";
 
 // Real OSM map — client-only (Leaflet needs window). Shared across the site.
 const ParkMap = dynamic(() => import("@/components/ui/ParkMap"), { ssr: false, loading: () => null });
@@ -49,7 +50,7 @@ function parseTags(raw?: string): string[] {
 }
 function parseList(raw?: string): string[] {
   if (!raw) return [];
-  const parts = raw.split(/[,;\n·|]+/).map((x) => x.trim()).filter(Boolean);
+  const parts = raw.split(/[,;\n||]+/).map((x) => x.trim()).filter(Boolean);
   if (parts.length < 1) return [];
   if (parts.some((p) => p.length > 40)) return [];
   return parts.slice(0, 18);
@@ -134,7 +135,7 @@ export default function AccommodationDetailClient({ initialAcc = null, initialIm
   const heroImg = acc.primaryImageUrl || (images[0]?.imageUrl ?? null);
   const heroBg = heroImg ? `50% 42%/cover no-repeat url('${heroImg}')` : gradFor(acc.slug);
   // Note: rating/stars, category, max guests, rooms/beds and price are commercial /
-  // operational data — kept out of the public page (owner-facing only).
+  // operational data - kept out of the public page (owner-facing only).
   const type = acc.accommodationTypeDisplayName;
   const regionFull = [acc.region, acc.district].filter(Boolean).join(", ");
   const photoCount = totalImages || images.length;
@@ -150,13 +151,13 @@ export default function AccommodationDetailClient({ initialAcc = null, initialIm
   const hasCoords = acc.latitude != null && acc.longitude != null && acc.latitude !== 0 && acc.longitude !== 0;
   const locRows = [
     regionFull && { label: t("detail.regionLabel"), value: regionFull },
-    (acc.location || acc.address) && { label: t("detail.addressLabel"), value: [acc.location, acc.address].filter(Boolean).join(" · ") },
+    (acc.location || acc.address) && { label: t("detail.addressLabel"), value: [acc.location, acc.address].filter(Boolean).join(" | ") },
     acc.elevation && { label: t("detail.elevationLabel"), value: acc.elevation },
   ].filter(Boolean) as { label: string; value: string }[];
 
   const renderSafariCard = (s: SafariItem) => {
     const bg = s.primaryImageUrl ? `50% 45%/cover no-repeat url('${s.primaryImageUrl}')` : gradFor(s.code);
-    const kicker = [s.totalDays ? `${s.totalDays} ${s.totalDays === 1 ? "Day" : "Days"}` : null, s.tripTypeDisplayName].filter(Boolean).join(" · ");
+    const kicker = [s.totalDays ? `${s.totalDays} ${s.totalDays === 1 ? "Day" : "Days"}` : null, s.tripTypeDisplayName].filter(Boolean).join(" | ");
     const price = safariFromPrice(s);
     return (
       <article className="group relative" style={{ height: 300, borderRadius: 20, overflow: "hidden", background: bg }}>
@@ -187,7 +188,7 @@ export default function AccommodationDetailClient({ initialAcc = null, initialIm
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#00aa6c" strokeWidth={2.2} style={{ flexShrink: 0 }}><path d="M20 6 9 17l-5-5" strokeLinecap="round" strokeLinejoin="round" /></svg>{t("detail.reply24")}
         </div>
         <div className="flex items-center" style={{ gap: 8, paddingTop: 12, borderTop: "1px solid #e4ddd1", marginTop: 4 }}>
-          <span style={{ color: "#c48f2b", letterSpacing: 1, fontSize: 14 }}>★★★★★</span><span style={{ color: "#7a6f61", fontSize: 12.5 }}>5.0 · Tripadvisor · TATO/TALA</span>
+          <StarRating size={14} /><span style={{ color: "#7a6f61", fontSize: 12.5 }}>5.0 | Tripadvisor | TATO/TALA</span>
         </div>
       </div>
     </div>
@@ -214,7 +215,7 @@ export default function AccommodationDetailClient({ initialAcc = null, initialIm
           <h1 style={{ fontFamily: SERIF, fontWeight: 700, color: "#fff", fontSize: "clamp(32px,6vw,60px)", lineHeight: 1.03, letterSpacing: "-.015em", margin: "0 0 14px", maxWidth: 820, overflowWrap: "break-word", textShadow: "0 2px 24px rgba(20,12,4,.4)" }}>{acc.name}</h1>
           <div className="flex flex-wrap items-center" style={{ gap: "8px 14px", color: "#fff", fontSize: "clamp(14px,1.9vw,17px)", fontWeight: 500 }}>
             {type && <span>{type}</span>}
-            {type && regionFull && <span style={{ color: "#c48f2b" }}>·</span>}
+            {type && regionFull && <span style={{ color: "#c48f2b" }}>|</span>}
             {regionFull && <span className="inline-flex items-center" style={{ gap: 6 }}><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#c48f2b" strokeWidth={2}><path d="M12 21s-7-4.5-7-10a7 7 0 0 1 14 0c0 5.5-7 10-7 10Z" /><circle cx="12" cy="11" r="2.3" /></svg>{regionFull}</span>}
           </div>
         </div>
@@ -330,7 +331,7 @@ export default function AccommodationDetailClient({ initialAcc = null, initialIm
             <a href={WHATSAPP} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 font-semibold" style={{ background: "rgba(242,236,224,.08)", color: "#fff", border: "1.5px solid rgba(242,236,224,.4)", fontSize: 16, borderRadius: 8, padding: "15px 28px" }}><WhatsAppIcon />{footer("whatsapp")}</a>
           </div>
           <div className="flex flex-wrap justify-center" style={{ gap: "14px 26px", paddingTop: 26, borderTop: "1px solid rgba(242,236,224,.15)" }}>
-            <span className="inline-flex items-center" style={{ gap: 8, fontSize: 13.5, color: "rgba(242,236,224,.85)" }}><span style={{ color: "#00aa6c", fontWeight: 700, fontFamily: SERIF, fontSize: 16 }}>5.0</span><span style={{ color: "#c48f2b", letterSpacing: 1 }}>★★★★★</span>Tripadvisor</span>
+            <span className="inline-flex items-center" style={{ gap: 8, fontSize: 13.5, color: "rgba(242,236,224,.85)" }}><span style={{ color: "#00aa6c", fontWeight: 700, fontFamily: SERIF, fontSize: 16 }}>5.0</span><StarRating size={13} />Tripadvisor</span>
             <span className="inline-flex items-center" style={{ gap: 8, fontSize: 13.5, color: "rgba(242,236,224,.85)" }}><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#c48f2b" strokeWidth={2}><path d="M12 2 4 6v6c0 5 3.5 8 8 10 4.5-2 8-5 8-10V6Z" strokeLinejoin="round" /></svg>{t("detail.accredited")}</span>
             <span className="inline-flex items-center" style={{ gap: 8, fontSize: 13.5, color: "rgba(242,236,224,.85)" }}><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#c48f2b" strokeWidth={2}><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 3" strokeLinecap="round" /></svg>{t("detail.replyBadge")}</span>
           </div>

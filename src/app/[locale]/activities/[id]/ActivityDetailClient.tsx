@@ -8,6 +8,7 @@ import ActivityDetailSkeleton from "@/components/activity/ActivityDetailSkeleton
 import FeaturedCarousel from "@/components/ui/FeaturedCarousel";
 import PhotoWheel from "@/components/park/PhotoWheel";
 import { apiClient } from "@/lib/api";
+import { StarRating } from "@/components/ui/Glyphs";
 
 export interface ActivityImage { imageUrl: string; altText?: string; caption?: string }
 export interface ActivityDetail {
@@ -149,7 +150,7 @@ export default function ActivityDetailClient({ initialActivity = null, initialIm
   // Editorial safari card for "Safaris featuring this experience".
   const renderSafariCard = (s: SafariItem) => {
     const bg = s.primaryImageUrl ? `50% 45%/cover no-repeat url('${s.primaryImageUrl}')` : gradFor(s.code);
-    const kicker = [s.totalDays ? `${s.totalDays} ${s.totalDays === 1 ? "Day" : "Days"}` : null, s.tripTypeDisplayName].filter(Boolean).join(" · ");
+    const kicker = [s.totalDays ? `${s.totalDays} ${s.totalDays === 1 ? "Day" : "Days"}` : null, s.tripTypeDisplayName].filter(Boolean).join(" | ");
     const price = safariFromPrice(s);
     return (
       <article className="group relative" style={{ height: 300, borderRadius: 20, overflow: "hidden", background: bg }}>
@@ -180,7 +181,7 @@ export default function ActivityDetailClient({ initialActivity = null, initialIm
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#00aa6c" strokeWidth={2.2} style={{ flexShrink: 0 }}><path d="M20 6 9 17l-5-5" strokeLinecap="round" strokeLinejoin="round" /></svg>{pd("railReply")}
         </div>
         <div className="flex items-center" style={{ gap: 8, paddingTop: 12, borderTop: "1px solid #e4ddd1", marginTop: 4 }}>
-          <span style={{ color: "#c48f2b", letterSpacing: 1, fontSize: 14 }}>★★★★★</span><span style={{ color: "#7a6f61", fontSize: 12.5 }}>5.0 · Tripadvisor · TATO/TALA</span>
+          <StarRating size={14} /><span style={{ color: "#7a6f61", fontSize: 12.5 }}>5.0 | Tripadvisor | TATO/TALA</span>
         </div>
       </div>
     </div>
@@ -190,7 +191,7 @@ export default function ActivityDetailClient({ initialActivity = null, initialIm
     <div className="ad" style={{ fontFamily: "var(--font-inter), Inter, system-ui, sans-serif", background: "linear-gradient(175deg,#faf8f5,#f1ece3 140%)", color: "#4a3f34", overflowX: "clip" }}>
       <style>{CSS}</style>
 
-      {/* ===== TALL HERO — eyebrow + title, bottom-left ===== */}
+      {/* ===== TALL HERO - eyebrow + title, bottom-left ===== */}
       <header style={{ position: "relative", overflow: "hidden", minHeight: "clamp(440px,64vh,600px)", display: "flex", alignItems: "flex-end", padding: "clamp(96px,12vh,124px) clamp(18px,5vw,56px) clamp(36px,5vw,56px)", background: heroBg }}>
         {!heroImg && (
           <svg aria-hidden="true" viewBox="0 0 200 200" style={{ position: "absolute", right: "4%", top: "18%", width: "min(300px,34vw)", opacity: 0.1, color: "#fff" }}><g fill="none" stroke="currentColor" strokeWidth={2}><circle cx="100" cy="100" r="78" /><path d="M100 30l14 56 56 14-56 14-14 56-14-56-56-14 56-14Z" strokeLinejoin="round" /></g></svg>
@@ -300,7 +301,7 @@ export default function ActivityDetailClient({ initialActivity = null, initialIm
             </a>
           </div>
           <div className="flex flex-wrap justify-center" style={{ gap: "14px 26px", paddingTop: 26, borderTop: "1px solid rgba(242,236,224,.15)" }}>
-            <span className="inline-flex items-center" style={{ gap: 8, fontSize: 13.5, color: "rgba(242,236,224,.85)" }}><span style={{ color: "#00aa6c", fontWeight: 700, fontFamily: SERIF, fontSize: 16 }}>5.0</span><span style={{ color: "#c48f2b", letterSpacing: 1 }}>★★★★★</span>Tripadvisor</span>
+            <span className="inline-flex items-center" style={{ gap: 8, fontSize: 13.5, color: "rgba(242,236,224,.85)" }}><span style={{ color: "#00aa6c", fontWeight: 700, fontFamily: SERIF, fontSize: 16 }}>5.0</span><StarRating size={13} />Tripadvisor</span>
             <span className="inline-flex items-center" style={{ gap: 8, fontSize: 13.5, color: "rgba(242,236,224,.85)" }}><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#c48f2b" strokeWidth={2}><path d="M12 2 4 6v6c0 5 3.5 8 8 10 4.5-2 8-5 8-10V6Z" strokeLinejoin="round" /></svg>{pd("accredited")}</span>
             <span className="inline-flex items-center" style={{ gap: 8, fontSize: 13.5, color: "rgba(242,236,224,.85)" }}><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#c48f2b" strokeWidth={2}><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 3" strokeLinecap="round" /></svg>{pd("replyBadge")}</span>
           </div>

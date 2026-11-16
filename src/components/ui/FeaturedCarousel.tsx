@@ -82,7 +82,7 @@ export default function FeaturedCarousel<T>({
         <div className="flex items-center flex-wrap" style={{ gap: 10 }}>
           <Star size={18} fill="#c48f2b" stroke="none" />
           <h2 style={{ fontFamily: SERIF, fontWeight: 700, color: "#2a2018", fontSize: "clamp(20px,2.6vw,26px)", margin: 0 }}>{title}</h2>
-          {subtitle && <span style={{ color: "#7a6f61", fontSize: 13.5 }}>— {subtitle}</span>}
+          {subtitle && <span style={{ color: "#7a6f61", fontSize: 13.5 }}>- {subtitle}</span>}
         </div>
         {showNav && (
           <div className="flex" style={{ gap: 7 }}>

@@ -99,7 +99,7 @@ export function TripAdvisorWidget() {
       target="_blank"
       rel="noopener noreferrer"
       className="flex items-center gap-3 no-underline"
-      aria-label={`Kabengo Safaris on Tripadvisor — rated ${rating.toFixed(1)} from ${count} review${count === 1 ? "" : "s"}`}
+      aria-label={`Kabengo Safaris on Tripadvisor - rated ${rating.toFixed(1)} from ${count} review${count === 1 ? "" : "s"}`}
     >
       <span className="flex items-center justify-center rounded-full flex-shrink-0" style={{ width: 44, height: 44, background: "rgba(0,170,108,.12)", color: TA_GREEN }}>
         <TripAdvisorLogo className="w-7 h-7" />
@@ -153,7 +153,7 @@ export function TripAdvisorAboutSection() {
             <div className="flex items-center justify-center sm:justify-start gap-2 mb-2">
               <RatingBubbles rating={rating} size={16} />
               <span className="text-white font-semibold">{rating.toFixed(1)}</span>
-              <span className="text-white/70 text-sm">· {count} review{count === 1 ? "" : "s"}</span>
+              <span className="text-white/70 text-sm">| {count} review{count === 1 ? "" : "s"}</span>
             </div>
             <p className="text-white/80 text-sm max-w-md">
               {t("tripadvisorAboutDesc")}
@@ -215,7 +215,7 @@ export function TripAdvisorReviewCard() {
       <div className="flex items-center gap-2.5">
         <RatingBubbles rating={rating} size={17} />
         <span className="font-semibold text-stone-800">{rating.toFixed(1)}</span>
-        <span className="text-stone-500 text-sm">· {count} review{count === 1 ? "" : "s"}</span>
+        <span className="text-stone-500 text-sm">| {count} review{count === 1 ? "" : "s"}</span>
       </div>
 
       <a href={TRIPADVISOR_WRITE_REVIEW_URL} target="_blank" rel="noopener noreferrer" aria-label="Write a review on Tripadvisor" className="block">

@@ -23,7 +23,7 @@ export default function SafariDetailHero({
 }: SafariDetailHeroProps) {
   const locationText =
     startLocation && endLocation && startLocation !== endLocation
-      ? `${startLocation} → ${endLocation}`
+      ? `${startLocation} to ${endLocation}`
       : startLocation || endLocation;
 
   return (

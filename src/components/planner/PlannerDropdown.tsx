@@ -61,7 +61,7 @@ export default function PlannerDropdown({ value, options, onChange, placeholder 
                 ref={searchRef}
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search…"
+                placeholder="Search..."
                 aria-label="Search options"
                 style={{ width: "100%", border: "1px solid var(--border)", borderRadius: 7, padding: "8px 10px 8px 32px", fontSize: 14, color: "var(--ink)", outline: "none" }}
               />

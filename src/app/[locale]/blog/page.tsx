@@ -51,8 +51,8 @@ export default async function BlogIndexPage({ params }: { params: Promise<{ loca
                 </h2>
                 <p style={{ color: "#7a6f61", fontSize: 14.5, lineHeight: 1.6, margin: "0 0 16px", flex: 1 }}>{p.excerpt}</p>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10, paddingTop: 14, borderTop: "1px solid #e4ddd1" }}>
-                  <span style={{ color: "#7a6f61", fontSize: 12.5 }}>{fmtDate(p.date)} · {t("readTime", { min: p.readMinutes })}</span>
-                  <Link href={`/blog/${p.slug}`} style={{ color: "#96631a", fontWeight: 600, fontSize: 13.5 }}>{common("readMore")} →</Link>
+                  <span style={{ color: "#7a6f61", fontSize: 12.5 }}>{fmtDate(p.date)} | {t("readTime", { min: p.readMinutes })}</span>
+                  <Link href={`/blog/${p.slug}`} style={{ color: "#96631a", fontWeight: 600, fontSize: 13.5 }}>{common("readMore")}</Link>
                 </div>
               </div>
             </article>

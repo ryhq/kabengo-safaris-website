@@ -219,7 +219,7 @@ export default function CountryPhoneInput({
                 ref={searchRef}
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search country or code…"
+                placeholder="Search country or code..."
                 className="flex-1 bg-transparent outline-none text-sm text-stone-700 placeholder:text-stone-400"
               />
             </div>

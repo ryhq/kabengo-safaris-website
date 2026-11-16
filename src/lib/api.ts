@@ -48,7 +48,7 @@ export async function fetchHomepageData(locale?: string): Promise<HomepageData> 
     } : undefined);
     return response.data.data || fallback;
   } catch {
-    console.warn("[api] Homepage data unavailable – backend may be offline");
+    console.warn("[api] Homepage data unavailable - backend may be offline");
     return fallback;
   }
 }

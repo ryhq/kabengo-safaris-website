@@ -271,7 +271,7 @@ export default function GalleryPage() {
                   </span>
                   <span className="text-white font-medium text-sm sm:text-base">{img.entityName}</span>
                   {img.imageType && (
-                    <span className="text-white/40 text-xs hidden sm:inline">— {img.imageType}</span>
+                    <span className="text-white/40 text-xs hidden sm:inline">- {img.imageType}</span>
                   )}
                 </div>
                 <button

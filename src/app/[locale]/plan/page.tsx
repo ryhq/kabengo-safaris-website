@@ -4,6 +4,7 @@ import { Check, Clock } from "lucide-react";
 import { buildAlternates } from "@/lib/seo";
 import { fetchTestimonySummary, fetchFeaturedTestimonies } from "@/lib/server-api";
 import SafariPlanner from "@/components/planner/SafariPlanner";
+import { StarRating } from "@/components/ui/Glyphs";
 
 export async function generateMetadata({
   params,
@@ -81,15 +82,15 @@ export default async function PlanPage({ params }: { params: Promise<{ locale: s
                       <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: quote ? 14 : 0 }}>
                         <span style={{ fontFamily: SERIF, fontWeight: 700, color: "#fff", fontSize: 30, lineHeight: 1 }}>{summary!.ratingValue.toFixed(1)}</span>
                         <div>
-                          <div style={{ color: "#c48f2b", fontSize: 16, letterSpacing: 2 }}>★★★★★</div>
+                          <StarRating size={16} gap={2} />
                           <div style={{ color: "rgba(242,236,224,.7)", fontSize: 12.5 }}>{t("railReviews", { count: summary!.reviewCount })}</div>
                         </div>
                       </div>
                     )}
                     {quote && (
                       <>
-                        <p style={{ fontFamily: SERIF, fontStyle: "italic", color: "#faf8f5", fontSize: 15.5, lineHeight: 1.55, margin: "0 0 10px" }}>“{quote.message}”</p>
-                        <div style={{ color: "rgba(242,236,224,.7)", fontSize: 13 }}>— {quote.authorName}{quote.authorCountry ? `, ${quote.authorCountry}` : ""}</div>
+                        <p style={{ fontFamily: SERIF, fontStyle: "italic", color: "#faf8f5", fontSize: 15.5, lineHeight: 1.55, margin: "0 0 10px" }}>"{quote.message}"</p>
+                        <div style={{ color: "rgba(242,236,224,.7)", fontSize: 13 }}>- {quote.authorName}{quote.authorCountry ? `, ${quote.authorCountry}` : ""}</div>
                       </>
                     )}
                   </div>

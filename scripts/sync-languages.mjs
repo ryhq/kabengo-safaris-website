@@ -50,6 +50,57 @@ if (DRY_RUN) {
 
 // ─── Read .env.local into process.env (only missing keys) ────────────────────
 
+/* ------------------------------------------------------------------------ *
+ * Typography
+ *
+ * A translation provider writes the punctuation it likes, not the punctuation
+ * we use. Russian came back full of em dashes minutes after en.json had been
+ * swept clean of them, which is the whole problem in one file: a one-time
+ * clean-up cannot hold a door that the build itself opens on every run.
+ *
+ * So the fold happens where the text is written, not afterwards. typography.json
+ * is the same map the site, the panel and the API all read.
+ *
+ * It never touches a letter, and it leaves a language its own punctuation:
+ * German keeps its low quotes, French its guillemets and its apostrophe,
+ * Spanish its opening marks. That is the keepIn section of the map.
+ * ------------------------------------------------------------------------ */
+
+const TYPOGRAPHY = JSON.parse(
+  fs.readFileSync(path.join(PROJECT_ROOT, "typography.json"), "utf-8"),
+);
+
+function foldTypography(text, locale) {
+  if (typeof text !== "string" || !text) return text;
+
+  const kept = new Set();
+  for (const [pattern, chars] of Object.entries(TYPOGRAPHY.keepIn ?? {})) {
+    if (pattern === "_") continue;
+    if (new RegExp(pattern).test(`src/messages/${locale}.json`)) {
+      for (const c of chars) kept.add(c);
+    }
+  }
+
+  let out = "";
+  for (const c of text) {
+    const replacement = TYPOGRAPHY.fold[c];
+    out += replacement !== undefined && !kept.has(c) ? replacement : c;
+  }
+  return out;
+}
+
+/** The same, over a whole nested message object. */
+function foldMessages(node, locale) {
+  if (typeof node === "string") return foldTypography(node, locale);
+  if (Array.isArray(node)) return node.map((v) => foldMessages(v, locale));
+  if (node && typeof node === "object") {
+    return Object.fromEntries(
+      Object.entries(node).map(([k, v]) => [k, foldMessages(v, locale)]),
+    );
+  }
+  return node;
+}
+
 function loadEnvFile() {
   if (!fs.existsSync(ENV_FILE)) return;
   const content = fs.readFileSync(ENV_FILE, "utf-8");
@@ -234,7 +285,10 @@ async function main() {
       }
 
       try {
-        const translated = await translateMessages(enMessages, locale);
+        const translated = foldMessages(
+          await translateMessages(enMessages, locale),
+          locale,
+        );
         const outputPath = path.join(MESSAGES_DIR, `${locale}.json`);
         fs.writeFileSync(outputPath, JSON.stringify(translated, null, 2) + "\n", "utf-8");
         console.log(`   ✅ Created src/messages/${locale}.json\n`);
@@ -306,7 +360,7 @@ async function main() {
       }
     }
 
-    const patched = unflattenMessages(translatedFlat);
+    const patched = foldMessages(unflattenMessages(translatedFlat), locale);
     fs.writeFileSync(localePath, JSON.stringify(patched, null, 2) + "\n", "utf-8");
     console.log(`   ✅ Patched ${locale}.json — ${missingKeys.length} keys translated\n`);
   }

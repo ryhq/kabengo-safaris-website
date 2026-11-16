@@ -137,8 +137,8 @@ export default function ReviewsPage() {
             )}
           </div>
           <div style={{ color: "#7a6f61", fontSize: 12.5, ...ONE_LINE }}>
-            {meta.length > 0 && <span className="inline-flex items-center" style={{ gap: 4 }}>{item.authorCountry && <MapPin size={11} />}{meta.join(" · ")}</span>}
-            {meta.length > 0 && date && <span> · </span>}
+            {meta.length > 0 && <span className="inline-flex items-center" style={{ gap: 4 }}>{item.authorCountry && <MapPin size={11} />}{meta.join(" | ")}</span>}
+            {meta.length > 0 && date && <span> | </span>}
             {date}
           </div>
         </div>
