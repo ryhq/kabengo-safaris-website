@@ -15,12 +15,12 @@ import { Maximize2 } from "lucide-react";
 import { apiClient } from "@/lib/api";
 import { StarRating } from "@/components/ui/Glyphs";
 
-// Real OSM route map — client-only (Leaflet needs window).
+// Real OSM route map - client-only (Leaflet needs window).
 const ItineraryRouteMap = dynamic(() => import("@/components/safari/ItineraryRouteMap"), { ssr: false, loading: () => null });
-// Full-screen animated route map — client-only, loaded on demand.
+// Full-screen animated route map - client-only, loaded on demand.
 const ItineraryRouteModal = dynamic(() => import("@/components/safari/ItineraryRouteModal"), { ssr: false, loading: () => null });
 
-// ── types (local — includes fields the global Itinerary type doesn't yet carry) ──
+// == types (local - includes fields the global Itinerary type doesn't yet carry) ==
 interface DayPark { parkSlug?: string; parkName?: string; primaryImageUrl?: string; latitude?: number; longitude?: number }
 interface DayActivity { activitySlug?: string; activityName?: string; durationHours?: number; isOptional?: boolean }
 interface DayAccommodation { accommodationSlug?: string; accommodationName?: string; primaryImageUrl?: string; board?: string; roomType?: string; roomStandard?: string; nights?: number; isAlternative?: boolean }

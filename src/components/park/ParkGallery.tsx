@@ -39,7 +39,7 @@ export default function ParkGallery({ images, parkName, totalImages, loadingMore
     <div>
       <h2 className="text-2xl font-bold text-stone-800 font-serif mb-6">{t("detail.gallery")}</h2>
 
-      {/* Visual grid — first image large, rest in grid */}
+      {/* Visual grid - first image large, rest in grid */}
       <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
         {images.map((img, i) => (
           <motion.button

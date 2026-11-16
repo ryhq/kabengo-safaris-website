@@ -20,13 +20,13 @@ interface HomeHeroProps {
 
 const pad = (n: number) => String(n + 1).padStart(2, "0");
 
-// Staggered reveal helper — one keyframe, cascading delays.
+// Staggered reveal helper - one keyframe, cascading delays.
 const rise = (delay: number): React.CSSProperties => ({
   animation: `hero-rise .9s cubic-bezier(.2,.7,.2,1) both`,
   animationDelay: `${delay}s`,
 });
 
-// Fade-only reveal (no movement) — keeps the element's position fixed.
+// Fade-only reveal (no movement) - keeps the element's position fixed.
 const fade = (delay: number): React.CSSProperties => ({
   animation: `hero-fade .7s ease both`,
   animationDelay: `${delay}s`,
@@ -72,7 +72,7 @@ export default function HomeHero({ heroes }: HomeHeroProps) {
     [count],
   );
 
-  // Autoplay — restarts whenever the slide changes (i or manual tick).
+  // Autoplay - restarts whenever the slide changes (i or manual tick).
   useEffect(() => {
     if (count <= 1) return;
     const id = setTimeout(() => advance(1), SLIDE_DURATION);
@@ -110,7 +110,7 @@ export default function HomeHero({ heroes }: HomeHeroProps) {
         background: "#3d1402",
       }}
     >
-      {/* ── Stacked image layers (crossfade + Ken Burns) ── */}
+      {/* == Stacked image layers (crossfade + Ken Burns) == */}
       {slides.map((s, idx) => {
         const on = idx === i;
         return (
@@ -134,7 +134,7 @@ export default function HomeHero({ heroes }: HomeHeroProps) {
         );
       })}
 
-      {/* ── Fixed signature overlay (same on every slide) ── */}
+      {/* == Fixed signature overlay (same on every slide) == */}
       <div style={{ position: "absolute", inset: 0, background: "linear-gradient(90deg,rgba(20,12,4,.82) 0%,rgba(20,12,4,.52) 42%,rgba(20,12,4,.12) 100%)" }} />
       <div style={{ position: "absolute", inset: 0, background: "linear-gradient(0deg,rgba(20,12,4,.78) 0%,rgba(20,12,4,.18) 34%,transparent 60%)" }} />
 
@@ -148,17 +148,17 @@ export default function HomeHero({ heroes }: HomeHeroProps) {
         <path d="M70 40c14-9 44-11 64-2 10-5 30-6 44 1-8-6-26-9-40-6-16-8-52-6-68 7Z" fill="rgba(196,143,43,.82)" />
       </svg>
 
-      {/* ── Content column — asymmetric, lower-left ── */}
+      {/* == Content column - asymmetric, lower-left == */}
       <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "flex-end", zIndex: 4 }}>
         <div style={{ width: "100%", maxWidth: 1340, margin: "0 auto", padding: "0 clamp(20px,5vw,60px) clamp(128px,19vh,200px)" }}>
           <div style={{ maxWidth: 640 }}>
-            {/* brand eyebrow — fixed across slides: animates once on load, does NOT replay */}
+            {/* brand eyebrow - fixed across slides: animates once on load, does NOT replay */}
             <div className="hero-rise" style={{ display: "inline-flex", alignItems: "center", gap: 10, marginBottom: 22, ...rise(0.1) }}>
               <span style={{ width: 28, height: 1, background: "#c48f2b", flexShrink: 0 }} />
               <span style={{ color: "#f3e6c8", fontSize: 12, fontWeight: 600, letterSpacing: ".24em", textTransform: "uppercase" }}>{t("eyebrow")}</span>
             </div>
 
-            {/* per-slide content — key remounts this block on slide change so it replays */}
+            {/* per-slide content - key remounts this block on slide change so it replays */}
             <div key={`slide-${i}-${tick}`}>
               {active.subtitle && (
                 <div className="hero-rise hero-sub" style={{ color: "#c48f2b", fontFamily: "var(--font-source-serif), Georgia, serif", fontStyle: "italic", fontSize: "clamp(16px,2vw,20px)", marginBottom: 12, ...lineClamp(2), ...rise(0.25) }}>{active.subtitle}</div>
@@ -176,7 +176,7 @@ export default function HomeHero({ heroes }: HomeHeroProps) {
               )}
             </div>
 
-            {/* CTA row — primary cross-fades in place each slide (keyed); "Plan a Custom Safari" animates once on load only */}
+            {/* CTA row - primary cross-fades in place each slide (keyed); "Plan a Custom Safari" animates once on load only */}
             <div style={{ display: "flex", flexWrap: "wrap", gap: 14, marginTop: 34 }}>
               {active.ctaText && active.ctaLink && (
                 <Link key={`cta-${i}-${tick}`} href={active.ctaLink} className="hero-fade" style={{ display: "inline-flex", alignItems: "center", gap: 9, background: "#c48f2b", color: "#3d1402", fontWeight: 600, fontSize: 16, borderRadius: 6, padding: "16px 28px", maxWidth: "100%", boxShadow: "0 10px 30px rgba(196,143,43,.4)", transition: "background .2s,color .2s,transform .2s", ...fade(0.45) }}>
@@ -194,7 +194,7 @@ export default function HomeHero({ heroes }: HomeHeroProps) {
         </div>
       </div>
 
-      {/* ── Refined index navigator (bottom band, raised clear of the grass) ── */}
+      {/* == Refined index navigator (bottom band, raised clear of the grass) == */}
       {count > 1 && (
         <div style={{ position: "absolute", left: 0, right: 0, bottom: 0, zIndex: 6 }}>
           <div style={{ maxWidth: 1340, margin: "0 auto", padding: "0 clamp(20px,5vw,60px) clamp(64px,8vw,92px)", display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: 24, flexWrap: "wrap" }}>

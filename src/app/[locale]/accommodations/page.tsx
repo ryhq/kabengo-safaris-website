@@ -20,7 +20,7 @@ interface StayItem {
   region?: string;
   priceRange?: string;
   primaryImageUrl?: string;
-  safariCount?: number; // distinct active itineraries that stay here — powers "guest favourites"
+  safariCount?: number; // distinct active itineraries that stay here - powers "guest favourites"
 }
 
 const SERIF = "var(--font-source-serif), Georgia, serif";
@@ -167,7 +167,7 @@ export default function AccommodationsPage() {
     } catch { /* ignore */ } finally { setLoadingMore(false); }
   };
 
-  // guest-favourites carousel + facet source (once) — ranked by popularity (safariCount)
+  // guest-favourites carousel + facet source (once) - ranked by popularity (safariCount)
   useEffect(() => {
     let alive = true;
     apiClient
@@ -258,7 +258,7 @@ export default function AccommodationsPage() {
       </div>
 
       <main style={{ maxWidth: 1220, margin: "0 auto", padding: "clamp(28px,4vw,44px) clamp(16px,5vw,56px) 0" }}>
-        {/* ===== Guest favourites (carousel, unfiltered) — most-booked stays ===== */}
+        {/* ===== Guest favourites (carousel, unfiltered) - most-booked stays ===== */}
         {!anyFilter && popular.length > 0 && (
           <div style={{ marginBottom: "clamp(36px,5vw,52px)" }}>
             <FeaturedCarousel title={af("guestFavourites")} subtitle={af("guestFavouritesSub")} items={popular} renderCard={renderFavouriteCard} prevLabel={af("prev")} nextLabel={af("next")} />

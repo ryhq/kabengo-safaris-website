@@ -19,7 +19,7 @@ export function buildAlternates(locale: string, path: string = "") {
   };
 }
 
-/** Map an app locale to an Open Graph locale (e.g. "fr" → "fr_FR"). */
+/** Map an app locale to an Open Graph locale (e.g. "fr" to "fr_FR"). */
 const OG_LOCALE: Record<string, string> = {
   en: "en_US",
   sw: "sw_TZ",
@@ -40,7 +40,7 @@ export function ogLocale(locale: string): string {
  * The picture a link shows when somebody shares it.
  *
  * Every page needs one. Without it WhatsApp, Slack, Facebook and iMessage render a bare card
- * with the domain repeated three times and nothing to look at — which is what sharing
+ * with the domain repeated three times and nothing to look at - which is what sharing
  * kabengosafaris.com did until this existed, while a safari page three clicks deeper looked
  * fine, because the detail pages set an image from the API and the homepage set none.
  *
@@ -60,7 +60,7 @@ type OgInput = {
   description: string;
   url: string;
   locale?: string;
-  /** A page's own picture — a safari's photograph, a lodge, a blog header. */
+  /** A page's own picture - a safari's photograph, a lodge, a blog header. */
   image?: string | null;
   imageAlt?: string;
 };
@@ -71,7 +71,7 @@ type OgInput = {
  * Use this rather than writing `openGraph: {...}` by hand. Next.js merges metadata SHALLOWLY:
  * the moment a page defines its own `openGraph`, the parent layout's is replaced outright, not
  * merged into. That is not obvious, and it had already cost us `og:type` and `og:site_name` on
- * every page that set a title — they were declared once in the root layout and silently
+ * every page that set a title - they were declared once in the root layout and silently
  * dropped everywhere below it. A helper is the only way the defaults actually survive.
  */
 export function buildOpenGraph({ title, description, url, locale, image, imageAlt }: OgInput) {

@@ -79,7 +79,7 @@ export default function ParkDescription({
         </div>
       )}
 
-      {/* Detail sections — two-column grid on larger screens */}
+      {/* Detail sections - two-column grid on larger screens */}
       {(wildlife || vegetation || ecosystem || history || accessInformation) && (
         <div className="grid gap-8 sm:grid-cols-2">
           {wildlife && <DetailCard icon={PawPrint} title={t("detail.wildlife")} content={wildlife} />}

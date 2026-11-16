@@ -49,7 +49,7 @@ export default async function PlanPage({ params }: { params: Promise<{ locale: s
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,40fr)_minmax(0,60fr)] gap-7 lg:gap-8 lg:items-stretch lg:h-[calc(100vh-240px)] lg:min-h-[520px]">
-          {/* LEFT — persuasion rail */}
+          {/* LEFT - persuasion rail */}
           <aside className="lg:min-h-0">
             <div style={{ position: "relative", height: "100%", borderRadius: 20, overflow: "hidden", background: "linear-gradient(160deg,#1b3717,#12280f)" }}>
               <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg,rgba(18,40,15,.35),rgba(18,40,15,.9))" }} />
@@ -63,7 +63,7 @@ export default async function PlanPage({ params }: { params: Promise<{ locale: s
                 <h2 style={{ fontFamily: SERIF, fontWeight: 700, color: "#faf8f5", fontSize: "clamp(26px,3vw,34px)", lineHeight: 1.12, margin: "0 0 14px" }}>{t("railTitle")}</h2>
                 <p style={{ color: "rgba(242,236,224,.82)", fontSize: 15.5, lineHeight: 1.6, margin: "0 0 26px" }}>{t("railBody")}</p>
 
-                {/* trust points 2×2 */}
+                {/* trust points 2x2 */}
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px 18px", marginBottom: 26 }}>
                   {TRUST.map((item) => (
                     <div key={item} style={{ display: "flex", alignItems: "flex-start", gap: 10 }}>
@@ -75,7 +75,7 @@ export default async function PlanPage({ params }: { params: Promise<{ locale: s
                   ))}
                 </div>
 
-                {/* social proof — shown only when there's real review data */}
+                {/* social proof - shown only when there's real review data */}
                 {(hasRating || quote) && (
                   <div style={{ background: "rgba(242,236,224,.08)", border: "1px solid rgba(242,236,224,.16)", borderRadius: 14, padding: 20, marginBottom: 20 }}>
                     {hasRating && (
@@ -105,7 +105,7 @@ export default async function PlanPage({ params }: { params: Promise<{ locale: s
             </div>
           </aside>
 
-          {/* RIGHT — the stepper */}
+          {/* RIGHT - the stepper */}
           <div style={{ height: "100%", minHeight: 0 }}>
             <SafariPlanner embedded />
           </div>

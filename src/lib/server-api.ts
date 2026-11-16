@@ -18,7 +18,7 @@ interface ApiResponse<T> {
  *
  * An hour is fine for a park description. It is not fine for anything that answers "is this trip
  * for sale", because unpublishing a trip is a decision that should take effect while somebody is
- * still watching — an hour of a withdrawn trip still being quotable is an hour too long.
+ * still watching - an hour of a withdrawn trip still being quotable is an hour too long.
  */
 const DEFAULT_REVALIDATE = 3600;
 export const SALEABILITY_REVALIDATE = 300;
@@ -28,7 +28,7 @@ export const SALEABILITY_REVALIDATE = 300;
  *
  * Every answer also wears "site", which is how one call empties the whole shelf. The names are
  * shared by agreement with the API (WebsiteCacheTags there, KNOWN_TAGS in the revalidate route
- * here) — a name that exists in only one of the three does nothing at all.
+ * here) - a name that exists in only one of the three does nothing at all.
  *
  * They are collections, not records. A tag per record would be more precise and does not work:
  * the API's ids are obfuscated and the obfuscation changes on every restart, so a per-record tag
@@ -60,7 +60,7 @@ async function serverFetch<T>(
      * Next.js keys its Data Cache on the request URL (plus method and body) and ignores request
      * headers. With the locale living only in Accept-Language, all 10 locales collided on a single
      * cache entry per path: whichever language warmed the cache first was then served to every
-     * other locale — the English page rendered German, the French page rendered German, and so on.
+     * other locale - the English page rendered German, the French page rendered German, and so on.
      * The `hl` query param gives each locale its own cache key. The backend resolves translations
      * from Accept-Language and ignores unknown query params, so `hl` is purely a cache discriminator.
      */
@@ -177,7 +177,7 @@ export async function fetchActivityMeta(id: string, locale = "en"): Promise<Acti
   return data ? (data.activity ?? data) : null;
 }
 
-// ─── Full detail payloads (for server-rendering the detail page bodies) ──────
+// === Full detail payloads (for server-rendering the detail page bodies) ======
 // These return the raw wrapper the public API sends so the server page can seed
 // the client component's initial state (content lands in the SSR HTML for SEO/GEO).
 export type DetailPayload = Record<string, unknown> | null;

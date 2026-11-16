@@ -106,7 +106,7 @@ export default function ParksPage() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  // ── filters (server-driven, initialised from the URL) ──
+  // == filters (server-driven, initialised from the URL) ==
   const [search, setSearch] = useState(() => searchParams.get("q") ?? "");
   const debouncedSearch = useDebounce(search, 400);
   const [parkType, setParkType] = useState(() => { const v = searchParams.get("type"); return v && VALID_TYPES.has(v) ? v : "all"; });

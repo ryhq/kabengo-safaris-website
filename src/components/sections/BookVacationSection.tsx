@@ -7,7 +7,7 @@ import { ArrowRight, Check, MapPin } from "lucide-react";
 
 const SERIF = "var(--font-source-serif), Georgia, serif";
 
-/* Organic brushed/torn-circle mask for the photo — fractal-noise-displaced circle, stretched to the frame. */
+/* Organic brushed/torn-circle mask for the photo - fractal-noise-displaced circle, stretched to the frame. */
 const PHOTO_MASK =
   "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Cdefs%3E%3Cfilter id='r' x='-20%25' y='-20%25' width='140%25' height='140%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.012' numOctaves='3' seed='14' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='52' xChannelSelector='R' yChannelSelector='G'/%3E%3C/filter%3E%3C/defs%3E%3Cellipse cx='400' cy='300' rx='352' ry='262' fill='white' filter='url(%23r)'/%3E%3C/svg%3E\") center/100% 100% no-repeat";
 
@@ -45,7 +45,7 @@ export default function BookVacationSection() {
         {/* big brushed shape in the background, anchored to the content container */}
         <div className="bookv-bg" aria-hidden="true" />
 
-        {/* ── text column ── */}
+        {/* == text column == */}
         <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }} className="bookv-text">
           <div className="flex items-center" style={{ gap: 8, color: "#96631a", fontSize: 12, fontWeight: 600, letterSpacing: ".18em", textTransform: "uppercase", marginBottom: 18 }}>
             <MapPin size={14} strokeWidth={2.4} />{t("eyebrow")}
@@ -80,7 +80,7 @@ export default function BookVacationSection() {
           </div>
         </motion.div>
 
-        {/* ── media: single photo in an organic brushed shape (landscape → door logos visible) ── */}
+        {/* == media: single photo in an organic brushed shape (landscape to door logos visible) == */}
         <motion.div initial={{ opacity: 0, scale: 0.94 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="bookv-media">
           <div className="bookv-frame" aria-hidden="true" />
           <div role="img" aria-label="A Kabengo Safaris guide with the branded Land Cruiser in the Ngorongoro highlands" className="bookv-photo" />

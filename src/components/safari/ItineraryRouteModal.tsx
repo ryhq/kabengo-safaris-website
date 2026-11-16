@@ -10,7 +10,7 @@ export interface RouteStop { n: number; nEnd?: number; lat: number; lng: number;
 
 const dayRange = (s: { n: number; nEnd?: number }) => (s.nEnd && s.nEnd !== s.n ? `${s.n}-${s.nEnd}` : String(s.n));
 
-/* ── geometry helpers ─────────────────────────────────────────────────────── */
+/* == geometry helpers ======================================================= */
 type LL = [number, number];
 function segLen(a: LL, b: LL) {
   const dx = a[0] - b[0];
@@ -21,7 +21,7 @@ function lerp(a: LL, b: LL, f: number): LL {
   return [a[0] + (b[0] - a[0]) * f, a[1] + (b[1] - a[1]) * f];
 }
 
-/* ── numbered day pin (label may be a range like "8–10") ──────────────────── */
+/* == numbered day pin (label may be a range like "8-10") ==================== */
 function pinIcon(label: string, active: boolean) {
   const size = active ? 40 : 32;
   const w = label.length > 2 ? size + (label.length - 2) * 9 : size;
@@ -35,7 +35,7 @@ function pinIcon(label: string, active: boolean) {
   });
 }
 
-/* Memoized day pin — stable icon identity so its entry animation plays ONCE
+/* Memoized day pin - stable icon identity so its entry animation plays ONCE
    (not restarted every animation frame). Only re-creates when label/active change. */
 const DayPin = memo(function DayPin({ label, lat, lng, active }: { label: string; lat: number; lng: number; active: boolean }) {
   const icon = useMemo(() => pinIcon(label, active), [label, active]);
@@ -43,7 +43,7 @@ const DayPin = memo(function DayPin({ label, lat, lng, active }: { label: string
   return <Marker position={pos} icon={icon} zIndexOffset={active ? 1000 : 0} />;
 });
 
-/* ── fit the whole route once ─────────────────────────────────────────────── */
+/* == fit the whole route once =============================================== */
 function FitAll({ pts }: { pts: LL[] }) {
   const map = useMap();
   useEffect(() => {
@@ -57,7 +57,7 @@ function FitAll({ pts }: { pts: LL[] }) {
   return null;
 }
 
-/* ── route layer — pure render from the current progress fraction `t` ──────── */
+/* == route layer - pure render from the current progress fraction `t` ======== */
 function RouteLayer({ pts, stops, cum, total, t, passed }: { pts: LL[]; stops: RouteStop[]; cum: number[]; total: number; t: number; passed: number }) {
   const target = t * total;
   let headIdx = 0;
@@ -84,7 +84,7 @@ function RouteLayer({ pts, stops, cum, total, t, passed }: { pts: LL[]; stops: R
       {revealed.length > 1 && (
         <Polyline positions={revealed} pathOptions={{ color: "#c48f2b", weight: 4, dashArray: "1 13", lineCap: "round", opacity: 0.98 }} />
       )}
-      {/* stops revealed so far — each pops in once as the route reaches it */}
+      {/* stops revealed so far - each pops in once as the route reaches it */}
       {stops.map((s, i) => {
         if (cum[i] > target + 1e-9) return null;
         return <DayPin key={s.n} label={s.pinLabel ?? String(s.n)} lat={s.lat} lng={s.lng} active={i === passed} />;
@@ -94,7 +94,7 @@ function RouteLayer({ pts, stops, cum, total, t, passed }: { pts: LL[]; stops: R
   );
 }
 
-/* ── modal shell ──────────────────────────────────────────────────────────── */
+/* == modal shell ============================================================ */
 export default function ItineraryRouteModal({
   open,
   onClose,
@@ -122,7 +122,7 @@ export default function ItineraryRouteModal({
 
   // playback: `tRef` is the displayed fraction; a single tween drives it, used
   // for BOTH auto-play (tween to 1) and manual steps (tween to a day). Pause
-  // simply drops the tween, freezing exactly where it is — no drift/lag.
+  // simply drops the tween, freezing exactly where it is - no drift/lag.
   const tRef = useRef(0);
   const tween = useRef<{ from: number; to: number; start: number | null; dur: number; auto: boolean } | null>(null);
   const playingRef = useRef(false);
@@ -208,7 +208,7 @@ export default function ItineraryRouteModal({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
-  // keyboard shortcuts: Esc close · Space play/pause · ←/→ step days
+  // keyboard shortcuts: Esc close | Space play/pause | ←/ to  step days
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {

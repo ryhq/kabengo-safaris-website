@@ -2,9 +2,9 @@ import { routing } from "@/i18n/routing";
 
 const BASE_URL = "https://kabengosafaris.com";
 
-/* ── Organization authority constants ──
+/* == Organization authority constants ==
  * Fill the remaining sameAs profiles as they go live (Facebook, YouTube,
- * TripAdvisor, SafariBookings) — they strengthen entity trust for SEO & GEO. */
+ * TripAdvisor, SafariBookings) - they strengthen entity trust for SEO & GEO. */
 const ORG_SAME_AS: string[] = [
   "https://www.instagram.com/kabengosafaris/",
   "https://www.tripadvisor.com/Attraction_Review-g297913-d34283345-Reviews-Kabengo_Safaris-Arusha_Arusha_Region.html",
@@ -29,7 +29,7 @@ export interface AggregateRatingInput {
 }
 
 // NOTE: aggregateRating / review markup was removed from the Organization (TravelAgency),
-// Reviews and Safari (TouristTrip) nodes — Google rejects self-serving reviews on your own
+// Reviews and Safari (TouristTrip) nodes - Google rejects self-serving reviews on your own
 // Organization/LocalBusiness and doesn't support review snippets on TouristTrip, which caused
 // the Search Console "Invalid object type for field '<parent_node>'" error. Real ratings come
 // from third-party sources (e.g. TripAdvisor) that Google reads directly.
@@ -49,7 +49,7 @@ export function JsonLd({ data }: { data: Record<string, unknown> }) {
 }
 
 /**
- * TravelAgency (organization) schema — rendered once per page in the locale layout.
+ * TravelAgency (organization) schema - rendered once per page in the locale layout.
  */
 export function getOrganizationJsonLd(_opts?: { aggregate?: AggregateRatingInput | null }) {
   return {
@@ -89,7 +89,7 @@ export function getOrganizationJsonLd(_opts?: { aggregate?: AggregateRatingInput
 }
 
 /**
- * WebSite + SearchAction (sitelinks search box) — rendered in the locale layout.
+ * WebSite + SearchAction (sitelinks search box) - rendered in the locale layout.
  */
 export function getWebSiteJsonLd(locale: string) {
   return {
@@ -112,7 +112,7 @@ export function getWebSiteJsonLd(locale: string) {
 }
 
 /**
- * BreadcrumbList schema (JSON-LD) — pass ordered {name, url} items.
+ * BreadcrumbList schema (JSON-LD) - pass ordered {name, url} items.
  */
 export function getBreadcrumbJsonLd(items: { name: string; url: string }[]) {
   return {
@@ -136,7 +136,7 @@ interface SafariDay {
 }
 
 /**
- * TouristTrip schema for safari detail pages — real per-day itinerary + offers + rating.
+ * TouristTrip schema for safari detail pages - real per-day itinerary + offers + rating.
  */
 export function getSafariJsonLd(
   safari: {
@@ -350,7 +350,7 @@ export function getActivityJsonLd(
 }
 
 /**
- * Reviews-page schema — attaches AggregateRating + individual Review nodes to the
+ * Reviews-page schema - attaches AggregateRating + individual Review nodes to the
  * organization entity (same @id merges with the global TravelAgency node).
  */
 export function getReviewsJsonLd(opts: {

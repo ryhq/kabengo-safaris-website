@@ -42,7 +42,7 @@ export default function ParkDetailHero({ name, location, region, district, heroI
         <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url('/images/placeholders/park.svg')" }} />
       )}
 
-      {/* Gradient overlay — deeper for readability */}
+      {/* Gradient overlay - deeper for readability */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/10" />
 
       {/* Content */}

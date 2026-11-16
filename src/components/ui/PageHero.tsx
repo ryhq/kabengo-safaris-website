@@ -27,7 +27,7 @@ export default function PageHero({ heroPage, fallbackTitle, fallbackSubtitle }: 
           setHeroes(res.data.data);
         }
       } catch {
-        // Heroes unavailable — fallback text will show
+        // Heroes unavailable - fallback text will show
       }
     };
     fetchHeroes();

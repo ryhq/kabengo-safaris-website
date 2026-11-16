@@ -1,5 +1,5 @@
 /**
- * Answer-first lead paragraph — a concise, factual one-liner placed high on
+ * Answer-first lead paragraph - a concise, factual one-liner placed high on
  * detail pages. Written to be quotable by search engines and AI answer engines
  * (GEO). Text is composed by the page from localized copy + entity data.
  */

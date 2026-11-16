@@ -23,7 +23,7 @@ export default function PhotoWheel({
   const railRef = useRef<HTMLDivElement>(null);
   const pausedRef = useRef(false);
   const draggingRef = useRef(false);
-  const posRef = useRef(0); // float accumulator — scrollLeft reads back as an integer, so track position ourselves
+  const posRef = useRef(0); // float accumulator - scrollLeft reads back as an integer, so track position ourselves
   const drag = useRef({ x: 0, left: 0, moved: 0 });
   const resumeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const activeRef = useRef(0);
@@ -75,7 +75,7 @@ export default function PhotoWheel({
     syncActive(el.scrollLeft);
   };
 
-  // mouse drag-to-scroll (touch uses native scrolling). No pointer capture — it
+  // mouse drag-to-scroll (touch uses native scrolling). No pointer capture - it
   // would swallow the click on the child image button.
   const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     drag.current.moved = 0;

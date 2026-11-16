@@ -19,7 +19,7 @@ const TA_GREEN = "#00aa6c";
 
 /**
  * Live rating + review count from the backend summary endpoint, so the count
- * grows automatically as guest reviews are added — no manual bumps. Falls back
+ * grows automatically as guest reviews are added - no manual bumps. Falls back
  * to the constants above until the request resolves (or if it errors).
  */
 function useTripAdvisorStats() {
@@ -88,7 +88,7 @@ export function TripAdvisorIcon() {
 }
 
 /**
- * Self-rendered TripAdvisor rating badge (footer). No third-party script —
+ * Self-rendered TripAdvisor rating badge (footer). No third-party script -
  * always renders and links to the live listing.
  */
 export function TripAdvisorWidget() {
@@ -119,7 +119,7 @@ export function TripAdvisorWidget() {
 }
 
 /**
- * Well-styled "Find us on Tripadvisor" section — for the about page.
+ * Well-styled "Find us on Tripadvisor" section - for the about page.
  */
 export function TripAdvisorAboutSection() {
   const t = useTranslations("common");
@@ -176,7 +176,7 @@ export function TripAdvisorAboutSection() {
 }
 
 /**
- * TripAdvisor "Write a Review" section — for the reviews page.
+ * TripAdvisor "Write a Review" section - for the reviews page.
  * Self-rendered (no jscache widget) so it always displays.
  */
 export function TripAdvisorReviewSection() {
@@ -192,7 +192,7 @@ export function TripAdvisorReviewSection() {
 }
 
 /**
- * Self-contained "Review us on Tripadvisor" card (no section chrome) — for
+ * Self-contained "Review us on Tripadvisor" card (no section chrome) - for
  * embedding side-by-side with the review form. Fills its column height.
  */
 export function TripAdvisorReviewCard() {

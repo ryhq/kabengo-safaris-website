@@ -291,7 +291,7 @@ export default function BookingInquiryForm({ safariId }: BookingInquiryFormProps
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-5 gap-0 rounded-2xl overflow-hidden shadow-xl bg-white">
-      {/* Left — Inspirational panel */}
+      {/* Left - Inspirational panel */}
       <div className="lg:col-span-2 bg-gradient-to-br from-brand-green via-brand-green-dark to-brand-secondary p-8 lg:p-10 flex flex-col justify-between relative overflow-hidden min-h-[200px] lg:min-h-0">
         {/* Decorative circles */}
         <div className="absolute inset-0 opacity-10 pointer-events-none">
@@ -369,7 +369,7 @@ export default function BookingInquiryForm({ safariId }: BookingInquiryFormProps
         </div>
       </div>
 
-      {/* Right — Form */}
+      {/* Right - Form */}
       <div className="lg:col-span-3 p-6 lg:p-10">
         <div>
           <AnimatePresence mode="wait">

@@ -1,4 +1,4 @@
-// /llms.txt — a concise, LLM-friendly map of the site (emerging GEO convention).
+// /llms.txt - a concise, LLM-friendly map of the site (emerging GEO convention).
 // Curated key pages + factual summary + an auto-generated list of blog articles
 // (so publishing a post automatically updates this file). See docs/SEO-GEO-STRATEGY.md.
 import { getAllPosts } from "@/content/blog";

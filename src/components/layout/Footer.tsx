@@ -9,7 +9,7 @@ import { subscribeToNewsletter } from "@/lib/api";
 import { TripAdvisorIcon, TripAdvisorWidget } from "@/components/ui/TripAdvisorBadge";
 import { Check } from "lucide-react";
 
-/* Obfuscated contact — assembled client-side so bots can't scrape from HTML */
+/* Obfuscated contact - assembled client-side so bots can't scrape from HTML */
 function ObfuscatedEmail() {
   const [ready, setReady] = useState(false);
   useEffect(() => setReady(true), []);
@@ -119,7 +119,7 @@ export default function Footer() {
             </Link>
           </div>
 
-          {/* Quick Links — Explore + Company */}
+          {/* Quick Links - Explore + Company */}
           <div>
             <h4 className="text-lg font-semibold mb-4 text-brand-warm">{t("quickLinks")}</h4>
             <div className="grid grid-cols-2 gap-x-4 gap-y-2">

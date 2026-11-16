@@ -10,7 +10,7 @@ import KabengoIcon from "@/components/ui/KabengoIcon";
 import SearchModal from "@/components/search/SearchModal";
 import { apiClient } from "@/lib/api";
 
-/** Display names for language codes — used as fallback when API names aren't available */
+/** Display names for language codes - used as fallback when API names aren't available */
 const LOCALE_NAMES: Record<string, string> = {
   en: "English", sw: "Kiswahili", fr: "Français", de: "Deutsch",
   es: "Español", it: "Italiano", pt: "Português", uk: "Українська",
@@ -72,7 +72,7 @@ export default function Navbar() {
         });
         if (res.data.success) {
           const d = res.data.data;
-          // API returns "id" as slug — map to "slug" field
+          // API returns "id" as slug - map to "slug" field
           const mapSlug = (items: Array<{ id?: string; [key: string]: unknown }>) =>
             items?.map(({ id, ...rest }) => ({ ...rest, slug: id })) || [];
           setNavData({
@@ -320,7 +320,7 @@ export default function Navbar() {
               <Search size={18} />
             </button>
 
-            {/* Language Switcher — only shown when translation service is enabled */}
+            {/* Language Switcher - only shown when translation service is enabled */}
             {navData?.translationEnabled && (
               <div className="relative ml-2" ref={langRef}>
                 <button
@@ -466,7 +466,7 @@ export default function Navbar() {
                 </Link>
               ))}
 
-              {/* Plan Your Safari CTA — Mobile */}
+              {/* Plan Your Safari CTA - Mobile */}
               <Link
                 href="/plan"
                 onClick={() => setIsOpen(false)}

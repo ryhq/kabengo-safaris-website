@@ -54,7 +54,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   }
 
-  // Dynamic pages — fetch all entity IDs from the API
+  // Dynamic pages - fetch all entity IDs from the API
   const [safaris, parks, accommodations, activities] = await Promise.all([
     fetchAllSafariIds(),
     fetchAllParkIds(),
@@ -62,7 +62,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     fetchAllActivityIds(),
   ]);
 
-  // Safari detail pages — only include safaris with a stable code
+  // Safari detail pages - only include safaris with a stable code
   for (const safari of safaris) {
     if (!safari.code) continue;
     const path = `/safaris/${safari.code}`;
@@ -77,7 +77,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   }
 
-  // Park detail pages — only include parks with a stable slug
+  // Park detail pages - only include parks with a stable slug
   for (const park of parks) {
     if (!park.slug) continue;
     const path = `/parks/${park.slug}`;
@@ -92,7 +92,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   }
 
-  // Accommodation detail pages — only include accommodations with a stable slug
+  // Accommodation detail pages - only include accommodations with a stable slug
   for (const acc of accommodations) {
     if (!acc.slug) continue;
     const path = `/accommodations/${acc.slug}`;
@@ -107,7 +107,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   }
 
-  // Activity detail pages — only include activities with a stable slug
+  // Activity detail pages - only include activities with a stable slug
   for (const activity of activities) {
     if (!activity.slug) continue;
     const path = `/activities/${activity.slug}`;

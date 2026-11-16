@@ -52,7 +52,7 @@ export default function SafarisSection({ initialSafaris }: SafarisSectionProps) 
       </svg>
 
       <div style={{ position: "relative", maxWidth: 1200, margin: "0 auto" }}>
-        {/* header — editorial, no counts. Text left / button right on desktop; centered stack on phones */}
+        {/* header - editorial, no counts. Text left / button right on desktop; centered stack on phones */}
         <header className="flex flex-col items-center text-center gap-7 md:flex-row md:items-end md:justify-between md:text-left md:gap-8" style={{ marginBottom: "clamp(38px,5vw,60px)" }}>
           <div style={{ maxWidth: 640 }}>
             <div className="flex items-center justify-center md:justify-start" style={{ gap: 11, color: "#96631a", fontSize: 12, fontWeight: 600, letterSpacing: ".2em", textTransform: "uppercase", marginBottom: 18 }}>
@@ -101,7 +101,7 @@ export default function SafarisSection({ initialSafaris }: SafarisSectionProps) 
           ))}
         </div>
 
-        {/* phone-only CTA — drops below the cards, centered */}
+        {/* phone-only CTA - drops below the cards, centered */}
         <div className="flex justify-center md:hidden" style={{ marginTop: "clamp(32px,8vw,44px)" }}>
           <Link
             href="/safaris"

@@ -66,7 +66,7 @@ function Bubbles({ rating, size = 14 }: { rating: number; size?: number }) {
   );
 }
 
-/** Small source pill (e.g. TripAdvisor / Google / Website) — plain chip. */
+/** Small source pill (e.g. TripAdvisor / Google / Website) - plain chip. */
 function SourceBadge({ source }: { source?: string }) {
   if (!source) return null;
   const ta = isTripadvisor(source);
@@ -215,7 +215,7 @@ export default function ReviewsPage() {
         </div>
       </section>
 
-      {/* ===== Leave a review — Tripadvisor + share-your-story (one row on large screens) ===== */}
+      {/* ===== Leave a review - Tripadvisor + share-your-story (one row on large screens) ===== */}
       <section id="share-story" style={{ background: "#faf8f5", borderTop: "1px solid #e4ddd1", padding: "clamp(44px,6vw,80px) clamp(16px,5vw,56px)", scrollMarginTop: 96 }}>
         <div className="grid grid-cols-1 lg:grid-cols-[0.85fr_1.5fr] items-stretch" style={{ maxWidth: 1220, margin: "0 auto", gap: "clamp(20px,2.5vw,32px)" }}>
           <TripAdvisorReviewCard />

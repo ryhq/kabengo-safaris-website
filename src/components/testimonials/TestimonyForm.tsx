@@ -41,7 +41,7 @@ export default function TestimonyForm() {
           setSafaris(data.map((s: SafariOption & { totalDays?: number }) => ({ code: s.code, name: s.name, totalDays: s.totalDays })));
         }
       } catch {
-        // Silently fail — safari dropdown is optional
+        // Silently fail - safari dropdown is optional
       }
     };
     fetchSafaris();
@@ -82,7 +82,7 @@ export default function TestimonyForm() {
       viewport={{ once: true }}
       className="grid grid-cols-1 lg:grid-cols-5 gap-0 rounded-2xl overflow-hidden shadow-lg"
     >
-      {/* Left — Inspirational panel */}
+      {/* Left - Inspirational panel */}
       <div className="lg:col-span-2 bg-brand-brown p-10 lg:p-12 flex flex-col justify-between relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-8 -left-4 w-40 h-40 border border-white/30 rounded-full" />
@@ -110,7 +110,7 @@ export default function TestimonyForm() {
         </div>
       </div>
 
-      {/* Right — Form */}
+      {/* Right - Form */}
       <div className="lg:col-span-3 bg-white p-8 lg:p-12">
         {status === "success" ? (
           <motion.div

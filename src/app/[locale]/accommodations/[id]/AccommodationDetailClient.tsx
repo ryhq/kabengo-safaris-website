@@ -12,7 +12,7 @@ import dynamic from "next/dynamic";
 import { apiClient } from "@/lib/api";
 import { StarRating } from "@/components/ui/Glyphs";
 
-// Real OSM map — client-only (Leaflet needs window). Shared across the site.
+// Real OSM map - client-only (Leaflet needs window). Shared across the site.
 const ParkMap = dynamic(() => import("@/components/ui/ParkMap"), { ssr: false, loading: () => null });
 
 export interface AccImage { imageUrl: string; altText?: string; caption?: string; imageType?: string }

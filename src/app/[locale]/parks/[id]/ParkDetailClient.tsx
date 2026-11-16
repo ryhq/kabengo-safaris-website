@@ -11,7 +11,7 @@ import dynamic from "next/dynamic";
 import { apiClient } from "@/lib/api";
 import { StarRating } from "@/components/ui/Glyphs";
 
-// Real OSM map — client-only (Leaflet needs window). Shared with the itinerary map.
+// Real OSM map - client-only (Leaflet needs window). Shared with the itinerary map.
 const ParkMap = dynamic(() => import("@/components/ui/ParkMap"), { ssr: false, loading: () => null });
 
 const IMAGES_PAGE_SIZE = 12;

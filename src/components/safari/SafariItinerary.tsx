@@ -126,7 +126,7 @@ export default function SafariItinerary({ days }: SafariItineraryProps) {
                     </div>
                   </div>
                 ) : (
-                  /* No image — full-width content */
+                  /* No image - full-width content */
                   <div className="p-7 lg:p-10">
                     <DayContent day={day} showDayNumber={true} />
                   </div>
@@ -143,7 +143,7 @@ export default function SafariItinerary({ days }: SafariItineraryProps) {
   );
 }
 
-/* ─── Day Content Block ─── */
+/* === Day Content Block === */
 
 function DayContent({ day, showDayNumber }: { day: ItineraryDay; showDayNumber: boolean }) {
   const t = useTranslations("safaris");
@@ -182,7 +182,7 @@ function DayContent({ day, showDayNumber }: { day: ItineraryDay; showDayNumber: 
         </p>
       )}
 
-      {/* Time-of-day schedule — magazine column layout */}
+      {/* Time-of-day schedule - magazine column layout */}
       {(day.morningActivities || day.afternoonActivities || day.eveningActivities) && (() => {
         const count = [day.morningActivities, day.afternoonActivities, day.eveningActivities].filter(Boolean).length;
         const gridCols = count === 3 ? "sm:grid-cols-3" : count === 2 ? "sm:grid-cols-2" : "";
@@ -272,7 +272,7 @@ function DayContent({ day, showDayNumber }: { day: ItineraryDay; showDayNumber: 
         </div>
       )}
 
-      {/* Accommodation — feature card */}
+      {/* Accommodation - feature card */}
       {day.accommodations && day.accommodations.length > 0 && (
         <div>
           <h4 className="text-[11px] font-bold tracking-[0.2em] uppercase text-stone-400 mb-3 flex items-center gap-2">
@@ -316,7 +316,7 @@ function DayContent({ day, showDayNumber }: { day: ItineraryDay; showDayNumber: 
   );
 }
 
-/* ─── Time Block (Morning / Afternoon / Evening) ─── */
+/* === Time Block (Morning / Afternoon / Evening) === */
 
 function TimeBlock({
   icon: Icon,

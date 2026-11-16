@@ -12,7 +12,7 @@ export default async function SafariDetailPage({ params }: { params: Promise<{ l
    * No trip, no page.
    *
    * This used to render the client shell with null and answer 200, which meant a code the API
-   * refuses — an unpublished trip, a deleted one, a typo — still looked like a real address to a
+   * refuses - an unpublished trip, a deleted one, a typo - still looked like a real address to a
    * browser and to Google. Three DRAFT itineraries were reachable that way: the API had started
    * refusing them and this page went on serving them from its cache and from its own willingness
    * to render nothing at all.

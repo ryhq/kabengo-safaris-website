@@ -31,7 +31,7 @@ const lineClamp = (lines: number): React.CSSProperties =>
   ({ display: "-webkit-box", WebkitBoxOrient: "vertical", WebkitLineClamp: lines, overflow: "hidden" }) as React.CSSProperties;
 
 /**
- * Sub-page hero — mirrors the HomeHero design language (directional gradient
+ * Sub-page hero - mirrors the HomeHero design language (directional gradient
  * scrims, lower-left branded column: gold eyebrow rule, italic gold subtitle,
  * serif title, gold CTA) at a shorter page-hero height.
  */
@@ -69,7 +69,7 @@ export default function HeroCarousel({
       aria-label={fallbackTitle}
       style={{ position: "relative", width: "100%", height: "clamp(420px,64vh,660px)", minHeight: 380, overflow: "hidden", background: "#3d1402" }}
     >
-      {/* stacked image layers — crossfade + Ken Burns */}
+      {/* stacked image layers - crossfade + Ken Burns */}
       {slides.map((s, idx) => {
         const on = idx === i;
         return (
@@ -99,7 +99,7 @@ export default function HeroCarousel({
         <path d="M70 40c14-9 44-11 64-2 10-5 30-6 44 1-8-6-26-9-40-6-16-8-52-6-68 7Z" fill="rgba(196,143,43,.82)" />
       </svg>
 
-      {/* content column — lower-left, asymmetric */}
+      {/* content column - lower-left, asymmetric */}
       <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "flex-end", zIndex: 4 }}>
         <div style={{ width: "100%", maxWidth: 1340, margin: "0 auto", padding: "0 clamp(20px,5vw,60px) clamp(72px,12vh,120px)" }}>
           <div style={{ maxWidth: 640 }}>

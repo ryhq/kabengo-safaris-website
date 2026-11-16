@@ -99,7 +99,7 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
   const [faqIndex, setFaqIndex] = useState<{ q: string; a: string }[]>([]);
   const contentLocaleRef = useRef<string | null>(null);
 
-  // Blog + FAQ index — loaded once per locale on open, then searched client-side
+  // Blog + FAQ index - loaded once per locale on open, then searched client-side
   // (matches title/excerpt/tags for posts, q/a for FAQs).
   useEffect(() => {
     if (!isOpen || contentLocaleRef.current === locale) return;
@@ -373,7 +373,7 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
 
               {/* Results */}
               <div className="overflow-y-auto flex-1">
-                {/* Empty state — suggestions + recent + plan CTA + preloaded previews */}
+                {/* Empty state - suggestions + recent + plan CTA + preloaded previews */}
                 {!data && !loading && query.length < 2 && (
                   <div>
                     {/* keyword suggestion chips */}
@@ -494,7 +494,7 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
                   );
                 })}
 
-                {/* Journal (blog) — frontend content */}
+                {/* Journal (blog) - frontend content */}
                 {blogMatches.length > 0 && (
                   <div className="border-b border-white/10 last:border-b-0">
                     <div className="px-5 pt-4 pb-2 flex items-center gap-2">
@@ -517,7 +517,7 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
                   </div>
                 )}
 
-                {/* FAQ — frontend content */}
+                {/* FAQ - frontend content */}
                 {faqMatches.length > 0 && (
                   <div className="border-b border-white/10 last:border-b-0">
                     <div className="px-5 pt-4 pb-2 flex items-center gap-2">

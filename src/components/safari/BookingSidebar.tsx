@@ -78,7 +78,7 @@ export default function BookingSidebar({
           )}
         </div>
 
-        {/* Book Now — primary CTA */}
+        {/* Book Now - primary CTA */}
         <Link
           href={`/book?safari=${safariCode}`}
           className="flex items-center justify-center gap-2 w-full px-6 py-3.5 bg-brand-green text-white font-semibold rounded-xl hover:bg-brand-green/90 transition-all shadow-md shadow-brand-green/15 text-sm"
@@ -88,7 +88,7 @@ export default function BookingSidebar({
           <ArrowRight size={16} />
         </Link>
 
-        {/* Inquire — secondary CTA */}
+        {/* Inquire - secondary CTA */}
         <Link
           href="/contact"
           className="flex items-center justify-center gap-2 w-full px-6 py-3 text-stone-600 font-medium border border-stone-200 rounded-xl hover:bg-stone-50 transition-all text-sm"

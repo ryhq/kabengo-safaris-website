@@ -211,7 +211,7 @@ export default function GalleryPage() {
         </div>
       </section>
 
-      {/* Conversion band — capture the inspired lead */}
+      {/* Conversion band - capture the inspired lead */}
       <section style={{ background: "#3d1402", color: "#faf8f5", padding: "clamp(52px,7vw,88px) clamp(16px,5vw,56px)" }}>
         <div style={{ maxWidth: 760, margin: "0 auto", textAlign: "center" }}>
           <h2 style={{ fontFamily: "var(--font-source-serif), Georgia, serif", fontWeight: 700, color: "#fff", fontSize: "clamp(26px,4vw,42px)", lineHeight: 1.08, margin: "0 0 14px" }}>{t("ctaTitle")}</h2>

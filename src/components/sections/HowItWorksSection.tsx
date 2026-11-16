@@ -8,7 +8,7 @@ import { Binoculars, Map, MessagesSquare, Compass, PawPrint, ArrowRight, Check }
 const SERIF = "var(--font-source-serif), Georgia, serif";
 const EASE: [number, number, number, number] = [0.4, 0, 0.2, 1];
 const POP: [number, number, number, number] = [0.34, 1.56, 0.64, 1];
-const DRAW = 1.7; // seconds — the trail draw / marker glide
+const DRAW = 1.7; // seconds - the trail draw / marker glide
 
 const STEPS = [
   { key: "s1", Icon: Binoculars },
@@ -49,23 +49,23 @@ export default function HowItWorksSection() {
         <svg viewBox="0 0 24 24" fill="none" stroke="#96631a" strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round" style={{ position: "absolute", top: "5%", right: "7%", width: "clamp(30px,4vw,52px)", opacity: 0.13, transform: "rotate(8deg)" }}>
           <path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z" />
         </svg>
-        {/* compass — top left */}
+        {/* compass - top left */}
         <svg viewBox="0 0 24 24" fill="none" stroke="#3e3117" strokeWidth={1.1} style={{ position: "absolute", top: "9%", left: "4%", width: "clamp(44px,6vw,88px)", opacity: 0.08 }}>
           <circle cx="12" cy="12" r="10" />
           <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" />
         </svg>
-        {/* acacia tree — bottom left */}
+        {/* acacia tree - bottom left */}
         <svg viewBox="0 0 240 200" fill="none" stroke="#274e22" strokeWidth={2.2} strokeLinecap="round" style={{ position: "absolute", bottom: "-4%", left: "1%", width: "clamp(120px,15vw,220px)", opacity: 0.08 }}>
           <path d="M120 200v-92" />
           <path d="M120 112c-26-6-52-24-70-30 16 14 42 28 62 32M120 112c26-6 54-22 72-28-18 14-46 26-66 30M120 96c-18-6-34-20-44-28 12 14 30 26 44 32M120 96c18-6 36-18 48-26-14 14-34 24-48 30" />
           <path d="M44 82c22-16 44-16 76-14 30 2 52-2 76 10-20-16-46-18-76-18-32 0-56 6-76 22Z" />
         </svg>
-        {/* sun — bottom right */}
+        {/* sun - bottom right */}
         <svg viewBox="0 0 60 60" fill="none" stroke="#96631a" strokeWidth={1.6} strokeLinecap="round" style={{ position: "absolute", bottom: "6%", right: "4%", width: "clamp(50px,7vw,96px)", opacity: 0.1 }}>
           <circle cx="30" cy="30" r="11" />
           <path d="M30 6v8M30 46v8M6 30h8M46 30h8M13 13l6 6M41 41l6 6M47 13l-6 6M19 41l-6 6" />
         </svg>
-        {/* paw tracks — scattered lower centre */}
+        {/* paw tracks - scattered lower centre */}
         <svg viewBox="0 0 40 48" fill="#5a1e03" style={{ position: "absolute", bottom: "16%", right: "26%", width: "clamp(20px,2.4vw,34px)", opacity: 0.07, transform: "rotate(22deg)" }}>
           <ellipse cx="20" cy="34" rx="11" ry="9" /><circle cx="8" cy="16" r="4" /><circle cx="18" cy="9" r="4.3" /><circle cx="29" cy="13" r="4" />
         </svg>

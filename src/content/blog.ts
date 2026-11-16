@@ -61,7 +61,7 @@ async function api<T>(path: string, locale = "en"): Promise<T | null> {
   }
 }
 
-/** All published posts (index/meta only — no body). Empty array on API failure. */
+/** All published posts (index/meta only - no body). Empty array on API failure. */
 export async function getAllPosts(locale = "en"): Promise<BlogPostMeta[]> {
   const data = await api<{ blogs: BlogPostMeta[] }>("/public/blogs?page=0&size=100", locale);
   return data?.blogs ?? [];

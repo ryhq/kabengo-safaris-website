@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 /**
  * "Stop showing what I told you earlier."
  *
- * This site renders itself from the management API and then keeps the answer — five minutes for
+ * This site renders itself from the management API and then keeps the answer - five minutes for
  * anything that says a trip is for sale, an hour for everything else. That is what makes it fast,
  * and it is also why an edit made in the office is invisible to a visitor until the timer runs
  * out. This endpoint is how the office says "no, now".
@@ -16,7 +16,7 @@ import { NextResponse } from "next/server";
  * chooses wrong is the day one company's edit empties another company's site. Each API
  * installation has exactly one website, so there is nothing to choose.
  *
- * ── Why there is a key ──
+ * == Why there is a key ==
  *
  * Without one, anyone could call this in a loop and the site would rebuild every page continuously
  * for as long as they cared to keep going. That is a denial of service that costs the attacker one
@@ -36,7 +36,7 @@ export const runtime = "nodejs";
  *
  * Shared, by agreement, with WebsiteCacheTags on the API side. A name here means nothing until a
  * fetch is tagged with it, and a name the API sends that is not here is reported back as unknown
- * rather than silently accepted — "cleared" for a label nothing carries is worse than an error,
+ * rather than silently accepted - "cleared" for a label nothing carries is worse than an error,
  * because the page then looks current and is not.
  */
 const KNOWN_TAGS = [
@@ -77,7 +77,7 @@ function notConfigured() {
 
 /**
  * A doorbell. Confirms the site is reachable and the two halves of the key agree, and throws
- * nothing away — so "is this wired up?" can be answered without making the site rebuild.
+ * nothing away - so "is this wired up?" can be answered without making the site rebuild.
  */
 export async function GET(request: NextRequest) {
   if (!process.env.REVALIDATE_SECRET) return notConfigured();

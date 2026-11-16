@@ -63,7 +63,7 @@ const PHONE_OPTIONS = [
 ].map(([code, c]) => ({ value: code, label: `${code} | ${c}` }));
 
 const STEPS = ["interests", "where", "days", "who", "when", "travellers", "budget", "notes", "details", "review"] as const;
-const LAST = STEPS.length - 1; // index of the final step ("Review" — submits)
+const LAST = STEPS.length - 1; // index of the final step ("Review" - submits)
 const DONE = STEPS.length; // success screen
 const gold = "#c48f2b";
 
@@ -320,7 +320,7 @@ export default function SafariPlanner({ embedded = false }: { embedded?: boolean
           <div style={{ padding: "clamp(24px,4vw,40px)", ...(embedded ? { flex: 1, overflowY: "auto", minHeight: 0 } : { minHeight: 380 }) }}>
             <div key={step} style={{ animation: "kp-stepIn .42s cubic-bezier(.2,.7,.2,1) both" }}>
 
-              {/* STEP — interests */}
+              {/* STEP - interests */}
               {current === "interests" && (
                 <>
                   {eyebrow(t("interestsEyebrow"))}
@@ -343,7 +343,7 @@ export default function SafariPlanner({ embedded = false }: { embedded?: boolean
                 </>
               )}
 
-              {/* STEP — where (destinations, real parks + search) */}
+              {/* STEP - where (destinations, real parks + search) */}
               {current === "where" && (
                 <>
                   {eyebrow(t("whereEyebrow"))}
@@ -381,7 +381,7 @@ export default function SafariPlanner({ embedded = false }: { embedded?: boolean
                 </>
               )}
 
-              {/* STEP — days */}
+              {/* STEP - days */}
               {current === "days" && (
                 <>
                   {eyebrow(t("daysEyebrow"))}
@@ -403,7 +403,7 @@ export default function SafariPlanner({ embedded = false }: { embedded?: boolean
                 </>
               )}
 
-              {/* STEP — party */}
+              {/* STEP - party */}
               {current === "who" && (
                 <>
                   {eyebrow(t("whoEyebrow"))}
@@ -426,7 +426,7 @@ export default function SafariPlanner({ embedded = false }: { embedded?: boolean
                 </>
               )}
 
-              {/* STEP — when */}
+              {/* STEP - when */}
               {current === "when" && (
                 <>
                   {eyebrow(t("whenEyebrow"))}
@@ -454,7 +454,7 @@ export default function SafariPlanner({ embedded = false }: { embedded?: boolean
                 </>
               )}
 
-              {/* STEP — travellers */}
+              {/* STEP - travellers */}
               {current === "travellers" && (
                 <>
                   {eyebrow(t("travellersEyebrow"))}
@@ -489,7 +489,7 @@ export default function SafariPlanner({ embedded = false }: { embedded?: boolean
                 </>
               )}
 
-              {/* STEP — budget */}
+              {/* STEP - budget */}
               {current === "budget" && (
                 <>
                   {eyebrow(t("budgetEyebrow"))}
@@ -511,7 +511,7 @@ export default function SafariPlanner({ embedded = false }: { embedded?: boolean
                 </>
               )}
 
-              {/* STEP — notes */}
+              {/* STEP - notes */}
               {current === "notes" && (
                 <>
                   {eyebrow(t("notesEyebrow"))}
@@ -521,7 +521,7 @@ export default function SafariPlanner({ embedded = false }: { embedded?: boolean
                 </>
               )}
 
-              {/* STEP — details */}
+              {/* STEP - details */}
               {current === "details" && (
                 <>
                   {eyebrow(t("detailsEyebrow"))}
@@ -553,7 +553,7 @@ export default function SafariPlanner({ embedded = false }: { embedded?: boolean
                 </>
               )}
 
-              {/* STEP — review */}
+              {/* STEP - review */}
               {current === "review" && (
                 <>
                   {eyebrow(t("reviewEyebrow"))}
@@ -601,7 +601,7 @@ export default function SafariPlanner({ embedded = false }: { embedded?: boolean
           )}
         </div>
 
-        {/* trust strip (standalone only — the /plan rail carries trust when embedded) */}
+        {/* trust strip (standalone only - the /plan rail carries trust when embedded) */}
         {!embedded && (
           <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "center", gap: "10px 22px", marginTop: 22, color: "var(--muted)", fontSize: 13 }}>
             {TRUST.map((item) => (

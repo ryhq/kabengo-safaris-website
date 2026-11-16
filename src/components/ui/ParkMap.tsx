@@ -5,7 +5,7 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
-/* Branded teardrop pin (gold/choc) — matches the itinerary route map, no
+/* Branded teardrop pin (gold/choc) - matches the itinerary route map, no
    external icon image requests. */
 const parkIcon = L.divIcon({
   className: "",

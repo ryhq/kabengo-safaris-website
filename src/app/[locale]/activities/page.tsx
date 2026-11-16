@@ -156,7 +156,7 @@ export default function ActivitiesPage() {
     } catch { /* ignore */ } finally { setLoadingMore(false); }
   };
 
-  // popular carousel source (once) — ranked by popularity (safariCount)
+  // popular carousel source (once) - ranked by popularity (safariCount)
   useEffect(() => {
     let alive = true;
     apiClient

@@ -4,7 +4,7 @@ import type { Itinerary, Park, Accommodation, Activity, Testimony, Hero, ApiResp
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:4450/api";
 
-/** Current locale for API requests — set via setApiLocale() */
+/** Current locale for API requests - set via setApiLocale() */
 let currentLocale = "en";
 
 /** Set the locale used for Accept-Language header on all API requests */
