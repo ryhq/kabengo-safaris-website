@@ -73,7 +73,7 @@
     "clear": "Clear",
     "explore": "Explore",
     "planYourSafari": "Plan your safari",
-    "planYourSafariSub": "Tell us your dream - we tailor it"
+    "planYourSafariSub": "Tell us what you want to see. We build the trip around it."
   },
   "home": {
     "safarisTitle": "Our safaris",
@@ -94,7 +94,7 @@
   },
   "safaris": {
     "title": "Safari Packages",
-    "subtitle": "Find your perfect African adventure - from day trips to multi-week expeditions",
+    "subtitle": "Day trips out of Arusha, and journeys of a fortnight or more.",
     "searchPlaceholder": "Search by name, destination, or package code...",
     "duration": "{days} Days",
     "nights": "{nights} nights",
@@ -330,7 +330,7 @@
     "accommodations": "Accommodations",
     "viewEntity": "View {entity}",
     "ctaTitle": "Ready to see it for yourself?",
-    "ctaBody": "These are real moments from real Kabengo journeys. Tell us your dream and our local team will craft a tailor-made safari to match.",
+    "ctaBody": "Every photograph here was taken on a trip we ran. Tell us which of them you want to be in.",
     "startPlanning": "Love this? Start planning"
   },
   "testimonials": {
@@ -372,7 +372,7 @@
     "viewAll": "Read all reviews",
     "reviewsShort": "{count} reviews",
     "ctaTitle": "Ready to create your own story?",
-    "ctaBody": "Join the travellers who rated us five stars. Tell us your dream safari and our local team will craft it - with no obligation."
+    "ctaBody": "These were written by guests after they got home. Send us your dates and we will come back with a trip and a price, with no obligation."
   },
   "blog": {
     "title": "Safari Journal",
@@ -384,7 +384,7 @@
     "backToBlog": "All articles",
     "faqHeading": "Frequently asked",
     "ctaTitle": "Ready to plan your safari?",
-    "ctaBody": "Tell us your dream trip and a local specialist in Arusha will craft a tailor-made proposal - free, no obligation."
+    "ctaBody": "Send us your dates and what you want to see. A specialist in Arusha will put a plan together, free and with no obligation."
   },
   "about": {
     "title": "About Kabengo Safaris",
@@ -424,9 +424,9 @@
     "whyH2": "The people who know the ground",
     "howEyebrow": "How it works",
     "howH2": "From first idea to the open plains",
-    "step1Title": "Tell us your dream",
+    "step1Title": "Tell us what you want",
     "step1Text": "Share your dates, interests and budget - a few quick questions is all it takes.",
-    "step2Title": "We craft your plan",
+    "step2Title": "We build a plan",
     "step2Text": "A local specialist builds a private itinerary with honest, transparent pricing.",
     "step3Title": "Refine together",
     "step3Text": "We fine-tune every detail until it's perfect - then you're ready for Tanzania.",
@@ -435,12 +435,12 @@
     "readReviews": "Read our reviews",
     "bandEyebrow": "Karibu - welcome",
     "bandTitle": "Let's plan your Tanzania safari",
-    "bandBody": "Tell us your dream trip and a local specialist in Arusha will craft a tailor-made proposal - free, no obligation.",
+    "bandBody": "Write to us with your dates and a rough budget. Someone in the Arusha office reads it and answers with a plan and a price.",
     "replyBadge": "Reply within 24 hrs"
   },
   "contact": {
     "title": "Contact Us",
-    "subtitle": "Let's start planning your dream safari",
+    "subtitle": "Tell us what you have in mind.",
     "formTitle": "Send Us a Message",
     "name": "Full Name",
     "email": "Email Address",
@@ -531,7 +531,7 @@
   },
   "bookingInquiry": {
     "title": "Plan Your Safari",
-    "subtitle": "Tell us about your dream safari and we'll craft the perfect experience for you",
+    "subtitle": "Tell us where you want to go and when. We reply within 24 hours with an itinerary and a price.",
     "safariSelection": "Safari Selection",
     "selectSafari": "Choose a Safari Package",
     "customSafari": "Custom Safari (tell us in the message)",
@@ -561,7 +561,7 @@
     "specialRequests": "Special Requests",
     "specialRequestsPlaceholder": "Dietary requirements, medical conditions, accessibility needs...",
     "message": "Message",
-    "messagePlaceholder": "Tell us about your dream safari, any specific interests, or questions you have...",
+    "messagePlaceholder": "Where you want to go, who is travelling, anything you particularly want to see...",
     "submit": "Send Inquiry",
     "back": "Back",
     "next": "Next",
@@ -609,10 +609,10 @@
   },
   "bookSection": {
     "eyebrow": "Locally owned | Arusha, Tanzania",
-    "title": "Book your dream safari today",
-    "intro": "A Tanzania safari is a once-in-a-lifetime journey - and we make it yours. From the Serengeti plains and the Ngorongoro Crater to the beaches of Zanzibar and the summit of Kilimanjaro, choose one of our ready-made itineraries or build your own, exactly the way you love it.",
+    "title": "Book a safari",
+    "intro": "From the Serengeti plains and the Ngorongoro Crater to the beaches of Zanzibar and the summit of Kilimanjaro. Take one of our itineraries as it stands, or build your own.",
     "bestWayTitle": "The best way to explore Tanzania",
-    "bestWayBody": "We're a team of locals based in Arusha, with our own guides and safari vehicles who know this country intimately and arrange every detail from start to finish. Tell us the parks and experiences you dream of - we'll design the perfect trip around you.",
+    "bestWayBody": "We're a team of locals based in Arusha, with our own guides and safari vehicles who know this country intimately and arrange every detail from start to finish. Tell us which parks you want and we will design the trip around them.",
     "trust1": "Our own local guides & safari Land Cruisers",
     "trust2": "Tailor-made itineraries, shaped around you",
     "trust3": "Honest, transparent pricing - no middlemen",
@@ -746,10 +746,10 @@
     "errConsent": "Please confirm we may contact you about your proposal.",
     "errGeneric": "Something went wrong. Please try again.",
     "successTitle": "Asante sana - request received!",
-    "successBody": "We'll craft your tailor-made itinerary and a personal safari specialist will reply <b>within 24 hours</b>. Keep an eye on your inbox.",
+    "successBody": "We'll put your itinerary together and a safari specialist will reply <b>within 24 hours</b>. Keep an eye on your inbox.",
     "backHome": "Back to home",
     "railEyebrow": "Plan Your Safari",
-    "railH1": "Build your dream Tanzania trip",
+    "railH1": "Build your Tanzania trip",
     "railKicker": "Tailor-made Safaris",
     "railTitle": "Your Tanzania safari, planned around you",
     "railBody": "Answer a few quick questions and a local expert will hand-build a free, no-obligation proposal - itinerary, lodges and honest pricing, all shaped to you.",
@@ -770,9 +770,9 @@
     "eyebrow": "How it works",
     "title": "Your journey, from dream to departure",
     "intro": "Planning a tailor-made safari is simpler than you'd think - here's how it works.",
-    "s1t": "Tell us your dream",
+    "s1t": "Tell us what you want",
     "s1b": "Share what excites you, when you'd travel and your budget - in the planner or a quick message.",
-    "s2t": "We craft your plan",
+    "s2t": "We build a plan",
     "s2b": "A local expert designs a personal itinerary with lodges and honest pricing - free, no obligation.",
     "s3t": "Refine it together",
     "s3b": "Tweak anything until it's perfect; we advise on parks, timing and budget.",
@@ -811,7 +811,7 @@
     "bandTitle": "We'll build it around you",
     "bandBody1": "Our local Arusha team designs tailor-made trips from the ground up - your dates, your pace, your budget.",
     "bandBody2": "Share a rough idea and we'll turn it into an honest, detailed proposal.",
-    "bottomTitle": "Can't find the perfect trip? Tell us your dream.",
+    "bottomTitle": "Nothing here quite right? Tell us what is missing.",
     "bottomSubtitle": "No trip here is off the shelf - every Kabengo safari is built for one set of travellers at a time.",
     "faqQ1": "When is the best time to go?",
     "faqA1": "June-October for classic dry-season game viewing; January-February for the calving season. We advise for your exact dates.",
