@@ -8,10 +8,10 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://kabengosafaris.com"),
   title: {
     template: "%s | Kabengo Safaris",
-    default: "Kabengo Safaris - Unforgettable African Safari Experiences",
+    default: "Kabengo Safaris - Tailor-made safaris in Tanzania, planned in Arusha",
   },
   description:
-    "Discover the magic of Africa with Kabengo Safaris. Premium safari tours, breathtaking destinations, and unforgettable wildlife experiences across East Africa.",
+    "Private, tailor-made Tanzania safaris to the Serengeti, Ngorongoro, Tarangire and Zanzibar. Planned in Arusha, guided by Tanzanians, priced honestly.",
   keywords: [
     "safari",
     "Tanzania safari",
@@ -31,15 +31,15 @@ export const metadata: Metadata = {
   },
   manifest: "/manifest.json",
   openGraph: buildOpenGraph({
-    title: "Kabengo Safaris - Unforgettable African Safari Experiences",
+    title: "Kabengo Safaris - Tailor-made safaris in Tanzania, planned in Arusha",
     description:
-      "Premium safari tours, breathtaking destinations, and unforgettable wildlife experiences across East Africa.",
+      "Private, tailor-made Tanzania safaris to the Serengeti, Ngorongoro, Tarangire and Zanzibar. Planned in Arusha, guided by Tanzanians, priced honestly.",
     url: "https://kabengosafaris.com",
   }),
   twitter: buildTwitter({
-    title: "Kabengo Safaris - Unforgettable African Safari Experiences",
+    title: "Kabengo Safaris - Tailor-made safaris in Tanzania, planned in Arusha",
     description:
-      "Premium safari tours, breathtaking destinations, and unforgettable wildlife experiences across East Africa.",
+      "Private, tailor-made Tanzania safaris to the Serengeti, Ngorongoro, Tarangire and Zanzibar. Planned in Arusha, guided by Tanzanians, priced honestly.",
   }),
 };
 

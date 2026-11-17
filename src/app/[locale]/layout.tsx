@@ -29,16 +29,16 @@ export async function generateMetadata({
   return {
     alternates: buildAlternates(locale),
     openGraph: buildOpenGraph({
-      title: "Kabengo Safaris - Unforgettable African Safari Experiences",
+      title: "Kabengo Safaris - Tailor-made safaris in Tanzania, planned in Arusha",
       description:
-        "Premium safari tours, breathtaking destinations, and unforgettable wildlife experiences across East Africa.",
+        "Private, tailor-made Tanzania safaris to the Serengeti, Ngorongoro, Tarangire and Zanzibar. Planned in Arusha, guided by Tanzanians, priced honestly.",
       url: `https://kabengosafaris.com/${locale}`,
       locale,
     }),
     twitter: buildTwitter({
-      title: "Kabengo Safaris - Unforgettable African Safari Experiences",
+      title: "Kabengo Safaris - Tailor-made safaris in Tanzania, planned in Arusha",
       description:
-        "Premium safari tours, breathtaking destinations, and unforgettable wildlife experiences across East Africa.",
+        "Private, tailor-made Tanzania safaris to the Serengeti, Ngorongoro, Tarangire and Zanzibar. Planned in Arusha, guided by Tanzanians, priced honestly.",
     }),
   };
 }
