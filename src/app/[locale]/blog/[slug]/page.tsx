@@ -34,7 +34,10 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 function renderBlock(b: Block, i: number) {
   if (b.type === "h2") return <h2 key={i} style={{ fontFamily: SERIF, fontWeight: 700, color: "#2a2018", fontSize: "clamp(22px,3vw,30px)", lineHeight: 1.15, margin: "36px 0 14px" }}>{b.text}</h2>;
   if (b.type === "h3") return <h3 key={i} style={{ fontFamily: SERIF, fontWeight: 700, color: "#2a2018", fontSize: "clamp(19px,2.4vw,24px)", lineHeight: 1.2, margin: "28px 0 12px" }}>{b.text}</h3>;
-  if (b.type === "ul") return <ul key={i} style={{ margin: "0 0 18px", paddingLeft: 22, color: "#4a3f34", fontSize: 16.5, lineHeight: 1.75 }}>{b.items.map((it, j) => <li key={j} style={{ marginBottom: 6 }}>{it}</li>)}</ul>;
+  if (b.type === "ul") return <ul key={i} style={{ margin: "0 0 18px", paddingLeft: 22, color: "#4a3f34", fontSize: 16.5, lineHeight: 1.75,
+    /* Tailwind's preflight sets list-style:none on every ul, so a list in a blog post
+       loses its bullets unless the style is put back here. */
+    listStyleType: "disc", listStylePosition: "outside" }}>{b.items.map((it, j) => <li key={j} style={{ marginBottom: 6 }}>{it}</li>)}</ul>;
   if (b.type === "image") return (
     <figure key={i} style={{ margin: "24px 0" }}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
