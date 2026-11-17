@@ -37,6 +37,42 @@ const FOLD = new Map(Object.entries(MAP.fold))
 const MANUAL = new Map(Object.entries(MAP.manual))
 const INTERNAL = new Set(Object.keys(MAP.foldInternal))
 const KEEP = new Set(Object.keys(MAP.keep))
+
+/**
+ * The same characters, written as HTML entities.
+ *
+ * A rendered invoice still showed arrows and em dashes long after every template body read
+ * clean, because the markup held `&rarr;` and `&mdash;` rather than the characters. A reader
+ * cannot tell the difference, which is what an entity is for, so neither does this.
+ *
+ * The non-breaking space is excluded: in markup it is spacing, not punctuation.
+ */
+const NAMED = {
+  '\u2014': 'mdash', '\u2013': 'ndash', '\u00b7': 'middot', '\u2022': 'bull',
+  '\u2026': 'hellip', '\u2019': 'rsquo', '\u2018': 'lsquo', '\u201c': 'ldquo',
+  '\u201d': 'rdquo', '\u00ab': 'laquo', '\u00bb': 'raquo', '\u00d7': 'times',
+  '\u2192': 'rarr', '\u2190': 'larr', '\u2191': 'uarr', '\u2193': 'darr',
+  '\u2265': 'ge', '\u2264': 'le', '\u00b2': 'sup2', '\u00b0': 'deg',
+  '\u2212': 'minus', '\u00ae': 'reg', '\u2122': 'trade',
+}
+
+const ENTITIES = new Map()
+for (const [c, repl] of [
+  ...FOLD.entries(),
+  ...Object.entries(MAP.foldInternal),
+  ...[...MANUAL.keys()].map((c) => [c, '']),
+]) {
+  if (c === '\u00a0') continue
+  const cp = c.codePointAt(0)
+  const advice = MANUAL.has(c)
+    ? 'decide: this one needs a sentence, see "manual" in typography.json'
+    : `'${repl}'`
+  ENTITIES.set(`&#${cp};`, advice)
+  ENTITIES.set(`&#x${cp.toString(16)};`, advice)
+  ENTITIES.set(`&#x${cp.toString(16).toUpperCase()};`, advice)
+  if (NAMED[c]) ENTITIES.set(`&${NAMED[c]};`, advice)
+}
+
 const KEEP_IN = Object.entries(MAP.keepIn ?? {})
   .filter(([pattern]) => pattern !== '_')
   .map(([pattern, chars]) => [new RegExp(pattern), new Set(chars)])
@@ -127,6 +163,15 @@ for (const file of files) {
     if (FOLD.has(c)) offences.push(`${where}  '${c}'  ->  '${FOLD.get(c)}'`)
     else if (MANUAL.has(c)) offences.push(`${where}  '${c}'  ->  ${MANUAL.get(c)}`)
     else offences.push(`${where}  '${c}'  ->  nobody has decided about this one. Add it to typography.json, in all four repositories.`)
+  }
+
+  // entity-encoded typography: invisible to the eye, identical to the reader
+  for (const [form, advice] of ENTITIES) {
+    let at = -1
+    while ((at = src.indexOf(form, at + 1)) !== -1) {
+      const line = src.slice(0, at).split('\n').length
+      offences.push(`${relative(ROOT, file)}:${line}  '${form}'  ->  ${advice}`)
+    }
   }
 }
 

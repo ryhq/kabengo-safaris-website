@@ -56,7 +56,7 @@ export default function ReviewCard({ item, height = 380 }: { item: ReviewItem; h
       {item.reviewTitle && (
         <h3 style={{ fontFamily: SERIF, fontWeight: 700, color: "#2a2018", fontSize: 17.5, lineHeight: 1.25, margin: "0 0 8px", paddingRight: 34, ...clamp(2) }}>{item.reviewTitle}</h3>
       )}
-      <p style={{ color: "#4a3f34", fontSize: 14.5, lineHeight: 1.6, margin: 0, flex: 1, minHeight: 0, ...clamp(item.reviewTitle ? 6 : 8) }}>&ldquo;{item.message}&rdquo;</p>
+      <p style={{ color: "#4a3f34", fontSize: 14.5, lineHeight: 1.6, margin: 0, flex: 1, minHeight: 0, ...clamp(item.reviewTitle ? 6 : 8) }}>"{item.message}"</p>
       <div className="flex items-center justify-between" style={{ gap: 10, paddingTop: 16, marginTop: 14, borderTop: "1px solid #f1ece3" }}>
         <div className="flex items-center" style={{ gap: 12 }}>
           <span className="flex items-center justify-center flex-shrink-0" style={{ width: 42, height: 42, borderRadius: "50%", background: bg, color: fg, fontFamily: SERIF, fontWeight: 700, fontSize: 15 }}>{initials(item.authorName)}</span>
