@@ -81,7 +81,7 @@
     "parksTitle": "The parks",
     "parksSubtitle": "Serengeti, Ngorongoro, Tarangire, Manyara, Arusha and Kilimanjaro. What each one is good for, and when to go.",
     "activitiesTitle": "Activities & Experiences",
-    "activitiesSubtitle": "Game drives, walking safaris, balloon flights, a day in Mto wa Mbu. Add any of them to a trip.",
+    "activitiesSubtitle": "Walking safaris, night drives, hot air balloons, canoeing, Olduvai Gorge. Add any of them to a trip.",
     "testimonialsTitle": "What our guests said",
     "testimonialsSubtitle": "Written by people after they got home.",
     "ctaTitle": "Tell us your travel dates",
@@ -176,7 +176,7 @@
         "q1": "How do I book this safari?",
         "a1": "You can book directly through our website by clicking 'Book Now' or 'Inquire', or contact us via WhatsApp or email. Our team will respond within 24 hours with a personalized proposal.",
         "q2": "Can this safari be customized?",
-        "a2": "Absolutely! Every safari we offer can be tailored to your preferences, budget, and travel dates. We can adjust accommodation, add extra days, or modify activities to suit your needs.",
+        "a2": "Yes. Every safari here is a starting point. Change the lodges, add days, swap activities, move the dates. Tell us what you want different and we will price it again.",
         "q3": "What should I pack for this safari?",
         "a3": "We recommend neutral-colored clothing (khaki, beige, olive), comfortable walking shoes, sun protection (hat, sunscreen, sunglasses), binoculars, a camera, and layers for cooler mornings and evenings.",
         "q4": "Is travel insurance required?",
@@ -192,7 +192,7 @@
   },
   "parks": {
     "title": "National Parks & Reserves",
-    "subtitle": "Discover Africa's most breathtaking natural wonders",
+    "subtitle": "Every national park and reserve in Tanzania. Open any one for its size, its hours and the months that suit it.",
     "searchPlaceholder": "Search parks...",
     "detail": {
       "size": "Size",
@@ -211,9 +211,9 @@
       "faq": {
         "title": "Frequently Asked Questions",
         "q1": "When is the best time to visit this park?",
-        "a1": "The best time varies by park, but generally the dry season (June to October) offers the best wildlife viewing as animals gather around water sources. The wet season (November to May) is ideal for birdwatching and lush landscapes.",
+        "a1": "It varies by park. From June to October the country is dry, animals gather at water, and they are easier to find. From November to May the grass is long and green, there are fewer vehicles, and the birding is better.",
         "q2": "What wildlife can I expect to see?",
-        "a2": "Each park has its unique wildlife. Our expert guides will help you spot the area's most iconic species. Sightings depend on season and time of day, but our experienced guides know the best spots.",
+        "a2": "It depends on the park and the month. Your guide will know where the animals have been that week, which is worth more than any list we could print here. Nothing in the wild is promised.",
         "q3": "Are there entry fees for the park?",
         "a3": "Yes, all national parks and reserves have entry fees. These are typically included in our safari packages. Fees vary by park, visitor nationality, and age category. Contact us for current rates.",
         "q4": "How do I get to this park?",
@@ -306,7 +306,7 @@
   },
   "activities": {
     "title": "Activities & Experiences",
-    "subtitle": "Explore exciting adventures and unforgettable experiences",
+    "subtitle": "Walking safaris, balloons, night drives, canoeing, Olduvai Gorge. What each involves, and when it runs.",
     "searchPlaceholder": "Search activities...",
     "parksOffering": "Parks Offering This Activity",
     "detail": {
@@ -392,9 +392,9 @@
     "storyTitle": "Our Story",
     "storyText": "Kabengo Safaris was born from a deep passion for Africa's wildlife and landscapes. With years of experience in the safari industry, we craft personalized journeys that connect travelers with the raw beauty of East Africa.",
     "missionTitle": "Our Mission",
-    "missionText": "To provide exceptional safari experiences that inspire conservation, support local communities, and create lifelong memories for our guests.",
+    "missionText": "To run trips worth what people pay for them, to employ Tanzanians and pay them properly, and to leave the parks as we found them.",
     "visionTitle": "Our Vision",
-    "visionText": "To be East Africa's most trusted safari company, known for responsible tourism, expert guidance, and unmatched wildlife experiences.",
+    "visionText": "To stay small enough that the person who plans your trip is the person who answers you, and good enough that guests send their friends.",
     "whyTitle": "Why Choose Us",
     "whyExpertGuides": "Expert Guides",
     "whyExpertGuidesDesc": "Our certified guides bring decades of wildlife knowledge and local expertise to every safari.",
@@ -504,7 +504,7 @@
     "subtitle": "Everything you need to know about your safari adventure"
   },
   "footer": {
-    "about": "Kabengo Safaris offers premium safari experiences across East Africa. Discover breathtaking wildlife, stunning landscapes, and the magic of Africa with our expert-guided tours.",
+    "about": "Kabengo Safaris is a Tanzanian tour operator based in Arusha. We build private, tailor-made safaris across the northern parks and Zanzibar, guided by Tanzanians.",
     "quickLinks": "Quick Links",
     "contactInfo": "Contact Info",
     "followUs": "Follow Us",
