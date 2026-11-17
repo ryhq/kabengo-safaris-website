@@ -18,8 +18,8 @@
     "planYourSafari": "Plan Your Safari"
   },
   "hero": {
-    "title": "Discover the Magic of Africa",
-    "subtitle": "Premium safari tours and breathtaking wildlife experiences across East Africa",
+    "title": "Private Safaris Across Northern Tanzania",
+    "subtitle": "Private trips to the Serengeti, Ngorongoro and Tarangire, planned in Arusha by people who live here.",
     "cta": "Plan Your Safari",
     "eyebrow": "Tanzania | Tailor-made Safaris",
     "planCustom": "Plan a Custom Safari",
@@ -76,19 +76,19 @@
     "planYourSafariSub": "Tell us your dream - we tailor it"
   },
   "home": {
-    "safarisTitle": "Our Safari Experiences",
-    "safarisSubtitle": "Handcrafted journeys through Africa's most stunning landscapes",
-    "parksTitle": "Explore Our Destinations",
-    "parksSubtitle": "From the Serengeti to Kilimanjaro, discover Africa's finest parks",
+    "safarisTitle": "Our safaris",
+    "safarisSubtitle": "Routes we have driven many times. Take one as it stands, or change anything in it.",
+    "parksTitle": "The parks",
+    "parksSubtitle": "Serengeti, Ngorongoro, Tarangire, Manyara, Arusha and Kilimanjaro. What each one is good for, and when to go.",
     "activitiesTitle": "Activities & Experiences",
-    "activitiesSubtitle": "Exciting adventures and unforgettable experiences await you",
-    "testimonialsTitle": "What Our Guests Say",
-    "testimonialsSubtitle": "Real stories from unforgettable safari adventures",
-    "ctaTitle": "Ready for Your African Adventure?",
-    "ctaSubtitle": "Let us craft the perfect safari experience tailored just for you",
+    "activitiesSubtitle": "Game drives, walking safaris, balloon flights, a day in Mto wa Mbu. Add any of them to a trip.",
+    "testimonialsTitle": "What our guests said",
+    "testimonialsSubtitle": "Written by people after they got home.",
+    "ctaTitle": "Tell us your travel dates",
+    "ctaSubtitle": "Say when you want to come and roughly what you want to see. You get a real itinerary and a price, not a brochure.",
     "ctaCta": "Plan Your Safari",
-    "whyChooseUsTitle": "Why Choose Kabengo Safaris",
-    "whyChooseUsSubtitle": "Trusted by travelers worldwide for unforgettable African adventures",
+    "whyChooseUsTitle": "Why book with us?",
+    "whyChooseUsSubtitle": "We are in Arusha, our guides are Tanzanian, and the person who plans your trip is the one who answers when you write.",
     "safarisEyebrow": "Tailor-made Journeys",
     "exploreAll": "Explore all safaris"
   },
@@ -571,8 +571,8 @@
     "errorMessage": "Something went wrong. Please try again or email us directly."
   },
   "meta": {
-    "title": "Kabengo Safaris - Unforgettable African Safari Experiences",
-    "description": "Discover the magic of Africa with Kabengo Safaris. Premium safari tours, breathtaking destinations, and unforgettable wildlife experiences across East Africa.",
+    "title": "Kabengo Safaris - Tailor-made safaris in Tanzania, planned in Arusha",
+    "description": "Private, tailor-made Tanzania safaris to the Serengeti, Ngorongoro, Tarangire and Zanzibar. Planned in Arusha, guided by Tanzanians, priced honestly.",
     "homeTitle": "Tanzania Safari Tours & Tailor-Made Holidays",
     "homeDescription": "Tailor-made Tanzania safaris to the Serengeti, Ngorongoro, Tarangire & Zanzibar. Local expert guides, private tours and honest pricing with Kabengo Safaris.",
     "safarisTitle": "Tanzania Safari Packages & Tours",
