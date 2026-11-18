@@ -99,7 +99,14 @@ Server-rendered on every relevant page:
   10 locales, with alternates.
 - `src/app/robots.ts` — allows all crawlers (incl. AI bots: GPTBot, ClaudeBot,
   PerplexityBot, Google-Extended) and points to the sitemap.
-- `src/app/llms.txt/route.ts` — curated, factual site map for AI answer engines.
+- `src/app/llms.txt/route.ts` — the site map for AI answer engines. Every count, park and
+  conservation fee in it is READ from the API, never typed: the hand-written version claimed
+  ten locales, two of which did not exist, and named none of the records the site publishes.
+- `src/app/llms-full.txt/route.ts` — the whole catalogue as plain text (every park, lodge,
+  activity, itinerary day and article), built from one call to `/api/public/llms-corpus`.
+- `src/components/seo/CatalogueIndex.tsx` — the hub pages render nine cards and then every
+  remaining name as plain links, because the cards cannot be server-rendered in bulk (each
+  paints its photo with an inline `background:url()` that cannot be lazy-loaded).
 
 ### 5. Internationalisation
 - 10 locales (en, sw, fr, de, es, it, pt, af, uk, ar) via next-intl; all new copy
@@ -146,6 +153,12 @@ Server-rendered on every relevant page:
   URL — expect TravelAgency, Breadcrumb, and the page's primary type.
 - **Sitemap:** `https://kabengosafaris.com/sitemap.xml` lists all entities ×
   locales with alternates.
-- **llms.txt:** `https://kabengosafaris.com/llms.txt` returns the plain-text map.
+- **llms.txt:** `https://kabengosafaris.com/llms.txt` returns the plain-text map; its counts
+  must match the API and its locale line must match `src/i18n/routing.ts`.
+- **llms-full.txt:** `curl -s https://kabengosafaris.com/llms-full.txt | wc -c` should be
+  substantial, and grepping it for a lodge that appears only in detail payloads proves the
+  corpus is deep rather than list-level.
+- **Hub rendering:** `curl -s https://kabengosafaris.com/en/parks | grep -c Tarangire` must
+  be non-zero. This read **0** before the hubs were server-rendered.
 - **GEO spot-check:** ask an AI assistant "What is Kabengo Safaris?" and check it
   describes us accurately (Arusha, tailor-made, TATO/TALA, Tripadvisor 5.0).

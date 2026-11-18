@@ -38,8 +38,18 @@ export default function FeaturedCarousel<T>({
     return () => window.removeEventListener("resize", r);
   }, []);
 
+  /*
+   * How many cards fit is decided twice, on purpose, and the two are kept in step by hand.
+   *
+   * CSS decides the WIDTH, in the media queries below, because this strip is now rendered on
+   * the server: a flex-basis computed from a measured window.innerWidth would paint 3-up in the
+   * HTML and reflow to 1-up on a phone the moment the component mounted, which is a layout
+   * shift that did not exist while the strip only appeared after a fetch.
+   *
+   * JavaScript still decides how many DOTS there are, which needs a number rather than a
+   * breakpoint. That one corrects itself on mount and shifts nothing above it.
+   */
   const perView = wide ? (winW >= 900 ? 2 : 1) : (winW >= 1080 ? 3 : winW >= 680 ? 2 : 1);
-  const basis = `calc((100% - ${(perView - 1) * GAP}px) / ${perView})`;
   const pages = Math.max(1, items.length - perView + 1);
   const showNav = pages > 1;
 
@@ -78,6 +88,13 @@ export default function FeaturedCarousel<T>({
 
   return (
     <section aria-label={title}>
+      <style>{`
+        .fc-item { flex: 0 0 100%; }
+        @media (min-width: 680px) { .fc-item { flex-basis: calc((100% - ${GAP}px) / 2); } }
+        @media (min-width: 1080px) { .fc-item { flex-basis: calc((100% - ${GAP * 2}px) / 3); } }
+        .fc-item-wide { flex-basis: 100%; }
+        @media (min-width: 900px) { .fc-item-wide { flex-basis: calc((100% - ${GAP}px) / 2); } }
+      `}</style>
       <div className="flex items-end justify-between flex-wrap" style={{ gap: 14, marginBottom: 18 }}>
         <div className="flex items-center flex-wrap" style={{ gap: 10 }}>
           <Star size={18} fill="#c48f2b" stroke="none" />
@@ -96,7 +113,7 @@ export default function FeaturedCarousel<T>({
         <div ref={railRef} onScroll={onScroll} onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}
           style={{ display: "flex", gap: GAP, overflowX: "auto", overflowY: "hidden", scrollSnapType: "x mandatory", scrollbarWidth: "none", paddingBottom: 24, marginBottom: -24 }}>
           {items.map((it, i) => (
-            <div key={i} data-c style={{ flex: `0 0 ${basis}`, scrollSnapAlign: "start" }}>{renderCard(it)}</div>
+            <div key={i} data-c className={wide ? "fc-item fc-item-wide" : "fc-item"} style={{ scrollSnapAlign: "start" }}>{renderCard(it)}</div>
           ))}
         </div>
       </div>

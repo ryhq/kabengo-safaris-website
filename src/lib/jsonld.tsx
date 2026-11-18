@@ -350,8 +350,11 @@ export function getActivityJsonLd(
 }
 
 /**
- * Reviews-page schema - attaches AggregateRating + individual Review nodes to the
- * organization entity (same @id merges with the global TravelAgency node).
+ * Reviews-page schema: the organization identity only.
+ *
+ * It deliberately emits no AggregateRating and no Review nodes - see the note at the top of
+ * this file. It still takes them as arguments so the page need not know that, and so turning
+ * them back on is one edit here rather than one at every call site.
  */
 export function getReviewsJsonLd(opts: {
   aggregate?: AggregateRatingInput | null;
@@ -408,5 +411,34 @@ export function getArticleJsonLd(opts: {
       name: "Kabengo Safaris",
       url: localeUrl(opts.locale),
     },
+  };
+}
+
+/**
+ * An ItemList for a hub page, naming what the page lists.
+ *
+ * The hub pages render their grid on the client, so until they were seeded from the server a
+ * crawler arriving at /en/parks found a heading and nothing else. This states, in a form a
+ * machine reads first, exactly which records the page covers and where each one lives.
+ */
+export function getItemListJsonLd(
+  items: Array<{ slug?: string; name?: string }>,
+  pathSegment: string,
+  locale: string,
+  name: string,
+) {
+  const listed = items.filter((i) => i.slug && i.name);
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name,
+    url: localeUrl(locale, `/${pathSegment}`),
+    numberOfItems: listed.length,
+    itemListElement: listed.map((i, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: i.name,
+      url: localeUrl(locale, `/${pathSegment}/${i.slug}`),
+    })),
   };
 }
