@@ -603,7 +603,7 @@
     "defaultMessage": "Hello! I'm interested in learning more about your safari packages."
   },
   "privacy": {
-    "bannerMessage": "We respect your privacy - this website does not use cookies or tracking.",
+    "bannerMessage": "This website uses cookies to measure how our advertising performs.",
     "learnMore": "Learn More",
     "dismiss": "Got it"
   },
