@@ -19,6 +19,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { submitBookingInquiry, fetchSafarisPaginated } from "@/lib/api";
+import { trackQuoteRequest } from "@/lib/gtag";
 import GlassSelect from "@/components/ui/GlassSelect";
 import GlassCombobox from "@/components/ui/GlassCombobox";
 import DateRangePicker from "@/components/ui/DateRangePicker";
@@ -206,6 +207,9 @@ export default function BookingInquiryForm({ safariId }: BookingInquiryFormProps
     const result = await submitBookingInquiry(payload);
 
     if (result.status === "received") {
+      /* Only once the API has it - a failed request is not a lead, and counting it would teach
+       * Google to buy more of whatever produced the failure. */
+      trackQuoteRequest();
       setStatus("success");
     } else {
       setStatus("error");

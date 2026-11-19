@@ -1,4 +1,6 @@
+import Script from "next/script";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
+import { GOOGLE_ADS_ID } from "@/lib/gtag";
 import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
@@ -73,6 +75,22 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} className={`${sourceSerif.variable} ${inter.variable}`}>
       <body className="min-h-screen flex flex-col">
+        {/*
+          The Google tag, which has to be present on every page for a conversion fired on any one
+          of them to be attributed to the ad click that brought the visitor. afterInteractive, so
+          it never sits in front of the page rendering - nobody waits on an advertising script.
+        */}
+        <Script
+          id="google-tag"
+          src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ADS_ID}`}
+          strategy="afterInteractive"
+        />
+        <Script id="google-tag-init" strategy="afterInteractive">
+          {`window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', '${GOOGLE_ADS_ID}');`}
+        </Script>
         <JsonLd data={getWebSiteJsonLd(locale)} />
         <NextIntlClientProvider messages={messages}>
           <ApiLocaleSync />

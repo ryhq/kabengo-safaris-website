@@ -6,6 +6,7 @@ import { useSearchParams } from "next/navigation";
 import { Link } from "@/i18n/navigation";
 import { User, Users, UsersRound, Heart, Baby, HelpCircle, ArrowRight, Check, Search, MapPin, Binoculars, Footprints, Waves, MountainSnow, Drum, BedDouble, X } from "lucide-react";
 import { submitBookingInquiry, fetchPublicParks, type PublicParkOption } from "@/lib/api";
+import { trackQuoteRequest } from "@/lib/gtag";
 import DateRangePicker from "@/components/ui/DateRangePicker";
 import PlannerDropdown from "@/components/planner/PlannerDropdown";
 
@@ -196,8 +197,12 @@ export default function SafariPlanner({ embedded = false }: { embedded?: boolean
       specialRequests: buildSpecialRequests() || undefined,
     });
     setSubmitting(false);
-    if (result.status === "received") setStep(DONE);
-    else setError(result.message || t("errGeneric"));
+    if (result.status === "received") {
+      /* Only once the API has it. A request that failed is not a lead, and counting it would
+       * teach Google to buy more of whatever produced the failure. */
+      trackQuoteRequest();
+      setStep(DONE);
+    } else setError(result.message || t("errGeneric"));
   };
 
   const next = () => {
